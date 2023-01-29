@@ -6,7 +6,7 @@ This application serves as an exercise organizer and scheduler for users. Whethe
 - a new gym goer
 - an experienced gym rat
 - currently regretting wasting money on that gym membership in January
-- making excuses for not going to the gym
+- making excuses for not going to the gym (possibly me)
 
 There is something for everyone. For example, it might be difficult sometimes especially for new gym goers to
 build a balanced or consistent schedule. Or, one might be doing the same *boring* schedule
