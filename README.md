@@ -1,10 +1,28 @@
-# My Personal Project
+# Exercise Scheduler
 
-## A subtitle
+###  Improve your gains
+This application serves as an exercise organizer and scheduler for users. Whether you are:
 
-A *bulleted* list:
-- item 1
-- item 2
-- item 3
+- a new gym goer
+- an experienced gym rat
+- currently regretting wasting money on that gym membership in January
+- making excuses for not going to the gym
 
-An example of text with **bold** and *italic* fonts.  
+There is something for everyone. For example, it might be difficult sometimes especially for new gym goers to
+build a balanced or consistent schedule. Or, one might be doing the same *boring* schedule
+continuously and dreading going to the gym, but lazy enough to not want to spend time reorganizing their workout,
+including myself.
+
+The application will allow you to make your **own personal profile** by entering basic information such as your name,
+age, gender, and weight. For each profile, you can enter exercises with a number of sets,
+repetitions, time per set, muscle groups worked, and a personal difficulty rating. You can view saved exercises by muscle groups, and
+edit them. You will also be able to generate a weekly workout schedule with your list of exercises, days you are available,
+the hours that you are available, a difficulty balance, and a muscle group balance. These schedules can be named, saved,
+and organized alphabetically.
+
+## User Stories
+- As a user, I want to be able to make a new exercise and add it to a list of exercises for my profile.
+- As a user, I want to be able to view and delete the list of exercises for my profile.
+- As a user, I want to be able to select an exercise and edit its information,
+  including sets, reps, muscle groups, and personal difficulty.
+- As a user, I want to be able to generate a workout schedule with the list of exercises for my profile.
