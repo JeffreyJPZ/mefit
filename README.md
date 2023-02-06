@@ -16,13 +16,13 @@ including myself.
 The application will allow you to make your **own personal profile** by entering basic information such as your name,
 age, gender, and weight. For each profile, you can enter exercises with a number of sets,
 repetitions, time per set, muscle groups worked, and a personal difficulty rating. You can view saved exercises by muscle groups, and
-edit them. You will also be able to generate a weekly workout schedule with your list of exercises, days you are available,
+edit them. You will also be able to generate a workout schedule with your list of exercises, days you are available,
 the hours that you are available, a difficulty balance, and a muscle group balance. These schedules can be named, saved,
 and organized alphabetically.
 
 ## User Stories
 - As a user, I want to be able to make a new exercise and add it to a list of exercises for my profile.
-- As a user, I want to be able to view and delete the list of exercises for my profile.
+- As a user, I want to be able to view and delete exercises from my profile.
 - As a user, I want to be able to select an exercise and edit its information,
   including sets, reps, muscle groups, and personal difficulty.
 - As a user, I want to be able to generate a workout schedule with the list of exercises for my profile.

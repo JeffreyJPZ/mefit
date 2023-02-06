@@ -1,10 +1,23 @@
 package model;
 
-public class Exercise {
+public interface Exercise {
 
-    // REQUIRES: name is not empty, sets and reps > 0
-    // EFFECTS: makes a new exercise with a name, # of sets, # of reps
-    public Exercise(String name, int sets, int reps) {
-        // STUB
-    }
+    public String getName();
+
+    public int getMetric();
+
+    public String getMuscleGroup();
+
+    public int getDifficulty();
+
+    public int getTime();
+
+    public void setMetric(int metric);
+
+    public void setMuscleGroup(String muscleGroup);
+
+    public void setDifficulty(int difficulty);
+
+    public void setTime(int time);
+
 }

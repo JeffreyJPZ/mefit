@@ -1,8 +1,6 @@
 package model;
 
-import model.GymList;
-
-public class ExerciseList implements GymList {
+public class WorkoutList implements GymList {
 
     public void viewAll() {
         // stub
@@ -11,5 +9,4 @@ public class ExerciseList implements GymList {
     public boolean isEmpty() {
         return false; // stub
     }
-
 }

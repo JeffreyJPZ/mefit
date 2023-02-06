@@ -1,41 +1,80 @@
 package model;
 
+// Represents a user profile with a name, age (in years), gender, weight (lbs), list of exercises, list of workouts,
+// and list of exercise schedules
 public class Profile {
-    // Name, age, list of exercises, list of schedules
+    private static int nextId = 1;
+    private int id; // account number (idea sourced from Account.java)
+    private String firstName;
+    private String lastName;
+    private String gender;
+    private int age;
+    private int weight;
+    private ExerciseList exerciseList;
+    private WorkoutList scheduleList;
 
-    // REQUIRES: name, gender are both not empty and age, weight are both > 0
-    // EFFECTS: makes a profile with a name, age in years, gender, and weight in lbs
-    public Profile(String name, int age, String gender, int weight) {
+
+    // REQUIRES: firstName, lastName, gender are not empty and age, weight are both > 0
+    // EFFECTS: makes a profile with a first name, last name, gender, age in years, weight in lbs,
+    //          empty list of exercises, empty list of schedules, and a unique id
+    public Profile(String firstName, String lastName, String gender, int age, int weight) {
         // stub
     }
 
-    // REQUIRES: name is not empty
-    // MODIFIES: this
-    // EFFECTS: changes profile name to given name
-    public void setName(String name) {
+    public void setFirstName(String firstName) {
         // stub
     }
 
-    // REQUIRES: age > 0
-    // MODIFIES: this
-    // EFFECTS: changes profile age to given age
-    public void setAge(int age) {
+    public void setLastName(String lastName) {
         // stub
     }
 
-    // REQUIRES: gender is not empty
-    // MODIFIES: this
-    // EFFECTS: changes profile gender to given gender
     public void setGender(String gender) {
         // stub
     }
 
-    // REQUIRES: weight > 0
-    // MODIFIES: this
-    // EFFECTS: changes profile weight to given weight
+    public void setAge(int age) {
+        // stub
+    }
+
     public void setWeight(int weight) {
         // stub
     }
 
+    public String getFirstName() {
+        return "";
+    }
 
+    public String getLastName() {
+        return "";
+    }
+
+    public String getGender() {
+        return "";
+    }
+
+    public int getAge() {
+        return 0;
+    }
+
+    public int getWeight() {
+        return 0;
+    }
+
+    public int getId() {
+        return 0;
+    }
+
+    public ExerciseList getExerciseList() {
+        return null;
+    }
+
+    public WorkoutList getWorkoutList() {
+        return null;
+    }
+
+    // EFFECTS: returns a summary of profile with first and last name, gender, age in years, and weight in lbs
+    public String viewProfile() {
+        return "";
+    }
 }
