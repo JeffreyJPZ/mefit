@@ -8,7 +8,7 @@ public class WeightsExercise extends Exercise {
 
     // REQUIRES: name, muscleGroup are not empty, weight, sets, reps, difficulty, time > 0
     // EFFECTS: makes a new exercise with a name, muscle group, metric as weight in lbs, # of sets, # of reps,
-    //          difficulty, and time (min)
+    //          difficulty, time (min), and unfavourited
     public WeightsExercise(String name, String muscleGroup, int weight, int sets, int reps, int difficulty, int time) {
         // stub
     }

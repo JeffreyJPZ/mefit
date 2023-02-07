@@ -3,8 +3,9 @@ package model;
 // Represents a user profile with a name, age (in years), gender, weight (lbs), list of exercises, list of workouts,
 // and list of exercise schedules
 public class Profile {
-    private static int nextId = 1;
-    private int id; // account number (idea sourced from Account.java)
+    private static int nextId = 1; // account number (attributed from TellerApp)
+
+    private int id;
     private String firstName;
     private String lastName;
     private String gender;
@@ -18,31 +19,37 @@ public class Profile {
     // EFFECTS: makes a profile with a first name, last name, gender, age in years, weight in lbs,
     //          empty list of exercises, empty list of schedules, and a unique id
     public Profile(String firstName, String lastName, String gender, int age, int weight) {
-        // stub
+        this.id = nextId;
+        nextId++;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.age = age;
+        this.weight = weight;
     }
 
     public String getFirstName() {
-        return "";
+        return firstName;
     }
 
     public String getLastName() {
-        return "";
+        return lastName;
     }
 
     public String getGender() {
-        return "";
+        return gender;
     }
 
     public int getAge() {
-        return 0;
+        return age;
     }
 
     public int getWeight() {
-        return 0;
+        return weight;
     }
 
     public int getId() {
-        return 0;
+        return id;
     }
 
     public ExerciseList getExerciseList() {
@@ -54,27 +61,35 @@ public class Profile {
     }
 
     public void setFirstName(String firstName) {
-        // stub
+        this.firstName = firstName;
     }
 
     public void setLastName(String lastName) {
-        // stub
+        this.lastName = lastName;
     }
 
     public void setGender(String gender) {
-        // stub
+        this.gender = gender;
     }
 
     public void setAge(int age) {
-        // stub
+        this.age = age;
     }
 
     public void setWeight(int weight) {
-        // stub
+        this.weight = weight;
     }
 
     // EFFECTS: returns a summary of profile with first and last name, gender, age in years, and weight in lbs
     public String viewProfile() {
-        return "";
+        return "First Name: " + firstName + "\n"
+                +
+                "Last Name: " + lastName + "\n"
+                +
+                "Gender: " + gender + "\n"
+                +
+                "Age: " + age + "\n"
+                +
+                "Weight: " + lastName;
     }
 }

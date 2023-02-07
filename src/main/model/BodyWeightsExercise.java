@@ -6,7 +6,7 @@ public class BodyWeightsExercise extends Exercise {
 
     // REQUIRES: name, muscleGroup are not empty; sets, reps, difficulty, time > 0
     // EFFECTS: makes a bodyweight exercise with a name, muscle group, metric as # of total reps,
-    //          # of sets, # of reps, difficulty, and time (min)
+    //          # of sets, # of reps, difficulty, and time (min), and unfavourited
     public BodyWeightsExercise(String name, String muscleGroup, int sets, int reps, int difficulty, int time) {
         // stub
     }
