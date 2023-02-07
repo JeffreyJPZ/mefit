@@ -1,40 +1,20 @@
 package model;
 
-public class CardioExercise implements Exercise {
+public class CardioExercise extends Exercise {
+    private int targetTime;
 
-    public String getName() {
-        return ""; // stub
-    }
-
-    public int getMetric() {
-        return 0; // stub
-    }
-
-    public String getMuscleGroup() {
-        return ""; // stub
-    }
-
-    public int getDifficulty() {
-        return 0; // stub
-    }
-
-    public int getTime() {
-        return 0; // stub
-    }
-
-    public void setMetric(int metric) {
+    // REQUIRES: name, muscleGroup are not empty; distance, difficulty, time > 0
+    // EFFECTS: makes a cardio exercise with a name, muscle group, metric as distance (m), difficulty, time (min),
+    //          and target time equal to time (min)
+    public CardioExercise(String name, String muscleGroup, int distance, int difficulty, int time) {
         // stub
     }
 
-    public void setMuscleGroup(String muscleGroup) {
-        // stub
+    public int getTargetTime() {
+        return 0; // stub
     }
 
-    public void setDifficulty(int difficulty) {
-        // stub
-    }
-
-    public void setTime(int time) {
+    public void setTargetTime() {
         // stub
     }
 }

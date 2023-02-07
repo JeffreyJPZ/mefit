@@ -21,26 +21,6 @@ public class Profile {
         // stub
     }
 
-    public void setFirstName(String firstName) {
-        // stub
-    }
-
-    public void setLastName(String lastName) {
-        // stub
-    }
-
-    public void setGender(String gender) {
-        // stub
-    }
-
-    public void setAge(int age) {
-        // stub
-    }
-
-    public void setWeight(int weight) {
-        // stub
-    }
-
     public String getFirstName() {
         return "";
     }
@@ -71,6 +51,26 @@ public class Profile {
 
     public WorkoutList getWorkoutList() {
         return null;
+    }
+
+    public void setFirstName(String firstName) {
+        // stub
+    }
+
+    public void setLastName(String lastName) {
+        // stub
+    }
+
+    public void setGender(String gender) {
+        // stub
+    }
+
+    public void setAge(int age) {
+        // stub
+    }
+
+    public void setWeight(int weight) {
+        // stub
     }
 
     // EFFECTS: returns a summary of profile with first and last name, gender, age in years, and weight in lbs

@@ -8,6 +8,10 @@ public class ExerciseList implements GymList {
         // stub
     }
 
+    public boolean contains() {
+        return false; // stub
+    }
+
     public boolean isEmpty() {
         return false; // stub
     }

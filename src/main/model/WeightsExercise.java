@@ -2,55 +2,30 @@ package model;
 
 import model.Exercise;
 
-public class WeightsExercise implements Exercise {
-    private final String name;
-    private int metric; // metric is weight in kg
+public class WeightsExercise extends Exercise {
     private int sets;
     private int reps;
-    private String muscleGroup;
-    private int difficulty;
-    private int time;
 
-    // REQUIRES: name is not empty, sets and reps > 0, muscleGroup is one of:
-    // EFFECTS: makes a new exercise with a name, metric as weight in kg, # of sets, # of reps, muscle group,
-    //          personal difficulty, and time taken
-    public WeightsExercise(String name, int weight, int sets, int reps, String muscleGroup, int difficulty, int time) {
+    // REQUIRES: name, muscleGroup are not empty, weight, sets, reps, difficulty, time > 0
+    // EFFECTS: makes a new exercise with a name, muscle group, metric as weight in lbs, # of sets, # of reps,
+    //          difficulty, and time (min)
+    public WeightsExercise(String name, String muscleGroup, int weight, int sets, int reps, int difficulty, int time) {
         // stub
     }
 
-    public String getName() {
-        return ""; // stub
-    }
-
-    public int getMetric() {
+    public int getSets() {
         return 0; // stub
     }
 
-    public String getMuscleGroup() {
-        return ""; // stub
-    }
-
-    public int getDifficulty() {
+    public int getReps() {
         return 0; // stub
     }
 
-    public int getTime() {
-        return 0; // stub
-    }
-
-    public void setMetric(int metric) {
+    public void setSets(int sets) {
         // stub
     }
 
-    public void setMuscleGroup(String muscleGroup) {
-        // stub
-    }
-
-    public void setDifficulty(int difficulty) {
-        // stub
-    }
-
-    public void setTime(int time) {
+    public void setReps(int reps) {
         // stub
     }
 }

@@ -16,7 +16,7 @@ class ProfileTest {
     }
 
     @Test
-    public void testProfileTypical() {
+    public void testConstructorTypical() {
         assertEquals("Shaqua", profileTest1.getFirstName());
         assertEquals("Shabi", profileTest1.getLastName());
         assertEquals("Female", profileTest1.getGender());
@@ -41,7 +41,7 @@ class ProfileTest {
     }
 
     @Test
-    public void testProfileBoundary() {
+    public void testConstructorBoundary() {
         profileTest3 = new Profile("Boundary", "Case", "Male", 1, 1);
 
         assertEquals("Boundary", profileTest3.getFirstName());
