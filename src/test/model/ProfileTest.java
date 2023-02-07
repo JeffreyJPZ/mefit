@@ -17,7 +17,7 @@ class ProfileTest {
 
     @Test
     public void testConstructorTypical() {
-        assertEquals("Shaqua", profileTest1.getFirstName());
+        assertEquals("Shagua", profileTest1.getFirstName());
         assertEquals("Shabi", profileTest1.getLastName());
         assertEquals("Female", profileTest1.getGender());
         assertEquals(20, profileTest1.getAge());

@@ -14,7 +14,15 @@ public class CardioExercise extends Exercise {
         return 0; // stub
     }
 
+    public int getTargetTime() {
+        return 0; // stub
+    }
+
     public void setMetric(int metric) {
+        // stub
+    }
+
+    public void setTargetTime(int targetTime) {
         // stub
     }
 }
