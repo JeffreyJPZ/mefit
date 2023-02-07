@@ -6,8 +6,7 @@ public class Profile {
     private static int nextId = 1; // account number (attributed from TellerApp)
 
     private int id;
-    private String firstName;
-    private String lastName;
+    private String name;
     private String gender;
     private int age;
     private int weight;
@@ -15,25 +14,20 @@ public class Profile {
     private WorkoutList workoutList;
 
 
-    // REQUIRES: firstName, lastName, gender are not empty and age, weight are both > 0
-    // EFFECTS: makes a profile with a first name, last name, gender, age in years, weight in lbs,
+    // REQUIRES: name, gender are not empty and age, weight are both > 0
+    // EFFECTS: makes a profile with a name, gender, age in years, weight in lbs,
     //          empty list of exercises, empty list of schedules, and a unique id
-    public Profile(String firstName, String lastName, String gender, int age, int weight) {
+    public Profile(String name, String gender, int age, int weight) {
         this.id = nextId;
         nextId++;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.gender = gender;
         this.age = age;
         this.weight = weight;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
+    public String getName() {
+        return name;
     }
 
     public String getGender() {
@@ -60,12 +54,8 @@ public class Profile {
         return workoutList;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setGender(String gender) {
@@ -85,14 +75,12 @@ public class Profile {
     //          first and last name, gender, age in years, and weight in lbs
     @Override
     public String toString() {
-        return "First Name: " + firstName + "\n"
-                +
-                "Last Name: " + lastName + "\n"
+        return "Name" + name + "\n"
                 +
                 "Gender: " + gender + "\n"
                 +
                 "Age: " + age + "\n"
                 +
-                "Weight: " + lastName;
+                "Weight: " + weight;
     }
 }

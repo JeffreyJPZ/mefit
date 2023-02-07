@@ -1,10 +1,16 @@
 package model;
 
-public class ProfileList implements GymList {
+import java.util.ArrayList;
 
+public class ProfileList implements GymList {
+    private ArrayList<Profile> profiles;
+
+    // EFFECTS: Makes a new profile list with no profiles
     public ProfileList() {
         // stub
     }
+
+    // MODIFIES: this
 
     public String toString() {
         return ""; // stub

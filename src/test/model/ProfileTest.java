@@ -11,14 +11,13 @@ class ProfileTest {
 
     @BeforeEach
     public void runBefore() {
-        profileTest1 = new Profile("Shagua", "Shabi", "Female", 20, 160);
-        profileTest2 = new Profile("Sukmai", "Mak", "None", 95, 30);
+        profileTest1 = new Profile("Shagua", "Female", 20, 160);
+        profileTest2 = new Profile("Sukmai", "None", 95, 30);
     }
 
     @Test
     public void testConstructorTypical() {
-        assertEquals("Shagua", profileTest1.getFirstName());
-        assertEquals("Shabi", profileTest1.getLastName());
+        assertEquals("Shagua", profileTest1.getName());
         assertEquals("Female", profileTest1.getGender());
         assertEquals(20, profileTest1.getAge());
         assertEquals(160, profileTest1.getWeight());
@@ -28,8 +27,7 @@ class ProfileTest {
 
         assertEquals(1, profileTest1.getId());
 
-        assertEquals("Sukmai", profileTest1.getFirstName());
-        assertEquals("Mak", profileTest1.getLastName());
+        assertEquals("Sukmai", profileTest1.getName());
         assertEquals("None", profileTest1.getGender());
         assertEquals(95, profileTest1.getAge());
         assertEquals(30, profileTest1.getWeight());
@@ -42,10 +40,9 @@ class ProfileTest {
 
     @Test
     public void testConstructorBoundary() {
-        profileTest3 = new Profile("Boundary", "Case", "Male", 1, 1);
+        profileTest3 = new Profile("Boundary", "Male", 1, 1);
 
-        assertEquals("Boundary", profileTest3.getFirstName());
-        assertEquals("Case", profileTest3.getLastName());
+        assertEquals("Boundary", profileTest3.getName());
         assertEquals("Male", profileTest3.getGender());
         assertEquals(1, profileTest3.getAge());
         assertEquals(1, profileTest3.getWeight());
@@ -58,19 +55,17 @@ class ProfileTest {
 
     @Test
     public void testDisplaySummary() {
-        String tempSummary1 = "First Name: " + profileTest1.getFirstName() + "\n"
-                            + "Last Name: " + profileTest1.getLastName() + "\n"
+        String tempToString1 = "Name: " + profileTest1.getName() + "\n"
                             + "Gender: " + profileTest1.getGender() + "\n"
                             + "Age: " + profileTest1.getAge() + "\n"
                             + "Weight: " + profileTest1.getWeight();
 
-        String tempSummary2 = "First Name: " + profileTest2.getFirstName() + "\n"
-                + "Last Name: " + profileTest2.getLastName() + "\n"
+        String tempToString2 = "Name: " + profileTest2.getName() + "\n"
                 + "Gender: " + profileTest2.getGender() + "\n"
                 + "Age: " + profileTest2.getAge() + "\n"
                 + "Weight: " + profileTest2.getWeight();
 
-        assertEquals(tempSummary1, profileTest1.toString());
-        assertEquals(tempSummary2, profileTest2.toString());
+        assertEquals(tempToString1, profileTest1.toString());
+        assertEquals(tempToString2, profileTest2.toString());
     }
 }
