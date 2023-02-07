@@ -12,7 +12,7 @@ public class Profile {
     private int age;
     private int weight;
     private ExerciseList exerciseList;
-    private WorkoutList scheduleList;
+    private WorkoutList workoutList;
 
 
     // REQUIRES: firstName, lastName, gender are not empty and age, weight are both > 0
@@ -53,11 +53,11 @@ public class Profile {
     }
 
     public ExerciseList getExerciseList() {
-        return null;
+        return exerciseList;
     }
 
     public WorkoutList getWorkoutList() {
-        return null;
+        return workoutList;
     }
 
     public void setFirstName(String firstName) {
@@ -80,8 +80,11 @@ public class Profile {
         this.weight = weight;
     }
 
-    // EFFECTS: returns a summary of profile with first and last name, gender, age in years, and weight in lbs
-    public String viewProfile() {
+    // MODIFIES: this
+    // EFFECTS: returns a string representation of profile with
+    //          first and last name, gender, age in years, and weight in lbs
+    @Override
+    public String toString() {
         return "First Name: " + firstName + "\n"
                 +
                 "Last Name: " + lastName + "\n"

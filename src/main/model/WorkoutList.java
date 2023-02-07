@@ -2,11 +2,15 @@ package model;
 
 public class WorkoutList implements GymList {
 
-    public void viewAll() {
-        // stub
+    public String toString() {
+        return ""; // stub
     }
 
-    public boolean contains() {
+    public GymList filter(String name) {
+        return null; // stub
+    }
+
+    public boolean contains(String name) {
         return false; // stub
     }
 

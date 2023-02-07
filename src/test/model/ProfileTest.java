@@ -70,7 +70,7 @@ class ProfileTest {
                 + "Age: " + profileTest2.getAge() + "\n"
                 + "Weight: " + profileTest2.getWeight();
 
-        assertEquals(tempSummary1, profileTest1.viewProfile());
-        assertEquals(tempSummary2, profileTest2.viewProfile());
+        assertEquals(tempSummary1, profileTest1.toString());
+        assertEquals(tempSummary2, profileTest2.toString());
     }
 }

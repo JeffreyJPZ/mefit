@@ -6,11 +6,15 @@ public class ProfileList implements GymList {
         // stub
     }
 
-    public void viewAll() {
-        // stub
+    public String toString() {
+        return ""; // stub
     }
 
-    public boolean contains() {
+    public GymList filter(String name) {
+        return null; // stub
+    }
+
+    public boolean contains(String name) {
         return false; // stub
     }
 
