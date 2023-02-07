@@ -3,6 +3,7 @@ package model;
 public class BodyWeightsExercise extends Exercise {
     private int sets;
     private int reps;
+    private int totalReps;
 
     // REQUIRES: name, muscleGroup are not empty; sets, reps, difficulty, time > 0
     // EFFECTS: makes a bodyweight exercise with a name, muscle group, metric as # of total reps,
@@ -11,12 +12,20 @@ public class BodyWeightsExercise extends Exercise {
         // stub
     }
 
+    public int getMetric() {
+        return 0; // stub
+    }
+
     public int getSets() {
         return 0; // stub
     }
 
     public int getReps() {
         return 0; // stub
+    }
+
+    public void setMetric(int metric) {
+        // stub
     }
 
     public void setSets(int sets) {

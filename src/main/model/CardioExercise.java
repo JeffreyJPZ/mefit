@@ -10,11 +10,11 @@ public class CardioExercise extends Exercise {
         // stub
     }
 
-    public int getTargetTime() {
+    public int getMetric() {
         return 0; // stub
     }
 
-    public void setTargetTime() {
+    public void setMetric(int metric) {
         // stub
     }
 }
