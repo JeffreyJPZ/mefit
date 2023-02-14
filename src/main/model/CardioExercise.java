@@ -12,7 +12,6 @@ public class CardioExercise extends Exercise {
     public CardioExercise(String name, String muscleGroup, int distance, int difficulty, int time) {
         super(name, muscleGroup, difficulty, time);
         this.distance = distance;
-        this.favourite = FALSE;
     }
 
     public int getDistance() {

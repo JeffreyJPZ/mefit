@@ -148,10 +148,36 @@ public class ProfilesByIdTest {
     }
 
     @Test
-    public void isEmptyNonEmptyMap() {
+    public void isEmptySingleProfileInMap() {
         addProfileHelper(profilesByIdTest1, 1);
 
         assertFalse(profilesByIdTest1.isEmpty());
+    }
+
+    @Test
+    public void isEmptyMultipleProfileInMap() {
+        addProfileHelper(profilesByIdTest1, 3);
+
+        assertFalse(profilesByIdTest1.isEmpty());
+    }
+
+    @Test
+    public void lengthEmptyMap() {
+        assertEquals(0, profilesByIdTest1.length());
+    }
+
+    @Test
+    public void lengthSingleProfileInMap() {
+        addProfileHelper(profilesByIdTest1, 1);
+
+        assertEquals(1, profilesByIdTest1.length());
+    }
+
+    @Test
+    public void lengthMultipleProfileInMap() {
+        addProfileHelper(profilesByIdTest1, 2);
+
+        assertEquals(2, profilesByIdTest1.length());
     }
 
     @Test
@@ -159,6 +185,14 @@ public class ProfilesByIdTest {
         addProfileHelper(profilesByIdTest1, 1);
 
         assertEquals(1, profilesByIdTest1.getProfile(1).getId());
+    }
+
+    @Test
+    public void getProfileMultipleProfileInMap() {
+        addProfileHelper(profilesByIdTest1, 2);
+
+        assertEquals(1, profilesByIdTest1.getProfile(1).getId());
+        assertEquals(2, profilesByIdTest1.getProfile(2).getId());
     }
 
     private void addProfileHelper(ProfilesById profilesById, int repeats) {

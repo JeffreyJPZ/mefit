@@ -3,6 +3,11 @@ package model;
 // Represents a mapping of workouts by name
 public class WorkoutsByName implements GymCollection {
 
+    // EFFECTS: Makes an empty map of workouts
+    public WorkoutsByName() {
+        // stub
+    }
+
     public String toString() {
         return ""; // stub
     }

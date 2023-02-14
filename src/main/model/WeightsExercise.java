@@ -16,7 +16,6 @@ public class WeightsExercise extends Exercise {
         this.weight = weight;
         this.sets = sets;
         this.reps = reps;
-        this.favourite = FALSE;
     }
 
     public int getWeight() {
