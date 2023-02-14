@@ -1,5 +1,6 @@
 package model;
 
+// Represents difficulty levels for exercises
 public enum Difficulty {
     LIGHT(1),
     MODERATE(2),

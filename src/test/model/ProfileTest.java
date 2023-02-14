@@ -22,8 +22,8 @@ class ProfileTest {
         assertEquals(20, profileTest1.getAge());
         assertEquals(160, profileTest1.getWeight());
 
-        assertTrue(profileTest1.getExerciseList().isEmpty());
-        assertTrue(profileTest1.getWorkoutList().isEmpty());
+        assertTrue(profileTest1.getExercises().isEmpty());
+        assertTrue(profileTest1.getWorkouts().isEmpty());
 
         assertEquals(1, profileTest1.getId());
 
@@ -32,8 +32,8 @@ class ProfileTest {
         assertEquals(95, profileTest1.getAge());
         assertEquals(30, profileTest1.getWeight());
 
-        assertTrue(profileTest2.getExerciseList().isEmpty());
-        assertTrue(profileTest2.getWorkoutList().isEmpty());
+        assertTrue(profileTest2.getExercises().isEmpty());
+        assertTrue(profileTest2.getWorkouts().isEmpty());
 
         assertEquals(2, profileTest2.getId());
     }
@@ -47,14 +47,14 @@ class ProfileTest {
         assertEquals(1, profileTest3.getAge());
         assertEquals(1, profileTest3.getWeight());
 
-        assertTrue(profileTest3.getExerciseList().isEmpty());
-        assertTrue(profileTest3.getWorkoutList().isEmpty());
+        assertTrue(profileTest3.getExercises().isEmpty());
+        assertTrue(profileTest3.getWorkouts().isEmpty());
 
         assertEquals(3, profileTest3.getId());
     }
 
     @Test
-    public void testDisplaySummary() {
+    public void testToString() {
         String tempToString1 = "Name: " + profileTest1.getName() + "\n"
                             + "Gender: " + profileTest1.getGender() + "\n"
                             + "Age: " + profileTest1.getAge() + "\n"

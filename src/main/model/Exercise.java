@@ -1,55 +1,61 @@
 package model;
 
+import static java.lang.Boolean.*;
+
+// Represents an exercise with basic information
 public abstract class Exercise {
     protected String name;
     protected String muscleGroup;
     protected int difficulty;
     protected int time;
-
     protected Boolean favourite;
 
+    public Exercise(String name, String muscleGroup, int difficulty, int time) {
+        this.name = name;
+        this.muscleGroup = muscleGroup;
+        this.difficulty = difficulty;
+        this.time = time;
+        this.favourite = FALSE;
+    }
+
     public String getName() {
-        return ""; // stub
+        return name;
     }
 
     public String getMuscleGroup() {
-        return ""; // stub
+        return muscleGroup;
     }
 
-    public abstract int getMetric();
-
     public int getDifficulty() {
-        return 0; // stub
+        return difficulty;
     }
 
     public int getTime() {
-        return 0; // stub
+        return time;
     }
 
     public Boolean isFavourite() {
-        return false;
+        return favourite;
     }
 
     public void setName(String name) {
-        // stub
+        this.name = name;
     }
 
     public void setMuscleGroup(String muscleGroup) {
-        // stub
+        this.muscleGroup = muscleGroup;
     }
 
-    public abstract void setMetric(int metric);
-
     public void setDifficulty(int difficulty) {
-        // stub
+        this.difficulty = difficulty;
     }
 
     public void setTime(int time) {
-        // stub
+        this.time = time;
     }
 
     public void setFavourite(Boolean favourite) {
-        // stub
+        this.favourite = favourite;
     }
 
 }

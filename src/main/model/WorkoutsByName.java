@@ -1,12 +1,13 @@
 package model;
 
-public class WorkoutList implements GymList {
+// Represents a mapping of workouts by name
+public class WorkoutsByName implements GymCollection {
 
     public String toString() {
         return ""; // stub
     }
 
-    public GymList filter(String name) {
+    public GymCollection filter(String name) {
         return null; // stub
     }
 
@@ -16,5 +17,9 @@ public class WorkoutList implements GymList {
 
     public boolean isEmpty() {
         return false; // stub
+    }
+
+    public int length() {
+        return 0; // stub
     }
 }

@@ -27,7 +27,7 @@ public class BodyWeightsExerciseTest {
         assertEquals(5, bodyWeightsExerciseTest1.getReps());
         assertEquals(3, bodyWeightsExerciseTest1.getDifficulty());
         assertEquals(30, bodyWeightsExerciseTest1.getTime());
-        assertEquals(15, bodyWeightsExerciseTest1.getMetric());
+        assertFalse(bodyWeightsExerciseTest1.isFavourite());
 
         assertEquals("Situps", bodyWeightsExerciseTest2.getName());
         assertEquals("Core", bodyWeightsExerciseTest2.getMuscleGroup());
@@ -35,7 +35,7 @@ public class BodyWeightsExerciseTest {
         assertEquals(20, bodyWeightsExerciseTest2.getReps());
         assertEquals(1, bodyWeightsExerciseTest2.getDifficulty());
         assertEquals(15, bodyWeightsExerciseTest2.getTime());
-        assertEquals(40, bodyWeightsExerciseTest2.getMetric());
+        assertFalse(bodyWeightsExerciseTest1.isFavourite());
     }
 
     @Test
@@ -49,6 +49,6 @@ public class BodyWeightsExerciseTest {
         assertEquals(1, bodyWeightsExerciseTest3.getReps());
         assertEquals(1, bodyWeightsExerciseTest3.getDifficulty());
         assertEquals(1, bodyWeightsExerciseTest3.getTime());
-        assertEquals(1, bodyWeightsExerciseTest3.getMetric());
+        assertFalse(bodyWeightsExerciseTest1.isFavourite());
     }
 }

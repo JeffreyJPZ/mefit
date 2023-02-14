@@ -1,16 +1,13 @@
 package model;
 
-import model.GymList;
-
-import java.util.List;
-
-public class ExerciseList implements GymList {
+// Represents a mapping of exercises by name
+public class ExercisesByName implements GymCollection {
 
     public String toString() {
         return ""; // stub
     }
 
-    public GymList filter(String name) {
+    public GymCollection filter(String name) {
         return null; // stub
     }
 
@@ -22,4 +19,7 @@ public class ExerciseList implements GymList {
         return false; // stub
     }
 
+    public int length() {
+        return 0; // stub
+    }
 }

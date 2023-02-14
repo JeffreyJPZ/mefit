@@ -23,7 +23,7 @@ public class WeightsExerciseTest {
     public void testConstructorTypical() {
         assertEquals("Bench Press", weightsExerciseTest1.getName());
         assertEquals("Chest", weightsExerciseTest1.getMuscleGroup());
-        assertEquals(150, weightsExerciseTest1.getMetric());
+        assertEquals(150, weightsExerciseTest1.getWeight());
         assertEquals(3, weightsExerciseTest1.getSets());
         assertEquals(5, weightsExerciseTest1.getReps());
         assertEquals(3, weightsExerciseTest1.getDifficulty());
@@ -32,7 +32,7 @@ public class WeightsExerciseTest {
 
         assertEquals("Squats", weightsExerciseTest2.getName());
         assertEquals("Legs", weightsExerciseTest2.getMuscleGroup());
-        assertEquals(225, weightsExerciseTest2.getMetric());
+        assertEquals(225, weightsExerciseTest2.getWeight());
         assertEquals(5, weightsExerciseTest2.getSets());
         assertEquals(8, weightsExerciseTest2.getReps());
         assertEquals(2, weightsExerciseTest2.getDifficulty());
@@ -47,7 +47,7 @@ public class WeightsExerciseTest {
 
         assertEquals("Bicep Curls", weightsExerciseTest3.getName());
         assertEquals("Arms", weightsExerciseTest3.getMuscleGroup());
-        assertEquals(1, weightsExerciseTest3.getMetric());
+        assertEquals(1, weightsExerciseTest3.getWeight());
         assertEquals(1, weightsExerciseTest3.getSets());
         assertEquals(1, weightsExerciseTest3.getReps());
         assertEquals(1, weightsExerciseTest3.getDifficulty());
