@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static model.ProfilesById.NO_PROFILES_MESSAGE;
 import static org.junit.jupiter.api.Assertions.*;
 
-// Test class for ProfileList
+// Test class for ProfilesByIdTest
 public class ProfilesByIdTest {
     private ProfilesById profilesByIdTest1;
 
