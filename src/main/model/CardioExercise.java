@@ -14,6 +14,15 @@ public class CardioExercise extends Exercise {
         this.distance = distance;
     }
 
+    // MODIFIES: this
+    // EFFECTS: returns a string representation with the exercise's name, muscle group,
+    //          distance, difficulty, and time
+    @Override
+    public String toString() {
+        return super.toString() + "\n"
+                + "Distance: " + distance;
+    }
+
     public int getDistance() {
         return distance;
     }

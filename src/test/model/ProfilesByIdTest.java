@@ -143,6 +143,42 @@ public class ProfilesByIdTest {
     }
 
     @Test
+    public void testContainsEmptyMap() {
+        assertFalse(profilesByIdTest1.contains("1"));
+    }
+
+    @Test
+    public void testContainsSingleProfileInMapAndDoesContain() {
+        addProfileHelper(profilesByIdTest1, 1);
+
+        assertTrue(profilesByIdTest1.contains("1"));
+    }
+
+    @Test
+    public void testContainsSingleProfileInMapAndDoesNotContain() {
+        addProfileHelper(profilesByIdTest1, 1);
+
+        assertFalse(profilesByIdTest1.contains("2"));
+    }
+
+    @Test
+    public void testContainsMultipleProfileInMapAndDoesContain() {
+        addProfileHelper(profilesByIdTest1, 5);
+
+        assertTrue(profilesByIdTest1.contains("1"));
+        assertTrue(profilesByIdTest1.contains("3"));
+    }
+
+    @Test
+    public void testContainsMultipleProfileInMapAndDoesNotContain() {
+        addProfileHelper(profilesByIdTest1, 5);
+
+        assertFalse(profilesByIdTest1.contains("6"));
+        assertFalse(profilesByIdTest1.contains("7"));
+    }
+
+
+    @Test
     public void isEmptyEmptyMap() {
         assertTrue(profilesByIdTest1.isEmpty());
     }

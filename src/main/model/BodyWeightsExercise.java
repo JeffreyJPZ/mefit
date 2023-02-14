@@ -14,6 +14,16 @@ public class BodyWeightsExercise extends Exercise {
         this.reps = reps;
     }
 
+    // MODIFIES: this
+    // EFFECTS: returns a string representation with the exercise's name, muscle group,
+    //          sets, reps, difficulty, and time
+    @Override
+    public String toString() {
+        return super.toString() + "\n"
+                + "Sets: " + sets + "\n"
+                + "Reps: " + reps;
+    }
+
     public int getSets() {
         return sets; // stub
     }

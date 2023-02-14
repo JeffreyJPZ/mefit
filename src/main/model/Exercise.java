@@ -18,6 +18,16 @@ public abstract class Exercise {
         this.favourite = FALSE;
     }
 
+    // MODIFIES: this
+    // EFFECTS: returns a string representation of the exercise description
+    public String toString() {
+        return "Exercise Name: " + name + "\n"
+                + "Muscle Group: " + muscleGroup + "\n"
+                + "Difficulty: " + difficulty + "\n"
+                + "Time: " + time + "\n"
+                + "Favourite?: " + favourite;
+    }
+
     public String getName() {
         return name;
     }

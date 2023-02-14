@@ -54,4 +54,27 @@ public class WeightsExerciseTest {
         assertEquals(1, weightsExerciseTest3.getTime());
         assertFalse(weightsExerciseTest1.isFavourite());
     }
+
+    @Test
+    public void testToString() {
+        assertEquals("Exercise Name: " + weightsExerciseTest1.getName() + "\n"
+                        + "Muscle Group: " + weightsExerciseTest1.getMuscleGroup() + "\n"
+                        + "Difficulty: " + weightsExerciseTest1.getDifficulty() + "\n"
+                        + "Time: " + weightsExerciseTest1.getTime() + "\n"
+                        + "Favourite?: " + weightsExerciseTest1.isFavourite() + "\n"
+                        + "Weight: " + weightsExerciseTest1.getWeight() + "\n"
+                        + "Sets: " + weightsExerciseTest1.getSets() + "\n"
+                        + "Reps: " + weightsExerciseTest1.getReps(),
+                weightsExerciseTest1.toString());
+
+        assertEquals("Exercise Name: " + weightsExerciseTest2.getName() + "\n"
+                        + "Muscle Group: " + weightsExerciseTest2.getMuscleGroup() + "\n"
+                        + "Difficulty: " + weightsExerciseTest2.getDifficulty() + "\n"
+                        + "Time: " + weightsExerciseTest2.getTime() + "\n"
+                        + "Favourite?: " + weightsExerciseTest2.isFavourite() + "\n"
+                        + "Weight: " + weightsExerciseTest2.getWeight() + "\n"
+                        + "Sets: " + weightsExerciseTest2.getSets() + "\n"
+                        + "Reps: " + weightsExerciseTest2.getReps(),
+                weightsExerciseTest2.toString());
+    }
 }

@@ -47,4 +47,23 @@ public class CardioExerciseTest {
         assertEquals(1, cardioExerciseTest3.getTime());
         assertFalse(cardioExerciseTest3.isFavourite());
     }
+
+    @Test
+    public void testToString() {
+        assertEquals("Exercise Name: " + cardioExerciseTest1.getName() + "\n"
+                        + "Muscle Group: " + cardioExerciseTest1.getMuscleGroup() + "\n"
+                        + "Difficulty: " + cardioExerciseTest1.getDifficulty() + "\n"
+                        + "Time: " + cardioExerciseTest1.getTime() + "\n"
+                        + "Favourite?: " + cardioExerciseTest1.isFavourite() + "\n"
+                        + "Distance: " + cardioExerciseTest1.getDistance(),
+                cardioExerciseTest1.toString());
+
+        assertEquals("Exercise Name: " + cardioExerciseTest2.getName() + "\n"
+                        + "Muscle Group: " + cardioExerciseTest2.getMuscleGroup() + "\n"
+                        + "Difficulty: " + cardioExerciseTest2.getDifficulty() + "\n"
+                        + "Time: " + cardioExerciseTest2.getTime() + "\n"
+                        + "Favourite?: " + cardioExerciseTest2.isFavourite() + "\n"
+                        + "Distance: " + cardioExerciseTest2.getDistance(),
+                cardioExerciseTest2.toString());
+    }
 }
