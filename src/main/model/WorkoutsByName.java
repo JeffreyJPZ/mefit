@@ -1,18 +1,23 @@
 package model;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 // Represents a mapping of workouts by name
 public class WorkoutsByName implements GymCollection {
+    private Map<String, Workout> workouts;
 
     // EFFECTS: Makes an empty map of workouts
     public WorkoutsByName() {
-        // stub
+        workouts = new LinkedHashMap<>();
     }
 
+    @Override
     public String toString() {
         return ""; // stub
     }
 
-    public GymCollection filter(String name) {
+    public WorkoutsByName filter(String name) {
         return null; // stub
     }
 

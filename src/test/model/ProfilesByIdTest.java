@@ -3,7 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static model.ProfilesById.NO_PROFILES_MESSAGE;
+import static model.ProfilesById.ADDITIONAL_PROFILE_MESSAGE;
+import static model.ProfilesById.DISPLAY_NUMBER_OF_PROFILES;
 import static org.junit.jupiter.api.Assertions.*;
 
 // Test class for ProfilesByIdTest
@@ -13,10 +14,11 @@ public class ProfilesByIdTest {
     @BeforeEach
     public void runBefore() {
         profilesByIdTest1 = new ProfilesById();
+        Profile.setNextId(1);
     }
 
     @Test
-    public void testConstructorEmptyList() {
+    public void testConstructorEmptyMap() {
         assertTrue(profilesByIdTest1.isEmpty());
     }
 
@@ -26,10 +28,12 @@ public class ProfilesByIdTest {
 
         assertEquals(1, profilesByIdTest1.length());
 
-        assertEquals("1", profilesByIdTest1.getProfile(1).getName());
-        assertEquals("1", profilesByIdTest1.getProfile(1).getGender());
-        assertEquals(1, profilesByIdTest1.getProfile(1).getAge());
-        assertEquals(1, profilesByIdTest1.getProfile(1).getWeight());
+        Profile profile1 = profilesByIdTest1.getProfile(1);
+
+        assertEquals("1", profile1.getName());
+        assertEquals("1", profile1.getGender());
+        assertEquals(1, profile1.getAge());
+        assertEquals(1, profile1.getWeight());
     }
 
     @Test
@@ -42,10 +46,12 @@ public class ProfilesByIdTest {
 
         assertEquals(3, profilesByIdTest1.length());
 
-        assertEquals("3", profilesByIdTest1.getProfile(3).getName());
-        assertEquals("3", profilesByIdTest1.getProfile(3).getGender());
-        assertEquals(3, profilesByIdTest1.getProfile(3).getAge());
-        assertEquals(3, profilesByIdTest1.getProfile(3).getWeight());
+        Profile profile2 = profilesByIdTest1.getProfile(3);
+
+        assertEquals("3", profile2.getName());
+        assertEquals("3", profile2.getGender());
+        assertEquals(3, profile2.getAge());
+        assertEquals(3, profile2.getWeight());
     }
 
     @Test
@@ -55,15 +61,18 @@ public class ProfilesByIdTest {
 
         assertEquals(2, profilesByIdTest1.length());
 
-        assertEquals("1", profilesByIdTest1.getProfile(1).getName());
-        assertEquals("1", profilesByIdTest1.getProfile(1).getGender());
-        assertEquals(1, profilesByIdTest1.getProfile(1).getAge());
-        assertEquals(1, profilesByIdTest1.getProfile(1).getWeight());
+        Profile profile3 = profilesByIdTest1.getProfile(1);
+        Profile profile4 = profilesByIdTest1.getProfile(2);
 
-        assertEquals("2", profilesByIdTest1.getProfile(2).getName());
-        assertEquals("2", profilesByIdTest1.getProfile(2).getGender());
-        assertEquals(2, profilesByIdTest1.getProfile(2).getAge());
-        assertEquals(2, profilesByIdTest1.getProfile(2).getWeight());
+        assertEquals("1", profile3.getName());
+        assertEquals("1", profile3.getGender());
+        assertEquals(1, profile3.getAge());
+        assertEquals(1, profile3.getWeight());
+
+        assertEquals("2", profile4.getName());
+        assertEquals("2", profile4.getGender());
+        assertEquals(2, profile4.getAge());
+        assertEquals(2, profile4.getWeight());
     }
 
     @Test
@@ -75,19 +84,22 @@ public class ProfilesByIdTest {
         profilesByIdTest1.addProfile(new Profile("3", "3", 3, 3));
         profilesByIdTest1.addProfile(new Profile("4", "4", 4, 4));
 
-        assertEquals("3", profilesByIdTest1.getProfile(3).getName());
-        assertEquals("3", profilesByIdTest1.getProfile(3).getGender());
-        assertEquals(3, profilesByIdTest1.getProfile(3).getAge());
-        assertEquals(3, profilesByIdTest1.getProfile(3).getWeight());
+        Profile profile5 = profilesByIdTest1.getProfile(3);
+        Profile profile6 = profilesByIdTest1.getProfile(4);
 
-        assertEquals("4", profilesByIdTest1.getProfile(4).getName());
-        assertEquals("4", profilesByIdTest1.getProfile(4).getGender());
-        assertEquals(4, profilesByIdTest1.getProfile(4).getAge());
-        assertEquals(4, profilesByIdTest1.getProfile(4).getWeight());
+        assertEquals("3", profile5.getName());
+        assertEquals("3", profile5.getGender());
+        assertEquals(3, profile5.getAge());
+        assertEquals(3, profile5.getWeight());
+
+        assertEquals("4", profile6.getName());
+        assertEquals("4", profile6.getGender());
+        assertEquals(4, profile6.getAge());
+        assertEquals(4, profile6.getWeight());
     }
 
     @Test
-    public void testRemoveProfileOnceSingleElementMap() {
+    public void testRemoveProfileOnceSingleProfileMap() {
         addProfileHelper(profilesByIdTest1, 1);
 
         assertEquals(1, profilesByIdTest1.length());
@@ -98,7 +110,7 @@ public class ProfilesByIdTest {
     }
 
     @Test
-    public void testRemoveProfileOnceMultipleElementMap() {
+    public void testRemoveProfileOnceMultipleProfileMap() {
         addProfileHelper(profilesByIdTest1, 2);
 
         assertEquals(2, profilesByIdTest1.length());
@@ -110,7 +122,7 @@ public class ProfilesByIdTest {
     }
 
     @Test
-    public void testRemoveProfileMultipleElementMap() {
+    public void testRemoveProfileMultipleProfileMap() {
         addProfileHelper(profilesByIdTest1, 5);
 
         assertEquals(5, profilesByIdTest1.length());
@@ -125,21 +137,91 @@ public class ProfilesByIdTest {
     }
 
     @Test
-    public void testToStringEmptyMap() {
-        assertEquals(NO_PROFILES_MESSAGE, profilesByIdTest1.toString());
-    }
-
-    @Test
     public void testToStringOneProfileInMap() {
         addProfileHelper(profilesByIdTest1, 1);
-        assertEquals("[1] 1", profilesByIdTest1.toString());
+        assertEquals("ID\tName" + "\n"
+                            + "[1]\t1" + "\n", profilesByIdTest1.toString());
     }
 
     @Test
     public void testToStringMultipleProfileInMap() {
         addProfileHelper(profilesByIdTest1, 2);
 
-        assertEquals("[1] 1" + "\n" + "[2] 2", profilesByIdTest1.toString());
+        assertEquals("ID\tName" + "\n"
+                            + "[1]\t1" + "\n"
+                            + "[2]\t2" + "\n", profilesByIdTest1.toString());
+    }
+
+    @Test
+    public void testToStringMultipleProfileInMapBoundary() {
+        addProfileHelper(profilesByIdTest1, DISPLAY_NUMBER_OF_PROFILES);
+
+        assertEquals("ID\tName" + "\n"
+                            + "[1]\t1" + "\n"
+                            + "[2]\t2" + "\n"
+                            + "[3]\t3" + "\n"
+                            + "[4]\t4" + "\n"
+                            + "[5]\t5" + "\n"
+                            + "[6]\t6" + "\n"
+                            + "[7]\t7" + "\n"
+                            + "[8]\t8" + "\n"
+                            + "[9]\t9" + "\n"
+                            + "[10]\t10" + "\n", profilesByIdTest1.toString());
+    }
+
+    @Test
+    public void testToStringMultipleProfileInMapGreaterThanBoundary() {
+        addProfileHelper(profilesByIdTest1, DISPLAY_NUMBER_OF_PROFILES + 1);
+
+        assertEquals("ID\tName" + "\n"
+                            + "[1]\t1" + "\n"
+                            + "[2]\t2" + "\n"
+                            + "[3]\t3" + "\n"
+                            + "[4]\t4" + "\n"
+                            + "[5]\t5" + "\n"
+                            + "[6]\t6" + "\n"
+                            + "[7]\t7" + "\n"
+                            + "[8]\t8" + "\n"
+                            + "[9]\t9" + "\n"
+                            + "[10]\t10" + "\n"
+                            + "... with " + 1 + ADDITIONAL_PROFILE_MESSAGE, profilesByIdTest1.toString());
+    }
+
+    @Test
+    public void testFilterSingleProfileInMapMatches() {
+        addProfileHelper(profilesByIdTest1, 1);
+        ProfilesById profilesById = profilesByIdTest1.filter("1");
+
+        assertEquals(1, profilesById.getProfiles().size());
+        assertEquals(1, profilesById.getProfiles().get(1).getId());
+    }
+
+    @Test
+    public void testFilterMultipleProfileInMapMatches() {
+        addProfileHelper(profilesByIdTest1, 11);
+        ProfilesById profilesById = profilesByIdTest1.filter("1");
+
+        assertEquals(3, profilesById.getProfiles().size());
+        assertEquals(1, profilesById.getProfiles().get(1).getId());
+        assertEquals(10, profilesById.getProfiles().get(10).getId());
+        assertEquals(11, profilesById.getProfiles().get(11).getId());
+    }
+
+    @Test
+    public void testFilterMultipleProfileInMapCaseInsensitive() {
+        profilesByIdTest1.addProfile(new Profile("abc", "1", 1, 1));
+        profilesByIdTest1.addProfile(new Profile("AB", "2", 2, 2));
+        profilesByIdTest1.addProfile(new Profile("a", "3", 3, 3));
+        profilesByIdTest1.addProfile(new Profile("Bc", "4", 4, 4));
+        profilesByIdTest1.addProfile(new Profile("dac", "5", 5, 5));
+        profilesByIdTest1.addProfile(new Profile("cAB", "6", 6, 6));
+
+        ProfilesById profilesById  = profilesByIdTest1.filter("a");
+
+        assertEquals(3, profilesById.getProfiles().size());
+        assertEquals(1, profilesById.getProfiles().get(1).getId());
+        assertEquals(2, profilesById.getProfiles().get(2).getId());
+        assertEquals(3, profilesById.getProfiles().get(3).getId());
     }
 
     @Test
@@ -158,6 +240,7 @@ public class ProfilesByIdTest {
     public void testContainsSingleProfileInMapAndDoesNotContain() {
         addProfileHelper(profilesByIdTest1, 1);
 
+        assertFalse(profilesByIdTest1.contains("11"));
         assertFalse(profilesByIdTest1.contains("2"));
     }
 
@@ -167,6 +250,18 @@ public class ProfilesByIdTest {
 
         assertTrue(profilesByIdTest1.contains("1"));
         assertTrue(profilesByIdTest1.contains("3"));
+    }
+
+    @Test
+    public void testContainsMultipleProfileInMapAndDoesContainCaseInsensitive() {
+        profilesByIdTest1.addProfile(new Profile("abc", "1", 1, 1));
+        profilesByIdTest1.addProfile(new Profile("DEF", "2", 2, 2));
+
+        assertFalse(profilesByIdTest1.contains("abcd"));
+        assertTrue(profilesByIdTest1.contains("aBc"));
+        assertTrue(profilesByIdTest1.contains("ABC"));
+        assertTrue(profilesByIdTest1.contains("def"));
+        assertTrue(profilesByIdTest1.contains("DEF"));
     }
 
     @Test

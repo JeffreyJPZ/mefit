@@ -1,5 +1,8 @@
 package model;
 
+import javax.imageio.plugins.tiff.GeoTIFFTagSet;
+import java.util.Map;
+
 // Represents a collection of objects for a gym application
 public interface GymCollection {
 

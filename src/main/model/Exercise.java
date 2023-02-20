@@ -10,6 +10,7 @@ public abstract class Exercise {
     protected int time;
     protected Boolean favourite;
 
+    // EFFECTS: Makes a new exercise with a name, muscle group worked, difficulty, and time (min)-
     public Exercise(String name, String muscleGroup, int difficulty, int time) {
         this.name = name;
         this.muscleGroup = muscleGroup;
@@ -18,6 +19,7 @@ public abstract class Exercise {
         this.favourite = FALSE;
     }
 
+    // REQUIRES: exercises contains at least one exercise
     // MODIFIES: this
     // EFFECTS: returns a string representation of the exercise description
     public String toString() {

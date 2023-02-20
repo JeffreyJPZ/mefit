@@ -15,7 +15,7 @@ public class Profile {
 
     // REQUIRES: name, gender are not empty and age, weight are both > 0
     // EFFECTS: makes a profile with a name, gender, age in years, weight in lbs,
-    //          empty exercises, empty workouts, and a unique id
+    //          empty map of exercises, empty map of workouts, and a unique id
     public Profile(String name, String gender, int age, int weight) {
         this.id = nextId;
         nextId++;
@@ -23,6 +23,8 @@ public class Profile {
         this.gender = gender;
         this.age = age;
         this.weight = weight;
+        this.exercises = new ExercisesByName();
+        this.workouts = new WorkoutsByName();
     }
 
     public String getName() {
@@ -69,12 +71,16 @@ public class Profile {
         this.weight = weight;
     }
 
+    public static void setNextId(int id) {
+        nextId = id;
+    }
+
     // MODIFIES: this
     // EFFECTS: returns a string representation of profile with
     //          first and last name, gender, age in years, and weight in lbs
     @Override
     public String toString() {
-        return "Name" + name + "\n"
+        return "Name: " + name + "\n"
                 +
                 "Gender: " + gender + "\n"
                 +
@@ -82,4 +88,5 @@ public class Profile {
                 +
                 "Weight: " + weight;
     }
+
 }
