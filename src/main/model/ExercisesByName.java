@@ -71,7 +71,7 @@ public class ExercisesByName implements GymCollection {
 
         Pattern pattern = Pattern.compile("^" + name + ".*", Pattern.CASE_INSENSITIVE);
 
-        for (Exercise exercise : this.exercises.values()) {
+        for (Exercise exercise : exercises.values()) {
             if (pattern.matcher(exercise.getName()).matches()) {
                 exercisesByName.getExercises().put(exercise.getName(), exercise);
             }
@@ -86,7 +86,7 @@ public class ExercisesByName implements GymCollection {
     public ExercisesByName filterMuscleGroup(MuscleGroup muscleGroup) {
         ExercisesByName exercisesByName = new ExercisesByName();
 
-        for (Exercise exercise : this.exercises.values()) {
+        for (Exercise exercise : exercises.values()) {
             if (exercise.getMuscleGroup().equals(muscleGroup)) {
                 exercisesByName.getExercises().put(exercise.getName(), exercise);
             }
@@ -101,7 +101,7 @@ public class ExercisesByName implements GymCollection {
     public ExercisesByName filterDifficulty(Difficulty difficulty) {
         ExercisesByName exercisesByName = new ExercisesByName();
 
-        for (Exercise exercise : this.exercises.values()) {
+        for (Exercise exercise : exercises.values()) {
             if (exercise.getDifficulty().getDifficulty() == difficulty.getDifficulty()) {
                 exercisesByName.getExercises().put(exercise.getName(), exercise);
             }
@@ -116,7 +116,7 @@ public class ExercisesByName implements GymCollection {
     public ExercisesByName filterTime(int time) {
         ExercisesByName exercisesByName = new ExercisesByName();
 
-        for (Exercise exercise : this.exercises.values()) {
+        for (Exercise exercise : exercises.values()) {
             if (exercise.getTime() <= time) {
                 exercisesByName.getExercises().put(exercise.getName(), exercise);
             }
@@ -130,7 +130,7 @@ public class ExercisesByName implements GymCollection {
     public ExercisesByName filterFavourite() {
         ExercisesByName exercisesByName = new ExercisesByName();
 
-        for (Exercise exercise : this.exercises.values()) {
+        for (Exercise exercise : exercises.values()) {
             if (exercise.isFavourite()) {
                 exercisesByName.getExercises().put(exercise.getName(), exercise);
             }
@@ -139,14 +139,9 @@ public class ExercisesByName implements GymCollection {
     }
 
     // MODIFIES: this
-    // EFFECTS: returns true if exercise with same name ignoring case is in map, otherwise returns false
+    // EFFECTS: returns true if exercise with same name is in map, otherwise returns false
     public boolean contains(String name) {
-        for (Exercise exercise : exercises.values()) {
-            if (exercise.getName().equalsIgnoreCase(name)) {
-                return true;
-            }
-        }
-        return false;
+        return exercises.containsKey(name);
     }
 
     // MODIFIES: this

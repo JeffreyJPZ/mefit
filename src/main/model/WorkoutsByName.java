@@ -2,6 +2,7 @@ package model;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 // Represents a mapping of workouts by name
 public class WorkoutsByName implements GymCollection {
@@ -19,14 +20,14 @@ public class WorkoutsByName implements GymCollection {
     // MODIFIES: this
     // EFFECTS: adds a workout to the workout map
     public void addWorkout(Workout workout) {
-
+        workouts.put(workout.getName(), workout);
     }
 
     // REQUIRES: workouts is not empty and name matches a workout
     // MODIFIES: this
     // EFFECTS: removes the workout with the given name
     public void removeWorkout(String name) {
-
+        workouts.remove(name);
     }
 
     // REQUIRES: workouts is not empty
@@ -37,7 +38,28 @@ public class WorkoutsByName implements GymCollection {
     //          Otherwise, also returns the number of remaining workouts and ADDITIONAL_WORKOUT_MESSAGE
     @Override
     public String toString() {
-        return ""; // stub
+        String retString = "Name\tDifficulty\tTime (min)\t# of Exercises\tFavourite?" + "\n";
+        int count = 0;
+
+        for (Workout workout: workouts.values()) {
+            if (count == DISPLAY_NUMBER_OF_WORKOUTS) {
+                break;
+            }
+            retString = retString + "[" + workout.getName() + "]" + "\t"
+                    + workout.getDifficulty().getDifficulty() + "\t"
+                    + workout.getTime() + "\t"
+                    + workout.length() + "\t"
+                    + workout.isFavourite() + "\n";
+            count++;
+        }
+
+        if (workouts.size() <= DISPLAY_NUMBER_OF_WORKOUTS) {
+            return retString;
+        } else {
+            return retString + "... with "
+                    + (workouts.size() - DISPLAY_NUMBER_OF_WORKOUTS)
+                    + ADDITIONAL_WORKOUT_MESSAGE;
+        }
     }
 
     // REQUIRES: workouts map is not empty and name matches at least one element in workout map
@@ -45,63 +67,105 @@ public class WorkoutsByName implements GymCollection {
     // EFFECTS: returns a mapping of workouts with their name matching given name case insensitively
     @Override
     public WorkoutsByName filter(String name) {
-        return null; // stub
+        WorkoutsByName workoutsByName = new WorkoutsByName();
+
+        Pattern pattern = Pattern.compile("^" + name + ".*", Pattern.CASE_INSENSITIVE);
+
+        for (Workout workout : workouts.values()) {
+            if (pattern.matcher(workout.getName()).matches()) {
+                workoutsByName.getWorkouts().put(workout.getName(), workout);
+            }
+        }
+
+        return workoutsByName;
     }
 
     // REQUIRES: workouts map is not empty and difficulty matches at least one element in workout map
     // MODIFIES: this
     // EFFECTS: returns a mapping of workouts with difficulty matching given difficulty
     public WorkoutsByName filterDifficulty(Difficulty difficulty) {
-        return null; // stub
+        WorkoutsByName workoutsByName = new WorkoutsByName();
+
+        for (Workout workout : workouts.values()) {
+            if (workout.getDifficulty().getDifficulty() == difficulty.getDifficulty()) {
+                workoutsByName.getWorkouts().put(workout.getName(), workout);
+            }
+        }
+
+        return workoutsByName;
     }
 
     // REQUIRES: workout map is not empty and at least one element in workout map <= time
     // MODIFIES: this
     // EFFECTS: returns a mapping of workouts with their time <= time
     public WorkoutsByName filterTime(int time) {
-        return null; // stub
+        WorkoutsByName workoutsByName = new WorkoutsByName();
+
+        for (Workout workout : workouts.values()) {
+            if (workout.getTime() <= time) {
+                workoutsByName.getWorkouts().put(workout.getName(), workout);
+            }
+        }
+
+        return workoutsByName;
     }
 
     // REQUIRES: workout map is not empty and at least one element in workout map <= numberOfExercises
     // MODIFIES: this
     // EFFECTS: returns a mapping of workouts with their number of exercises <= time
     public WorkoutsByName filterNumberOfExercises(int numberOfExercises) {
-        return null; // stub
+        WorkoutsByName workoutsByName = new WorkoutsByName();
+
+        for (Workout workout : workouts.values()) {
+            if (workout.length() <= numberOfExercises) {
+                workoutsByName.getWorkouts().put(workout.getName(), workout);
+            }
+        }
+
+        return workoutsByName;
     }
 
     // REQUIRES: workout map is not empty and at least one element in workout map is favourited
     // MODIFIES: this
     // EFFECTS: returns a mapping of workouts that are favourited
     public WorkoutsByName filterFavourite() {
-        return null; // stub
+        WorkoutsByName workoutsByName = new WorkoutsByName();
+
+        for (Workout workout : workouts.values()) {
+            if (workout.isFavourite()) {
+                workoutsByName.getWorkouts().put(workout.getName(), workout);
+            }
+        }
+
+        return workoutsByName;
     }
 
     // MODIFIES: this
     // EFFECTS: returns true if workout map contains a workout with the given name, otherwise returns false
     @Override
     public boolean contains(String name) {
-        return false; // stub
+        return workouts.containsKey(name);
     }
 
     @Override
     // MODIFIES: this
     // EFFECTS: returns the length of the workout map
     public boolean isEmpty() {
-        return false; // stub
+        return workouts.isEmpty();
     }
 
     @Override
     // MODIFIES: this
     // EFFECTS: returns the length of the workout map
     public int length() {
-        return 0; // stub
+        return workouts.size();
     }
 
     // REQUIRES: workouts is not empty and name matches a workout
     // MODIFIES: this
     // EFFECTS: returns the workout with the given name
     public Workout getWorkout(String name) {
-        return null;
+        return workouts.get(name);
     }
 
     public Map<String, Workout> getWorkouts() {

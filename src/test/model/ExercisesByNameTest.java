@@ -368,21 +368,6 @@ public class ExercisesByNameTest {
     }
 
     @Test
-    public void testContainsMultipleExerciseInMapAndDoesContainCaseInsensitive() {
-        exercisesByNameTest1.addExercise(new CardioExercise("abc", MuscleGroup.LEGS,
-                1, Difficulty.LIGHT, 1));
-        exercisesByNameTest1.addExercise(new BodyWeightsExercise("DEF", MuscleGroup.CORE,
-                2, 2, Difficulty.MODERATE, 2));
-
-        assertFalse(exercisesByNameTest1.contains("abcd"));
-        assertTrue(exercisesByNameTest1.contains("aBc"));
-        assertTrue(exercisesByNameTest1.contains("ABC"));
-        assertTrue(exercisesByNameTest1.contains("def"));
-        assertTrue(exercisesByNameTest1.contains("DEF"));
-    }
-
-
-    @Test
     public void isEmptyEmptyMap() {
         assertTrue(exercisesByNameTest1.isEmpty());
     }

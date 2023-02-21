@@ -101,7 +101,7 @@ public class WorkoutsByNameTest {
         addWorkoutHelper(workoutsByNameTest1, 1);
 
         assertEquals("Name\tDifficulty\tTime (min)\t# of Exercises\tFavourite?" + "\n"
-                + "[1]\t1\t1\t0\tfalse" + "\n", workoutsByNameTest1.toString());
+                + "[1]\t1\t0\t0\tfalse" + "\n", workoutsByNameTest1.toString());
     }
 
     @Test
@@ -109,8 +109,8 @@ public class WorkoutsByNameTest {
         addWorkoutHelper(workoutsByNameTest1, 2);
 
         assertEquals("Name\tDifficulty\tTime (min)\t# of Exercises\tFavourite?" + "\n"
-                + "[1]\t1\t1\t0\tfalse" + "\n"
-                + "[2]\t2\t2\t0\tfalse" + "\n", workoutsByNameTest1.toString());
+                + "[1]\t1\t0\t0\tfalse" + "\n"
+                + "[2]\t2\t0\t0\tfalse" + "\n", workoutsByNameTest1.toString());
     }
 
     @Test
@@ -118,16 +118,16 @@ public class WorkoutsByNameTest {
         addWorkoutHelper(workoutsByNameTest1, DISPLAY_NUMBER_OF_WORKOUTS);
 
         assertEquals("Name\tDifficulty\tTime (min)\t# of Exercises\tFavourite?" + "\n"
-                + "[1]\t1\t1\t0\tfalse" + "\n"
-                + "[2]\t2\t2\t0\tfalse" + "\n"
-                + "[3]\t1\t3\t0\tfalse" + "\n"
-                + "[4]\t2\t4\t0\tfalse" + "\n"
-                + "[5]\t1\t5\t0\tfalse" + "\n"
-                + "[6]\t2\t6\t0\tfalse" + "\n"
-                + "[7]\t1\t7\t0\tfalse" + "\n"
-                + "[8]\t2\t8\t0\tfalse" + "\n"
-                + "[9]\t1\t9\t0\tfalse" + "\n"
-                + "[10]\t2\t10\t0\tfalse" + "\n", workoutsByNameTest1.toString());
+                + "[1]\t1\t0\t0\tfalse" + "\n"
+                + "[2]\t2\t0\t0\tfalse" + "\n"
+                + "[3]\t1\t0\t0\tfalse" + "\n"
+                + "[4]\t2\t0\t0\tfalse" + "\n"
+                + "[5]\t1\t0\t0\tfalse" + "\n"
+                + "[6]\t2\t0\t0\tfalse" + "\n"
+                + "[7]\t1\t0\t0\tfalse" + "\n"
+                + "[8]\t2\t0\t0\tfalse" + "\n"
+                + "[9]\t1\t0\t0\tfalse" + "\n"
+                + "[10]\t2\t0\t0\tfalse" + "\n", workoutsByNameTest1.toString());
     }
 
     @Test
@@ -135,16 +135,16 @@ public class WorkoutsByNameTest {
         addWorkoutHelper(workoutsByNameTest1, DISPLAY_NUMBER_OF_WORKOUTS + 1);
 
         assertEquals("Name\tDifficulty\tTime (min)\t# of Exercises\tFavourite?" + "\n"
-                + "[1]\t1\t1\t0\tfalse" + "\n"
-                + "[2]\t2\t2\t0\tfalse" + "\n"
-                + "[3]\t1\t3\t0\tfalse" + "\n"
-                + "[4]\t2\t4\t0\tfalse" + "\n"
-                + "[5]\t1\t5\t0\tfalse" + "\n"
-                + "[6]\t2\t6\t0\tfalse" + "\n"
-                + "[7]\t1\t7\t0\tfalse" + "\n"
-                + "[8]\t2\t8\t0\tfalse" + "\n"
-                + "[9]\t1\t9\t0\tfalse" + "\n"
-                + "[10]\t2\t10\t0\tfalse" + "\n"
+                + "[1]\t1\t0\t0\tfalse" + "\n"
+                + "[2]\t2\t0\t0\tfalse" + "\n"
+                + "[3]\t1\t0\t0\tfalse" + "\n"
+                + "[4]\t2\t0\t0\tfalse" + "\n"
+                + "[5]\t1\t0\t0\tfalse" + "\n"
+                + "[6]\t2\t0\t0\tfalse" + "\n"
+                + "[7]\t1\t0\t0\tfalse" + "\n"
+                + "[8]\t2\t0\t0\tfalse" + "\n"
+                + "[9]\t1\t0\t0\tfalse" + "\n"
+                + "[10]\t2\t0\t0\tfalse" + "\n"
                 + "... with " + 1 + ADDITIONAL_WORKOUT_MESSAGE, workoutsByNameTest1.toString());
     }
 
@@ -187,8 +187,8 @@ public class WorkoutsByNameTest {
         assertEquals("aC", workoutsByName1.getWorkout("aC").getName());
 
         assertEquals(2, workoutsByName2.length());
-        assertEquals("DEF", workoutsByName1.getWorkout("DEF").getName());
-        assertEquals("de", workoutsByName1.getWorkout("de").getName());
+        assertEquals("DEF", workoutsByName2.getWorkout("DEF").getName());
+        assertEquals("de", workoutsByName2.getWorkout("de").getName());
     }
 
     @Test
@@ -266,13 +266,13 @@ public class WorkoutsByNameTest {
         WorkoutsByName workoutsByName = workoutsByNameTest1.filterTime(10);
 
         assertEquals(2, workoutsByName.length());
+        assertEquals("1", workoutsByName.getWorkout("1").getName());
         assertEquals("2", workoutsByName.getWorkout("2").getName());
-        assertEquals("3", workoutsByName.getWorkout("3").getName());
     }
 
     @Test
     public void testFilterByNumberOfExercisesSingleWorkoutInMapGreaterThan() {
-        addWorkoutHelper(workoutsByNameTest1, 3);
+        addWorkoutHelper(workoutsByNameTest1, 1);
         workoutsByNameTest1.getWorkout("1").addExercise(new CardioExercise("Running", MuscleGroup.LEGS,
                 1, Difficulty.INTENSE, 1));
         workoutsByNameTest1.getWorkout("1").addExercise(new WeightsExercise("Press", MuscleGroup.CHEST,
@@ -338,7 +338,7 @@ public class WorkoutsByNameTest {
         WorkoutsByName workoutsByName = workoutsByNameTest1.filterNumberOfExercises(2);
 
         assertEquals(2, workoutsByName.length());
-        assertEquals("1", workoutsByName.getWorkout("1").getName());
+        assertEquals("2", workoutsByName.getWorkout("2").getName());
         assertEquals("3", workoutsByName.getWorkout("3").getName());
     }
 
