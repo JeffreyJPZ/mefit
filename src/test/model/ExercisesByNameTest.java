@@ -19,7 +19,10 @@ public class ExercisesByNameTest {
 
     @Test
     public void testConstructorEmptyMap() {
+        ExercisesByName exercisesByNameTest2 = new ExercisesByName();
+
         assertTrue(exercisesByNameTest1.isEmpty());
+        assertTrue(exercisesByNameTest2.isEmpty());
     }
 
     @Test
@@ -31,8 +34,8 @@ public class ExercisesByNameTest {
         Exercise exercise1 = exercisesByNameTest1.getExercise("1");
 
         assertEquals("1", exercise1.getName());
-        assertEquals("Chest", exercise1.getMuscleGroup());
-        assertEquals(1, exercise1.getDifficulty());
+        assertEquals(MuscleGroup.CHEST, exercise1.getMuscleGroup());
+        assertEquals(Difficulty.LIGHT, exercise1.getDifficulty());
         assertEquals(1, exercise1.getTime());
         assertFalse(exercise1.isFavourite());
     }
@@ -43,25 +46,26 @@ public class ExercisesByNameTest {
 
         assertEquals(2, exercisesByNameTest1.length());
 
-        exercisesByNameTest1.addExercise(new CardioExercise("3", "Legs", 3, 3, 3));
+        exercisesByNameTest1.addExercise(new CardioExercise("3", MuscleGroup.LEGS, 3,
+                Difficulty.INTENSE, 3));
 
         assertEquals(3, exercisesByNameTest1.length());
 
         Exercise exercise3 = exercisesByNameTest1.getExercise("3");
 
         assertEquals("3", exercise3.getName());
-        assertEquals("Legs", exercise3.getMuscleGroup());
-        assertEquals(3, exercise3.getDifficulty());
+        assertEquals(MuscleGroup.LEGS, exercise3.getMuscleGroup());
+        assertEquals(Difficulty.INTENSE, exercise3.getDifficulty());
         assertEquals(3, exercise3.getTime());
         assertFalse(exercise3.isFavourite());
     }
 
     @Test
     public void testAddExerciseMultipleEmptyMap() {
-        exercisesByNameTest1.addExercise(new WeightsExercise("1", "Chest", 1, 1, 1,
-                                                            1, 1));
-        exercisesByNameTest1.addExercise(new BodyWeightsExercise("2", "Core", 2, 2,
-                                                            2, 2));
+        exercisesByNameTest1.addExercise(new WeightsExercise("1", MuscleGroup.CHEST, 1, 1, 1,
+                                                            Difficulty.LIGHT, 1));
+        exercisesByNameTest1.addExercise(new BodyWeightsExercise("2", MuscleGroup.CORE, 2, 2,
+                                                            Difficulty.MODERATE, 2));
 
         assertEquals(2, exercisesByNameTest1.length());
 
@@ -69,14 +73,14 @@ public class ExercisesByNameTest {
         Exercise exercise2 = exercisesByNameTest1.getExercise("2");
 
         assertEquals("1", exercise1.getName());
-        assertEquals("Chest", exercise1.getMuscleGroup());
-        assertEquals(1, exercise1.getDifficulty());
+        assertEquals(MuscleGroup.CHEST, exercise1.getMuscleGroup());
+        assertEquals(Difficulty.LIGHT, exercise1.getDifficulty());
         assertEquals(1, exercise1.getTime());
         assertFalse(exercise1.isFavourite());
 
         assertEquals("2", exercise2.getName());
-        assertEquals("Core", exercise2.getMuscleGroup());
-        assertEquals(2, exercise2.getDifficulty());
+        assertEquals(MuscleGroup.CORE, exercise2.getMuscleGroup());
+        assertEquals(Difficulty.MODERATE, exercise2.getDifficulty());
         assertEquals(2, exercise2.getTime());
         assertFalse(exercise2.isFavourite());
     }
@@ -87,22 +91,23 @@ public class ExercisesByNameTest {
 
         assertEquals(2, exercisesByNameTest1.length());
 
-        exercisesByNameTest1.addExercise(new CardioExercise("3", "Legs", 3, 3, 3));
-        exercisesByNameTest1.addExercise(new WeightsExercise("4", "Chest", 4, 4, 4,
-                                                            1, 4));
+        exercisesByNameTest1.addExercise(new CardioExercise("3", MuscleGroup.LEGS, 3,
+                                                            Difficulty.INTENSE, 3));
+        exercisesByNameTest1.addExercise(new WeightsExercise("4", MuscleGroup.CHEST, 4, 4, 4,
+                                                            Difficulty.LIGHT, 4));
 
         Exercise exercise3 = exercisesByNameTest1.getExercise("3");
         Exercise exercise4 = exercisesByNameTest1.getExercise("4");
 
         assertEquals("3", exercise3.getName());
-        assertEquals("Legs", exercise3.getMuscleGroup());
-        assertEquals(3, exercise3.getDifficulty());
+        assertEquals(MuscleGroup.LEGS, exercise3.getMuscleGroup());
+        assertEquals(Difficulty.INTENSE, exercise3.getDifficulty());
         assertEquals(3, exercise3.getTime());
         assertFalse(exercise3.isFavourite());
 
         assertEquals("4", exercise4.getName());
-        assertEquals("Chest", exercise4.getMuscleGroup());
-        assertEquals(1, exercise4.getDifficulty());
+        assertEquals(MuscleGroup.CHEST, exercise4.getMuscleGroup());
+        assertEquals(Difficulty.LIGHT, exercise4.getDifficulty());
         assertEquals(4, exercise4.getTime());
         assertFalse(exercise4.isFavourite());
     }
@@ -219,17 +224,19 @@ public class ExercisesByNameTest {
 
     @Test
     public void testFilterMultipleExerciseInMapMatchesCaseInsensitive() {
-        exercisesByNameTest1.addExercise(new BodyWeightsExercise("abc", "Core",
-                1, 1, 1, 1));
-        exercisesByNameTest1.addExercise(new BodyWeightsExercise("ABC", "Core",
-                1, 1, 1, 1));
-        exercisesByNameTest1.addExercise(new BodyWeightsExercise("DEF", "Core",
-                2, 2, 2, 2));
-        exercisesByNameTest1.addExercise(new BodyWeightsExercise("def", "Core",
-                2, 2, 2, 2));
+        exercisesByNameTest1.addExercise(new BodyWeightsExercise("abc", MuscleGroup.CORE,
+                1, 1, Difficulty.LIGHT, 1));
+        exercisesByNameTest1.addExercise(new CardioExercise("ABC", MuscleGroup.CORE,
+                1, Difficulty.LIGHT, 1));
+        exercisesByNameTest1.addExercise(new BodyWeightsExercise("DEF", MuscleGroup.CORE,
+                2, 2, Difficulty.MODERATE, 2));
+        exercisesByNameTest1.addExercise(new WeightsExercise("def", MuscleGroup.CORE,
+                2, 2, 2,  Difficulty.MODERATE, 2));
+        exercisesByNameTest1.addExercise(new BodyWeightsExercise("d", MuscleGroup.CORE,
+                2, 2, Difficulty.MODERATE, 2));
 
         ExercisesByName exercisesByName1 = exercisesByNameTest1.filter("ABC");
-        ExercisesByName exercisesByName2 = exercisesByNameTest1.filter("D");
+        ExercisesByName exercisesByName2 = exercisesByNameTest1.filter("De");
 
         assertEquals(2, exercisesByName1.getExercises().size());
         assertEquals("abc", exercisesByName1.getExercises().get("abc").getName());
@@ -243,58 +250,39 @@ public class ExercisesByNameTest {
     @Test
     public void testFilterMuscleGroupSingleExerciseInMapMatches() {
         addExerciseHelper(exercisesByNameTest1, 1);
-        ExercisesByName exercisesByName1 = exercisesByNameTest1.filterMuscleGroup("Chest");
+        ExercisesByName exercisesByName1 = exercisesByNameTest1.filterMuscleGroup(MuscleGroup.CHEST);
 
         assertEquals(1, exercisesByName1.getExercises().size());
-        assertEquals("Chest", exercisesByName1.getExercises().get("1").getMuscleGroup());
+        assertEquals(MuscleGroup.CHEST, exercisesByName1.getExercises().get("1").getMuscleGroup());
     }
 
     @Test
     public void testFilterMuscleGroupMultipleExerciseInMapMatches() {
         addExerciseHelper(exercisesByNameTest1, 4);
-        ExercisesByName exercisesByName1 = exercisesByNameTest1.filterMuscleGroup("Core");
+        ExercisesByName exercisesByName1 = exercisesByNameTest1.filterMuscleGroup(MuscleGroup.CORE);
 
         assertEquals(2, exercisesByName1.getExercises().size());
-        assertEquals("Core", exercisesByName1.getExercises().get("2").getMuscleGroup());
-        assertEquals("Core", exercisesByName1.getExercises().get("4").getMuscleGroup());
-    }
-
-    @Test
-    public void testFilterMuscleGroupMultipleExerciseInMapMatchesCaseInsensitive() {
-        exercisesByNameTest1.addExercise(new BodyWeightsExercise("abc", "Core",
-                1, 1, 1, 1));
-        exercisesByNameTest1.addExercise(new BodyWeightsExercise("def", "Core",
-                2, 2, 2, 2));
-
-        ExercisesByName exercisesByName1 = exercisesByNameTest1.filterMuscleGroup("cORE");
-        ExercisesByName exercisesByName2 = exercisesByNameTest1.filterMuscleGroup("CO");
-
-        assertEquals(2, exercisesByName1.getExercises().size());
-        assertEquals("Core", exercisesByName1.getExercises().get("abc").getMuscleGroup());
-        assertEquals("Core", exercisesByName1.getExercises().get("def").getMuscleGroup());
-
-        assertEquals(2, exercisesByName2.getExercises().size());
-        assertEquals("Core", exercisesByName2.getExercises().get("abc").getMuscleGroup());
-        assertEquals("Core", exercisesByName2.getExercises().get("def").getMuscleGroup());
+        assertEquals(MuscleGroup.CORE, exercisesByName1.getExercises().get("2").getMuscleGroup());
+        assertEquals(MuscleGroup.CORE, exercisesByName1.getExercises().get("4").getMuscleGroup());
     }
 
     @Test
     public void testFilterDifficultySingleExerciseInMapMatches() {
         addExerciseHelper(exercisesByNameTest1, 1);
-        ExercisesByName exercisesByName1 = exercisesByNameTest1.filterDifficulty(1);
+        ExercisesByName exercisesByName1 = exercisesByNameTest1.filterDifficulty(Difficulty.LIGHT);
 
         assertEquals(1, exercisesByName1.getExercises().size());
-        assertEquals(1, exercisesByName1.getExercises().get("1").getDifficulty());
+        assertEquals(Difficulty.LIGHT, exercisesByName1.getExercises().get("1").getDifficulty());
     }
 
     @Test
     public void testFilterDifficultyMultipleExerciseInMapMatches() {
         addExerciseHelper(exercisesByNameTest1, 4);
-        ExercisesByName exercisesByName1 = exercisesByNameTest1.filterDifficulty(2);
+        ExercisesByName exercisesByName1 = exercisesByNameTest1.filterDifficulty(Difficulty.MODERATE);
 
         assertEquals(2, exercisesByName1.getExercises().size());
-        assertEquals(2, exercisesByName1.getExercises().get("2").getDifficulty());
-        assertEquals(2, exercisesByName1.getExercises().get("4").getDifficulty());
+        assertEquals(Difficulty.MODERATE, exercisesByName1.getExercises().get("2").getDifficulty());
+        assertEquals(Difficulty.MODERATE, exercisesByName1.getExercises().get("4").getDifficulty());
     }
 
     @Test
@@ -381,10 +369,10 @@ public class ExercisesByNameTest {
 
     @Test
     public void testContainsMultipleExerciseInMapAndDoesContainCaseInsensitive() {
-        exercisesByNameTest1.addExercise(new CardioExercise("abc", "Legs",
-                1, 1, 1));
-        exercisesByNameTest1.addExercise(new BodyWeightsExercise("DEF", "Core",
-                2, 2, 2, 2));
+        exercisesByNameTest1.addExercise(new CardioExercise("abc", MuscleGroup.LEGS,
+                1, Difficulty.LIGHT, 1));
+        exercisesByNameTest1.addExercise(new BodyWeightsExercise("DEF", MuscleGroup.CORE,
+                2, 2, Difficulty.MODERATE, 2));
 
         assertFalse(exercisesByNameTest1.contains("abcd"));
         assertTrue(exercisesByNameTest1.contains("aBc"));
@@ -434,27 +422,36 @@ public class ExercisesByNameTest {
 
     @Test
     public void getExerciseOneExerciseInMap() {
-        addExerciseHelper(exercisesByNameTest1, 1);
+        Exercise exercise1 = new WeightsExercise("1", MuscleGroup.CHEST, 1, 1, 1,
+                Difficulty.LIGHT, 1);
 
-        assertEquals("1", exercisesByNameTest1.getExercise("1").getName());
+        exercisesByNameTest1.addExercise(exercise1);
+
+        assertEquals(exercise1, exercisesByNameTest1.getExercise("1"));
     }
 
     @Test
     public void getExerciseMultipleExerciseInMap() {
-        addExerciseHelper(exercisesByNameTest1, 2);
+        Exercise exercise1 = new WeightsExercise("1", MuscleGroup.CHEST, 1, 1, 1,
+                Difficulty.LIGHT, 1);
+        Exercise exercise2 = new BodyWeightsExercise("2", MuscleGroup.CORE, 2, 2,
+                Difficulty.MODERATE, 2);
 
-        assertEquals("1", exercisesByNameTest1.getExercise("1").getName());
-        assertEquals("2", exercisesByNameTest1.getExercise("2").getName());
+        exercisesByNameTest1.addExercise(exercise1);
+        exercisesByNameTest1.addExercise(exercise2);
+
+        assertEquals(exercise1, exercisesByNameTest1.getExercise("1"));
+        assertEquals(exercise2, exercisesByNameTest1.getExercise("2"));
     }
 
     private void addExerciseHelper(ExercisesByName exercisesByName, int repeats) {
         for (int i = 0; i < repeats; i++) {
             if ((i + 1) % 2 == 0) {
-                exercisesByName.addExercise(new BodyWeightsExercise(Integer.toString(i + 1), "Core",
-                        i + 1, i + 1, 2, i + 1));
+                exercisesByName.addExercise(new BodyWeightsExercise(Integer.toString(i + 1), MuscleGroup.CORE,
+                        i + 1, i + 1, Difficulty.MODERATE, i + 1));
             } else {
-                exercisesByName.addExercise(new WeightsExercise(Integer.toString(i + 1), "Chest",
-                        i + 1, i + 1, i + 1, 1, i + 1));
+                exercisesByName.addExercise(new WeightsExercise(Integer.toString(i + 1), MuscleGroup.CHEST,
+                        i + 1, i + 1, i + 1, Difficulty.LIGHT, i + 1));
             }
         }
     }

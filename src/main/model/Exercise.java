@@ -5,13 +5,13 @@ import static java.lang.Boolean.*;
 // Represents an exercise with basic information
 public abstract class Exercise {
     protected String name;
-    protected String muscleGroup;
-    protected int difficulty;
+    protected MuscleGroup muscleGroup;
+    protected Difficulty difficulty;
     protected int time;
     protected Boolean favourite;
 
     // EFFECTS: Makes a new exercise with a name, muscle group worked, difficulty, and time (min)-
-    public Exercise(String name, String muscleGroup, int difficulty, int time) {
+    public Exercise(String name, MuscleGroup muscleGroup, Difficulty difficulty, int time) {
         this.name = name;
         this.muscleGroup = muscleGroup;
         this.difficulty = difficulty;
@@ -24,8 +24,8 @@ public abstract class Exercise {
     // EFFECTS: returns a string representation of the exercise description
     public String toString() {
         return "Exercise Name: " + name + "\n"
-                + "Muscle Group: " + muscleGroup + "\n"
-                + "Difficulty: " + difficulty + "\n"
+                + "Muscle Group: " + muscleGroup.getMuscleGroup() + "\n"
+                + "Difficulty: " + difficulty.getDifficulty() + "\n"
                 + "Time: " + time + "\n"
                 + "Favourite?: " + favourite;
     }
@@ -34,11 +34,11 @@ public abstract class Exercise {
         return name;
     }
 
-    public String getMuscleGroup() {
+    public MuscleGroup getMuscleGroup() {
         return muscleGroup;
     }
 
-    public int getDifficulty() {
+    public Difficulty getDifficulty() {
         return difficulty;
     }
 
@@ -54,11 +54,11 @@ public abstract class Exercise {
         this.name = name;
     }
 
-    public void setMuscleGroup(String muscleGroup) {
+    public void setMuscleGroup(MuscleGroup muscleGroup) {
         this.muscleGroup = muscleGroup;
     }
 
-    public void setDifficulty(int difficulty) {
+    public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
     }
 

@@ -12,20 +12,20 @@ public class WorkoutTest {
 
     @BeforeEach
     public void runBefore() {
-        workoutTest1 = new Workout("1", 1);
-        workoutTest2 = new Workout("2", 2);
+        workoutTest1 = new Workout("1", Difficulty.LIGHT);
+        workoutTest2 = new Workout("2", Difficulty.MODERATE);
     }
 
     @Test
     public void testConstructor() {
         assertEquals("1", workoutTest1.getName());
-        assertEquals(1, workoutTest1.getDifficulty());
+        assertEquals(Difficulty.LIGHT, workoutTest1.getDifficulty());
         assertEquals(0, workoutTest1.getTime());
         assertFalse(workoutTest1.isFavourite());
         assertTrue(workoutTest1.getExercises().isEmpty());
 
         assertEquals("2", workoutTest2.getName());
-        assertEquals(2, workoutTest2.getDifficulty());
+        assertEquals(Difficulty.MODERATE, workoutTest2.getDifficulty());
         assertEquals(0, workoutTest2.getTime());
         assertFalse(workoutTest2.isFavourite());
         assertTrue(workoutTest2.getExercises().isEmpty());
@@ -44,7 +44,7 @@ public class WorkoutTest {
     public void testAddExerciseOnceNonEmptyList() {
         addExerciseHelper(workoutTest1, 2);
 
-        workoutTest1.addExercise(new CardioExercise("3", "Legs", 3, 3, 3));
+        workoutTest1.addExercise(new CardioExercise("3", MuscleGroup.LEGS, 3, Difficulty.INTENSE, 3));
 
         assertEquals(3, workoutTest1.length());
         assertEquals("3", workoutTest1.getExercise(3).getName());
@@ -64,8 +64,8 @@ public class WorkoutTest {
 
     @Test
     public void testInsertExerciseOnceEmptyList() {
-        workoutTest1.insertExercise(new WeightsExercise("1", "Chest",
-                1, 1, 1, 1, 1), 1);
+        workoutTest1.insertExercise(new WeightsExercise("1", MuscleGroup.CHEST, 1, 1, 1,
+                Difficulty.LIGHT, 1), 1);
 
         assertEquals(1, workoutTest1.length());
         assertEquals("1", workoutTest1.getExercise(1).getName());
@@ -76,7 +76,8 @@ public class WorkoutTest {
     public void testInsertExerciseOnceNonEmptyList() {
         addExerciseHelper(workoutTest1, 3);
 
-        workoutTest1.insertExercise(new CardioExercise("4", "Legs", 4, 3, 4),
+        workoutTest1.insertExercise(new CardioExercise("4", MuscleGroup.LEGS, 4,
+                        Difficulty.INTENSE, 4),
                 2);
 
         assertEquals(4, workoutTest1.length());
@@ -88,11 +89,14 @@ public class WorkoutTest {
     public void testInsertExerciseMultipleToListDifferentPositions() {
         addExerciseHelper(workoutTest1, 3);
 
-        workoutTest1.insertExercise(new CardioExercise("4", "Legs", 4, 3, 4),
+        workoutTest1.insertExercise(new CardioExercise("4", MuscleGroup.LEGS, 4,
+                        Difficulty.INTENSE, 4),
                 1);
-        workoutTest1.insertExercise(new CardioExercise("5", "Legs", 4, 3, 4),
+        workoutTest1.insertExercise(new CardioExercise("5", MuscleGroup.LEGS, 4,
+                        Difficulty.INTENSE, 4),
                 2);
-        workoutTest1.insertExercise(new CardioExercise("6", "Legs", 4, 3, 4),
+        workoutTest1.insertExercise(new CardioExercise("6", MuscleGroup.LEGS, 4,
+                        Difficulty.INTENSE, 4),
                 3);
 
         assertEquals(6, workoutTest1.length());
@@ -106,11 +110,14 @@ public class WorkoutTest {
     public void testInsertExerciseMultipleToListSamePositions() {
         addExerciseHelper(workoutTest1, 3);
 
-        workoutTest1.insertExercise(new CardioExercise("4", "Legs", 4, 3, 4),
+        workoutTest1.insertExercise(new CardioExercise("4", MuscleGroup.LEGS, 4,
+                        Difficulty.INTENSE, 4),
                 2);
-        workoutTest1.insertExercise(new CardioExercise("5", "Legs", 4, 3, 4),
+        workoutTest1.insertExercise(new CardioExercise("5", MuscleGroup.LEGS, 4,
+                        Difficulty.INTENSE, 4),
                 2);
-        workoutTest1.insertExercise(new CardioExercise("6", "Legs", 4, 3, 4),
+        workoutTest1.insertExercise(new CardioExercise("6", MuscleGroup.LEGS, 4,
+                        Difficulty.INTENSE, 4),
                 2);
 
         assertEquals(6, workoutTest1.length());
@@ -128,7 +135,7 @@ public class WorkoutTest {
         assertEquals(1, workoutTest1.length());
         assertEquals(1, workoutTest1.getTime());
 
-        workoutTest1.setExercise(new CardioExercise("4", "Legs", 4, 3, 4),
+        workoutTest1.setExercise(new CardioExercise("4", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 4),
                 1);
 
         assertEquals(1, workoutTest1.length());
@@ -143,7 +150,7 @@ public class WorkoutTest {
         assertEquals(1, workoutTest1.length());
         assertEquals(1, workoutTest1.getTime());
 
-        workoutTest1.setExercise(new CardioExercise("4", "Legs", 4, 3, 1),
+        workoutTest1.setExercise(new CardioExercise("4", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 1),
                 1);
 
         assertEquals(1, workoutTest1.length());
@@ -158,7 +165,7 @@ public class WorkoutTest {
         assertEquals(2, workoutTest1.length());
         assertEquals(3, workoutTest1.getTime());
 
-        workoutTest1.setExercise(new CardioExercise("4", "Legs", 4, 3, 1),
+        workoutTest1.setExercise(new CardioExercise("4", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 1),
                 2);
 
         assertEquals(2, workoutTest1.length());
@@ -173,11 +180,11 @@ public class WorkoutTest {
         assertEquals(5, workoutTest1.length());
         assertEquals(15, workoutTest1.getTime());
 
-        workoutTest1.setExercise(new CardioExercise("4", "Legs", 4, 3, 1),
+        workoutTest1.setExercise(new CardioExercise("4", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 1),
                 1);
-        workoutTest1.setExercise(new CardioExercise("5", "Legs", 4, 3, 2),
+        workoutTest1.setExercise(new CardioExercise("5", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 2),
                 3);
-        workoutTest1.setExercise(new CardioExercise("6", "Legs", 4, 3, 7),
+        workoutTest1.setExercise(new CardioExercise("6", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 7),
                 5);
 
         assertEquals(5, workoutTest1.length());
@@ -244,10 +251,14 @@ public class WorkoutTest {
     public void testRemoveByNameMultipleInListCaseInsensitive() {
         addExerciseHelper(workoutTest1, 2);
 
-        workoutTest1.addExercise(new CardioExercise("abc", "Legs", 3, 3, 3));
-        workoutTest1.addExercise(new CardioExercise("DEF", "Legs", 3, 3, 3));
-        workoutTest1.addExercise(new CardioExercise("cAt", "Legs", 3, 3, 3));
-        workoutTest1.addExercise(new CardioExercise("Sbin", "Legs", 3, 3, 3));
+        workoutTest1.addExercise(new CardioExercise("abc", MuscleGroup.LEGS, 3,
+                Difficulty.INTENSE, 3));
+        workoutTest1.addExercise(new CardioExercise("DEF", MuscleGroup.LEGS, 3,
+                Difficulty.INTENSE, 3));
+        workoutTest1.addExercise(new CardioExercise("cAt", MuscleGroup.LEGS, 3,
+                Difficulty.INTENSE, 3));
+        workoutTest1.addExercise(new CardioExercise("Sbin", MuscleGroup.LEGS, 3,
+                Difficulty.INTENSE, 3));
 
         workoutTest1.removeExercise("ABC");
         workoutTest1.removeExercise("def");
@@ -330,8 +341,10 @@ public class WorkoutTest {
 
     @Test
     public void testContainsMultipleExerciseListAndDoesContainCaseInsensitive() {
-        workoutTest1.addExercise(new CardioExercise("abc", "Legs", 1, 3, 1));
-        workoutTest1.addExercise(new CardioExercise("DEF", "Legs", 1, 3, 1));
+        workoutTest1.addExercise(new CardioExercise("abc", MuscleGroup.LEGS, 1,
+                Difficulty.INTENSE, 1));
+        workoutTest1.addExercise(new CardioExercise("DEF", MuscleGroup.LEGS, 1,
+                Difficulty.INTENSE, 1));
 
         assertTrue(workoutTest1.contains("abc"));
         assertTrue(workoutTest1.contains("ABC"));
@@ -367,11 +380,11 @@ public class WorkoutTest {
     private void addExerciseHelper(Workout workout, int repeats) {
         for (int i = 0; i < repeats; i++) {
             if ((i + 1) % 2 == 0) {
-                workout.addExercise(new BodyWeightsExercise(Integer.toString(i + 1), "Core",
-                        i + 1, i + 1, 2, i + 1));
+                workout.addExercise(new BodyWeightsExercise(Integer.toString(i + 1), MuscleGroup.CORE,
+                        i + 1, i + 1, Difficulty.MODERATE, i + 1));
             } else {
-                workout.addExercise(new WeightsExercise(Integer.toString(i + 1), "Chest",
-                        i + 1, i + 1, i + 1, 1, i + 1));
+                workout.addExercise(new WeightsExercise(Integer.toString(i + 1), MuscleGroup.CHEST,
+                        i + 1, i + 1, i + 1, Difficulty.LIGHT, i + 1));
             }
         }
     }

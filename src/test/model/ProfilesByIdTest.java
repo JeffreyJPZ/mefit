@@ -313,17 +313,23 @@ public class ProfilesByIdTest {
 
     @Test
     public void getProfileOneProfileInMap() {
-        addProfileHelper(profilesByIdTest1, 1);
+        Profile profile1 = new Profile("1", "1", 1, 1);
 
-        assertEquals(1, profilesByIdTest1.getProfile(1).getId());
+        profilesByIdTest1.addProfile(profile1);
+
+        assertEquals(profile1, profilesByIdTest1.getProfile(1));
     }
 
     @Test
     public void getProfileMultipleProfileInMap() {
-        addProfileHelper(profilesByIdTest1, 2);
+        Profile profile1 = new Profile("1", "1", 1, 1);
+        Profile profile2 = new Profile("2", "2", 2, 2);
 
-        assertEquals(1, profilesByIdTest1.getProfile(1).getId());
-        assertEquals(2, profilesByIdTest1.getProfile(2).getId());
+        profilesByIdTest1.addProfile(profile1);
+        profilesByIdTest1.addProfile(profile2);
+
+        assertEquals(profile1, profilesByIdTest1.getProfile(1));
+        assertEquals(profile2, profilesByIdTest1.getProfile(2));
     }
 
     private void addProfileHelper(ProfilesById profilesById, int repeats) {

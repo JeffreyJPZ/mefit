@@ -22,7 +22,7 @@ public class ProfilesById implements GymCollection {
         profiles.put(profile.getId(), profile);
     }
 
-    // REQUIRES: profile map is not empty
+    // REQUIRES: profile map is not empty, id > 0 and matches a profile
     // MODIFIES: this
     // EFFECTS: removes the profile from the profile map with the given id
     public void removeProfile(int id) {
@@ -33,7 +33,7 @@ public class ProfilesById implements GymCollection {
     // REQUIRES: profile map is not empty
     // MODIFIES: this
     // EFFECTS: if number of profiles in map <= DISPLAY_NUMBER_OF_PROFILES, returns the profile id and name of the first
-    //          DISPLAY_NUMBER_OF_PROFILES profiles in map,
+    //          for each profile up to the first DISPLAY_NUMBER_OF_PROFILES profiles in map,
     //          otherwise also returns the number of remaining profiles in map and ADDITIONAL_PROFILE_MESSAGE
     public String toString() {
         String retString = "ID\tName" + "\n";
@@ -96,7 +96,7 @@ public class ProfilesById implements GymCollection {
         return profiles.size();
     }
 
-    // REQUIRES: profile map is not empty
+    // REQUIRES: profile map is not empty, id > 0 and matches a profile
     // MODIFIES: this
     // EFFECTS: returns the profile with the given id in profile map
     public Profile getProfile(int id) {

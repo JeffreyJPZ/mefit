@@ -9,7 +9,7 @@ public class CardioExercise extends Exercise {
     // REQUIRES: name, muscleGroup are not empty; distance, difficulty, time > 0
     // EFFECTS: makes a cardio exercise with a name, muscle group, distance (m), difficulty, time (min),
     //          and unfavourited
-    public CardioExercise(String name, String muscleGroup, int distance, int difficulty, int time) {
+    public CardioExercise(String name, MuscleGroup muscleGroup, int distance, Difficulty difficulty, int time) {
         super(name, muscleGroup, difficulty, time);
         this.distance = distance;
     }

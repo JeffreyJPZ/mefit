@@ -8,7 +8,7 @@ import static java.lang.Boolean.*;
 // Represents a number of exercises organized into a workout
 public class Workout {
     private String name;
-    private int difficulty;
+    private Difficulty difficulty;
     private int time;
     private boolean favourite;
     private List<Exercise> exercises;
@@ -16,7 +16,7 @@ public class Workout {
     // REQUIRES: name is not empty, difficulty > 0
     // EFFECTS: Makes a new workout with a name, difficulty, time (min) equal to 0,
     //          unfavourited and with no exercises
-    public Workout(String name, int difficulty) {
+    public Workout(String name, Difficulty difficulty) {
         this.name = name;
         this.difficulty = difficulty;
         this.time = 0;
@@ -118,8 +118,8 @@ public class Workout {
 
         for (Exercise exercise : exercises) {
             retString += "[" + exercise.getName() + "]" + "\t"
-                    + exercise.getMuscleGroup() + "\t"
-                    + exercise.getDifficulty() + "\t"
+                    + exercise.getMuscleGroup().getMuscleGroup() + "\t"
+                    + exercise.getDifficulty().getDifficulty() + "\t"
                     + exercise.getTime() + "\t"
                     + exercise.isFavourite() + "\n";
         }
@@ -137,7 +137,7 @@ public class Workout {
         this.name = name;
     }
 
-    public void setDifficulty(int difficulty) {
+    public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
     }
 
@@ -174,7 +174,7 @@ public class Workout {
         return name;
     }
 
-    public int getDifficulty() {
+    public Difficulty getDifficulty() {
         return difficulty;
     }
 

@@ -23,7 +23,7 @@ public class ExercisesByName implements GymCollection {
         exercises.put(exercise.getName(), exercise);
     }
 
-    // REQUIRES: exercise map is not empty
+    // REQUIRES: exercise map is not empty and name matches an exercise
     // MODIFIES: this
     // EFFECTS: removes the exercise from the exercise map with the given name
     public void removeExercise(String name) {
@@ -35,7 +35,7 @@ public class ExercisesByName implements GymCollection {
     // MODIFIES: this
     // EFFECTS: if number of exercises in map <= DISPLAY_NUMBER_OF_EXERCISES,
     //          returns the exercise name, muscle group, difficulty, time and whether the exercise is favourited
-    //          for the first DISPLAY_NUMBER_OF_EXERCISES exercises in map,
+    //          up to the first DISPLAY_NUMBER_OF_EXERCISES exercises in map,
     //          otherwise also returns the number of remaining exercises in map and ADDITIONAL_EXERCISE_MESSAGE
     public String toString() {
         String retString = "Name\tMuscle Group\tDifficulty\tTime (min)\t Favourite?" + "\n";
@@ -46,8 +46,8 @@ public class ExercisesByName implements GymCollection {
                 break;
             }
             retString = retString + "[" + exercise.getName() + "]" + "\t"
-                                + exercise.getMuscleGroup() + "\t"
-                                + exercise.getDifficulty() + "\t"
+                                + exercise.getMuscleGroup().getMuscleGroup() + "\t"
+                                + exercise.getDifficulty().getDifficulty() + "\t"
                                 + exercise.getTime() + "\t"
                                 + exercise.isFavourite() + "\n";
             count++;
@@ -80,16 +80,14 @@ public class ExercisesByName implements GymCollection {
         return exercisesByName;
     }
 
-    // REQUIRES: exercise map is not empty and string matches at least one element in exercise map
+    // REQUIRES: exercise map is not empty and muscleGroup matches at least one element in exercise map
     // MODIFIES: this
-    // EFFECTS: returns a mapping of exercises with muscle group matching muscleGroup case insensitively
-    public ExercisesByName filterMuscleGroup(String muscleGroup) {
+    // EFFECTS: returns a mapping of exercises with muscle group matching muscleGroup
+    public ExercisesByName filterMuscleGroup(MuscleGroup muscleGroup) {
         ExercisesByName exercisesByName = new ExercisesByName();
 
-        Pattern pattern = Pattern.compile("^" + muscleGroup + ".*", Pattern.CASE_INSENSITIVE);
-
         for (Exercise exercise : this.exercises.values()) {
-            if (pattern.matcher(exercise.getMuscleGroup()).matches()) {
+            if (exercise.getMuscleGroup().equals(muscleGroup)) {
                 exercisesByName.getExercises().put(exercise.getName(), exercise);
             }
         }
@@ -100,11 +98,11 @@ public class ExercisesByName implements GymCollection {
     // REQUIRES: exercise map is not empty and difficulty matches at least one element in exercise map
     // MODIFIES: this
     // EFFECTS: returns a mapping of exercises with difficulty matching given difficulty
-    public ExercisesByName filterDifficulty(int difficulty) {
+    public ExercisesByName filterDifficulty(Difficulty difficulty) {
         ExercisesByName exercisesByName = new ExercisesByName();
 
         for (Exercise exercise : this.exercises.values()) {
-            if (exercise.getDifficulty() == difficulty) {
+            if (exercise.getDifficulty().getDifficulty() == difficulty.getDifficulty()) {
                 exercisesByName.getExercises().put(exercise.getName(), exercise);
             }
         }
@@ -163,7 +161,7 @@ public class ExercisesByName implements GymCollection {
         return exercises.size();
     }
 
-    // REQUIRES: exercise map is not empty
+    // REQUIRES: exercise map is not empty and name matches an exercise
     // MODIFIES: this
     // EFFECTS: returns the exercise with the given name in exercise map
     public Exercise getExercise(String name) {

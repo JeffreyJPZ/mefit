@@ -11,7 +11,8 @@ public class WeightsExercise extends Exercise {
     // REQUIRES: name, muscleGroup are not empty, weight, sets, reps, difficulty, time > 0
     // EFFECTS: makes a new exercise with a name, muscle group, weight in lbs, # of sets, # of reps,
     //          difficulty, time (min), and unfavourited
-    public WeightsExercise(String name, String muscleGroup, int weight, int sets, int reps, int difficulty, int time) {
+    public WeightsExercise(String name, MuscleGroup muscleGroup, int weight, int sets, int reps,
+                           Difficulty difficulty, int time) {
         super(name, muscleGroup, difficulty, time);
         this.weight = weight;
         this.sets = sets;

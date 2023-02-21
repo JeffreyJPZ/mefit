@@ -8,7 +8,8 @@ public class BodyWeightsExercise extends Exercise {
     // REQUIRES: name, muscleGroup are not empty; sets, reps, difficulty, time > 0
     // EFFECTS: makes a bodyweight exercise with a name, muscle group, # of sets, # of reps, difficulty, and time (min),
     //          and unfavourited
-    public BodyWeightsExercise(String name, String muscleGroup, int sets, int reps, int difficulty, int time) {
+    public BodyWeightsExercise(String name, MuscleGroup muscleGroup, int sets, int reps,
+                               Difficulty difficulty, int time) {
         super(name, muscleGroup, difficulty, time);
         this.sets = sets;
         this.reps = reps;
