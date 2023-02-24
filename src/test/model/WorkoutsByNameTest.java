@@ -97,6 +97,12 @@ public class WorkoutsByNameTest {
     }
 
     @Test
+    public void testToStringNoWorkouts() {
+        assertEquals("Name\tDifficulty\tTime (min)\t# of Exercises\tFavourite?" + "\n",
+                workoutsByNameTest1.toString());
+    }
+
+    @Test
     public void testToStringSingleWorkout() {
         addWorkoutHelper(workoutsByNameTest1, 1);
 

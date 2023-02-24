@@ -1,7 +1,7 @@
-# Exercise Scheduler
+# Fitness Application
 
 ###  Improve your gains
-This application serves as an exercise organizer and scheduler for users. Whether you are:
+This application serves as an fitness hub for users. Whether you are:
 
 - a new gym goer
 - an experienced gym rat

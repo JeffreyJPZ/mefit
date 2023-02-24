@@ -137,6 +137,11 @@ public class ProfilesByIdTest {
     }
 
     @Test
+    public void testToStringEmptyMap() {
+        assertEquals("ID\tName" + "\n", profilesByIdTest1.toString());
+    }
+
+    @Test
     public void testToStringOneProfileInMap() {
         addProfileHelper(profilesByIdTest1, 1);
         assertEquals("ID\tName" + "\n"
@@ -272,7 +277,29 @@ public class ProfilesByIdTest {
         assertFalse(profilesByIdTest1.contains("7"));
     }
 
+    @Test
+    public void testContainsIdSingleProfileInMapAndDoesContain() {
+        addProfileHelper(profilesByIdTest1, 1);
 
+        assertTrue(profilesByIdTest1.contains(1));
+    }
+
+    @Test
+    public void testContainsIdSingleProfileInMapAndDoesNotContain() {
+        addProfileHelper(profilesByIdTest1, 1);
+
+        assertFalse(profilesByIdTest1.contains(2));
+    }
+
+    @Test
+    public void testContainsMultipleProfileInMap() {
+        addProfileHelper(profilesByIdTest1, 5);
+
+        assertTrue(profilesByIdTest1.contains(1));
+        assertTrue(profilesByIdTest1.contains(3));
+        assertTrue(profilesByIdTest1.contains(5));
+        assertFalse(profilesByIdTest1.contains(6));
+    }
     @Test
     public void isEmptyEmptyMap() {
         assertTrue(profilesByIdTest1.isEmpty());

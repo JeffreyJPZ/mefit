@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 // Represents a mapping of exercises by name
-public class ExercisesByName implements GymCollection {
+public class ExercisesByName implements FitnessCollection {
     public static final int DISPLAY_NUMBER_OF_EXERCISES = 10;
     public static final String ADDITIONAL_EXERCISE_MESSAGE = " additional exercises";
 
@@ -31,7 +31,6 @@ public class ExercisesByName implements GymCollection {
     }
 
     @Override
-    // REQUIRES: exercise map is not empty
     // MODIFIES: this
     // EFFECTS: if number of exercises in map <= DISPLAY_NUMBER_OF_EXERCISES,
     //          returns the exercise name, muscle group, difficulty, time and whether the exercise is favourited

@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 // Represents a mapping of profiles by their id
-public class ProfilesById implements GymCollection {
+public class ProfilesById implements FitnessCollection {
     public static final int DISPLAY_NUMBER_OF_PROFILES = 10;
     public static final String ADDITIONAL_PROFILE_MESSAGE = " additional profiles";
 
@@ -83,6 +83,13 @@ public class ProfilesById implements GymCollection {
         }
         return false;
     }
+
+    // MODIFIES: this
+    // EFFECTS: returns true if profile with given id is in map, otherwise returns false
+    public boolean contains(int id) {
+        return profiles.containsKey(id);
+    }
+
 
     // MODIFIES: this
     // EFFECTS: returns true if map is empty, otherwise returns false

@@ -151,6 +151,12 @@ public class ExercisesByNameTest {
     }
 
     @Test
+    public void testToStringNoExercises() {
+        assertEquals("Name\tMuscle Group\tDifficulty\tTime (min)\t Favourite?" + "\n",
+                exercisesByNameTest1.toString());
+    }
+
+    @Test
     public void testToStringOneExerciseInMap() {
         addExerciseHelper(exercisesByNameTest1, 1);
 

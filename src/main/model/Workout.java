@@ -111,7 +111,11 @@ public class Workout {
     //          whether it is favourited and exercises
     public String toString() {
         String retString = "Name\tDifficulty\tTime (min)\t # of Exercises\tFavourite?" + "\n"
-                        + "[1]\t1\t1\t1\tfalse" + "\n"
+                        + "[" + name + "]" + "\t"
+                        + difficulty.getDifficulty() + "\t"
+                        + time + "\t"
+                        + length() + "\t"
+                        + isFavourite() + "\t"
                         + "\n"
                         + "Exercises" + "\n"
                         + "Name\tMuscle Group\tDifficulty\tTime (min)\tFavourite?" + "\n";

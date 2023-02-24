@@ -7,10 +7,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProfileTest {
     private Profile profileTest1;
     private Profile profileTest2;
-    private Profile profileTest3;
 
     @BeforeEach
     public void runBefore() {
+        Profile.setNextId(1);
         profileTest1 = new Profile("Shagua", "Female", 20, 160);
         profileTest2 = new Profile("Sukmai", "None", 95, 30);
     }
@@ -27,10 +27,10 @@ class ProfileTest {
 
         assertEquals(1, profileTest1.getId());
 
-        assertEquals("Sukmai", profileTest1.getName());
-        assertEquals("None", profileTest1.getGender());
-        assertEquals(95, profileTest1.getAge());
-        assertEquals(30, profileTest1.getWeight());
+        assertEquals("Sukmai", profileTest2.getName());
+        assertEquals("None", profileTest2.getGender());
+        assertEquals(95, profileTest2.getAge());
+        assertEquals(30, profileTest2.getWeight());
 
         assertTrue(profileTest2.getExercises().isEmpty());
         assertTrue(profileTest2.getWorkouts().isEmpty());
@@ -40,7 +40,7 @@ class ProfileTest {
 
     @Test
     public void testConstructorBoundary() {
-        profileTest3 = new Profile("Boundary", "Male", 1, 1);
+        Profile profileTest3 = new Profile("Boundary", "Male", 1, 1);
 
         assertEquals("Boundary", profileTest3.getName());
         assertEquals("Male", profileTest3.getGender());

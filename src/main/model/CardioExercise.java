@@ -27,7 +27,7 @@ public class CardioExercise extends Exercise {
         return distance;
     }
 
-    public void setDistance() {
+    public void setDistance(int distance) {
         this.distance = distance;
     }
 }

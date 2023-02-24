@@ -1,10 +1,7 @@
 package model;
 
-import javax.imageio.plugins.tiff.GeoTIFFTagSet;
-import java.util.Map;
-
-// Represents a collection of objects for a gym application
-public interface GymCollection {
+// Represents a collection of objects for a fitness application
+public interface FitnessCollection {
 
     // REQUIRES: this is not empty
     // MODIFIES: this
@@ -15,7 +12,7 @@ public interface GymCollection {
     // REQUIRES: name is not empty
     // MODIFIES: this
     // EFFECTS: returns a collection of elements satisfying the given string
-    GymCollection filter(String string);
+    FitnessCollection filter(String string);
 
     // REQUIRES: name is not empty
     // MODIFIES: this
