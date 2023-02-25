@@ -68,7 +68,7 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: processes the key options for main profiles menu and resets any filters
+    // EFFECTS: selects the appropriate profiles menu option and resets any filters
     private void mainMenuSelection(String input) {
         switch (input) {
             case "1":
@@ -96,7 +96,7 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: views the profile if given profile id matches a profile, otherwise indicates failure to find profile
+    // EFFECTS: enters the menu for the profile with the given id if found, otherwise indicates failure to find profile
     public void accessProfile() {
         String input;
 
@@ -171,7 +171,8 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: deletes the profile with a given id if found, otherwise prints failure
+    // EFFECTS: checks if input is a valid input, if input is not accepted then indicates an invalid
+    //          input
     private void profileMenu(String id) {
         profile = profilesByIdSaved.getProfile(parseInt(id));
         String input = "";
@@ -200,7 +201,7 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: deletes the profile with a given id if found, otherwise prints failure
+    // EFFECTS: selects the appropriate profile option given user input
     private void profileMenuSelection(String input) {
         switch (input) {
             case "1":
@@ -216,6 +217,8 @@ public class FitnessApp {
         menuNavigation(input);
     }
 
+    // MODIFIES: this
+    // EFFECTS: prints the key options for a profile
     private void displayProfileMenu() {
         System.out.println("Welcome, " + profile.getName());
         System.out.println("Select from the following options:");
@@ -226,6 +229,9 @@ public class FitnessApp {
         System.out.println("\t\"/\" to exit the application\n");
     }
 
+    // MODIFIES: this
+    // EFFECTS: checks if given input is valid for profile info menu, if invalid then indicates an invalid input
+    //          and keeps user in profile info menu until exit key is pressed
     private void profileInfoMenu() {
         String input = "";
         String[] inputs = {"1", "2", "3", "4", "<", "/"};
@@ -250,6 +256,8 @@ public class FitnessApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: prints the key options for profile info menu and a string representation of a profile
     private void displayProfileInfoMenu() {
         System.out.println("Profile Information");
         System.out.println(profile.toString());
@@ -263,6 +271,8 @@ public class FitnessApp {
         System.out.println("\t\"/\" to exit the application\n");
     }
 
+    // MODIFIES: this
+    // EFFECTS: selects the appropriate profile info functionality given user input
     private void profileInfoSelection(String input) {
         switch (input) {
             case "1":
@@ -285,6 +295,8 @@ public class FitnessApp {
         menuNavigation(input);
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes the exercises for a profile
     private void exercisesMenuForProfile() {
         exercisesByName = profile.getExercises();
         exercisesByNameSaved = exercisesByName;
@@ -292,6 +304,8 @@ public class FitnessApp {
         exercisesMenu();
     }
 
+    // MODIFIES: this
+    // EFFECTS: prints the key options for the exercises menu for a profile
     private void displayExercisesMenu() {
         System.out.println("Exercises");
         System.out.println(exercisesByName.toString());
@@ -306,6 +320,9 @@ public class FitnessApp {
         System.out.println("\t\"/\" to exit the application\n");
     }
 
+    // MODIFIES: this
+    // EFFECTS: checks if user input is valid for the exercises menu, if invalid then indicates an invalid input
+    //          and keeps user in exercises menu until exit key is pressed
     private void exercisesMenu() {
         String input = "";
         String[] inputs = {"1", "2", "3", "4", "5", "<", "/"};
@@ -332,6 +349,8 @@ public class FitnessApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes any filters and selects the appropriate exercises menu option based on user input
     private void exercisesMenuSelection(String input) {
         switch (input) {
             case "1":
@@ -356,6 +375,8 @@ public class FitnessApp {
         menuNavigation(input);
     }
 
+    // MODIFIES: this
+    // EFFECTS: enters the menu for the exercise with the given name if found, otherwise indicates failure
     private void viewExercise() {
         String input;
 
@@ -369,6 +390,8 @@ public class FitnessApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: accesses the exercise from the given input, keeps user in exercise menu until exit key is pressed
     private void exerciseMenu(String name) {
         exercise = exercisesByName.getExercise(name);
         String input = "";
@@ -381,6 +404,9 @@ public class FitnessApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: prints the key options for the exercise menu and additional options based on exercise type,
+    //          and a string representation of the exercise
     private void displayExerciseMenu() {
         System.out.println("Exercise Information");
         System.out.println(exercise.toString());
@@ -409,6 +435,8 @@ public class FitnessApp {
         System.out.println("\t\"/\" to exit the application\n");
     }
 
+    // MODIFIES: this
+    // EFFECTS: checks if input is valid for the exercise menu, if invalid indicates an invalid input
     private void exerciseMenuSelection(String input) {
         boolean exerciseOptions;
         boolean additionalExerciseOptions;
@@ -423,7 +451,8 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: returns true if input matches an exercise option, otherwise returns false
+    // EFFECTS: selects appropriate exercise option and returns true if input matches an exercise option,
+    //          otherwise returns false
     private boolean exerciseOptions(String input) {
         switch (input) {
             case "1":
@@ -449,6 +478,8 @@ public class FitnessApp {
         return false;
     }
 
+    // MODIFIES: this
+    // EFFECTS: renames exercise given user input
     private void renameExercise() {
         String input;
 
@@ -460,6 +491,8 @@ public class FitnessApp {
         exercisesByName.addExercise(exercise);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets exercise time given user input
     private void setExerciseTime() {
         String input;
 
@@ -469,6 +502,8 @@ public class FitnessApp {
         exercise.setTime(parseInt(input));
     }
 
+    // MODIFIES: this
+    // EFFECTS: returns  muscle group given user input
     private MuscleGroup editMuscleGroup() {
         int input;
         MuscleGroup retMuscleGroup = null;
@@ -494,6 +529,8 @@ public class FitnessApp {
         return retMuscleGroup;
     }
 
+    // MODIFIES: this
+    // EFFECTS: returns difficulty given user input
     private Difficulty editDifficulty() {
         int input;
         Difficulty retDifficulty = null;
@@ -519,6 +556,9 @@ public class FitnessApp {
         return retDifficulty;
     }
 
+    // MODIFIES: this
+    // EFFECTS: selects appropriate additional exercise options based on exercise type and returns true if
+    //          input matches an option, otherwise returns false
     private boolean additionalExerciseOptions(String input) {
         boolean retBoolean = false;
 
@@ -536,6 +576,9 @@ public class FitnessApp {
         return retBoolean;
     }
 
+    // MODIFIES: this
+    // EFFECTS: selects appropriate additional exercise options for weights exercise and returns true if
+    //          input matches an option, otherwise returns false
     private boolean editWeightsExercise(WeightsExercise weightsExercise, String input) {
         switch (input) {
             case "6":
@@ -557,6 +600,9 @@ public class FitnessApp {
         return false;
     }
 
+    // MODIFIES: this
+    // EFFECTS: selects appropriate additional exercise options for bodyweights exercise and returns true if
+    //          input matches an option, otherwise returns false
     private boolean editBodyWeightsExercise(BodyWeightsExercise bodyWeightsExercise, String input) {
         switch (input) {
             case "6":
@@ -573,6 +619,9 @@ public class FitnessApp {
         return false;
     }
 
+    // MODIFIES: this
+    // EFFECTS: selects appropriate additional exercise options for cardio exercise and returns true if
+    //          input matches an option, otherwise returns false
     private boolean editCardioExercise(CardioExercise cardioExercise, String input) {
         if (input.equals("6")) {
             System.out.println("Enter the new exercise distance:");
@@ -583,6 +632,8 @@ public class FitnessApp {
         return false;
     }
 
+    // MODIFIES: this
+    // EFFECTS: prints key options for filtering exercises menu
     private void displayFilterExercisesMenu() {
         System.out.println("Select from the following filters:");
         System.out.println("\t\"1\" by name");
@@ -592,6 +643,8 @@ public class FitnessApp {
         System.out.println("\t\"5\" by favourite");
     }
 
+    // MODIFIES: this
+    // EFFECTS: selects the appropriate filtering functionality based on user input
     private void filterExercises() {
         String input;
 
@@ -616,6 +669,8 @@ public class FitnessApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: filters exercises by name given user input
     private void filterExercisesByName() {
         String input;
 
@@ -625,31 +680,44 @@ public class FitnessApp {
         exercisesByName = exercisesByName.filter(input);
     }
 
+    // MODIFIES: this
+    // EFFECTS: filters exercises by muscle group given user input
     private void filterExercisesByMuscleGroup() {
         exercisesByName = exercisesByName.filterMuscleGroup(editMuscleGroup());
     }
 
+    // MODIFIES: this
+    // EFFECTS: filters exercises by difficulty given user input
     private void filterExercisesByDifficulty() {
         exercisesByName = exercisesByName.filterDifficulty(editDifficulty());
     }
 
+    // MODIFIES: this
+    // EFFECTS: filters exercises by time <= given input
     private void filterExercisesByTime() {
-        int input;
+        String input;
         System.out.println("Enter the exercise time you wish to filter by (all times <= given)");
 
-        input = scanner.nextInt();
+        input = scanner.next();
 
-        exercisesByName = exercisesByName.filterTime(input);
+        exercisesByName = exercisesByName.filterTime(parseInt(input));
     }
 
+    // MODIFIES: this
+    // EFFECTS: filters exercises by favourited status
     private void filterExercisesByFavourite() {
         exercisesByName = exercisesByName.filterFavourite();
     }
 
+    // MODIFIES: this
+    // EFFECTS: resets exercise filters
     private void resetExercises() {
         exercisesByName = exercisesByNameSaved;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a new exercise with name, muscle group, difficulty, time and additional exercise information
+    //          based on exercise type
     private void createExercise() {
         Map<String, String> exerciseData = new LinkedHashMap<>();
 
@@ -658,20 +726,23 @@ public class FitnessApp {
         additionalExerciseInfo(exerciseData);
     }
 
+    // MODIFIES: this
+    // EFFECTS: gets user input for exercise name and time and additional exercise information
     private void additionalExerciseInfo(Map<String, String> exerciseData) {
         String input;
 
         System.out.println("Enter the name of the exercise:");
         input = scanner.nextLine();
-        scanner.nextLine();
         exerciseData.put("name", input);
-        System.out.println("Enter the time of the exercise:");
+        System.out.println("Enter the time of the exercise (min):");
         input = scanner.next();
         exerciseData.put("time", input);
 
         createExerciseSelection(exerciseData);
     }
 
+    // MODIFIES: this
+    // EFFECTS: prompts user to enter appropriate information based on exercise type
     private void createExerciseSelection(Map<String, String> exerciseData) {
         Exercise exercise = null;
         String input;
@@ -697,10 +768,12 @@ public class FitnessApp {
         exercisesByName.addExercise(exercise);
     }
 
+    // MODIFIES: this
+    // EFFECTS: gets user input for weight, sets, and reps for a weights exercise
     private Exercise createWeightsExercise(Map<String, String> exerciseData) {
         String input;
 
-        System.out.println("Enter the weight of the exercise:"); // TODO: FOR LOOP
+        System.out.println("Enter the weight of the exercise:");
         input = scanner.next();
         exerciseData.put("weight", input);
         System.out.println("Enter the sets of the exercise:");
@@ -716,10 +789,12 @@ public class FitnessApp {
                 parseInt(exerciseData.get("time")));
     }
 
+    // MODIFIES: this
+    // EFFECTS: gets user input for sets and reps for a bodyweights exercise
     private Exercise createBodyWeightsExercise(Map<String, String> exerciseData) {
         String input;
 
-        System.out.println("Enter the sets of the exercise:"); // TODO: FOR LOOP
+        System.out.println("Enter the sets of the exercise:");
         input = scanner.next();
         exerciseData.put("sets", input);
         System.out.println("Enter the reps of the exercise:");
@@ -731,10 +806,12 @@ public class FitnessApp {
                 editDifficulty(), parseInt(exerciseData.get("time")));
     }
 
+    // MODIFIES: this
+    // EFFECTS: gets user input for distance for a cardio exercise
     private Exercise createCardioExercise(Map<String, String> exerciseData) {
         String input;
 
-        System.out.println("Enter the distance of the exercise:");
+        System.out.println("Enter the distance of the exercise (m):");
         input = scanner.next();
         exerciseData.put("distance", input);
 
@@ -743,6 +820,8 @@ public class FitnessApp {
                 editDifficulty(), parseInt(exerciseData.get("time")));
     }
 
+    // MODIFIES: this
+    // EFFECTS: deletes the exercise with the given name if found, otherwise indicates failure
     private void deleteExercise() {
         String input;
 
@@ -756,6 +835,8 @@ public class FitnessApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: accesses the workouts for a profile and enters the menu for workouts
     private void workoutsMenuForProfile() {
         workoutsByName = profile.getWorkouts();
         workoutsByNameSaved = workoutsByName;
@@ -763,6 +844,8 @@ public class FitnessApp {
         workoutsMenu();
     }
 
+    // MODIFIES: this
+    // EFFECTS: prints the key options for workouts menu
     private void displayWorkoutsMenu() {
         System.out.println("Workouts");
         System.out.println(workoutsByName.toString());
@@ -777,6 +860,9 @@ public class FitnessApp {
         System.out.println("\t\"/\" to exit the application\n");
     }
 
+    // MODIFIES: this
+    // EFFECTS: checks if given input is valid for the workouts menu, if invalid then indicates an invalid selection;
+    //          keeps user in exercises menu until exit key is pressed
     private void workoutsMenu() {
         String input = "";
         String[] inputs = {"1", "2", "3", "4", "5", "<", "/"};
@@ -802,6 +888,8 @@ public class FitnessApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes any filters and selects the appropriate workout menu option given user input
     private void workoutsMenuSelection(String input) {
         switch (input) {
             case "1":
@@ -825,6 +913,9 @@ public class FitnessApp {
         menuNavigation(input);
     }
 
+    // MODIFIES: this
+    // EFFECTS: accesses the workout menu with the appropriate workout matching user input if found,
+    //          otherwise indicates failure
     private void viewWorkout() {
         String input;
 
@@ -839,6 +930,8 @@ public class FitnessApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: prints the key options for workout menu and a string representation of the workout
     private void displayWorkoutMenu() {
         System.out.println("Workout Information");
         System.out.println(workout.toString());
@@ -853,6 +946,9 @@ public class FitnessApp {
         System.out.println("\t\"/\" to exit the application");
     }
 
+    // MODIFIES: this
+    // EFFECTS: checks if user input matches a workout menu option, if invalid indicates an invalid option;
+    //          keeps user in workout menu until exit key is pressed
     private void workoutMenu() {
         String input = "";
         String[] inputs = {"1", "2", "3", "4", "5", "<", "/"};
@@ -879,6 +975,8 @@ public class FitnessApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: selects appropriate workout menu option given user input
     private void workoutMenuSelection(String input) {
         switch (input) {
             case "1":
@@ -899,6 +997,8 @@ public class FitnessApp {
         menuNavigation(input);
     }
 
+    // MODIFIES: this
+    // EFFECTS: renames workout given name inputted by user
     private void renameWorkout() {
         String input;
 
@@ -910,6 +1010,8 @@ public class FitnessApp {
         workoutsByName.addWorkout(workout);
     }
 
+    // MODIFIES: this
+    // EFFECTS: prints the key options for editing the exercises of a workout
     private void displayWorkoutExerciseOptions() {
         System.out.println("Select from the following options:");
         System.out.println("\t\"1\" to add an exercise by name");
@@ -919,6 +1021,8 @@ public class FitnessApp {
         System.out.println("\t\"5\" to remove an exercise at a position");
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes the user input for editing the exercises of a workout
     private void workoutExerciseOptions() {
         displayWorkoutExerciseOptions();
 
@@ -927,6 +1031,8 @@ public class FitnessApp {
         workoutExerciseOptionsSelection(input);
     }
 
+    // MODIFIES: this
+    // EFFECTS: selects the appropriate workout exercise option given user input
     private void workoutExerciseOptionsSelection(String input) {
         switch (input) {
             case "1":
@@ -946,11 +1052,15 @@ public class FitnessApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds an exercise from the user profile to workout given user input
     private void addExercise() {
         Exercise exercise = getExerciseFromExercisesByName();
         workout.addExercise(exercise);
     }
 
+    // MODIFIES: this
+    // EFFECTS: inserts an exercise from the user exercises to a given position in workout
     private void insertExercise() {
         Exercise exercise = getExerciseFromExercisesByName();
         System.out.println("Enter the position where you wish to insert the exercise:");
@@ -958,6 +1068,8 @@ public class FitnessApp {
         workout.insertExercise(exercise, parseInt(input));
     }
 
+    // MODIFIES: this
+    // EFFECTS: replaces an exercise in workout at a given position by an exercise from the user exercises
     private void replaceExercise() {
         Exercise exercise = getExerciseFromExercisesByName();
         System.out.println("Enter the position of the exercise you wish to replace:");
@@ -965,18 +1077,25 @@ public class FitnessApp {
         workout.setExercise(exercise, parseInt(input));
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes an exercise from the workout given a name inputted by user
     private void removeExerciseByName() {
         System.out.println("Enter the name of the exercise:");
         String input = scanner.nextLine();
         workout.removeExercise(input);
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes an exercise from the workout given its position inputted by user
     private void removeExerciseByPosition() {
         System.out.println("Enter the position of the exercise you wish to remove:");
         String input = scanner.next();
         workout.removeExercise(parseInt(input));
     }
 
+    // MODIFIES: this
+    // EFFECTS: returns an exercise from the user exercises matching name inputted by user if found, otherwise
+    //          does nothing
     private Exercise getExerciseFromExercisesByName() {
         String input;
 
@@ -988,9 +1107,10 @@ public class FitnessApp {
         } else {
             return null;
         }
-
     }
 
+    // MODIFIES: this
+    // EFFECTS: prints key options for filtering workouts
     private void displayFilterWorkoutsMenu() {
         System.out.println("Select from the following filters:");
         System.out.println("\t\"1\" by name");
@@ -1000,6 +1120,8 @@ public class FitnessApp {
         System.out.println("\t\"5\" by favourite");
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user input to filter workouts
     private void filterWorkouts() {
         String input;
 
@@ -1010,6 +1132,8 @@ public class FitnessApp {
         filterWorkouts(input);
     }
 
+    // MODIFIES: this
+    // EFFECTS: selects the appropriate filtering option for workouts given user input
     private void filterWorkouts(String input) {
         switch (input) {
             case "1":
@@ -1035,12 +1159,14 @@ public class FitnessApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes filters from the user workouts
     private void resetWorkouts() {
         workoutsByName = workoutsByNameSaved;
     }
 
     // MODIFIES: this
-    // EFFECTS: creates a new workout with user inputted name and difficulty and adds it to profile workouts
+    // EFFECTS: creates a new workout with user inputted name and difficulty and adds it to the user workouts
     private void createWorkout() {
         Map<String, String> workoutData = new LinkedHashMap<>();
         String input;
@@ -1061,7 +1187,7 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: removes a workout from profile workouts if found, otherwise indicates failure
+    // EFFECTS: removes a workout from user workouts if found, otherwise indicates failure
     private void deleteWorkout() {
         String input;
 
@@ -1081,7 +1207,7 @@ public class FitnessApp {
         System.exit(0);
     }
 
-    // EFFECTS: Checks if input matches a key to backtrack to a previous menu, exit the application,
+    // EFFECTS: Checks if input matches a key to exit to a previous menu or to exit the application
     private void menuNavigation(String input) {
         switch (input) {
             case "<":

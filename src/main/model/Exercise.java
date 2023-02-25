@@ -26,7 +26,7 @@ public abstract class Exercise {
         return "Exercise Name: " + name + "\n"
                 + "Muscle Group: " + muscleGroup.getMuscleGroup() + "\n"
                 + "Difficulty: " + difficulty.getDifficulty() + "\n"
-                + "Time: " + time + "\n"
+                + "Time (min): " + time + "\n"
                 + "Favourite?: " + favourite;
     }
 

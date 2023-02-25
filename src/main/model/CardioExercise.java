@@ -20,7 +20,7 @@ public class CardioExercise extends Exercise {
     @Override
     public String toString() {
         return super.toString() + "\n"
-                + "Distance: " + distance;
+                + "Distance (m): " + distance;
     }
 
     public int getDistance() {
