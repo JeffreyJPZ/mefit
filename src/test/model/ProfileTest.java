@@ -68,4 +68,40 @@ class ProfileTest {
         assertEquals(tempToString1, profileTest1.toString());
         assertEquals(tempToString2, profileTest2.toString());
     }
+
+    @Test
+    public void testSetName() {
+        profileTest1.setName("Jeff");
+        profileTest2.setName("A");
+
+        assertEquals("Jeff", profileTest1.getName());
+        assertEquals("A", profileTest2.getName());
+    }
+
+    @Test
+    public void testSetGender() {
+        profileTest1.setGender("Jeff");
+        profileTest2.setGender("A");
+
+        assertEquals("Jeff", profileTest1.getGender());
+        assertEquals("A", profileTest2.getGender());
+    }
+
+    @Test
+    public void testSetAge() {
+        profileTest1.setAge(5);
+        profileTest2.setAge(50);
+
+        assertEquals(5, profileTest1.getAge());
+        assertEquals(50, profileTest2.getAge());
+    }
+
+    @Test
+    public void testSetWeight() {
+        profileTest1.setWeight(3);
+        profileTest2.setWeight(30);
+
+        assertEquals(3, profileTest1.getWeight());
+        assertEquals(30, profileTest2.getWeight());
+    }
 }

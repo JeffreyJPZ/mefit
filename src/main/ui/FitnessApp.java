@@ -34,7 +34,6 @@ public class FitnessApp {
 
         while (run) {
             mainMenu();
-            System.out.println(profilesById.toString());
             input = scanner.nextLine().toLowerCase();
 
             if (input.equals("/")) {
@@ -43,7 +42,6 @@ public class FitnessApp {
                 mainMenuSelection(input);
             }
         }
-
         exitApp();
     }
 
@@ -56,7 +54,7 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: prints the key options for main profiles menu
+    // EFFECTS: prints the key options for main profiles menu and string representations of profiles
     private void mainMenu() {
         System.out.println("Fitness App\n");
         System.out.println("Select from the following options:");
@@ -66,6 +64,7 @@ public class FitnessApp {
         System.out.println("\t\"4\" to create a profile");
         System.out.println("\t\"5\" to delete a profile");
         System.out.println("\t\"/\" to exit the application\n");
+        System.out.println(profilesById.toString());
     }
 
     // MODIFIES: this
@@ -92,13 +91,13 @@ public class FitnessApp {
             case "/":
                 break;
             default:
-                System.out.println("Please select a valid option.\n");
+                invalidSelection();
         }
     }
 
     // MODIFIES: this
     // EFFECTS: views the profile if given profile id matches a profile, otherwise indicates failure to find profile
-    private void accessProfile() {
+    public void accessProfile() {
         String input;
 
         System.out.println("Type the id number of the profile you wish to access:");
@@ -176,36 +175,45 @@ public class FitnessApp {
     private void profileMenu(String id) {
         profile = profilesByIdSaved.getProfile(parseInt(id));
         String input = "";
-        boolean profileMenuSelection;
+        String[] inputs = {"1", "2", "3", "<", "/"};
+        boolean isInputInvalid;
 
         while (!input.equals("<")) {
             displayProfileMenu();
 
             input = scanner.nextLine().toLowerCase();
 
-            profileMenuSelection = profileMenuSelection(input);
+            isInputInvalid = true;
 
-            if (!profileMenuSelection) {
-                menuNavigation(input);
+            for (String possibleInput : inputs) {
+                if (possibleInput.equals(input)) {
+                    profileMenuSelection(possibleInput);
+                    isInputInvalid = false;
+                    break;
+                }
+            }
+
+            if (isInputInvalid) {
+                invalidSelection();
             }
         }
     }
 
     // MODIFIES: this
     // EFFECTS: deletes the profile with a given id if found, otherwise prints failure
-    private boolean profileMenuSelection(String input) {
+    private void profileMenuSelection(String input) {
         switch (input) {
             case "1":
                 profileInfoMenu();
-                return true;
+                break;
             case "2":
                 exercisesMenuForProfile();
-                return true;
+                break;
             case "3":
                 workoutsMenuForProfile();
-                return true;
+                break;
         }
-        return false;
+        menuNavigation(input);
     }
 
     private void displayProfileMenu() {
@@ -220,16 +228,24 @@ public class FitnessApp {
 
     private void profileInfoMenu() {
         String input = "";
-        boolean profileInfoSelection;
+        String[] inputs = {"1", "2", "3", "4", "<", "/"};
+        boolean isInputInvalid;
 
         while (!input.equals("<")) {
             displayProfileInfoMenu();
             input = scanner.nextLine().toLowerCase();
+            isInputInvalid = true;
 
-            profileInfoSelection = profileInfoSelection(input);
+            for (String possibleInput : inputs) {
+                if (possibleInput.equals(input)) {
+                    profileInfoSelection(possibleInput);
+                    isInputInvalid = false;
+                    break;
+                }
+            }
 
-            if (!profileInfoSelection) {
-                menuNavigation(input);
+            if (isInputInvalid) {
+                invalidSelection();
             }
         }
     }
@@ -247,30 +263,26 @@ public class FitnessApp {
         System.out.println("\t\"/\" to exit the application\n");
     }
 
-    private boolean profileInfoSelection(String input) {
+    private void profileInfoSelection(String input) {
         switch (input) {
             case "1":
                 System.out.println("Enter your new name:");
                 input = scanner.nextLine();
                 profile.setName(input);
-                return true;
             case "2":
                 System.out.println("Enter your new gender:");
                 input = scanner.nextLine();
                 profile.setGender(input);
-                return true;
             case "3":
                 System.out.println("Enter your new age:");
                 input = scanner.next();
                 profile.setAge(parseInt(input));
-                return true;
             case "4":
                 System.out.println("Enter your new weight:");
                 input = scanner.next();
                 profile.setAge(parseInt(input));
-                return true;
         }
-        return false;
+        menuNavigation(input);
     }
 
     private void exercisesMenuForProfile() {
@@ -296,42 +308,52 @@ public class FitnessApp {
 
     private void exercisesMenu() {
         String input = "";
-        boolean exercisesMenuSelection;
+        String[] inputs = {"1", "2", "3", "4", "5", "<", "/"};
+        boolean isInputInvalid;
 
         while (!input.equals("<")) {
             displayExercisesMenu();
+
             input = scanner.nextLine().toLowerCase();
 
-            exercisesMenuSelection = exercisesMenuSelection(input);
+            isInputInvalid = true;
 
-            if (!exercisesMenuSelection) {
-                menuNavigation(input);
+            for (String possibleInput : inputs) {
+                if (possibleInput.equals(input)) {
+                    exercisesMenuSelection(possibleInput);
+                    isInputInvalid = false;
+                    break;
+                }
+            }
+
+            if (isInputInvalid) {
+                invalidSelection();
             }
         }
     }
 
-    private boolean exercisesMenuSelection(String input) {
+    private void exercisesMenuSelection(String input) {
         switch (input) {
             case "1":
                 resetExercises();
                 viewExercise();
-                return true;
+                break;
             case "2":
                 filterExercises();
-                return true;
+                break;
             case "3":
                 resetExercises();
-                return true;
+                break;
             case "4":
                 resetExercises();
                 createExercise();
-                return true;
+                break;
             case "5":
                 resetExercises();
                 deleteExercise();
-                return true;
+                break;
         }
-        return false;
+        menuNavigation(input);
     }
 
     private void viewExercise() {
@@ -354,6 +376,7 @@ public class FitnessApp {
         while (!input.equals("<")) {
             displayExerciseMenu();
             input = scanner.nextLine().toLowerCase();
+
             exerciseMenuSelection(input);
         }
     }
@@ -387,15 +410,15 @@ public class FitnessApp {
     }
 
     private void exerciseMenuSelection(String input) {
-        boolean exerciseOptions = false;
-        boolean additionalExerciseOptions = false;
+        boolean exerciseOptions;
+        boolean additionalExerciseOptions;
 
         exerciseOptions = exerciseOptions(input);
         additionalExerciseOptions = additionalExerciseOptions(input);
 
-        // Ensures default "select a valid option" message only printed if input is not handled already
+        // Ensures invalid input message only printed if input is not handled already
         if (!(exerciseOptions || additionalExerciseOptions)) {
-            menuNavigation(input);
+            invalidSelection();
         }
     }
 
@@ -404,9 +427,7 @@ public class FitnessApp {
     private boolean exerciseOptions(String input) {
         switch (input) {
             case "1":
-                System.out.println("Enter the new exercise name:");
-                input = scanner.nextLine();
-                exercise.setName(input);
+                renameExercise();
                 return true;
             case "2":
                 exercise.setMuscleGroup(editMuscleGroup());
@@ -415,15 +436,37 @@ public class FitnessApp {
                 exercise.setDifficulty(editDifficulty());
                 return true;
             case "4":
-                System.out.println("Enter the new exercise time:");
-                input = scanner.next();
-                exercise.setTime(parseInt(input));
+                setExerciseTime();
                 return true;
             case "5":
                 exercise.setFavourite(!exercise.isFavourite());
                 return true;
+            case "<":
+                return true;
+            case "/":
+                exitApp();
         }
         return false;
+    }
+
+    private void renameExercise() {
+        String input;
+
+        System.out.println("Enter the new exercise name:");
+        input = scanner.nextLine();
+
+        exercisesByName.removeExercise(exercise.getName());
+        exercise.setName(input);
+        exercisesByName.addExercise(exercise);
+    }
+
+    private void setExerciseTime() {
+        String input;
+
+        System.out.println("Enter the new exercise time:");
+        input = scanner.next();
+
+        exercise.setTime(parseInt(input));
     }
 
     private MuscleGroup editMuscleGroup() {
@@ -736,42 +779,50 @@ public class FitnessApp {
 
     private void workoutsMenu() {
         String input = "";
-        boolean workoutsMenuSelection;
+        String[] inputs = {"1", "2", "3", "4", "5", "<", "/"};
+        boolean isInputInvalid;
 
         while (!input.equals("<")) {
             displayWorkoutsMenu();
             input = scanner.nextLine().toLowerCase();
 
-            workoutsMenuSelection = workoutsMenuSelection(input);
+            isInputInvalid = true;
 
-            if (!workoutsMenuSelection) {
-                menuNavigation(input);
+            for (String possibleInput : inputs) {
+                if (possibleInput.equals(input)) {
+                    workoutsMenuSelection(possibleInput);
+                    isInputInvalid = false;
+                    break;
+                }
+            }
+
+            if (isInputInvalid) {
+                invalidSelection();
             }
         }
     }
 
-    private boolean workoutsMenuSelection(String input) {
+    private void workoutsMenuSelection(String input) {
         switch (input) {
             case "1":
                 resetWorkouts();
                 viewWorkout();
-                return true;
+                break;
             case "2":
                 filterWorkouts();
-                return true;
+                break;
             case "3":
                 resetWorkouts();
-                return true;
+                break;
             case "4":
                 resetWorkouts();
                 createWorkout();
-                return true;
+                break;
             case "5":
                 resetWorkouts();
                 deleteWorkout();
-                return true;
         }
-        return false;
+        menuNavigation(input);
     }
 
     private void viewWorkout() {
@@ -791,13 +842,12 @@ public class FitnessApp {
     private void displayWorkoutMenu() {
         System.out.println("Workout Information");
         System.out.println(workout.toString());
-        System.out.println(workout.getName());
 
         System.out.println("\nSelect from the following options:");
         System.out.println("\t\"1\" to edit the name");
         System.out.println("\t\"2\" to edit the difficulty");
         System.out.println("\t\"3\" to mark favourite/unfavourite");
-        System.out.println("\t\"4\" to view options for adding an exercise");
+        System.out.println("\t\"4\" to view options for adding/removing an exercise");
         System.out.println("\t\"5\" to clear all exercises");
         System.out.println("\t\"<\" to return to the workouts menu");
         System.out.println("\t\"/\" to exit the application");
@@ -805,40 +855,59 @@ public class FitnessApp {
 
     private void workoutMenu() {
         String input = "";
-        boolean workoutMenuSelection;
+        String[] inputs = {"1", "2", "3", "4", "5", "<", "/"};
+        boolean isInputInvalid;
 
         while (!input.equals("<")) {
             displayWorkoutMenu();
-            input = scanner.nextLine().toLowerCase();
-            workoutMenuSelection = workoutMenuSelection(input);
 
-            if (!workoutMenuSelection) {
-                menuNavigation(input);
+            input = scanner.nextLine().toLowerCase();
+
+            isInputInvalid = true;
+
+            for (String possibleInput : inputs) {
+                if (possibleInput.equals(input)) {
+                    workoutMenuSelection(possibleInput);
+                    isInputInvalid = false;
+                    break;
+                }
+            }
+
+            if (isInputInvalid) {
+                invalidSelection();
             }
         }
     }
 
-    private boolean workoutMenuSelection(String input) {
+    private void workoutMenuSelection(String input) {
         switch (input) {
             case "1":
-                System.out.println("Enter the new name of the workout:");
-                input = scanner.nextLine();
-                workout.setName(input); // TODO: MUST UPDATE KEY FOR WORKOUT IN WORKOUTS AND EXERCISE IN EXERCISES
-                return true;
+                renameWorkout();
+                break;
             case "2":
                 workout.setDifficulty(editDifficulty());
-                return true;
+                break;
             case "3":
                 workout.setFavourite(!workout.isFavourite());
-                return true;
+                break;
             case "4":
                 workoutExerciseOptions();
-                return true;
+                break;
             case "5":
                 workout.clear();
-                return true;
         }
-        return false;
+        menuNavigation(input);
+    }
+
+    private void renameWorkout() {
+        String input;
+
+        System.out.println("Enter the new name of the workout:");
+        input = scanner.nextLine();
+
+        workoutsByName.removeWorkout(workout.getName());
+        workout.setName(input);
+        workoutsByName.addWorkout(workout);
     }
 
     private void displayWorkoutExerciseOptions() {
@@ -883,15 +952,16 @@ public class FitnessApp {
     }
 
     private void insertExercise() {
+        Exercise exercise = getExerciseFromExercisesByName();
         System.out.println("Enter the position where you wish to insert the exercise:");
         String input = scanner.next();
         workout.insertExercise(exercise, parseInt(input));
     }
 
     private void replaceExercise() {
+        Exercise exercise = getExerciseFromExercisesByName();
         System.out.println("Enter the position of the exercise you wish to replace:");
         String input = scanner.next();
-        Exercise exercise = getExerciseFromExercisesByName();
         workout.setExercise(exercise, parseInt(input));
     }
 
@@ -913,7 +983,12 @@ public class FitnessApp {
         System.out.println("Enter the name of the exercise:");
         input = scanner.nextLine();
 
-        return exercisesByName.getExercise(input);
+        if (exercisesByName.contains(input)) {
+            return exercisesByName.getExercise(input);
+        } else {
+            return null;
+        }
+
     }
 
     private void displayFilterWorkoutsMenu() {
@@ -964,6 +1039,8 @@ public class FitnessApp {
         workoutsByName = workoutsByNameSaved;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a new workout with user inputted name and difficulty and adds it to profile workouts
     private void createWorkout() {
         Map<String, String> workoutData = new LinkedHashMap<>();
         String input;
@@ -983,6 +1060,8 @@ public class FitnessApp {
         workoutsByName.addWorkout(workout);
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes a workout from profile workouts if found, otherwise indicates failure
     private void deleteWorkout() {
         String input;
 
@@ -1002,18 +1081,18 @@ public class FitnessApp {
         System.exit(0);
     }
 
-    // EFFECTS: Checks if input matches a key to backtrack to a previous menu, exit the application, or indicates
-    //          an invalid input
+    // EFFECTS: Checks if input matches a key to backtrack to a previous menu, exit the application,
     private void menuNavigation(String input) {
         switch (input) {
             case "<":
                 break;
             case "/":
                 exitApp();
-            default:
-                System.out.println("Please select a valid option.\n");
-                // PRINTS WHEN MAKING NEW EXERCISE/ACCESSING PROFILE
-                // TODO: FIX BY CHECKING INPUTS AGAINST LIST OF INTEGER INPUTS?
         }
+    }
+
+    // EFFECTS: prints a statement indicating an invalid input
+    private void invalidSelection() {
+        System.out.println("Please select a valid option.\n");
     }
 }

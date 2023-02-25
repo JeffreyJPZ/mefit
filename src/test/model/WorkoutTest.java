@@ -222,6 +222,17 @@ public class WorkoutTest {
     }
 
     @Test
+    public void testRemoveByNameNoMatch() {
+        addExerciseHelper(workoutTest1, 3);
+
+        assertEquals(3, workoutTest1.length());
+
+        workoutTest1.removeExercise("5");
+
+        assertEquals(3, workoutTest1.length());
+    }
+
+    @Test
     public void testRemoveByNameOnce() {
         addExerciseHelper(workoutTest1, 1);
 
@@ -357,7 +368,8 @@ public class WorkoutTest {
         addExerciseHelper(workoutTest1, 1);
 
         assertEquals("Name\tDifficulty\tTime (min)\t # of Exercises\tFavourite?" + "\n"
-                            + "[1]\t1\t1\t1\tfalse" + "\n"
+                            + "[1]\t1\t1\t1\tfalse"
+                            + "\n"
                             + "\n"
                             + "Exercises" + "\n"
                             + "Name\tMuscle Group\tDifficulty\tTime (min)\tFavourite?" + "\n"
@@ -369,12 +381,54 @@ public class WorkoutTest {
         addExerciseHelper(workoutTest1, 2);
 
         assertEquals("Name\tDifficulty\tTime (min)\t # of Exercises\tFavourite?" + "\n"
-                + "[1]\t1\t1\t1\tfalse" + "\n"
+                + "[1]\t1\t3\t2\tfalse"
+                + "\n"
                 + "\n"
                 + "Exercises" + "\n"
                 + "Name\tMuscle Group\tDifficulty\tTime (min)\tFavourite?" + "\n"
                 + "[1]\tChest\t1\t1\tfalse" + "\n"
                 + "[2]\tCore\t2\t2\tfalse" + "\n", workoutTest1.toString());
+    }
+
+    @Test
+    public void testGetExerciseByNameNoMatch() {
+        addExerciseHelper(workoutTest1, 3);
+
+        assertEquals(null, workoutTest1.getExercise("5"));
+    }
+
+    @Test
+    public void testGetExerciseByNameMatch() {
+        addExerciseHelper(workoutTest1, 3);
+
+        assertEquals("3", workoutTest1.getExercise("3").getName());
+    }
+
+    @Test
+    public void testSetName() {
+        workoutTest1.setName("Jeff");
+        workoutTest2.setName("A");
+
+        assertEquals("Jeff", workoutTest1.getName());
+        assertEquals("A", workoutTest2.getName());
+    }
+
+    @Test
+    public void testSetDifficulty() {
+        workoutTest1.setDifficulty(Difficulty.INTENSE);
+        workoutTest2.setDifficulty(Difficulty.LIGHT);
+
+        assertEquals(Difficulty.INTENSE, workoutTest1.getDifficulty());
+        assertEquals(Difficulty.LIGHT, workoutTest2.getDifficulty());
+    }
+
+    @Test
+    public void testSetTime() {
+        workoutTest1.setTime(1);
+        workoutTest2.setTime(100);
+
+        assertEquals(1, workoutTest1.getTime());
+        assertEquals(100, workoutTest2.getTime());
     }
 
     private void addExerciseHelper(Workout workout, int repeats) {

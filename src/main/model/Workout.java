@@ -115,7 +115,8 @@ public class Workout {
                         + difficulty.getDifficulty() + "\t"
                         + time + "\t"
                         + length() + "\t"
-                        + isFavourite() + "\t"
+                        + isFavourite()
+                        + "\n"
                         + "\n"
                         + "Exercises" + "\n"
                         + "Name\tMuscle Group\tDifficulty\tTime (min)\tFavourite?" + "\n";

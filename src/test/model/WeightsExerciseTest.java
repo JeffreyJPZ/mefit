@@ -76,4 +76,67 @@ public class WeightsExerciseTest {
                         + "Reps: " + weightsExerciseTest2.getReps(),
                 weightsExerciseTest2.toString());
     }
+
+    @Test
+    public void testSetName() {
+        weightsExerciseTest1.setName("Jeff");
+        weightsExerciseTest2.setName("A");
+
+        assertEquals("Jeff", weightsExerciseTest1.getName());
+        assertEquals("A", weightsExerciseTest2.getName());
+    }
+
+    @Test
+    public void testSetMuscleGroup() {
+        weightsExerciseTest1.setMuscleGroup(MuscleGroup.SHOULDERS);
+        weightsExerciseTest2.setMuscleGroup(MuscleGroup.BACK);
+
+        assertEquals(MuscleGroup.SHOULDERS, weightsExerciseTest1.getMuscleGroup());
+        assertEquals(MuscleGroup.BACK, weightsExerciseTest2.getMuscleGroup());
+    }
+
+    @Test
+    public void testSetDifficulty() {
+        weightsExerciseTest1.setDifficulty(Difficulty.MODERATE);
+        weightsExerciseTest2.setDifficulty(Difficulty.INTENSE);
+
+        assertEquals(Difficulty.MODERATE, weightsExerciseTest1.getDifficulty());
+        assertEquals(Difficulty.INTENSE, weightsExerciseTest2.getDifficulty());
+    }
+
+    @Test
+    public void testSetTime() {
+        weightsExerciseTest1.setTime(1);
+        weightsExerciseTest2.setTime(100);
+
+        assertEquals(1, weightsExerciseTest1.getTime());
+        assertEquals(100, weightsExerciseTest2.getTime());
+    }
+
+    @Test
+    public void testSetWeight() {
+        weightsExerciseTest1.setWeight(1);
+        weightsExerciseTest2.setWeight(100);
+
+        assertEquals(1, weightsExerciseTest1.getWeight());
+        assertEquals(100, weightsExerciseTest2.getWeight());
+    }
+
+    @Test
+    public void testSetSets() {
+        weightsExerciseTest1.setSets(1);
+        weightsExerciseTest2.setSets(100);
+
+        assertEquals(1, weightsExerciseTest1.getSets());
+        assertEquals(100, weightsExerciseTest2.getSets());
+    }
+
+    @Test
+    public void testSetReps() {
+        weightsExerciseTest1.setReps(1);
+        weightsExerciseTest2.setReps(100);
+
+        assertEquals(1, weightsExerciseTest1.getReps());
+        assertEquals(100, weightsExerciseTest2.getReps());
+    }
 }

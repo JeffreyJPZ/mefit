@@ -71,4 +71,22 @@ public class BodyWeightsExerciseTest {
                         + "Reps: " + bodyWeightsExerciseTest2.getReps(),
                 bodyWeightsExerciseTest2.toString());
     }
+
+    @Test
+    public void testSetSets() {
+        bodyWeightsExerciseTest1.setSets(1);
+        bodyWeightsExerciseTest2.setSets(100);
+
+        assertEquals(1, bodyWeightsExerciseTest1.getSets());
+        assertEquals(100, bodyWeightsExerciseTest2.getSets());
+    }
+
+    @Test
+    public void testSetReps() {
+        bodyWeightsExerciseTest1.setReps(1);
+        bodyWeightsExerciseTest2.setReps(100);
+
+        assertEquals(1, bodyWeightsExerciseTest1.getReps());
+        assertEquals(100, bodyWeightsExerciseTest2.getReps());
+    }
 }

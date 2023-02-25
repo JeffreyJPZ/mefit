@@ -66,4 +66,13 @@ public class CardioExerciseTest {
                         + "Distance: " + cardioExerciseTest2.getDistance(),
                 cardioExerciseTest2.toString());
     }
+
+    @Test
+    public void testSetDistance() {
+        cardioExerciseTest1.setDistance(1);
+        cardioExerciseTest2.setDistance(100);
+
+        assertEquals(1, cardioExerciseTest1.getDistance());
+        assertEquals(100, cardioExerciseTest2.getDistance());
+    }
 }
