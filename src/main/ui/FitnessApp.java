@@ -459,16 +459,16 @@ public class FitnessApp {
                 renameExercise();
                 return true;
             case "2":
-                exercise.setMuscleGroup(editMuscleGroup());
+                setExerciseMuscleGroup();
                 return true;
             case "3":
-                exercise.setDifficulty(editDifficulty());
+                setExerciseDifficulty();
                 return true;
             case "4":
                 setExerciseTime();
                 return true;
             case "5":
-                exercise.setFavourite(!exercise.isFavourite());
+                setExerciseFavourite();
                 return true;
             case "<":
                 return true;
@@ -492,6 +492,20 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
+    // EFFECTS: sets exercise muscle group given user input
+    private void setExerciseMuscleGroup() {
+        MuscleGroup muscleGroup = editMuscleGroup();
+        exercise.setMuscleGroup(muscleGroup);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets exercise difficulty given user input
+    private void setExerciseDifficulty() {
+        Difficulty difficulty = editDifficulty();
+        exercise.setDifficulty(difficulty);
+    }
+
+    // MODIFIES: this
     // EFFECTS: sets exercise time given user input
     private void setExerciseTime() {
         String input;
@@ -500,6 +514,12 @@ public class FitnessApp {
         input = scanner.next();
 
         exercise.setTime(parseInt(input));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: unfavourites or favourites exercise given user input
+    private void setExerciseFavourite() {
+        exercise.setFavourite(!exercise.isFavourite());
     }
 
     // MODIFIES: this
@@ -683,17 +703,19 @@ public class FitnessApp {
     // MODIFIES: this
     // EFFECTS: filters exercises by muscle group given user input
     private void filterExercisesByMuscleGroup() {
-        exercisesByName = exercisesByName.filterMuscleGroup(editMuscleGroup());
+        MuscleGroup muscleGroup = editMuscleGroup();
+        exercisesByName = exercisesByName.filterMuscleGroup(muscleGroup);
     }
 
     // MODIFIES: this
     // EFFECTS: filters exercises by difficulty given user input
     private void filterExercisesByDifficulty() {
-        exercisesByName = exercisesByName.filterDifficulty(editDifficulty());
+        Difficulty difficulty = editDifficulty();
+        exercisesByName = exercisesByName.filterDifficulty(difficulty);
     }
 
     // MODIFIES: this
-    // EFFECTS: filters exercises by time <= given input
+    // EFFECTS: filters exercises with time <= user inputted time
     private void filterExercisesByTime() {
         String input;
         System.out.println("Enter the exercise time you wish to filter by (all times <= given)");
@@ -983,16 +1005,16 @@ public class FitnessApp {
                 renameWorkout();
                 break;
             case "2":
-                workout.setDifficulty(editDifficulty());
+                setWorkoutDifficulty();
                 break;
             case "3":
-                workout.setFavourite(!workout.isFavourite());
+                setWorkoutFavourite();
                 break;
             case "4":
                 workoutExerciseOptions();
                 break;
             case "5":
-                workout.clear();
+                clearWorkout();
         }
         menuNavigation(input);
     }
@@ -1008,6 +1030,25 @@ public class FitnessApp {
         workoutsByName.removeWorkout(workout.getName());
         workout.setName(input);
         workoutsByName.addWorkout(workout);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets workout difficulty given user input
+    private void setWorkoutDifficulty() {
+        Difficulty difficulty = editDifficulty();
+        workout.setDifficulty(difficulty);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: if workout is favourited, unfavourites workout; if workout is unfavourited, favourites workout
+    private void setWorkoutFavourite() {
+        workout.setFavourite(!workout.isFavourite());
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes all exercises from workout
+    private void clearWorkout() {
+        workout.clear();
     }
 
     // MODIFIES: this
@@ -1137,26 +1178,66 @@ public class FitnessApp {
     private void filterWorkouts(String input) {
         switch (input) {
             case "1":
-                System.out.println("Enter the name of the workout(s) you wish to filter for");
-                input = scanner.nextLine();
-                workoutsByName = workoutsByName.filter(input);
+                filterWorkoutsByName();
                 break;
             case "2":
-                workoutsByName = workoutsByName.filterDifficulty(editDifficulty());
+                filterWorkoutsByDifficulty();
                 break;
             case "3":
-                System.out.println("Enter the time of the workout(s) you wish to filter for (all <= given)");
-                input = scanner.next();
-                workoutsByName = workoutsByName.filterTime(parseInt(input));
+                filterWorkoutsByTime();
                 break;
             case "4":
-                System.out.println("Enter the # of exercises of the workout(s) you wish to filter for (all <= given)");
-                input = scanner.next();
-                workoutsByName = workoutsByName.filterNumberOfExercises(parseInt(input));
+                filterWorkoutsByNumberOfExercises();
                 break;
             case "5":
-                workoutsByName = workoutsByName.filterFavourite();
+                filterWorkoutsByFavourite();
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: filters workouts by name given user input
+    private void filterWorkoutsByName() {
+        String input;
+
+        System.out.println("Enter the name of the workout(s) you wish to filter for");
+        input = scanner.nextLine();
+
+        workoutsByName = workoutsByName.filter(input);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: filters workouts by difficulty matching user input
+    private void filterWorkoutsByDifficulty() {
+        Difficulty difficulty = editDifficulty();
+        workoutsByName = workoutsByName.filterDifficulty(difficulty);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: filters workouts with time <= user inputted time
+    private void filterWorkoutsByTime() {
+        String input;
+
+        System.out.println("Enter the time of the workout(s) you wish to filter for (all <= given)");
+        input = scanner.next();
+
+        workoutsByName = workoutsByName.filterTime(parseInt(input));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: filters workouts with number of exercises <= user inputted number
+    private void filterWorkoutsByNumberOfExercises() {
+        String input;
+
+        System.out.println("Enter the # of exercises of the workout(s) you wish to filter for (all <= given)");
+        input = scanner.next();
+
+        workoutsByName = workoutsByName.filterNumberOfExercises(parseInt(input));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: filters workouts by favourited status
+    private void filterWorkoutsByFavourite() {
+        workoutsByName = workoutsByName.filterFavourite();
     }
 
     // MODIFIES: this
