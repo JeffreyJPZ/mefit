@@ -172,7 +172,7 @@ public class FitnessApp {
 
     // MODIFIES: this
     // EFFECTS: checks if input is a valid input, if input is not accepted then indicates an invalid
-    //          input
+    //          input; keeps user in profile menu until exit key is pressed
     private void profileMenu(String id) {
         profile = profilesByIdSaved.getProfile(parseInt(id));
         String input = "";
@@ -272,27 +272,59 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: selects the appropriate profile info functionality given user input
+    // EFFECTS: selects the appropriate profile info option given user input
     private void profileInfoSelection(String input) {
         switch (input) {
             case "1":
-                System.out.println("Enter your new name:");
-                input = scanner.nextLine();
-                profile.setName(input);
+                setProfileName();
             case "2":
-                System.out.println("Enter your new gender:");
-                input = scanner.nextLine();
-                profile.setGender(input);
+                setProfileGender();
             case "3":
-                System.out.println("Enter your new age:");
-                input = scanner.next();
-                profile.setAge(parseInt(input));
+                setProfileAge();
             case "4":
-                System.out.println("Enter your new weight:");
-                input = scanner.next();
-                profile.setAge(parseInt(input));
+                setProfileWeight();
         }
         menuNavigation(input);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the name for profile given user input
+    private void setProfileName() {
+        String input;
+
+        System.out.println("Enter your new name:");
+        input = scanner.nextLine();
+        profile.setName(input);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the gender for profile given user input
+    private void setProfileGender() {
+        String input;
+
+        System.out.println("Enter your new gender:");
+        input = scanner.nextLine();
+        profile.setGender(input);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the age for profile given user input
+    private void setProfileAge() {
+        String input;
+
+        System.out.println("Enter your new age:");
+        input = scanner.next();
+        profile.setAge(parseInt(input));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the weight for profile given user input
+    private void setProfileWeight() {
+        String input;
+
+        System.out.println("Enter your new weight:");
+        input = scanner.next();
+        profile.setWeight(parseInt(input));
     }
 
     // MODIFIES: this
@@ -305,7 +337,7 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: prints the key options for the exercises menu for a profile
+    // EFFECTS: prints the key options for the exercises menu for a profile and a string representation for exercises
     private void displayExercisesMenu() {
         System.out.println("Exercises");
         System.out.println(exercisesByName.toString());
@@ -321,8 +353,8 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: checks if user input is valid for the exercises menu, if invalid then indicates an invalid input
-    //          and keeps user in exercises menu until exit key is pressed
+    // EFFECTS: checks if user input is valid for the exercises menu, if invalid then indicates an invalid input;
+    //          keeps user in exercises menu until exit key is pressed
     private void exercisesMenu() {
         String input = "";
         String[] inputs = {"1", "2", "3", "4", "5", "<", "/"};
@@ -386,7 +418,7 @@ public class FitnessApp {
         if (exercisesByName.contains(input)) {
             exerciseMenu(input);
         } else {
-            System.out.println("Exercise cannot be found \n");
+            System.out.println("Exercise cannot be found\n");
         }
     }
 
@@ -566,7 +598,7 @@ public class FitnessApp {
 
         // Checks if input matches muscle group position, sets muscle group if matching and breaks out of loop
         for (Difficulty difficulty : Difficulty.values()) {
-            int position = difficulty.ordinal() + 1; // UPDATE COUNTER
+            int position = difficulty.ordinal() + 1;
             if (input == position) {
                 retDifficulty = difficulty;
                 break;
@@ -577,7 +609,7 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: selects appropriate additional exercise options based on exercise type and returns true if
+    // EFFECTS: selects appropriate additional exercise option based on exercise type and returns true if
     //          input matches an option, otherwise returns false
     private boolean additionalExerciseOptions(String input) {
         boolean retBoolean = false;
@@ -597,7 +629,7 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: selects appropriate additional exercise options for weights exercise and returns true if
+    // EFFECTS: selects appropriate additional exercise option for weights exercise and returns true if
     //          input matches an option, otherwise returns false
     private boolean editWeightsExercise(WeightsExercise weightsExercise, String input) {
         switch (input) {
@@ -621,7 +653,7 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: selects appropriate additional exercise options for bodyweights exercise and returns true if
+    // EFFECTS: selects appropriate additional exercise option for bodyweights exercise and returns true if
     //          input matches an option, otherwise returns false
     private boolean editBodyWeightsExercise(BodyWeightsExercise bodyWeightsExercise, String input) {
         switch (input) {
@@ -640,7 +672,7 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: selects appropriate additional exercise options for cardio exercise and returns true if
+    // EFFECTS: selects appropriate additional exercise option for cardio exercise and returns true if
     //          input matches an option, otherwise returns false
     private boolean editCardioExercise(CardioExercise cardioExercise, String input) {
         if (input.equals("6")) {
@@ -664,7 +696,7 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: selects the appropriate filtering functionality based on user input
+    // EFFECTS: selects the appropriate filtering option based on user input
     private void filterExercises() {
         String input;
 
