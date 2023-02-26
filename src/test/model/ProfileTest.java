@@ -57,13 +57,13 @@ class ProfileTest {
     public void testToString() {
         String tempToString1 = "Name: " + profileTest1.getName() + "\n"
                             + "Gender: " + profileTest1.getGender() + "\n"
-                            + "Age: " + profileTest1.getAge() + "\n"
-                            + "Weight: " + profileTest1.getWeight();
+                            + "Age (yrs): " + profileTest1.getAge() + "\n"
+                            + "Weight (lbs): " + profileTest1.getWeight();
 
         String tempToString2 = "Name: " + profileTest2.getName() + "\n"
                 + "Gender: " + profileTest2.getGender() + "\n"
-                + "Age: " + profileTest2.getAge() + "\n"
-                + "Weight: " + profileTest2.getWeight();
+                + "Age (yrs): " + profileTest2.getAge() + "\n"
+                + "Weight (lbs): " + profileTest2.getWeight();
 
         assertEquals(tempToString1, profileTest1.toString());
         assertEquals(tempToString2, profileTest2.toString());

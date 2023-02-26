@@ -193,6 +193,13 @@ public class ProfilesByIdTest {
     }
 
     @Test
+    public void testFilterEmptyMapNoMatch() {
+        ProfilesById profilesById = profilesByIdTest1.filter("1");
+
+        assertEquals(0, profilesById.getProfiles().size());
+    }
+
+    @Test
     public void testFilterSingleProfileInMapMatches() {
         addProfileHelper(profilesByIdTest1, 1);
         ProfilesById profilesById = profilesByIdTest1.filter("1");

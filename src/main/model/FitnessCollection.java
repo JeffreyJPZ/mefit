@@ -3,7 +3,6 @@ package model;
 // Represents a collection of objects for a fitness application
 public interface FitnessCollection {
 
-    // REQUIRES: this is not empty
     // MODIFIES: this
     // EFFECTS: returns a string representation of the given collection
     @Override
@@ -11,8 +10,8 @@ public interface FitnessCollection {
 
     // REQUIRES: name is not empty
     // MODIFIES: this
-    // EFFECTS: returns a collection of elements satisfying the given string
-    FitnessCollection filter(String string);
+    // EFFECTS: returns a collection of elements satisfying the given name
+    FitnessCollection filter(String name);
 
     // REQUIRES: name is not empty
     // MODIFIES: this

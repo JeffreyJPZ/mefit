@@ -30,7 +30,6 @@ public class ProfilesById implements FitnessCollection {
     }
 
     @Override
-    // REQUIRES: profile map is not empty
     // MODIFIES: this
     // EFFECTS: if number of profiles in map <= DISPLAY_NUMBER_OF_PROFILES, returns the profile id and name of the first
     //          for each profile up to the first DISPLAY_NUMBER_OF_PROFILES profiles in map,
@@ -56,7 +55,6 @@ public class ProfilesById implements FitnessCollection {
         }
     }
 
-    // REQUIRES: profile map is not empty and string matches at least one element in profile map
     // MODIFIES: this
     // EFFECTS: returns a mapping of profiles where string matches the beginning of the profile name case insensitively
     public ProfilesById filter(String name) {

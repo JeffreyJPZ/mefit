@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CardioExerciseTest {
     private CardioExercise cardioExerciseTest1;
     private CardioExercise cardioExerciseTest2;
-    private CardioExercise cardioExerciseTest3;
 
     @BeforeEach
     public void runBefore() {
@@ -38,7 +37,8 @@ public class CardioExerciseTest {
 
     @Test
     public void testConstructorBoundary() {
-        cardioExerciseTest3 = new CardioExercise("Bike", MuscleGroup.LEGS, 1, Difficulty.LIGHT, 1);
+        CardioExercise cardioExerciseTest3 = new CardioExercise("Bike", MuscleGroup.LEGS, 1,
+                Difficulty.LIGHT, 1);
 
         assertEquals("Bike", cardioExerciseTest3.getName());
         assertEquals(MuscleGroup.LEGS, cardioExerciseTest3.getMuscleGroup());
@@ -53,17 +53,17 @@ public class CardioExerciseTest {
         assertEquals("Exercise Name: " + cardioExerciseTest1.getName() + "\n"
                         + "Muscle Group: " + cardioExerciseTest1.getMuscleGroup().getMuscleGroup() + "\n"
                         + "Difficulty: " + cardioExerciseTest1.getDifficulty().getDifficulty() + "\n"
-                        + "Time: " + cardioExerciseTest1.getTime() + "\n"
+                        + "Time (min): " + cardioExerciseTest1.getTime() + "\n"
                         + "Favourite?: " + cardioExerciseTest1.isFavourite() + "\n"
-                        + "Distance: " + cardioExerciseTest1.getDistance(),
+                        + "Distance (m): " + cardioExerciseTest1.getDistance(),
                 cardioExerciseTest1.toString());
 
         assertEquals("Exercise Name: " + cardioExerciseTest2.getName() + "\n"
                         + "Muscle Group: " + cardioExerciseTest2.getMuscleGroup().getMuscleGroup() + "\n"
                         + "Difficulty: " + cardioExerciseTest2.getDifficulty().getDifficulty() + "\n"
-                        + "Time: " + cardioExerciseTest2.getTime() + "\n"
+                        + "Time (min): " + cardioExerciseTest2.getTime() + "\n"
                         + "Favourite?: " + cardioExerciseTest2.isFavourite() + "\n"
-                        + "Distance: " + cardioExerciseTest2.getDistance(),
+                        + "Distance (m): " + cardioExerciseTest2.getDistance(),
                 cardioExerciseTest2.toString());
     }
 

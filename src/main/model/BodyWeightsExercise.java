@@ -1,11 +1,12 @@
 package model;
 
-// Represents a bodyweight exercise with its description
+// Represents a bodyweight exercise with a name, muscle group, # of sets, # of reps, difficulty, and time (min),
+// and unfavourited
 public class BodyWeightsExercise extends Exercise {
     private int sets;
     private int reps;
 
-    // REQUIRES: name, muscleGroup are not empty; sets, reps, difficulty, time > 0
+    // REQUIRES: name is not empty; sets, reps, time > 0
     // EFFECTS: makes a bodyweight exercise with a name, muscle group, # of sets, # of reps, difficulty, and time (min),
     //          and unfavourited
     public BodyWeightsExercise(String name, MuscleGroup muscleGroup, int sets, int reps,

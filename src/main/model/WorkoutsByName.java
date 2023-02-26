@@ -30,7 +30,6 @@ public class WorkoutsByName implements FitnessCollection {
         workouts.remove(name);
     }
 
-    // REQUIRES: workouts is not empty
     // MODIFIES: this
     // EFFECTS: if the number of workouts in map <= DISPLAY_NUMBER_OF_WORKOUTS, returns a string representation
     //          of the workout name, difficulty, time, # of exercises, and whether it is favourited up to the first
@@ -62,7 +61,6 @@ public class WorkoutsByName implements FitnessCollection {
         }
     }
 
-    // REQUIRES: workouts map is not empty and name matches at least one element in workout map
     // MODIFIES: this
     // EFFECTS: returns a mapping of workouts with their name matching given name case insensitively
     @Override
@@ -80,7 +78,6 @@ public class WorkoutsByName implements FitnessCollection {
         return workoutsByName;
     }
 
-    // REQUIRES: workouts map is not empty and difficulty matches at least one element in workout map
     // MODIFIES: this
     // EFFECTS: returns a mapping of workouts with difficulty matching given difficulty
     public WorkoutsByName filterDifficulty(Difficulty difficulty) {
@@ -95,7 +92,6 @@ public class WorkoutsByName implements FitnessCollection {
         return workoutsByName;
     }
 
-    // REQUIRES: workout map is not empty and at least one element in workout map <= time
     // MODIFIES: this
     // EFFECTS: returns a mapping of workouts with their time <= time
     public WorkoutsByName filterTime(int time) {
@@ -110,8 +106,7 @@ public class WorkoutsByName implements FitnessCollection {
         return workoutsByName;
     }
 
-    // REQUIRES: workout map is not empty and at least one element in workout map <= numberOfExercises
-    // MODIFIES: this
+   // MODIFIES: this
     // EFFECTS: returns a mapping of workouts with their number of exercises <= time
     public WorkoutsByName filterNumberOfExercises(int numberOfExercises) {
         WorkoutsByName workoutsByName = new WorkoutsByName();
@@ -125,7 +120,6 @@ public class WorkoutsByName implements FitnessCollection {
         return workoutsByName;
     }
 
-    // REQUIRES: workout map is not empty and at least one element in workout map is favourited
     // MODIFIES: this
     // EFFECTS: returns a mapping of workouts that are favourited
     public WorkoutsByName filterFavourite() {
@@ -149,7 +143,7 @@ public class WorkoutsByName implements FitnessCollection {
 
     @Override
     // MODIFIES: this
-    // EFFECTS: returns the length of the workout map
+    // EFFECTS: returns true if the workout is empty, otherwise returns false
     public boolean isEmpty() {
         return workouts.isEmpty();
     }

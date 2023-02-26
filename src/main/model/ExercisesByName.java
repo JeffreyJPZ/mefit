@@ -61,7 +61,6 @@ public class ExercisesByName implements FitnessCollection {
         }
     }
 
-    // REQUIRES: exercise map is not empty and string matches at least one element in exercise map
     // MODIFIES: this
     // EFFECTS: returns a mapping of exercises where string matches the beginning of the exercise name
     //          case insensitively
@@ -79,7 +78,6 @@ public class ExercisesByName implements FitnessCollection {
         return exercisesByName;
     }
 
-    // REQUIRES: exercise map is not empty and muscleGroup matches at least one element in exercise map
     // MODIFIES: this
     // EFFECTS: returns a mapping of exercises with muscle group matching muscleGroup
     public ExercisesByName filterMuscleGroup(MuscleGroup muscleGroup) {
@@ -94,7 +92,6 @@ public class ExercisesByName implements FitnessCollection {
         return exercisesByName;
     }
 
-    // REQUIRES: exercise map is not empty and difficulty matches at least one element in exercise map
     // MODIFIES: this
     // EFFECTS: returns a mapping of exercises with difficulty matching given difficulty
     public ExercisesByName filterDifficulty(Difficulty difficulty) {
@@ -109,7 +106,6 @@ public class ExercisesByName implements FitnessCollection {
         return exercisesByName;
     }
 
-    // REQUIRES: exercise map is not empty and at least one element in exercise map <= time
     // MODIFIES: this
     // EFFECTS: returns a mapping of exercises with their time <= time
     public ExercisesByName filterTime(int time) {
@@ -123,7 +119,6 @@ public class ExercisesByName implements FitnessCollection {
         return exercisesByName;
     }
 
-    // REQUIRES: exercise map is not empty and at least one element in exercise map is favourited
     // MODIFIES: this
     // EFFECTS: returns a mapping of exercises that are favourited
     public ExercisesByName filterFavourite() {

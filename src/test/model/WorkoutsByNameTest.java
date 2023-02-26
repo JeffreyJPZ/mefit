@@ -155,6 +155,13 @@ public class WorkoutsByNameTest {
     }
 
     @Test
+    public void testFilterByNameEmptyWorkoutsNoMatch() {
+        WorkoutsByName workoutsByName = workoutsByNameTest1.filter("1");
+
+        assertEquals(0, workoutsByName.length());
+    }
+
+    @Test
     public void testFilterByNameSingleWorkoutInMapAndMatches() {
         addWorkoutHelper(workoutsByNameTest1, 1);
 
@@ -198,6 +205,13 @@ public class WorkoutsByNameTest {
     }
 
     @Test
+    public void testFilterByDifficultyEmptyWorkoutsNoMatch() {
+        WorkoutsByName workoutsByName = workoutsByNameTest1.filterDifficulty(Difficulty.MODERATE);
+
+        assertEquals(0, workoutsByName.length());
+    }
+
+    @Test
     public void testFilterByDifficultySingleWorkoutInMapAndMatches() {
         addWorkoutHelper(workoutsByNameTest1, 1);
 
@@ -216,6 +230,13 @@ public class WorkoutsByNameTest {
         assertEquals(2, workoutsByName.length());
         assertEquals("2", workoutsByName.getWorkout("2").getName());
         assertEquals("4", workoutsByName.getWorkout("4").getName());
+    }
+
+    @Test
+    public void testFilterByTimeEmptyWorkoutsNoMatch() {
+        WorkoutsByName workoutsByName = workoutsByNameTest1.filterTime(10);
+
+        assertEquals(0, workoutsByName.length());
     }
 
     @Test
@@ -274,6 +295,13 @@ public class WorkoutsByNameTest {
         assertEquals(2, workoutsByName.length());
         assertEquals("1", workoutsByName.getWorkout("1").getName());
         assertEquals("2", workoutsByName.getWorkout("2").getName());
+    }
+
+    @Test
+    public void testFilterByNumberOfExercisesEmptyWorkoutsNoMatch() {
+        WorkoutsByName workoutsByName = workoutsByNameTest1.filterNumberOfExercises(5);
+
+        assertEquals(0, workoutsByName.length());
     }
 
     @Test
@@ -346,6 +374,13 @@ public class WorkoutsByNameTest {
         assertEquals(2, workoutsByName.length());
         assertEquals("2", workoutsByName.getWorkout("2").getName());
         assertEquals("3", workoutsByName.getWorkout("3").getName());
+    }
+
+    @Test
+    public void testFilterFavouriteEmptyWorkoutsNoMatch() {
+        WorkoutsByName workoutsByName = workoutsByNameTest1.filterFavourite();
+
+        assertEquals(0, workoutsByName.length());
     }
 
     @Test

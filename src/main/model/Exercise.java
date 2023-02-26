@@ -2,7 +2,7 @@ package model;
 
 import static java.lang.Boolean.*;
 
-// Represents an exercise with basic information
+// Represents an exercise with basic information of name, muscle group, difficulty, and time (min)
 public abstract class Exercise {
     protected String name;
     protected MuscleGroup muscleGroup;
@@ -10,7 +10,8 @@ public abstract class Exercise {
     protected int time;
     protected Boolean favourite;
 
-    // EFFECTS: Makes a new exercise with a name, muscle group worked, difficulty, and time (min)-
+    // REQUIRES: name is not empty; time > 0
+    // EFFECTS: Makes a new exercise with a name, muscle group worked, difficulty, and time (min)
     public Exercise(String name, MuscleGroup muscleGroup, Difficulty difficulty, int time) {
         this.name = name;
         this.muscleGroup = muscleGroup;
@@ -19,7 +20,6 @@ public abstract class Exercise {
         this.favourite = FALSE;
     }
 
-    // REQUIRES: exercises contains at least one exercise
     // MODIFIES: this
     // EFFECTS: returns a string representation of the exercise description
     public String toString() {

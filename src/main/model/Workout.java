@@ -105,7 +105,6 @@ public class Workout {
     }
 
     @Override
-    // REQUIRES: exercises is not empty
     // MODIFIES: this
     // EFFECTS: returns a string representation of the workout name, difficulty, time (min), number of exercises,
     //          whether it is favourited and exercises

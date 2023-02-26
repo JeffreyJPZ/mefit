@@ -8,6 +8,8 @@ public enum Difficulty {
 
     private final int difficulty;
 
+    // MODIFIES: this
+    // EFFECTS: makes a difficulty with a level
     Difficulty(int difficulty) {
         this.difficulty = difficulty;
     }

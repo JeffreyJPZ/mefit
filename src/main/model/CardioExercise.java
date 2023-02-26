@@ -1,12 +1,11 @@
 package model;
 
-import static java.lang.Boolean.*;
-
-// Represents a cardiovascular exercise with its description
+// Represents a cardiovascular exercise with a name, muscle group, distance (m), difficulty, time (min),
+// and unfavourited
 public class CardioExercise extends Exercise {
     private int distance;
 
-    // REQUIRES: name, muscleGroup are not empty; distance, difficulty, time > 0
+    // REQUIRES: name is not empty; distance, time > 0
     // EFFECTS: makes a cardio exercise with a name, muscle group, distance (m), difficulty, time (min),
     //          and unfavourited
     public CardioExercise(String name, MuscleGroup muscleGroup, int distance, Difficulty difficulty, int time) {

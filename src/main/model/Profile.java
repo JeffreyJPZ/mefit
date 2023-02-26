@@ -2,7 +2,7 @@ package model;
 
 // Represents a user profile with a name, age (in years), gender, weight (lbs), exercises, and workouts
 public class Profile {
-    private static int nextId = 1; // account number (attributed from TellerApp)
+    private static int nextId = 1; // account number of the next profile (adapted from TellerApp)
 
     private int id;
     private String name;
@@ -77,16 +77,16 @@ public class Profile {
 
     // MODIFIES: this
     // EFFECTS: returns a string representation of profile with
-    //          first and last name, gender, age in years, and weight in lbs
+    //          profile name, gender, age in years, and weight in lbs
     @Override
     public String toString() {
         return "Name: " + name + "\n"
                 +
                 "Gender: " + gender + "\n"
                 +
-                "Age: " + age + "\n"
+                "Age (yrs): " + age + "\n"
                 +
-                "Weight: " + weight;
+                "Weight (lbs): " + weight;
     }
 
 }

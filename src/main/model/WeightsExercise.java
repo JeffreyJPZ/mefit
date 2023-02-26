@@ -8,7 +8,7 @@ public class WeightsExercise extends Exercise {
     private int sets;
     private int reps;
 
-    // REQUIRES: name, muscleGroup are not empty, weight, sets, reps, difficulty, time > 0
+    // REQUIRES: name is not empty; weight, sets, reps, time > 0
     // EFFECTS: makes a new exercise with a name, muscle group, weight in lbs, # of sets, # of reps,
     //          difficulty, time (min), and unfavourited
     public WeightsExercise(String name, MuscleGroup muscleGroup, int weight, int sets, int reps,
@@ -21,11 +21,11 @@ public class WeightsExercise extends Exercise {
 
     // MODIFIES: this
     // EFFECTS: returns a string representation with the exercise's name, muscle group,
-    //          weight, sets, reps, difficulty, and time
+    //          weight in lbs, sets, reps, difficulty, and time
     @Override
     public String toString() {
         return super.toString() + "\n"
-                + "Weight: " + weight + "\n"
+                + "Weight (lbs): " + weight + "\n"
                 + "Sets: " + sets + "\n"
                 + "Reps: " + reps;
     }

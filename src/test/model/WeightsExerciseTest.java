@@ -59,9 +59,9 @@ public class WeightsExerciseTest {
         assertEquals("Exercise Name: " + weightsExerciseTest1.getName() + "\n"
                         + "Muscle Group: " + weightsExerciseTest1.getMuscleGroup().getMuscleGroup() + "\n"
                         + "Difficulty: " + weightsExerciseTest1.getDifficulty().getDifficulty() + "\n"
-                        + "Time: " + weightsExerciseTest1.getTime() + "\n"
+                        + "Time (min): " + weightsExerciseTest1.getTime() + "\n"
                         + "Favourite?: " + weightsExerciseTest1.isFavourite() + "\n"
-                        + "Weight: " + weightsExerciseTest1.getWeight() + "\n"
+                        + "Weight (lbs): " + weightsExerciseTest1.getWeight() + "\n"
                         + "Sets: " + weightsExerciseTest1.getSets() + "\n"
                         + "Reps: " + weightsExerciseTest1.getReps(),
                 weightsExerciseTest1.toString());
@@ -69,9 +69,9 @@ public class WeightsExerciseTest {
         assertEquals("Exercise Name: " + weightsExerciseTest2.getName() + "\n"
                         + "Muscle Group: " + weightsExerciseTest2.getMuscleGroup().getMuscleGroup() + "\n"
                         + "Difficulty: " + weightsExerciseTest2.getDifficulty().getDifficulty() + "\n"
-                        + "Time: " + weightsExerciseTest2.getTime() + "\n"
+                        + "Time (min): " + weightsExerciseTest2.getTime() + "\n"
                         + "Favourite?: " + weightsExerciseTest2.isFavourite() + "\n"
-                        + "Weight: " + weightsExerciseTest2.getWeight() + "\n"
+                        + "Weight (lbs): " + weightsExerciseTest2.getWeight() + "\n"
                         + "Sets: " + weightsExerciseTest2.getSets() + "\n"
                         + "Reps: " + weightsExerciseTest2.getReps(),
                 weightsExerciseTest2.toString());
