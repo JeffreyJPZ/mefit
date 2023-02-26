@@ -22,5 +22,5 @@ edit them. You will also be able to generate a workout schedule with your list o
 - As a user, I want to be able to make a new exercise and add it to a list of exercises for my profile.
 - As a user, I want to be able to view and delete exercises from my profile.
 - As a user, I want to be able to select an exercise and edit its information,
-  including sets, reps, muscle groups, and personal difficulty.
+  including its name, muscle group, difficulty, and time.
 - As a user, I want to be able to generate a workout schedule with the list of exercises for my profile.
