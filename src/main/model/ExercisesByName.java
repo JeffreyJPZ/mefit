@@ -11,31 +11,31 @@ public class ExercisesByName implements FitnessCollection {
 
     private Map<String, Exercise> exercises;
 
-    // EFFECTS: Makes an empty map of exercises
+    // EFFECTS: Makes a map of exercises with no exercises
     public ExercisesByName() {
         exercises = new LinkedHashMap<>();
     }
 
-    // REQUIRES: exercise map does not contain an exercise with the same name ignoring case
+    // REQUIRES: exercises does not contain an exercise with the same name ignoring case
     // MODIFIES: this
-    // EFFECTS: adds an exercise to the exercise map
+    // EFFECTS: adds an exercise to the exercises
     public void addExercise(Exercise exercise) {
         exercises.put(exercise.getName(), exercise);
     }
 
-    // REQUIRES: exercise map is not empty and name matches an exercise
+    // REQUIRES: exercises is not empty and name matches an exercise
     // MODIFIES: this
-    // EFFECTS: removes the exercise from the exercise map with the given name
+    // EFFECTS: removes an exercise from the exercises with the given name
     public void removeExercise(String name) {
         exercises.remove(name);
     }
 
     @Override
     // MODIFIES: this
-    // EFFECTS: if number of exercises in map <= DISPLAY_NUMBER_OF_EXERCISES,
+    // EFFECTS: if number of exercises  <= DISPLAY_NUMBER_OF_EXERCISES,
     //          returns the exercise name, muscle group, difficulty, time and whether the exercise is favourited
-    //          up to the first DISPLAY_NUMBER_OF_EXERCISES exercises in map,
-    //          otherwise also returns the number of remaining exercises in map and ADDITIONAL_EXERCISE_MESSAGE
+    //          up to the first DISPLAY_NUMBER_OF_EXERCISES exercises,
+    //          otherwise also returns the number of remaining exercises and ADDITIONAL_EXERCISE_MESSAGE
     public String toString() {
         String retString = "Name\tMuscle Group\tDifficulty\tTime (min)\t Favourite?" + "\n";
         int count = 0;
@@ -62,7 +62,7 @@ public class ExercisesByName implements FitnessCollection {
     }
 
     // MODIFIES: this
-    // EFFECTS: returns a mapping of exercises where string matches the beginning of the exercise name
+    // EFFECTS: returns the exercises where string matches the beginning of the exercise name
     //          case insensitively
     public ExercisesByName filter(String name) {
         ExercisesByName exercisesByName = new ExercisesByName();
@@ -79,7 +79,7 @@ public class ExercisesByName implements FitnessCollection {
     }
 
     // MODIFIES: this
-    // EFFECTS: returns a mapping of exercises with muscle group matching muscleGroup
+    // EFFECTS: returns the exercises with muscle group matching muscleGroup
     public ExercisesByName filterMuscleGroup(MuscleGroup muscleGroup) {
         ExercisesByName exercisesByName = new ExercisesByName();
 
@@ -93,7 +93,7 @@ public class ExercisesByName implements FitnessCollection {
     }
 
     // MODIFIES: this
-    // EFFECTS: returns a mapping of exercises with difficulty matching given difficulty
+    // EFFECTS: returns the exercises with difficulty matching given difficulty
     public ExercisesByName filterDifficulty(Difficulty difficulty) {
         ExercisesByName exercisesByName = new ExercisesByName();
 
@@ -107,7 +107,7 @@ public class ExercisesByName implements FitnessCollection {
     }
 
     // MODIFIES: this
-    // EFFECTS: returns a mapping of exercises with their time <= time
+    // EFFECTS: returns the exercises with their time <= time
     public ExercisesByName filterTime(int time) {
         ExercisesByName exercisesByName = new ExercisesByName();
 
@@ -120,7 +120,7 @@ public class ExercisesByName implements FitnessCollection {
     }
 
     // MODIFIES: this
-    // EFFECTS: returns a mapping of exercises that are favourited
+    // EFFECTS: returns the exercises that are favourited
     public ExercisesByName filterFavourite() {
         ExercisesByName exercisesByName = new ExercisesByName();
 
@@ -133,26 +133,26 @@ public class ExercisesByName implements FitnessCollection {
     }
 
     // MODIFIES: this
-    // EFFECTS: returns true if exercise with same name is in map, otherwise returns false
+    // EFFECTS: returns true if exercise with same name in the exercises, otherwise returns false
     public boolean contains(String name) {
         return exercises.containsKey(name);
     }
 
     // MODIFIES: this
-    // EFFECTS: returns true if map is empty, otherwise returns false
+    // EFFECTS: returns true if exercises has no exercises, otherwise returns false
     public boolean isEmpty() {
         return exercises.isEmpty();
     }
 
     // MODIFIES: this
-    // EFFECTS: returns the length of the exercise map
+    // EFFECTS: returns the number of exercises
     public int length() {
         return exercises.size();
     }
 
-    // REQUIRES: exercise map is not empty and name matches an exercise
+    // REQUIRES: exercises is not empty and name matches an exercise
     // MODIFIES: this
-    // EFFECTS: returns the exercise with the given name in exercise map
+    // EFFECTS: returns the exercise with the given name in exercises
     public Exercise getExercise(String name) {
         return exercises.get(name);
     }

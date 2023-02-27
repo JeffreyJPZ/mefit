@@ -17,23 +17,23 @@ public class ProfilesById implements FitnessCollection {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds a profile to the profile map
+    // EFFECTS: adds a profile to the profiles
     public void addProfile(Profile profile) {
         profiles.put(profile.getId(), profile);
     }
 
-    // REQUIRES: profile map is not empty, id > 0 and matches a profile
+    // REQUIRES: profiles is not empty, id > 0 and matches a profile
     // MODIFIES: this
-    // EFFECTS: removes the profile from the profile map with the given id
+    // EFFECTS: removes the profile from the profiles with the given id
     public void removeProfile(int id) {
         profiles.remove(id);
     }
 
     @Override
     // MODIFIES: this
-    // EFFECTS: if number of profiles in map <= DISPLAY_NUMBER_OF_PROFILES, returns the profile id and name of the first
-    //          for each profile up to the first DISPLAY_NUMBER_OF_PROFILES profiles in map,
-    //          otherwise also returns the number of remaining profiles in map and ADDITIONAL_PROFILE_MESSAGE
+    // EFFECTS: if number of profiles <= DISPLAY_NUMBER_OF_PROFILES, returns the profile id and name of the first
+    //          for each profile up to the first DISPLAY_NUMBER_OF_PROFILES profiles,
+    //          otherwise also returns the number of remaining profiles and ADDITIONAL_PROFILE_MESSAGE
     public String toString() {
         String retString = "ID\tName" + "\n";
         int count = 0;
@@ -56,7 +56,7 @@ public class ProfilesById implements FitnessCollection {
     }
 
     // MODIFIES: this
-    // EFFECTS: returns a mapping of profiles where string matches the beginning of the profile name case insensitively
+    // EFFECTS: returns the profiles where string matches the beginning of the profile name case insensitively
     public ProfilesById filter(String name) {
         ProfilesById profilesById = new ProfilesById();
 
@@ -83,27 +83,27 @@ public class ProfilesById implements FitnessCollection {
     }
 
     // MODIFIES: this
-    // EFFECTS: returns true if profile with given id is in map, otherwise returns false
+    // EFFECTS: returns true if the profiles contain a profile with the given id, otherwise returns false
     public boolean contains(int id) {
         return profiles.containsKey(id);
     }
 
 
     // MODIFIES: this
-    // EFFECTS: returns true if map is empty, otherwise returns false
+    // EFFECTS: returns true if profiles has no profiles, otherwise returns false
     public boolean isEmpty() {
         return profiles.isEmpty();
     }
 
     // MODIFIES: this
-    // EFFECTS: returns the length of the profile map
+    // EFFECTS: returns the number of profiles
     public int length() {
         return profiles.size();
     }
 
-    // REQUIRES: profile map is not empty, id > 0 and matches a profile
+    // REQUIRES: profiles is not empty, id > 0 and matches a profile
     // MODIFIES: this
-    // EFFECTS: returns the profile with the given id in profile map
+    // EFFECTS: returns the profile with the given id in the profiles
     public Profile getProfile(int id) {
         return profiles.get(id);
     }
