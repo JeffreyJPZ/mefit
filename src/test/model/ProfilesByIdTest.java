@@ -7,7 +7,7 @@ import static model.ProfilesById.ADDITIONAL_PROFILE_MESSAGE;
 import static model.ProfilesById.DISPLAY_NUMBER_OF_PROFILES;
 import static org.junit.jupiter.api.Assertions.*;
 
-// Test class for ProfilesByIdTest
+// Test class for ProfilesById
 public class ProfilesByIdTest {
     private ProfilesById profilesByIdTest1;
 

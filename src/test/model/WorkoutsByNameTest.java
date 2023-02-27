@@ -8,7 +8,7 @@ import static model.WorkoutsByName.ADDITIONAL_WORKOUT_MESSAGE;
 import static model.WorkoutsByName.DISPLAY_NUMBER_OF_WORKOUTS;
 import static org.junit.jupiter.api.Assertions.*;
 
-// Test class for WorkoutsByNameTest
+// Test class for WorkoutsByName
 public class WorkoutsByNameTest {
     private WorkoutsByName workoutsByNameTest1;
 
