@@ -26,3 +26,6 @@ These workouts can be named and saved.
 - As a user, I want to be able to select an exercise and edit its information,
   including its name, muscle group, difficulty, and time.
 - As a user, I want to be able to generate a workout schedule with the list of exercises for my profile.
+
+- As a user, I want to be able to save all the profiles in the fitness application to file from the main menu.
+- As a user, I want to be able to be able to load saved profiles from file from the main menu.
