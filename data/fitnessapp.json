@@ -1,0 +1,110 @@
+{"profiles": [
+    {
+        "gender": "Male",
+        "exercises": {"exercises": [
+            {
+                "difficulty": 2,
+                "reps": 15,
+                "sets": 3,
+                "muscleGroup": "Chest",
+                "name": "Pushups",
+                "time": 10,
+                "type": "BodyWeightsExercise",
+                "favourite": true
+            },
+            {
+                "difficulty": 1,
+                "reps": 5,
+                "sets": 5,
+                "muscleGroup": "Legs",
+                "name": "Squats",
+                "weight": 225,
+                "time": 30,
+                "type": "WeightsExercise",
+                "favourite": false
+            },
+            {
+                "difficulty": 3,
+                "distance": 2000,
+                "muscleGroup": "Back",
+                "name": "Rowing",
+                "time": 10,
+                "type": "CardioExercise",
+                "favourite": false
+            }
+        ]},
+        "workouts": {"workouts": [
+            {
+                "difficulty": 1,
+                "exercises": [
+                    {
+                        "difficulty": 2,
+                        "reps": 15,
+                        "sets": 3,
+                        "muscleGroup": "Chest",
+                        "name": "Pushups",
+                        "time": 10,
+                        "type": "BodyWeightsExercise",
+                        "favourite": true
+                    },
+                    {
+                        "difficulty": 1,
+                        "reps": 5,
+                        "sets": 5,
+                        "muscleGroup": "Legs",
+                        "name": "Squats",
+                        "weight": 225,
+                        "time": 30,
+                        "type": "WeightsExercise",
+                        "favourite": false
+                    }
+                ],
+                "name": "Holy Hell",
+                "time": 40,
+                "favourite": true
+            },
+            {
+                "difficulty": 3,
+                "exercises": [{
+                    "difficulty": 3,
+                    "distance": 2000,
+                    "muscleGroup": "Back",
+                    "name": "Rowing",
+                    "time": 10,
+                    "type": "CardioExercise",
+                    "favourite": false
+                }],
+                "name": "Hell Holy",
+                "time": 10,
+                "favourite": false
+            }
+        ]},
+        "name": "Jeff",
+        "weight": 150,
+        "id": 1,
+        "age": 18
+    },
+    {
+        "gender": "Other",
+        "exercises": {"exercises": [{
+            "difficulty": 1,
+            "distance": 200,
+            "muscleGroup": "Legs",
+            "name": "Sprints",
+            "time": 20,
+            "type": "CardioExercise",
+            "favourite": false
+        }]},
+        "workouts": {"workouts": [{
+            "difficulty": 3,
+            "exercises": [],
+            "name": "Deadge",
+            "time": 0,
+            "favourite": false
+        }]},
+        "name": "Kai",
+        "weight": 135,
+        "id": 2,
+        "age": 20
+    }
+]}

@@ -1,11 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.JsonWritable;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 // Represents a mapping of exercises by name
-public class ExercisesByName implements FitnessCollection {
+public class ExercisesByName implements FitnessCollection, JsonWritable {
     public static final int DISPLAY_NUMBER_OF_EXERCISES = 10;
     public static final String ADDITIONAL_EXERCISE_MESSAGE = " additional exercises";
 
@@ -31,7 +35,6 @@ public class ExercisesByName implements FitnessCollection {
     }
 
     @Override
-    // MODIFIES: this
     // EFFECTS: if number of exercises  <= DISPLAY_NUMBER_OF_EXERCISES,
     //          returns the exercise name, muscle group, difficulty, time and whether the exercise is favourited
     //          up to the first DISPLAY_NUMBER_OF_EXERCISES exercises,
@@ -61,7 +64,6 @@ public class ExercisesByName implements FitnessCollection {
         }
     }
 
-    // MODIFIES: this
     // EFFECTS: returns the exercises where string matches the beginning of the exercise name
     //          case insensitively
     public ExercisesByName filter(String name) {
@@ -78,7 +80,6 @@ public class ExercisesByName implements FitnessCollection {
         return exercisesByName;
     }
 
-    // MODIFIES: this
     // EFFECTS: returns the exercises with muscle group matching muscleGroup
     public ExercisesByName filterMuscleGroup(MuscleGroup muscleGroup) {
         ExercisesByName exercisesByName = new ExercisesByName();
@@ -92,7 +93,6 @@ public class ExercisesByName implements FitnessCollection {
         return exercisesByName;
     }
 
-    // MODIFIES: this
     // EFFECTS: returns the exercises with difficulty matching given difficulty
     public ExercisesByName filterDifficulty(Difficulty difficulty) {
         ExercisesByName exercisesByName = new ExercisesByName();
@@ -106,7 +106,6 @@ public class ExercisesByName implements FitnessCollection {
         return exercisesByName;
     }
 
-    // MODIFIES: this
     // EFFECTS: returns the exercises with their time <= time
     public ExercisesByName filterTime(int time) {
         ExercisesByName exercisesByName = new ExercisesByName();
@@ -119,7 +118,6 @@ public class ExercisesByName implements FitnessCollection {
         return exercisesByName;
     }
 
-    // MODIFIES: this
     // EFFECTS: returns the exercises that are favourited
     public ExercisesByName filterFavourite() {
         ExercisesByName exercisesByName = new ExercisesByName();
@@ -132,26 +130,22 @@ public class ExercisesByName implements FitnessCollection {
         return exercisesByName;
     }
 
-    // MODIFIES: this
     // EFFECTS: returns true if exercise with same name in the exercises, otherwise returns false
     public boolean contains(String name) {
         return exercises.containsKey(name);
     }
 
-    // MODIFIES: this
     // EFFECTS: returns true if exercises has no exercises, otherwise returns false
     public boolean isEmpty() {
         return exercises.isEmpty();
     }
 
-    // MODIFIES: this
     // EFFECTS: returns the number of exercises
     public int length() {
         return exercises.size();
     }
 
     // REQUIRES: exercises is not empty and name matches an exercise
-    // MODIFIES: this
     // EFFECTS: returns the exercise with the given name in exercises
     public Exercise getExercise(String name) {
         return exercises.get(name);
@@ -159,5 +153,26 @@ public class ExercisesByName implements FitnessCollection {
 
     public Map<String, Exercise> getExercises() {
         return exercises;
+    }
+
+    // EFFECTS: Returns a json object with exercises
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("exercises", exercisesToJson());
+
+        return jsonObject;
+    }
+
+    // EFFECTS: Returns a json array with exercises
+    private JSONArray exercisesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Exercise exercise : exercises.values()) {
+            jsonArray.put(exercise.toJson());
+        }
+
+        return jsonArray;
     }
 }

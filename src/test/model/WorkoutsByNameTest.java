@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -493,6 +494,33 @@ public class WorkoutsByNameTest {
 
         assertEquals(workout1, workoutsByNameTest1.getWorkout("1"));
         assertEquals(workout2, workoutsByNameTest1.getWorkout("2"));
+    }
+
+    @Test
+    public void testToJsonEmptyWorkouts() {
+        JSONObject jsonObjectTest1 = workoutsByNameTest1.toJson();
+
+        assertTrue(jsonObjectTest1.getJSONArray("workouts").isEmpty());
+    }
+
+    @Test
+    public void testToJsonMultipleWorkouts() {
+        addWorkoutHelper(workoutsByNameTest1, 2);
+
+        JSONObject jsonObjectTest1 = workoutsByNameTest1.toJson();
+
+        JSONObject jsonObjectWorkout1 = jsonObjectTest1.getJSONArray("workouts").getJSONObject(0);
+        JSONObject jsonObjectWorkout2 = jsonObjectTest1.getJSONArray("workouts").getJSONObject(1);
+
+        assertEquals("1", jsonObjectWorkout1.getString("name"));
+        assertEquals(1, jsonObjectWorkout1.get("difficulty"));
+        assertEquals(0, jsonObjectWorkout1.getInt("time"));
+        assertFalse(jsonObjectWorkout1.getBoolean("favourite"));
+
+        assertEquals("2", jsonObjectWorkout2.getString("name"));
+        assertEquals(2, jsonObjectWorkout2.get("difficulty"));
+        assertEquals(0, jsonObjectWorkout2.getInt("time"));
+        assertFalse(jsonObjectWorkout2.getBoolean("favourite"));
     }
 
     private void addWorkoutHelper(WorkoutsByName workoutsByName, int repeats) {

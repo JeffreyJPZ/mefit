@@ -1,12 +1,16 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.JsonWritable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Boolean.*;
 
 // Represents a number of exercises organized into a workout
-public class Workout {
+public class Workout implements JsonWritable {
     private String name;
     private Difficulty difficulty;
     private int time;
@@ -93,7 +97,6 @@ public class Workout {
         time = 0;
     }
 
-    // MODIFIES: this
     // EFFECTS: returns true if exercise with the same name ignoring case is in list, otherwise returns false
     public boolean contains(String name) {
         for (Exercise exercise : exercises) {
@@ -105,7 +108,6 @@ public class Workout {
     }
 
     @Override
-    // MODIFIES: this
     // EFFECTS: returns a string representation of the workout name, difficulty, time (min), number of exercises,
     //          whether it is favourited and exercises
     public String toString() {
@@ -153,15 +155,17 @@ public class Workout {
         this.time = time;
     }
 
+    public void setExercises(List<Exercise> exercises) {
+        this.exercises = exercises;
+    }
+
     // REQUIRES: 1 <= position <= exercises.size()
-    // MODIFIES: this
     // EFFECTS: returns the exercise at the given position in the workout
     public Exercise getExercise(int position) {
         return exercises.get(position - 1);
     }
 
     // REQUIRES: string is not empty
-    // MODIFIES: this
     // EFFECTS: returns the exercise with the given name in the workout case insensitively if found,
     //          otherwise does nothing
     //
@@ -192,5 +196,30 @@ public class Workout {
 
     public List<Exercise> getExercises() {
         return exercises;
+    }
+
+    // EFFECTS: Makes a json object with workout name, difficulty, time, favourite status, and exercises
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("name", name);
+        jsonObject.put("difficulty", difficulty.getDifficulty());
+        jsonObject.put("time", time);
+        jsonObject.put("favourite", favourite);
+        jsonObject.put("exercises", exercisesToJson());
+
+        return jsonObject;
+    }
+
+    // EFFECTS: Makes a json array with workout exercises
+    public JSONArray exercisesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Exercise exercise : exercises) {
+            jsonArray.put(exercise.toJson());
+        }
+
+        return jsonArray;
     }
 }

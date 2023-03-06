@@ -1,0 +1,149 @@
+{"profiles": [
+  {
+    "gender": "1",
+    "exercises": {"exercises": [
+      {
+        "difficulty": 2,
+        "reps": 15,
+        "sets": 3,
+        "muscleGroup": "Chest",
+        "name": "Pushups",
+        "time": 10,
+        "type": "BodyWeightsExercise",
+        "favourite": true
+      },
+      {
+        "difficulty": 1,
+        "reps": 5,
+        "sets": 5,
+        "muscleGroup": "Legs",
+        "name": "Squats",
+        "weight": 225,
+        "time": 30,
+        "type": "WeightsExercise",
+        "favourite": false
+      },
+      {
+        "difficulty": 3,
+        "distance": 2000,
+        "muscleGroup": "Back",
+        "name": "Rowing",
+        "time": 10,
+        "type": "CardioExercise",
+        "favourite": true
+      },
+      {
+        "difficulty": 2,
+        "reps": 15,
+        "sets": 3,
+        "muscleGroup": "Core",
+        "name": "Death",
+        "time": 15,
+        "type": "BodyWeightsExercise",
+        "favourite": true
+      },
+      {
+        "difficulty": 1,
+        "distance": 1000,
+        "muscleGroup": "Shoulders",
+        "name": "Handstand Sprints",
+        "time": 100,
+        "type": "CardioExercise",
+        "favourite": false
+      },
+      {
+        "difficulty": 1,
+        "reps": 8,
+        "sets": 10,
+        "muscleGroup": "Arms",
+        "name": "Bicep Curls",
+        "weight": 50,
+        "time": 30,
+        "type": "WeightsExercise",
+        "favourite": false
+      }
+    ]},
+    "workouts": {"workouts": [
+      {
+        "difficulty": 1,
+        "exercises": [
+          {
+            "difficulty": 2,
+            "reps": 15,
+            "sets": 3,
+            "muscleGroup": "Chest",
+            "name": "Pushups",
+            "time": 10,
+            "type": "BodyWeightsExercise",
+            "favourite": true
+          },
+          {
+            "difficulty": 3,
+            "reps": 5,
+            "sets": 5,
+            "muscleGroup": "Legs",
+            "name": "Squats",
+            "weight": 225,
+            "time": 30,
+            "type": "WeightsExercise",
+            "favourite": false
+          }
+        ],
+        "name": "Holy Hell",
+        "time": 40,
+        "favourite": true
+      },
+      {
+        "difficulty": 3,
+        "exercises": [{
+          "difficulty": 3,
+          "distance": 2000,
+          "muscleGroup": "Back",
+          "name": "Rowing",
+          "time": 10,
+          "type": "CardioExercise",
+          "favourite": false
+        }],
+        "name": "Hell Holy",
+        "time": 10,
+        "favourite": false
+      }
+    ]},
+    "name": "A",
+    "weight": 1,
+    "id": 1,
+    "age": 1
+  },
+  {
+    "gender": "Other",
+    "exercises": {"exercises": [{
+      "difficulty": 1,
+      "distance": 200,
+      "muscleGroup": "Legs",
+      "name": "Sprints",
+      "time": 20,
+      "type": "CardioExercise",
+      "favourite": false
+    }]},
+    "workouts": {"workouts": [{
+      "difficulty": 2,
+      "exercises": [],
+      "name": "Deadge",
+      "time": 0,
+      "favourite": false
+    }]},
+    "name": "B",
+    "weight": 2,
+    "id": 2,
+    "age": 2
+  },
+  {
+    "gender": "Bozo",
+    "exercises": {"exercises": []},
+    "workouts": {"workouts": []},
+    "name": "C",
+    "weight": 3,
+    "id": 3,
+    "age": 3
+  }
+]}

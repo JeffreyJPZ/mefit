@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -308,45 +309,45 @@ public class ProfilesByIdTest {
         assertFalse(profilesByIdTest1.contains(6));
     }
     @Test
-    public void isEmptyEmptyMap() {
+    public void testIsEmptyEmptyMap() {
         assertTrue(profilesByIdTest1.isEmpty());
     }
 
     @Test
-    public void isEmptySingleProfileInMap() {
+    public void testIsEmptySingleProfileInMap() {
         addProfileHelper(profilesByIdTest1, 1);
 
         assertFalse(profilesByIdTest1.isEmpty());
     }
 
     @Test
-    public void isEmptyMultipleProfileInMap() {
+    public void testIsEmptyMultipleProfileInMap() {
         addProfileHelper(profilesByIdTest1, 3);
 
         assertFalse(profilesByIdTest1.isEmpty());
     }
 
     @Test
-    public void lengthEmptyMap() {
+    public void testLengthEmptyMap() {
         assertEquals(0, profilesByIdTest1.length());
     }
 
     @Test
-    public void lengthSingleProfileInMap() {
+    public void testLengthSingleProfileInMap() {
         addProfileHelper(profilesByIdTest1, 1);
 
         assertEquals(1, profilesByIdTest1.length());
     }
 
     @Test
-    public void lengthMultipleProfileInMap() {
+    public void testLengthMultipleProfileInMap() {
         addProfileHelper(profilesByIdTest1, 2);
 
         assertEquals(2, profilesByIdTest1.length());
     }
 
     @Test
-    public void getProfileOneProfileInMap() {
+    public void testGetProfileOneProfileInMap() {
         Profile profile1 = new Profile("1", "1", 1, 1);
 
         profilesByIdTest1.addProfile(profile1);
@@ -355,7 +356,7 @@ public class ProfilesByIdTest {
     }
 
     @Test
-    public void getProfileMultipleProfileInMap() {
+    public void testGetProfileMultipleProfileInMap() {
         Profile profile1 = new Profile("1", "1", 1, 1);
         Profile profile2 = new Profile("2", "2", 2, 2);
 
@@ -364,6 +365,39 @@ public class ProfilesByIdTest {
 
         assertEquals(profile1, profilesByIdTest1.getProfile(1));
         assertEquals(profile2, profilesByIdTest1.getProfile(2));
+    }
+
+    @Test
+    public void testToJsonEmptyProfiles() {
+        JSONObject jsonObjectTest1 = profilesByIdTest1.toJson();
+
+        assertTrue(jsonObjectTest1.getJSONArray("profiles").isEmpty());
+    }
+
+    @Test
+    public void testToJsonMultipleProfiles() {
+        addProfileHelper(profilesByIdTest1, 2);
+
+        JSONObject jsonObjectTest1 = profilesByIdTest1.toJson();
+
+        JSONObject jsonObjectProfile1 = jsonObjectTest1.getJSONArray("profiles").getJSONObject(0);
+        JSONObject jsonObjectProfile2 = jsonObjectTest1.getJSONArray("profiles").getJSONObject(1);
+
+        assertEquals(1, jsonObjectProfile1.getInt("id"));
+        assertEquals("1", jsonObjectProfile1.getString("name"));
+        assertEquals("1", jsonObjectProfile1.getString("gender"));
+        assertEquals(1, jsonObjectProfile1.getInt("age"));
+        assertEquals(1, jsonObjectProfile1.getInt("weight"));
+        assertTrue(jsonObjectProfile1.getJSONObject("exercises").getJSONArray("exercises").isEmpty());
+        assertTrue(jsonObjectProfile1.getJSONObject("workouts").getJSONArray("workouts").isEmpty());
+
+        assertEquals(2, jsonObjectProfile2.getInt("id"));
+        assertEquals("2", jsonObjectProfile2.getString("name"));
+        assertEquals("2", jsonObjectProfile2.getString("gender"));
+        assertEquals(2, jsonObjectProfile2.getInt("age"));
+        assertEquals(2, jsonObjectProfile2.getInt("weight"));
+        assertTrue(jsonObjectProfile2.getJSONObject("exercises").getJSONArray("exercises").isEmpty());
+        assertTrue(jsonObjectProfile2.getJSONObject("workouts").getJSONArray("workouts").isEmpty());
     }
 
     private void addProfileHelper(ProfilesById profilesById, int repeats) {

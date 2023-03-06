@@ -1,21 +1,30 @@
 package ui;
 
+import exceptions.InvalidExerciseException;
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
 // Represents a fitness application with user profiles, editing and viewing of exercises and workouts
 public class FitnessApp {
+    private static final String PATH = "./data/fitnessapp.json";
+
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
     private ProfilesById profilesById;
-    private ProfilesById profilesByIdSaved;
+    private ProfilesById profilesByIdMaster;
     private Profile profile;
     private ExercisesByName exercisesByName;
-    private ExercisesByName exercisesByNameSaved;
+    private ExercisesByName exercisesByNameMaster;
     private Exercise exercise;
     private WorkoutsByName workoutsByName;
-    private WorkoutsByName workoutsByNameSaved;
+    private WorkoutsByName workoutsByNameMaster;
     private Workout workout;
     private Scanner scanner;
 
@@ -34,7 +43,7 @@ public class FitnessApp {
 
         while (run) {
             mainMenu();
-            input = scanner.nextLine().toLowerCase();
+            input = scanner.next().toLowerCase();
 
             if (input.equals("/")) {
                 run = false;
@@ -49,8 +58,10 @@ public class FitnessApp {
     // EFFECTS: initializes the profiles for the application and input
     private void init() {
         profilesById = new ProfilesById();
-        profilesByIdSaved = profilesById;
+        profilesByIdMaster = profilesById;
         scanner = new Scanner(System.in);
+        jsonWriter = new JsonWriter(PATH);
+        jsonReader = new JsonReader(PATH);
     }
 
     // MODIFIES: this
@@ -59,10 +70,9 @@ public class FitnessApp {
         System.out.println("Fitness App\n");
         System.out.println("Select from the following options:");
         System.out.println("\t\"1\" to access a profile by id");
-        System.out.println("\t\"2\" to filter for matching profiles by name");
-        System.out.println("\t\"3\" to reset filters");
-        System.out.println("\t\"4\" to create a profile");
-        System.out.println("\t\"5\" to delete a profile");
+        System.out.println("\t\"2\" for profile filtering options");
+        System.out.println("\t\"3\" for profile creation/deletion options");
+        System.out.println("\t\"4\" to save/load profiles to/from file");
         System.out.println("\t\"/\" to exit the application\n");
         System.out.println(profilesById.toString());
     }
@@ -74,24 +84,117 @@ public class FitnessApp {
             case "1":
                 resetProfiles();
                 accessProfile();
+                break;
             case "2":
-                filterProfiles();
+                filterOrResetFilters();
                 break;
             case "3":
                 resetProfiles();
+                createOrDeleteProfile();
                 break;
             case "4":
                 resetProfiles();
-                createProfile();
-                break;
-            case "5":
-                resetProfiles();
-                deleteProfile();
+                saveOrLoadProfile();
                 break;
             case "/":
                 break;
             default:
                 invalidSelection();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: enters the menu for profile filtering/resetting filtering and prompts user
+    public void filterOrResetFilters() {
+        System.out.println("Select from the following options:");
+        System.out.println("\t\"1\" to filter profiles by name");
+        System.out.println("\t\"2\" to reset filters");
+
+        String input = scanner.next();
+        scanner.nextLine();
+
+        switch (input) {
+            case "1":
+                filterProfiles();
+                break;
+            case "2":
+                resetProfiles();
+                break;
+            default:
+                invalidSelection();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: enters the menu for profile creation/deletion and prompts user
+    public void createOrDeleteProfile() {
+        System.out.println("Select from the following options:");
+        System.out.println("\t\"1\" to create a profile");
+        System.out.println("\t\"2\" to delete a profile");
+
+        String input = scanner.next();
+        scanner.nextLine();
+
+        switch (input) {
+            case "1":
+                createProfile();
+                break;
+            case "2":
+                deleteProfile();
+                break;
+            default:
+                invalidSelection();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: enters the menu for profile saving/loading and prompts user
+    public void saveOrLoadProfile() {
+        System.out.println("Select from the following options:");
+        System.out.println("\t\"1\" to save profiles to file");
+        System.out.println("\t\"2\" to load saved profiles from file");
+
+        String input = scanner.next();
+        scanner.nextLine();
+
+        switch (input) {
+            case "1":
+                saveProfiles();
+                break;
+            case "2":
+                loadProfiles();
+                break;
+            default:
+                invalidSelection();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: writes profiles to file with given path
+    //          and indicates success if successfully written, otherwise indicates failure
+    public void saveProfiles() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(profilesById);
+            jsonWriter.close();
+            System.out.println("Successfully saved to: " + PATH + "\n");
+        } catch (FileNotFoundException e) {
+            System.out.println("Could not save to: " + PATH + "\n");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: reads profiles from file and indicates success if successfully read,
+    //          otherwise indicates failure
+    public void loadProfiles() {
+        try {
+            profilesById = jsonReader.read();
+            profilesByIdMaster = profilesById;
+            System.out.println("Successfully loaded from: " + PATH + "\n");
+        } catch (InvalidExerciseException e) {
+            System.out.println("Invalid exercise type encountered in: " + PATH + "\n");
+        } catch (IOException e) {
+            System.out.println("Could not load from: " + PATH + "\n");
         }
     }
 
@@ -103,7 +206,7 @@ public class FitnessApp {
         System.out.println("Type the id number of the profile you wish to access:");
         input = scanner.next();
 
-        if (profilesByIdSaved.contains(parseInt(input))) {
+        if (profilesByIdMaster.contains(parseInt(input))) {
             profileMenu(input);
         } else {
             System.out.println("Profile cannot be found");
@@ -125,14 +228,13 @@ public class FitnessApp {
     // MODIFIES: this
     // EFFECTS: resets profiles to unfiltered state
     private void resetProfiles() {
-        profilesById = profilesByIdSaved;
+        profilesById = profilesByIdMaster;
     }
 
     // MODIFIES: this
     // EFFECTS: makes a profile with user inputted name, gender, age, and weight and adds it to the profiles
     private void createProfile() {
         Map<String, String> profileData = new LinkedHashMap<>();
-        String input;
 
         profileData.put("name", null);
         profileData.put("gender", null);
@@ -143,7 +245,7 @@ public class FitnessApp {
 
         for (String data : profileData.keySet()) {
             System.out.println("Enter your " + data + ":");
-            input = scanner.nextLine();
+            String input = scanner.nextLine();
             profileData.replace(data, input);
         }
 
@@ -174,10 +276,12 @@ public class FitnessApp {
     // EFFECTS: checks if input is a valid input, if input is not accepted then indicates an invalid
     //          input; keeps user in profile menu until exit key is pressed
     private void profileMenu(String id) {
-        profile = profilesByIdSaved.getProfile(parseInt(id));
+        profile = profilesByIdMaster.getProfile(parseInt(id));
         String input = "";
         String[] inputs = {"1", "2", "3", "<", "/"};
         boolean isInputInvalid;
+
+        scanner.nextLine();
 
         while (!input.equals("<")) {
             displayProfileMenu();
@@ -277,10 +381,13 @@ public class FitnessApp {
         switch (input) {
             case "1":
                 setProfileName();
+                break;
             case "2":
                 setProfileGender();
+                break;
             case "3":
                 setProfileAge();
+                break;
             case "4":
                 setProfileWeight();
         }
@@ -331,7 +438,7 @@ public class FitnessApp {
     // EFFECTS: processes the exercises for a profile
     private void exercisesMenuForProfile() {
         exercisesByName = profile.getExercises();
-        exercisesByNameSaved = exercisesByName;
+        exercisesByNameMaster = exercisesByName;
 
         exercisesMenu();
     }
@@ -542,7 +649,7 @@ public class FitnessApp {
     private void setExerciseTime() {
         String input;
 
-        System.out.println("Enter the new exercise time:");
+        System.out.println("Enter the new exercise time (min):");
         input = scanner.next();
 
         exercise.setTime(parseInt(input));
@@ -634,7 +741,7 @@ public class FitnessApp {
     private boolean editWeightsExercise(WeightsExercise weightsExercise, String input) {
         switch (input) {
             case "6":
-                System.out.println("Enter the new exercise weight:");
+                System.out.println("Enter the new exercise weight (lbs):");
                 input = scanner.next();
                 weightsExercise.setWeight(parseInt(input));
                 return true;
@@ -701,7 +808,7 @@ public class FitnessApp {
         String input;
 
         displayFilterExercisesMenu();
-        input = scanner.next();
+        input = scanner.nextLine();
 
         switch (input) {
             case "1":
@@ -766,7 +873,7 @@ public class FitnessApp {
     // MODIFIES: this
     // EFFECTS: resets exercise filters
     private void resetExercises() {
-        exercisesByName = exercisesByNameSaved;
+        exercisesByName = exercisesByNameMaster;
     }
 
     // MODIFIES: this
@@ -820,6 +927,8 @@ public class FitnessApp {
         }
 
         exercisesByName.addExercise(exercise);
+
+        scanner.nextLine(); // clears scanner so that next cycle does not result in invalid input
     }
 
     // MODIFIES: this
@@ -827,7 +936,7 @@ public class FitnessApp {
     private Exercise createWeightsExercise(Map<String, String> exerciseData) {
         String input;
 
-        System.out.println("Enter the weight of the exercise:");
+        System.out.println("Enter the weight of the exercise (lbs):");
         input = scanner.next();
         exerciseData.put("weight", input);
         System.out.println("Enter the sets of the exercise:");
@@ -893,7 +1002,7 @@ public class FitnessApp {
     // EFFECTS: accesses the workouts for a profile and enters the menu for workouts
     private void workoutsMenuForProfile() {
         workoutsByName = profile.getWorkouts();
-        workoutsByNameSaved = workoutsByName;
+        workoutsByNameMaster = workoutsByName;
 
         workoutsMenu();
     }
@@ -977,8 +1086,7 @@ public class FitnessApp {
         input = scanner.nextLine();
 
         if (workoutsByName.contains(input)) {
-            workout = workoutsByName.getWorkout(input);
-            workoutMenu();
+            workoutMenu(input);
         } else {
             System.out.println("Workout cannot be found \n");
         }
@@ -1003,7 +1111,8 @@ public class FitnessApp {
     // MODIFIES: this
     // EFFECTS: checks if user input matches a workout menu option, if invalid indicates an invalid option;
     //          keeps user in workout menu until exit key is pressed
-    private void workoutMenu() {
+    private void workoutMenu(String name) {
+        workout = workoutsByName.getWorkout(name);
         String input = "";
         String[] inputs = {"1", "2", "3", "4", "5", "<", "/"};
         boolean isInputInvalid;
@@ -1200,7 +1309,7 @@ public class FitnessApp {
 
         displayFilterWorkoutsMenu();
 
-        input = scanner.next();
+        input = scanner.nextLine();
 
         filterWorkouts(input);
     }
@@ -1275,7 +1384,7 @@ public class FitnessApp {
     // MODIFIES: this
     // EFFECTS: removes filters from the user workouts
     private void resetWorkouts() {
-        workoutsByName = workoutsByNameSaved;
+        workoutsByName = workoutsByNameMaster;
     }
 
     // MODIFIES: this
@@ -1297,6 +1406,8 @@ public class FitnessApp {
         Workout workout = new Workout(workoutData.get("name"), editDifficulty());
 
         workoutsByName.addWorkout(workout);
+
+        scanner.nextLine(); // clears scanner so that next cycle does not result in invalid input
     }
 
     // MODIFIES: this

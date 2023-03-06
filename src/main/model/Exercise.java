@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.JsonWritable;
+import persistence.JsonWriter;
+
 import static java.lang.Boolean.*;
 
 // Represents an exercise with basic information of name, muscle group, difficulty, and time (min)
-public abstract class Exercise {
+public abstract class Exercise implements JsonWritable {
     protected String name;
     protected MuscleGroup muscleGroup;
     protected Difficulty difficulty;
@@ -20,7 +24,6 @@ public abstract class Exercise {
         this.favourite = FALSE;
     }
 
-    // MODIFIES: this
     // EFFECTS: returns a string representation of the exercise description
     public String toString() {
         return "Exercise Name: " + name + "\n"
@@ -70,4 +73,18 @@ public abstract class Exercise {
         this.favourite = favourite;
     }
 
+    // EFFECTS: creates a json object with exercise name, muscle group, difficulty, time (min), and favourited status
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("type", getClass().getSimpleName());
+        jsonObject.put("name", name);
+        jsonObject.put("muscleGroup", muscleGroup.getMuscleGroup());
+        jsonObject.put("difficulty", difficulty.getDifficulty());
+        jsonObject.put("time", time);
+        jsonObject.put("favourite", favourite);
+
+        return jsonObject;
+    }
 }

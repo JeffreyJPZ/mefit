@@ -1,0 +1,20 @@
+{"profiles": [
+    {
+        "gender": "1",
+        "exercises": {"exercises": []},
+        "workouts": {"workouts": []},
+        "name": "1",
+        "weight": 1,
+        "id": 1,
+        "age": 1
+    },
+    {
+        "gender": "2",
+        "exercises": {"exercises": []},
+        "workouts": {"workouts": []},
+        "name": "2",
+        "weight": 2,
+        "id": 2,
+        "age": 2
+    }
+]}

@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -138,5 +139,31 @@ public class WeightsExerciseTest {
 
         assertEquals(1, weightsExerciseTest1.getReps());
         assertEquals(100, weightsExerciseTest2.getReps());
+    }
+
+    @Test
+    public void testToJson() {
+        JSONObject jsonObjectTest1 = weightsExerciseTest1.toJson();
+        JSONObject jsonObjectTest2 = weightsExerciseTest2.toJson();
+
+        assertEquals("WeightsExercise", jsonObjectTest1.getString("type"));
+        assertEquals("Bench Press", jsonObjectTest1.getString("name"));
+        assertEquals("Chest", jsonObjectTest1.get("muscleGroup"));
+        assertEquals(150, jsonObjectTest1.getInt("weight"));
+        assertEquals(3, jsonObjectTest1.getInt("sets"));
+        assertEquals(5, jsonObjectTest1.getInt("reps"));
+        assertEquals(3, jsonObjectTest1.get("difficulty"));
+        assertEquals(30, jsonObjectTest1.getInt("time"));
+        assertFalse(jsonObjectTest1.getBoolean("favourite"));
+
+        assertEquals("WeightsExercise", jsonObjectTest2.getString("type"));
+        assertEquals("Squats", jsonObjectTest2.getString("name"));
+        assertEquals("Legs", jsonObjectTest2.get("muscleGroup"));
+        assertEquals(225, jsonObjectTest2.getInt("weight"));
+        assertEquals(5, jsonObjectTest2.getInt("sets"));
+        assertEquals(8, jsonObjectTest2.getInt("reps"));
+        assertEquals(2, jsonObjectTest2.get("difficulty"));
+        assertEquals(60, jsonObjectTest2.getInt("time"));
+        assertFalse(jsonObjectTest2.getBoolean("favourite"));
     }
 }

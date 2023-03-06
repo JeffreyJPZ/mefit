@@ -1,11 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.JsonWritable;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 // Represents a mapping of workouts by name
-public class WorkoutsByName implements FitnessCollection {
+public class WorkoutsByName implements FitnessCollection, JsonWritable {
     public static final int DISPLAY_NUMBER_OF_WORKOUTS = 10;
     public static final String ADDITIONAL_WORKOUT_MESSAGE = " additional workouts";
 
@@ -30,12 +34,11 @@ public class WorkoutsByName implements FitnessCollection {
         workouts.remove(name);
     }
 
-    // MODIFIES: this
+    @Override
     // EFFECTS: if the number of workouts <= DISPLAY_NUMBER_OF_WORKOUTS, returns a string representation
     //          of the workout name, difficulty, time, # of exercises, and whether it is favourited up to the first
     //          DISPLAY_NUMBER_OF_WORKOUTS workouts
     //          Otherwise, also returns the number of remaining workouts and ADDITIONAL_WORKOUT_MESSAGE
-    @Override
     public String toString() {
         String retString = "Name\tDifficulty\tTime (min)\t# of Exercises\tFavourite?" + "\n";
         int count = 0;
@@ -61,9 +64,8 @@ public class WorkoutsByName implements FitnessCollection {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: returns the workouts with their name matching given name case insensitively
     @Override
+    // EFFECTS: returns the workouts with their name matching given name case insensitively
     public WorkoutsByName filter(String name) {
         WorkoutsByName workoutsByName = new WorkoutsByName();
 
@@ -78,7 +80,6 @@ public class WorkoutsByName implements FitnessCollection {
         return workoutsByName;
     }
 
-    // MODIFIES: this
     // EFFECTS: returns the workouts with difficulty matching given difficulty
     public WorkoutsByName filterDifficulty(Difficulty difficulty) {
         WorkoutsByName workoutsByName = new WorkoutsByName();
@@ -92,7 +93,6 @@ public class WorkoutsByName implements FitnessCollection {
         return workoutsByName;
     }
 
-    // MODIFIES: this
     // EFFECTS: returns the workouts with their time <= time
     public WorkoutsByName filterTime(int time) {
         WorkoutsByName workoutsByName = new WorkoutsByName();
@@ -106,7 +106,6 @@ public class WorkoutsByName implements FitnessCollection {
         return workoutsByName;
     }
 
-   // MODIFIES: this
     // EFFECTS: returns the workouts with their number of exercises <= time
     public WorkoutsByName filterNumberOfExercises(int numberOfExercises) {
         WorkoutsByName workoutsByName = new WorkoutsByName();
@@ -120,7 +119,6 @@ public class WorkoutsByName implements FitnessCollection {
         return workoutsByName;
     }
 
-    // MODIFIES: this
     // EFFECTS: returns the workouts that are favourited
     public WorkoutsByName filterFavourite() {
         WorkoutsByName workoutsByName = new WorkoutsByName();
@@ -134,7 +132,6 @@ public class WorkoutsByName implements FitnessCollection {
         return workoutsByName;
     }
 
-    // MODIFIES: this
     // EFFECTS: returns true if workouts contains a workout with the given name, otherwise returns false
     @Override
     public boolean contains(String name) {
@@ -142,21 +139,18 @@ public class WorkoutsByName implements FitnessCollection {
     }
 
     @Override
-    // MODIFIES: this
     // EFFECTS: returns true if workouts has no workouts, otherwise returns false
     public boolean isEmpty() {
         return workouts.isEmpty();
     }
 
     @Override
-    // MODIFIES: this
     // EFFECTS: returns the number of workouts
     public int length() {
         return workouts.size();
     }
 
     // REQUIRES: workouts is not empty and name matches a workout
-    // MODIFIES: this
     // EFFECTS: returns the workout with the given name
     public Workout getWorkout(String name) {
         return workouts.get(name);
@@ -164,5 +158,26 @@ public class WorkoutsByName implements FitnessCollection {
 
     public Map<String, Workout> getWorkouts() {
         return workouts;
+    }
+
+    @Override
+    // EFFECTS: Returns a json object with workouts
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("workouts", workoutsToJson());
+
+        return jsonObject;
+    }
+
+    // EFFECTS: Returns a json array with workouts
+    private JSONArray workoutsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Workout workout : workouts.values()) {
+            jsonArray.put(workout.toJson());
+        }
+
+        return jsonArray;
     }
 }

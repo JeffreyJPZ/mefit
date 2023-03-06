@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 // Represents a cardiovascular exercise with a name, muscle group, distance (m), difficulty, time (min),
 // and unfavourited
 public class CardioExercise extends Exercise {
@@ -13,7 +15,6 @@ public class CardioExercise extends Exercise {
         this.distance = distance;
     }
 
-    // MODIFIES: this
     // EFFECTS: returns a string representation with the exercise's name, muscle group,
     //          distance, difficulty, and time
     @Override
@@ -28,5 +29,16 @@ public class CardioExercise extends Exercise {
 
     public void setDistance(int distance) {
         this.distance = distance;
+    }
+
+    // EFFECTS: creates a json object with exercise name, muscle group, difficulty, time (min), and favourited status,
+    //          and distance (m)
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = super.toJson();
+
+        jsonObject.put("distance", distance);
+
+        return jsonObject;
     }
 }

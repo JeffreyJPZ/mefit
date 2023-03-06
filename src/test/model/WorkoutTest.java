@@ -1,7 +1,11 @@
 package model;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -394,7 +398,7 @@ public class WorkoutTest {
     public void testGetExerciseByNameNoMatch() {
         addExerciseHelper(workoutTest1, 3);
 
-        assertEquals(null, workoutTest1.getExercise("5"));
+        assertNull(workoutTest1.getExercise("5"));
     }
 
     @Test
@@ -429,6 +433,90 @@ public class WorkoutTest {
 
         assertEquals(1, workoutTest1.getTime());
         assertEquals(100, workoutTest2.getTime());
+    }
+
+    @Test
+    public void testSetExercisesEmptyExercises() {
+        assertTrue(workoutTest1.getExercises().isEmpty());
+
+        workoutTest1.setExercises(new ArrayList<>());
+
+        assertTrue(workoutTest1.getExercises().isEmpty());
+    }
+
+    @Test
+    public void testSetExerciseMultipleExercisesFromEmpty() {
+        assertTrue(workoutTest1.getExercises().isEmpty());
+
+        List<Exercise> exercises = new ArrayList<>();
+        exercises.add(new CardioExercise("1", MuscleGroup.LEGS, 1, Difficulty.LIGHT, 1));
+        exercises.add(new CardioExercise("2", MuscleGroup.BACK, 2, Difficulty.MODERATE, 2));
+
+        workoutTest1.setExercises(exercises);
+
+        assertEquals(2, workoutTest1.length());
+        assertEquals("1", workoutTest1.getExercise("1").getName());
+        assertEquals("2", workoutTest1.getExercise("2").getName());
+    }
+
+    @Test
+    public void testSetExerciseEmptyExercisesFromMultiple() {
+        List<Exercise> exercises = new ArrayList<>();
+        exercises.add(new CardioExercise("1", MuscleGroup.LEGS, 1, Difficulty.LIGHT, 1));
+        exercises.add(new CardioExercise("2", MuscleGroup.BACK, 2, Difficulty.MODERATE, 2));
+
+        workoutTest1.setExercises(exercises);
+
+        assertEquals(2, workoutTest1.length());
+        assertEquals("1", workoutTest1.getExercise("1").getName());
+        assertEquals("2", workoutTest1.getExercise("2").getName());
+
+        workoutTest1.setExercises(new ArrayList<>());
+
+        assertTrue(workoutTest1.getExercises().isEmpty());
+    }
+
+    @Test
+    public void testToJsonEmptyExercises() {
+        JSONObject jsonObjectTest1 = workoutTest1.toJson();
+
+        assertEquals("1", jsonObjectTest1.getString("name"));
+        assertEquals(1, jsonObjectTest1.get("difficulty"));
+        assertEquals(0, jsonObjectTest1.getInt("time"));
+        assertFalse(jsonObjectTest1.getBoolean("favourite"));
+        assertTrue(jsonObjectTest1.getJSONArray("exercises").isEmpty());
+    }
+
+    @Test
+    public void testToJsonMultipleExercises() {
+        addExerciseHelper(workoutTest1, 2);
+
+        JSONObject jsonObjectTest1 = workoutTest1.toJson();
+
+        assertEquals("1", jsonObjectTest1.getString("name"));
+        assertEquals(1, jsonObjectTest1.get("difficulty"));
+        assertEquals(3, jsonObjectTest1.getInt("time"));
+        assertFalse(jsonObjectTest1.getBoolean("favourite"));
+
+        JSONObject jsonObjectExercise1 = jsonObjectTest1.getJSONArray("exercises").getJSONObject(0);
+        JSONObject jsonObjectExercise2 = jsonObjectTest1.getJSONArray("exercises").getJSONObject(1);
+
+        assertEquals("1", jsonObjectExercise1.getString("name"));
+        assertEquals("Chest", jsonObjectExercise1.get("muscleGroup"));
+        assertEquals(1, jsonObjectExercise1.getInt("weight"));
+        assertEquals(1, jsonObjectExercise1.getInt("sets"));
+        assertEquals(1, jsonObjectExercise1.getInt("reps"));
+        assertEquals(1, jsonObjectExercise1.get("difficulty"));
+        assertEquals(1, jsonObjectExercise1.getInt("time"));
+        assertFalse(jsonObjectExercise1.getBoolean("favourite"));
+
+        assertEquals("2", jsonObjectExercise2.getString("name"));
+        assertEquals("Core", jsonObjectExercise2.get("muscleGroup"));
+        assertEquals(2, jsonObjectExercise2.getInt("sets"));
+        assertEquals(2, jsonObjectExercise2.getInt("reps"));
+        assertEquals(2, jsonObjectExercise2.get("difficulty"));
+        assertEquals(2, jsonObjectExercise2.getInt("time"));
+        assertFalse(jsonObjectExercise2.getBoolean("favourite"));
     }
 
     private void addExerciseHelper(Workout workout, int repeats) {

@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 import static java.lang.Boolean.*;
 
 // Represents an exercise using weighted equipment with its description
@@ -19,7 +21,6 @@ public class WeightsExercise extends Exercise {
         this.reps = reps;
     }
 
-    // MODIFIES: this
     // EFFECTS: returns a string representation with the exercise's name, muscle group,
     //          weight in lbs, sets, reps, difficulty, and time
     @Override
@@ -52,5 +53,18 @@ public class WeightsExercise extends Exercise {
 
     public void setReps(int reps) {
         this.reps = reps;
+    }
+
+    // EFFECTS: creates a json object with exercise name, muscle group, difficulty, time (min), and favourited status,
+    //          weight (kg), # of sets, and # of reps
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = super.toJson();
+
+        jsonObject.put("weight", weight);
+        jsonObject.put("sets", sets);
+        jsonObject.put("reps", reps);
+
+        return jsonObject;
     }
 }
