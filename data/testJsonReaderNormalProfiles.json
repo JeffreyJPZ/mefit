@@ -85,6 +85,15 @@
     "age": 18
   },
   {
+    "gender": "Bozo",
+    "exercises": {"exercises": []},
+    "workouts": {"workouts": []},
+    "name": "Bozo",
+    "weight": 1,
+    "id": 3,
+    "age": 1
+  },
+  {
     "gender": "Other",
     "exercises": {"exercises": [{
       "difficulty": 1,

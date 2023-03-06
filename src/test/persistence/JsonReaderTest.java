@@ -37,6 +37,7 @@ public class JsonReaderTest extends JsonTestHelpers {
         try {
             ProfilesById profilesById = jsonReader.read();
             assertTrue(profilesById.isEmpty());
+            assertEquals(1, Profile.getNextId());
         } catch (InvalidExerciseException e) {
             fail("Expected none, caught InvalidExerciseException");
         } catch (IOException e) {
@@ -49,9 +50,11 @@ public class JsonReaderTest extends JsonTestHelpers {
         jsonReader = new JsonReader("./data/testJsonReaderNormalProfiles.json");
         try {
             ProfilesById profilesById = jsonReader.read();
-            assertEquals(2, profilesById.length());
+            assertEquals(3, profilesById.length());
             assertEquals(1, profilesById.getProfile(1).getId());
             assertEquals(2, profilesById.getProfile(2).getId());
+            assertEquals(3, profilesById.getProfile(3).getId());
+            assertEquals(4, Profile.getNextId());
         } catch (InvalidExerciseException e) {
             fail("Expected none, caught InvalidExerciseException");
         } catch (IOException e) {
@@ -71,6 +74,7 @@ public class JsonReaderTest extends JsonTestHelpers {
                     profilesById.getProfile(2));
             checkProfile("C", "Bozo", 3, 3, 3, 0, 0,
                     profilesById.getProfile(3));
+            assertEquals(4, Profile.getNextId());
         } catch (InvalidExerciseException e) {
             fail("Expected none, caught InvalidExerciseException");
         } catch (IOException e) {

@@ -50,7 +50,7 @@ public class Profile implements JsonWritable {
         return id;
     }
 
-    public int getNextId() {
+    public static int getNextId() {
         return nextId;
     }
 
