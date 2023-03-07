@@ -40,28 +40,29 @@ public class ExercisesByName implements FitnessCollection, JsonWritable {
     //          up to the first DISPLAY_NUMBER_OF_EXERCISES exercises,
     //          otherwise also returns the number of remaining exercises and ADDITIONAL_EXERCISE_MESSAGE
     public String toString() {
-        String retString = "Name\tMuscle Group\tDifficulty\tTime (min)\t Favourite?" + "\n";
+        StringBuilder exercisesString = new StringBuilder();
+        exercisesString.append("Name\tMuscle Group\tDifficulty\tTime (min)\t Favourite?\n");
         int count = 0;
 
         for (Exercise exercise: exercises.values()) {
             if (count == DISPLAY_NUMBER_OF_EXERCISES) {
                 break;
             }
-            retString = retString + "[" + exercise.getName() + "]" + "\t"
-                                + exercise.getMuscleGroup().getMuscleGroup() + "\t"
-                                + exercise.getDifficulty().getDifficulty() + "\t"
-                                + exercise.getTime() + "\t"
-                                + exercise.isFavourite() + "\n";
+            exercisesString.append("[").append(exercise.getName()).append("]").append("\t");
+            exercisesString.append(exercise.getMuscleGroup().getMuscleGroup()).append("\t");
+            exercisesString.append(exercise.getDifficulty().getDifficulty()).append("\t");
+            exercisesString.append(exercise.getTime()).append("\t");
+            exercisesString.append(exercise.isFavourite()).append("\n");
             count++;
         }
 
-        if (exercises.size() <= DISPLAY_NUMBER_OF_EXERCISES) {
-            return retString;
-        } else {
-            return retString + "... with "
-                    + (exercises.size() - DISPLAY_NUMBER_OF_EXERCISES)
-                    + ADDITIONAL_EXERCISE_MESSAGE;
+        if (exercises.size() > DISPLAY_NUMBER_OF_EXERCISES) {
+            exercisesString.append("... with ");
+            exercisesString.append((exercises.size() - DISPLAY_NUMBER_OF_EXERCISES));
+            exercisesString.append(ADDITIONAL_EXERCISE_MESSAGE);
         }
+
+        return exercisesString.toString();
     }
 
     // EFFECTS: returns the exercises where string matches the beginning of the exercise name

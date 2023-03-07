@@ -38,24 +38,25 @@ public class ProfilesById implements FitnessCollection, JsonWritable {
     //          for each profile up to the first DISPLAY_NUMBER_OF_PROFILES profiles,
     //          otherwise also returns the number of remaining profiles and ADDITIONAL_PROFILE_MESSAGE
     public String toString() {
-        String retString = "ID\tName" + "\n";
+        StringBuilder profilesString = new StringBuilder();
+        profilesString.append("ID\tName").append("\n");
         int count = 0;
 
         for (Profile profile: profiles.values()) {
             if (count == DISPLAY_NUMBER_OF_PROFILES) {
                 break;
             }
-            retString = retString + "[" + profile.getId() + "]" + "\t" + profile.getName() + "\n";
+            profilesString.append("[").append(profile.getId()).append("]\t").append(profile.getName()).append("\n");
             count++;
         }
 
-        if (profiles.size() <= DISPLAY_NUMBER_OF_PROFILES) {
-            return retString;
-        } else {
-            return retString + "... with "
-                    + (profiles.size() - DISPLAY_NUMBER_OF_PROFILES)
-                    + ADDITIONAL_PROFILE_MESSAGE;
+        if (profiles.size() > DISPLAY_NUMBER_OF_PROFILES) {
+            profilesString.append("... with ");
+            profilesString.append((profiles.size() - DISPLAY_NUMBER_OF_PROFILES));
+            profilesString.append(ADDITIONAL_PROFILE_MESSAGE);
         }
+
+        return profilesString.toString();
     }
 
     // EFFECTS: returns the profiles where string matches the beginning of the profile name case insensitively

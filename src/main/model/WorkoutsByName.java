@@ -40,28 +40,29 @@ public class WorkoutsByName implements FitnessCollection, JsonWritable {
     //          DISPLAY_NUMBER_OF_WORKOUTS workouts
     //          Otherwise, also returns the number of remaining workouts and ADDITIONAL_WORKOUT_MESSAGE
     public String toString() {
-        String retString = "Name\tDifficulty\tTime (min)\t# of Exercises\tFavourite?" + "\n";
+        StringBuilder workoutsString = new StringBuilder();
+        workoutsString.append("Name\tDifficulty\tTime (min)\t# of Exercises\tFavourite?\n");
         int count = 0;
 
         for (Workout workout: workouts.values()) {
             if (count == DISPLAY_NUMBER_OF_WORKOUTS) {
                 break;
             }
-            retString = retString + "[" + workout.getName() + "]" + "\t"
-                    + workout.getDifficulty().getDifficulty() + "\t"
-                    + workout.getTime() + "\t"
-                    + workout.length() + "\t"
-                    + workout.isFavourite() + "\n";
+            workoutsString.append("[").append(workout.getName()).append("]\t");
+            workoutsString.append(workout.getDifficulty().getDifficulty()).append("\t");
+            workoutsString.append(workout.getTime()).append("\t");
+            workoutsString.append(workout.length()).append("\t");
+            workoutsString.append(workout.isFavourite()).append("\n");
             count++;
         }
 
-        if (workouts.size() <= DISPLAY_NUMBER_OF_WORKOUTS) {
-            return retString;
-        } else {
-            return retString + "... with "
-                    + (workouts.size() - DISPLAY_NUMBER_OF_WORKOUTS)
-                    + ADDITIONAL_WORKOUT_MESSAGE;
+        if (workouts.size() > DISPLAY_NUMBER_OF_WORKOUTS) {
+            workoutsString.append("... with ");
+            workoutsString.append((workouts.size() - DISPLAY_NUMBER_OF_WORKOUTS));
+            workoutsString.append(ADDITIONAL_WORKOUT_MESSAGE);
         }
+
+        return workoutsString.toString();
     }
 
     @Override
