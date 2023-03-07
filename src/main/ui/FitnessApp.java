@@ -12,6 +12,7 @@ import java.util.*;
 import static java.lang.Integer.parseInt;
 
 // Represents a fitness application with user profiles, editing and viewing of exercises and workouts
+// attributed to TellerApp from CPSC 210
 public class FitnessApp {
     private static final String PATH = "./data/fitnessapp.json";
 

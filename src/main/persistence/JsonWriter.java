@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import java.io.*;
 
 // Represents a writer for a json representation of profiles to a given file path
-// (attributed to JsonSerializationDemo)
+// attributed to JsonSerializationDemo from CPSC 210
 public class JsonWriter {
     private static final int INDENT = 4; // number of spaces for indentation in json file
 

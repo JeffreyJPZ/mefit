@@ -31,6 +31,16 @@
                 "time": 10,
                 "type": "CardioExercise",
                 "favourite": false
+            },
+            {
+                "difficulty": 2,
+                "reps": 1,
+                "sets": 3,
+                "muscleGroup": "Core",
+                "name": "Plank",
+                "time": 10,
+                "type": "BodyWeightsExercise",
+                "favourite": false
             }
         ]},
         "workouts": {"workouts": [
@@ -48,6 +58,16 @@
                         "favourite": true
                     },
                     {
+                        "difficulty": 2,
+                        "reps": 1,
+                        "sets": 3,
+                        "muscleGroup": "Core",
+                        "name": "Plank",
+                        "time": 10,
+                        "type": "BodyWeightsExercise",
+                        "favourite": false
+                    },
+                    {
                         "difficulty": 1,
                         "reps": 5,
                         "sets": 5,
@@ -60,7 +80,7 @@
                     }
                 ],
                 "name": "Holy Hell",
-                "time": 40,
+                "time": 50,
                 "favourite": true
             },
             {

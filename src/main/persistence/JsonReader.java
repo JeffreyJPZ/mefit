@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-// A reader that reads JSON files for profiles from a given path (attributed to JsonSerializationDemo)
+// A reader that reads JSON files for profiles from a given path
+// attributed to JsonSerializationDemo from CPSC 210
 public class JsonReader {
     private String path;
 

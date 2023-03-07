@@ -20,6 +20,8 @@ You can view saved exercises by various filters, and edit them.
 You will also be able to generate a workout schedule with your list of exercises. 
 These workouts can be named and saved.
 
+Inspiration was taken from TellerApp and JsonSerializationDemo from CPSC 210.
+
 ## User Stories
 - As a user, I want to be able to make a new exercise and add it to a list of exercises for my profile.
 - As a user, I want to be able to view and delete exercises from my profile.

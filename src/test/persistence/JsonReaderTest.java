@@ -11,6 +11,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 // Test class for JsonReader
+// implementation attributed to JsonSerializationDemo from CPSC 210
 public class JsonReaderTest extends JsonTestHelpers {
     private JsonReader jsonReader;
 

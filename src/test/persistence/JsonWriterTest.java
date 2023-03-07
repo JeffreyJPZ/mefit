@@ -13,6 +13,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 // Test class for JsonWriter
+// implementation attributed to JsonSerializationDemo from CPSC 210
 public class JsonWriterTest extends JsonTestHelpers {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
