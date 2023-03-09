@@ -1,6 +1,9 @@
 package ui;
 
 import exceptions.InvalidExerciseException;
+import exceptions.InvalidInputException;
+import exceptions.InvalidNameException;
+import exceptions.InvalidPositionException;
 import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -477,7 +480,7 @@ public class FitnessApp {
 
             for (String possibleInput : inputs) {
                 if (possibleInput.equals(input)) {
-                    exercisesMenuSelection(possibleInput);
+                    handleExercisesMenu(possibleInput);
                     isInputInvalid = false;
                     break;
                 }
@@ -490,8 +493,21 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
+    // EFFECTS: enters exercises menu selection
+    //          prints invalid input message if input to muscle group or difficulty when filtering exercises
+    //          does not match an option
+    private void handleExercisesMenu(String possibleInput) {
+        try {
+            exercisesMenuSelection(possibleInput);
+        } catch (InvalidInputException e) {
+            System.out.println("Please select one of the options.\n");
+        }
+    }
+
+    // MODIFIES: this
     // EFFECTS: removes any filters and selects the appropriate exercises menu option based on user input
-    private void exercisesMenuSelection(String input) {
+    //          throws InvalidInputException if filter by time receives a non-integer input
+    private void exercisesMenuSelection(String input) throws InvalidInputException {
         switch (input) {
             case "1":
                 resetExercises();
@@ -510,7 +526,6 @@ public class FitnessApp {
             case "5":
                 resetExercises();
                 deleteExercise();
-                break;
         }
         menuNavigation(input);
     }
@@ -577,11 +592,21 @@ public class FitnessApp {
 
     // MODIFIES: this
     // EFFECTS: checks if input is valid for the exercise menu, if invalid indicates an invalid input
+    //          prints an invalid name message if exercises contains an exercise with the inputted name
+    //          prints an invalid input message if input to muscle group or difficulty does not match an option
     private void exerciseMenuSelection(String input) {
         boolean exerciseOptions;
         boolean additionalExerciseOptions;
 
-        exerciseOptions = exerciseOptions(input);
+        try {
+            exerciseOptions = exerciseOptions(input);
+        } catch (InvalidNameException e) {
+            System.out.println("Name already exists in exercises. Try another name.\n");
+            exerciseOptions = true;
+        } catch (InvalidInputException e) {
+            System.out.println("Please select one of the given options.\n");
+            exerciseOptions = true;
+        }
         additionalExerciseOptions = additionalExerciseOptions(input);
 
         // Ensures invalid input message only printed if input is not handled already
@@ -593,7 +618,9 @@ public class FitnessApp {
     // MODIFIES: this
     // EFFECTS: selects appropriate exercise option and returns true if input matches an exercise option,
     //          otherwise returns false
-    private boolean exerciseOptions(String input) {
+    //          throws InvalidNameException if exercises contains an exercise with an inputted name
+    //          throws InvalidInputException if input to muscle group or difficulty does not match an option
+    private boolean exerciseOptions(String input) throws InvalidNameException, InvalidInputException {
         switch (input) {
             case "1":
                 renameExercise();
@@ -618,37 +645,40 @@ public class FitnessApp {
         return false;
     }
 
-    // REQUIRES: exercises does not contain an exercise with the same name
     // MODIFIES: this
-    // EFFECTS: renames exercise given user input
-    private void renameExercise() {
+    // EFFECTS: renames exercise given user input, if exercises has an exercise with the same name,
+    //          throws InvalidNameException
+    private void renameExercise() throws InvalidNameException {
         String input;
 
         System.out.println("Enter the new exercise name:");
         input = scanner.nextLine();
+
+        if (exercisesByName.contains(input)) {
+            throw new InvalidNameException();
+        }
 
         exercisesByName.removeExercise(exercise.getName());
         exercise.setName(input);
         exercisesByName.addExercise(exercise);
     }
 
-    // REQUIRES: input to muscle group matches an option
     // MODIFIES: this
     // EFFECTS: sets exercise muscle group given user input
-    private void setExerciseMuscleGroup() {
+    //          prints an invalid input message if input to muscle group or difficulty does not match an option
+    private void setExerciseMuscleGroup() throws InvalidInputException {
         MuscleGroup muscleGroup = editMuscleGroup();
         exercise.setMuscleGroup(muscleGroup);
     }
 
-    // REQUIRES: input difficulty matches an option
     // MODIFIES: this
     // EFFECTS: sets exercise difficulty given user input
-    private void setExerciseDifficulty() {
+    //          prints an invalid input message if input to muscle group or difficulty does not match an option
+    private void setExerciseDifficulty() throws InvalidInputException {
         Difficulty difficulty = editDifficulty();
         exercise.setDifficulty(difficulty);
     }
 
-    // REQUIRES: input to time is an integer
     // MODIFIES: this
     // EFFECTS: sets exercise time given user input
     private void setExerciseTime() {
@@ -666,10 +696,9 @@ public class FitnessApp {
         exercise.setFavourite(!exercise.isFavourite());
     }
 
-    // REQUIRES: input to muscle group matches an option
     // MODIFIES: this
-    // EFFECTS: returns muscle group given user input
-    private MuscleGroup editMuscleGroup() {
+    // EFFECTS: returns muscle group given user input; if input does not match an option throws InvalidInputException
+    private MuscleGroup editMuscleGroup() throws InvalidInputException {
         int input;
         MuscleGroup retMuscleGroup = null;
 
@@ -680,46 +709,52 @@ public class FitnessApp {
             System.out.println("\t" + "\"" + position + "\"" + " for " + muscleGroup.getMuscleGroup());
         }
 
-        input = scanner.nextInt();
+        if (scanner.hasNextInt()) {
+            input = scanner.nextInt();
+            scanner.nextLine(); // Clears scanner
 
-        // Checks if input matches muscle group position, sets muscle group if matching and breaks out of loop
-        for (MuscleGroup muscleGroup : MuscleGroup.values()) {
-            int position = muscleGroup.ordinal() + 1;
-            if (input == position) {
-                retMuscleGroup = muscleGroup;
-                break;
+            // Checks if input matches muscle group position, sets muscle group if matching and breaks out of loop
+            for (MuscleGroup muscleGroup : MuscleGroup.values()) {
+                int position = muscleGroup.ordinal() + 1;
+                if (input == position) {
+                    retMuscleGroup = muscleGroup;
+                    return retMuscleGroup;
+                }
             }
         }
-
-        return retMuscleGroup;
+        
+        throw new InvalidInputException();
     }
 
-    // REQUIRES: input to difficulty matches an option
     // MODIFIES: this
-    // EFFECTS: returns difficulty given user input
-    private Difficulty editDifficulty() {
+    // EFFECTS: returns difficulty given user input; if input does not match an option throws InvalidInputException
+    private Difficulty editDifficulty() throws InvalidInputException {
         int input;
         Difficulty retDifficulty = null;
 
         System.out.println("Select difficulty from:");
+        
         // Assigns difficulty position in enum to selection number beginning with 1
         for (Difficulty difficulty : Difficulty.values()) {
             int position = difficulty.ordinal() + 1;
             System.out.println("\t" + "\"" + position + "\"" + " for " + difficulty.getDifficulty());
         }
 
-        input = scanner.nextInt();
+        if (scanner.hasNextInt()) {
+            input = scanner.nextInt();
+            scanner.nextLine(); // Clears scanner
 
-        // Checks if input matches muscle group position, sets muscle group if matching and breaks out of loop
-        for (Difficulty difficulty : Difficulty.values()) {
-            int position = difficulty.ordinal() + 1;
-            if (input == position) {
-                retDifficulty = difficulty;
-                break;
+            // Checks if input matches muscle group position, sets muscle group if matching and breaks out of loop
+            for (Difficulty difficulty : Difficulty.values()) {
+                int position = difficulty.ordinal() + 1;
+                if (input == position) {
+                    retDifficulty = difficulty;
+                    return retDifficulty;
+                }
             }
         }
 
-        return retDifficulty;
+        throw new InvalidInputException();
     }
 
     // MODIFIES: this
@@ -811,7 +846,8 @@ public class FitnessApp {
 
     // MODIFIES: this
     // EFFECTS: selects the appropriate filtering option based on user input
-    private void filterExercises() {
+    //          throws InvalidInputException if input to time is not an integer
+    private void filterExercises() throws InvalidInputException {
         String input;
 
         displayFilterExercisesMenu();
@@ -832,46 +868,59 @@ public class FitnessApp {
                 break;
             case "5":
                 filterExercisesByFavourite();
+                break;
+            default:
+                invalidSelection();
         }
     }
 
     // MODIFIES: this
     // EFFECTS: filters exercises by name given user input
     private void filterExercisesByName() {
-        String input;
-
         System.out.println("Enter the name of the exercise(s) you wish to filter for:");
-        input = scanner.nextLine();
+
+        String input = scanner.nextLine();
 
         exercisesByName = exercisesByName.filter(input);
     }
 
-    // REQUIRES: input to muscle group matches an option
     // MODIFIES: this
     // EFFECTS: filters exercises by muscle group given user input
-    private void filterExercisesByMuscleGroup() {
+    //          throws InvalidInputException if input to muscle group does not match an option
+    private void filterExercisesByMuscleGroup() throws InvalidInputException {
         MuscleGroup muscleGroup = editMuscleGroup();
         exercisesByName = exercisesByName.filterMuscleGroup(muscleGroup);
+
+        scanner.nextLine(); // clears scanner
     }
 
-    // REQUIRES: input to difficulty matches an option
     // MODIFIES: this
     // EFFECTS: filters exercises by difficulty given user input
-    private void filterExercisesByDifficulty() {
+    //          throws InvalidInputException if input to difficulty does not match an option
+    private void filterExercisesByDifficulty() throws InvalidInputException {
         Difficulty difficulty = editDifficulty();
         exercisesByName = exercisesByName.filterDifficulty(difficulty);
+
+        scanner.nextLine(); // clears scanner
     }
 
-    // REQUIRES: input to time is an integer
     // MODIFIES: this
     // EFFECTS: filters exercises with time <= user inputted time
-    private void filterExercisesByTime() {
+    //          throws InvalidInputException if input to time is not an integer
+    private void filterExercisesByTime() throws InvalidInputException {
         String input;
+
         System.out.println("Enter the exercise time you wish to filter by (all times <= given)");
 
-        input = scanner.next();
+        if (scanner.hasNextInt()) {
+            input = scanner.next();
+            scanner.nextLine(); // Clears scanner
 
-        exercisesByName = exercisesByName.filterTime(parseInt(input));
+            exercisesByName = exercisesByName.filterTime(parseInt(input));
+        } else {
+            scanner.nextLine(); // Clears scanner
+            throw new InvalidInputException();
+        }
     }
 
     // MODIFIES: this
@@ -889,23 +938,37 @@ public class FitnessApp {
     // MODIFIES: this
     // EFFECTS: creates a new exercise with name, muscle group, difficulty, time and additional exercise information
     //          based on exercise type
+    //          throws InvalidInputException if input to muscle group or difficulty does not match an option
     private void createExercise() {
         Map<String, String> exerciseData = new LinkedHashMap<>();
 
         System.out.println("Exercise Creation\n");
 
-        additionalExerciseInfo(exerciseData);
+        try {
+            additionalExerciseInfo(exerciseData);
+        } catch (InvalidNameException e) {
+            System.out.println("Name already exists in exercises. Try another name.\n");
+        } catch (InvalidInputException e) {
+            System.out.println("Input must be an appropriate integer.\n");
+        }
     }
 
-    // REQUIRES: exercises does not contain an exercise with the same name
     // MODIFIES: this
-    // EFFECTS: gets user input for exercise name and time and additional exercise information
-    private void additionalExerciseInfo(Map<String, String> exerciseData) {
+    // EFFECTS: gets user input for exercise name and time and additional exercise information, if exercises has an
+    //          exercise with the same name, throws InvalidNameException
+    //          throws InvalidInputException if input to muscle group or difficulty does not match an option
+    private void additionalExerciseInfo(Map<String, String> exerciseData) throws InvalidNameException,
+                                                                                    InvalidInputException {
         String input;
 
         System.out.println("Enter the name of the exercise:");
         input = scanner.nextLine();
         exerciseData.put("name", input);
+
+        if (exercisesByName.contains(input)) {
+            throw new InvalidNameException();
+        }
+
         System.out.println("Enter the time of the exercise (min):");
         input = scanner.next();
         exerciseData.put("time", input);
@@ -915,7 +978,8 @@ public class FitnessApp {
 
     // MODIFIES: this
     // EFFECTS: prompts user to enter appropriate information based on exercise type
-    private void createExerciseSelection(Map<String, String> exerciseData) {
+    //          throws InvalidInputException if input to muscle group or difficulty does not match an option
+    private void createExerciseSelection(Map<String, String> exerciseData) throws InvalidInputException {
         Exercise exercise = null;
         String input;
 
@@ -942,10 +1006,10 @@ public class FitnessApp {
         scanner.nextLine(); // clears scanner so that next cycle does not result in invalid input
     }
 
-    // REQUIRES: input to muscle group and difficulty matches an option
     // MODIFIES: this
     // EFFECTS: gets user input for weight, sets, and reps for a weights exercise
-    private Exercise createWeightsExercise(Map<String, String> exerciseData) {
+    //          throws InvalidInputException if input to muscle group or difficulty does not match an option
+    private Exercise createWeightsExercise(Map<String, String> exerciseData) throws InvalidInputException {
         String input;
 
         System.out.println("Enter the weight of the exercise (lbs):");
@@ -964,10 +1028,10 @@ public class FitnessApp {
                 parseInt(exerciseData.get("time")));
     }
 
-    // REQUIRES: input to muscle group and difficulty matches an option
     // MODIFIES: this
     // EFFECTS: gets user input for sets and reps for a bodyweights exercise
-    private Exercise createBodyWeightsExercise(Map<String, String> exerciseData) {
+    //          throws InvalidInputException if input to muscle group or difficulty does not match an option
+    private Exercise createBodyWeightsExercise(Map<String, String> exerciseData) throws InvalidInputException {
         String input;
 
         System.out.println("Enter the sets of the exercise:");
@@ -982,10 +1046,10 @@ public class FitnessApp {
                 editDifficulty(), parseInt(exerciseData.get("time")));
     }
 
-    // REQUIRES: input to muscle group and difficulty matches an option
     // MODIFIES: this
     // EFFECTS: gets user input for distance for a cardio exercise
-    private Exercise createCardioExercise(Map<String, String> exerciseData) {
+    //          throws InvalidInputException if input to muscle group or difficulty does not match an option
+    private Exercise createCardioExercise(Map<String, String> exerciseData) throws InvalidInputException {
         String input;
 
         System.out.println("Enter the distance of the exercise (m):");
@@ -1040,6 +1104,7 @@ public class FitnessApp {
     // MODIFIES: this
     // EFFECTS: checks if given input is valid for the workouts menu, if invalid then indicates an invalid selection;
     //          keeps user in exercises menu until exit key is pressed
+
     private void workoutsMenu() {
         String input = "";
         String[] inputs = {"1", "2", "3", "4", "5", "<", "/"};
@@ -1053,7 +1118,7 @@ public class FitnessApp {
 
             for (String possibleInput : inputs) {
                 if (possibleInput.equals(input)) {
-                    workoutsMenuSelection(possibleInput);
+                    handleWorkoutsMenu(possibleInput);
                     isInputInvalid = false;
                     break;
                 }
@@ -1066,8 +1131,25 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
+    // EFFECTS: enters workouts menu selection
+    //          prints invalid name message if workouts contains a workout with the same name
+    //          prints invalid input message if input to difficulty when creating a workout
+    //          does not match an option
+    private void handleWorkoutsMenu(String possibleInput) {
+        try {
+            workoutsMenuSelection(possibleInput);
+        } catch (InvalidNameException e) {
+            System.out.println("Name already exists in workouts. Try another name.\n");
+        } catch (InvalidInputException e) {
+            System.out.println("Please select one of the options.\n");
+        }
+    }
+
+    // MODIFIES: this
     // EFFECTS: removes any filters and selects the appropriate workout menu option given user input
-    private void workoutsMenuSelection(String input) {
+    //          throws InvalidNameException if workouts contains a workout with the inputted name
+    //          throws InvalidInputException if input to difficulty when creating a workout does not match an option
+    private void workoutsMenuSelection(String input) throws InvalidInputException, InvalidNameException {
         switch (input) {
             case "1":
                 resetWorkouts();
@@ -1133,14 +1215,12 @@ public class FitnessApp {
 
         while (!input.equals("<")) {
             displayWorkoutMenu();
-
             input = scanner.nextLine().toLowerCase();
-
             isInputInvalid = true;
 
             for (String possibleInput : inputs) {
                 if (possibleInput.equals(input)) {
-                    workoutMenuSelection(possibleInput);
+                    handleWorkoutMenu(possibleInput);
                     isInputInvalid = false;
                     break;
                 }
@@ -1153,8 +1233,26 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
+    // EFFECTS: enters the workout menu selection
+    //          prints invalid name message if workouts contains a workout with the same name
+    //          prints invalid input message if input to difficulty when setting workout difficulty
+    //          does not match an option
+    private void handleWorkoutMenu(String possibleInput) {
+        try {
+            workoutMenuSelection(possibleInput);
+        } catch (InvalidNameException e) {
+            System.out.println("Name already exists in workouts. Try another name.\n");
+        } catch (InvalidInputException e) {
+            System.out.println("Please select one of the options.\n");
+        }
+    }
+
+    // MODIFIES: this
     // EFFECTS: selects appropriate workout menu option given user input
-    private void workoutMenuSelection(String input) {
+    //          throws InvalidNameException if workouts contains a workout with the same name
+    //          throws InvalidInputException if input to difficulty when setting workout difficulty
+    //          does not match an option
+    private void workoutMenuSelection(String input) throws InvalidNameException, InvalidInputException {
         switch (input) {
             case "1":
                 renameWorkout();
@@ -1174,24 +1272,27 @@ public class FitnessApp {
         menuNavigation(input);
     }
 
-    // REQUIRES: workouts does not contain a workout with the same name
     // MODIFIES: this
-    // EFFECTS: renames workout given name inputted by user
-    private void renameWorkout() {
+    // EFFECTS: renames workout given name inputted by user, if workouts has a workout with the same name, throws
+    //          InvalidNameException
+    private void renameWorkout() throws InvalidNameException {
         String input;
 
         System.out.println("Enter the new name of the workout:");
         input = scanner.nextLine();
+
+        if (workoutsByName.contains(input)) {
+            throw new InvalidNameException();
+        }
 
         workoutsByName.removeWorkout(workout.getName());
         workout.setName(input);
         workoutsByName.addWorkout(workout);
     }
 
-    // REQUIRES: input to difficulty matches an option
     // MODIFIES: this
     // EFFECTS: sets workout difficulty given user input
-    private void setWorkoutDifficulty() {
+    private void setWorkoutDifficulty() throws InvalidInputException {
         Difficulty difficulty = editDifficulty();
         workout.setDifficulty(difficulty);
     }
@@ -1226,12 +1327,24 @@ public class FitnessApp {
 
         String input = scanner.nextLine();
 
-        workoutExerciseOptionsSelection(input);
+        try {
+            workoutExerciseOptionsSelection(input);
+        } catch (InvalidPositionException e) {
+            System.out.println("No exercise found at the given position. Try another position.\n");
+        } catch (InvalidNameException e) {
+            System.out.println("No exercise found with the given name. Try another name.\n");
+        } catch (InvalidInputException e) {
+            System.out.println("Input must be an appropriate integer.\n");
+        }
     }
 
     // MODIFIES: this
-    // EFFECTS: selects the appropriate workout exercise option given user input
-    private void workoutExerciseOptionsSelection(String input) {
+    // EFFECTS: selects the appropriate workout exercise option given user input;
+    //          throws InvalidNameException if workout exercises does not have an exercise with the given name,
+    //          throws InvalidPositionException if a position is inputted greater than number of exercises
+    //          throws InvalidInputException if input to position is not an integer
+    private void workoutExerciseOptionsSelection(String input) throws InvalidNameException, InvalidPositionException,
+                                                                        InvalidInputException {
         switch (input) {
             case "1":
                 addExercise();
@@ -1250,62 +1363,112 @@ public class FitnessApp {
         }
     }
 
-    // REQUIRES: input to name matches an exercise in workout exercises
     // MODIFIES: this
     // EFFECTS: adds an exercise from the user profile to workout given user input
-    private void addExercise() {
-        Exercise exercise = getExerciseFromExercisesByName();
+    //          throws InvalidNameException if workout exercises does not have an exercise with the given name
+    private void addExercise() throws InvalidNameException {
+        Exercise exercise = getExerciseFromProfile();
         workout.addExercise(exercise);
     }
 
-    // REQUIRES: input to position is an integer
     // MODIFIES: this
     // EFFECTS: inserts an exercise from the user exercises to a given position in workout
-    private void insertExercise() {
-        Exercise exercise = getExerciseFromExercisesByName();
+    //          throws InvalidNameException if exercises does not have an exercise with the given name,
+    //          throws InvalidPositionException if a position is inputted greater than number of workout exercises
+    //          throws InvalidInputException if input to position is not an integer
+    private void insertExercise() throws InvalidNameException, InvalidPositionException, InvalidInputException {
+        Exercise exercise = getExerciseFromProfile();
         System.out.println("Enter the position where you wish to insert the exercise:");
-        String input = scanner.next();
+        String input;
+
+        if (scanner.hasNextInt()) {
+            input = scanner.next();
+            scanner.nextLine();
+
+            if (parseInt(input) > workout.length()) {
+                throw new InvalidPositionException();
+            }
+        } else {
+            throw new InvalidInputException();
+        }
+
         workout.insertExercise(exercise, parseInt(input));
     }
 
-    // REQUIRES: input to name matches an exercise in workout exercises and input to position is an integer
     // MODIFIES: this
     // EFFECTS: replaces an exercise in workout at a given position by an exercise from the user exercises
-    private void replaceExercise() {
-        Exercise exercise = getExerciseFromExercisesByName();
+    //          throws InvalidNameException if exercises does not have an exercise with the given name,
+    //          throws InvalidPositionException if a position is inputted greater than number of workout exercises
+    //          throws InvalidInputException if input to position is not an integer
+    private void replaceExercise() throws InvalidNameException, InvalidPositionException, InvalidInputException {
+        Exercise exercise = getExerciseFromProfile();
         System.out.println("Enter the position of the exercise you wish to replace:");
-        String input = scanner.next();
+        String input;
+
+        if (scanner.hasNextInt()) {
+            input = scanner.next();
+            scanner.nextLine();
+
+            if (parseInt(input) > workout.length()) {
+                throw new InvalidPositionException();
+            }
+        } else {
+            throw new InvalidInputException();
+        }
+
         workout.setExercise(exercise, parseInt(input));
     }
 
-    // REQUIRES: input to name matches an exercise in workout exercises
     // MODIFIES: this
     // EFFECTS: removes an exercise from the workout given a name inputted by user
-    private void removeExerciseByName() {
+    //          throws InvalidNameException if workout exercises does not have an exercise with the given name
+    private void removeExerciseByName() throws InvalidNameException {
         System.out.println("Enter the name of the exercise:");
         String input = scanner.nextLine();
-        workout.removeExercise(input);
+
+        try {
+            workout.removeExercise(input);
+        } catch (NullPointerException e) {
+            throw new InvalidNameException();
+        }
     }
 
-    // REQUIRES: input is an integer
     // MODIFIES: this
     // EFFECTS: removes an exercise from the workout given its position inputted by user
-    private void removeExerciseByPosition() {
+    //          throws InvalidPositionException if a position is inputted greater than number of workout exercises
+    //          throws InvalidInputException if input to position is not an integer
+    private void removeExerciseByPosition() throws InvalidPositionException, InvalidInputException {
         System.out.println("Enter the position of the exercise you wish to remove:");
-        String input = scanner.next();
+        String input;
+
+        if (scanner.hasNextInt()) {
+            input = scanner.next();
+            scanner.nextLine();
+
+            if (parseInt(input) > workout.length()) {
+                throw new InvalidPositionException();
+            }
+        } else {
+            throw new InvalidInputException();
+        }
+
         workout.removeExercise(parseInt(input));
     }
 
     // MODIFIES: this
-    // EFFECTS: returns an exercise from the profile exercises matching name inputted by user if found, otherwise
-    //          does nothing
-    private Exercise getExerciseFromExercisesByName() {
+    // EFFECTS: returns an exercise from the user exercises matching name inputted by user if found, otherwise
+    //          throws InvalidNameException
+    private Exercise getExerciseFromProfile() throws InvalidNameException {
         String input;
 
         System.out.println("Enter the name of the exercise:");
         input = scanner.nextLine();
 
-        return profile.getExercises().getExercise(input);
+        if (profile.getExercises().contains(input)) {
+            return profile.getExercises().getExercise(input);
+        } else {
+            throw new InvalidNameException();
+        }
     }
 
     // MODIFIES: this
@@ -1328,12 +1491,19 @@ public class FitnessApp {
 
         input = scanner.nextLine();
 
-        filterWorkouts(input);
+        try {
+            filterWorkouts(input);
+        } catch (InvalidInputException e) {
+            System.out.println("Input must be an appropriate integer.\n");
+        }
+
+        scanner.nextLine(); // clears scanner
     }
 
     // MODIFIES: this
     // EFFECTS: selects the appropriate filtering option for workouts given user input
-    private void filterWorkouts(String input) {
+    //          throws InvalidInputException if input to time or # of exercises is not an integer
+    private void filterWorkouts(String input) throws InvalidInputException {
         switch (input) {
             case "1":
                 filterWorkoutsByName();
@@ -1349,6 +1519,9 @@ public class FitnessApp {
                 break;
             case "5":
                 filterWorkoutsByFavourite();
+                break;
+            default:
+                invalidSelection();
         }
     }
 
@@ -1363,36 +1536,50 @@ public class FitnessApp {
         workoutsByName = workoutsByName.filter(input);
     }
 
-    // REQUIRES: input to difficulty matches an option
     // MODIFIES: this
     // EFFECTS: filters workouts by difficulty matching user input
-    private void filterWorkoutsByDifficulty() {
+    //          throws InvalidInputException if input to difficulty does not match an option
+    private void filterWorkoutsByDifficulty() throws InvalidInputException {
         Difficulty difficulty = editDifficulty();
         workoutsByName = workoutsByName.filterDifficulty(difficulty);
     }
 
-    // REQUIRES: input is an integer
     // MODIFIES: this
     // EFFECTS: filters workouts with time <= user inputted time
-    private void filterWorkoutsByTime() {
-        String input;
+    //          throws InvalidInputException if input to time is not an integer
+    private void filterWorkoutsByTime() throws InvalidInputException {
+        int input;
 
         System.out.println("Enter the time of the workout(s) you wish to filter for (all <= given)");
-        input = scanner.next();
 
-        workoutsByName = workoutsByName.filterTime(parseInt(input));
+        if (scanner.hasNextInt()) {
+            input = scanner.nextInt();
+            scanner.nextLine(); // Clears scanner
+
+            workoutsByName = workoutsByName.filterTime(input);
+        } else {
+            scanner.nextLine(); // Clears scanner
+            throw new InvalidInputException();
+        }
     }
 
-    // REQUIRES: input is an integer
     // MODIFIES: this
     // EFFECTS: filters workouts with number of exercises <= user inputted number
-    private void filterWorkoutsByNumberOfExercises() {
-        String input;
+    //          throws InvalidInputException if input to time is not an integer
+    private void filterWorkoutsByNumberOfExercises() throws InvalidInputException {
+        int input;
 
         System.out.println("Enter the # of exercises of the workout(s) you wish to filter for (all <= given)");
-        input = scanner.next();
 
-        workoutsByName = workoutsByName.filterNumberOfExercises(parseInt(input));
+        if (scanner.hasNextInt()) {
+            input = scanner.nextInt();
+            scanner.nextLine(); // Clears scanner
+
+            workoutsByName = workoutsByName.filterNumberOfExercises(input);
+        } else {
+            scanner.nextLine(); // Clears scanner
+            throw new InvalidInputException();
+        }
     }
 
     // MODIFIES: this
@@ -1409,7 +1596,9 @@ public class FitnessApp {
 
     // MODIFIES: this
     // EFFECTS: creates a new workout with user inputted name and difficulty and adds it to the user workouts
-    private void createWorkout() {
+    //          if workouts has a workout with the same name, throws an InvalidNameException
+    //          throws an InvalidInputException if input to difficulty does not match an option
+    private void createWorkout() throws InvalidNameException, InvalidInputException {
         Map<String, String> workoutData = new LinkedHashMap<>();
         String input;
 
@@ -1417,11 +1606,14 @@ public class FitnessApp {
 
         workoutData.put("name", null);
 
-        for (String data : workoutData.keySet()) {
-            System.out.println("Enter the " + data + " of the workout:");
-            input = scanner.nextLine();
-            workoutData.replace(data, input);
+        System.out.println("Enter the name of the workout:");
+        input = scanner.nextLine();
+
+        if (workoutsByName.contains(input)) {
+            throw new InvalidNameException();
         }
+
+        workoutData.replace("name", input);
 
         Workout workout = new Workout(workoutData.get("name"), editDifficulty());
 
