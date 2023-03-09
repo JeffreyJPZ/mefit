@@ -41,7 +41,7 @@ public class Workout implements JsonWritable {
     // MODIFIES: this
     // EFFECTS: adds an exercise to the given position in the workout and increases the workout time by exercise time
     public void insertExercise(Exercise exercise, int position) throws InvalidPositionException {
-        if ((position < 1 || position > (this.length() + 1)) && position != 1) {
+        if (position < 1 || position > (this.length() + 1)) {
             throw new InvalidPositionException();
         }
 
