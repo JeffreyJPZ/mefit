@@ -618,6 +618,7 @@ public class FitnessApp {
         return false;
     }
 
+    // REQUIRES: exercises does not contain an exercise with the same name
     // MODIFIES: this
     // EFFECTS: renames exercise given user input
     private void renameExercise() {
@@ -631,6 +632,7 @@ public class FitnessApp {
         exercisesByName.addExercise(exercise);
     }
 
+    // REQUIRES: input to muscle group matches an option
     // MODIFIES: this
     // EFFECTS: sets exercise muscle group given user input
     private void setExerciseMuscleGroup() {
@@ -638,6 +640,7 @@ public class FitnessApp {
         exercise.setMuscleGroup(muscleGroup);
     }
 
+    // REQUIRES: input difficulty matches an option
     // MODIFIES: this
     // EFFECTS: sets exercise difficulty given user input
     private void setExerciseDifficulty() {
@@ -645,6 +648,7 @@ public class FitnessApp {
         exercise.setDifficulty(difficulty);
     }
 
+    // REQUIRES: input to time is an integer
     // MODIFIES: this
     // EFFECTS: sets exercise time given user input
     private void setExerciseTime() {
@@ -662,8 +666,9 @@ public class FitnessApp {
         exercise.setFavourite(!exercise.isFavourite());
     }
 
+    // REQUIRES: input to muscle group matches an option
     // MODIFIES: this
-    // EFFECTS: returns  muscle group given user input
+    // EFFECTS: returns muscle group given user input
     private MuscleGroup editMuscleGroup() {
         int input;
         MuscleGroup retMuscleGroup = null;
@@ -689,6 +694,7 @@ public class FitnessApp {
         return retMuscleGroup;
     }
 
+    // REQUIRES: input to difficulty matches an option
     // MODIFIES: this
     // EFFECTS: returns difficulty given user input
     private Difficulty editDifficulty() {
@@ -840,6 +846,7 @@ public class FitnessApp {
         exercisesByName = exercisesByName.filter(input);
     }
 
+    // REQUIRES: input to muscle group matches an option
     // MODIFIES: this
     // EFFECTS: filters exercises by muscle group given user input
     private void filterExercisesByMuscleGroup() {
@@ -847,6 +854,7 @@ public class FitnessApp {
         exercisesByName = exercisesByName.filterMuscleGroup(muscleGroup);
     }
 
+    // REQUIRES: input to difficulty matches an option
     // MODIFIES: this
     // EFFECTS: filters exercises by difficulty given user input
     private void filterExercisesByDifficulty() {
@@ -854,6 +862,7 @@ public class FitnessApp {
         exercisesByName = exercisesByName.filterDifficulty(difficulty);
     }
 
+    // REQUIRES: input to time is an integer
     // MODIFIES: this
     // EFFECTS: filters exercises with time <= user inputted time
     private void filterExercisesByTime() {
@@ -888,6 +897,7 @@ public class FitnessApp {
         additionalExerciseInfo(exerciseData);
     }
 
+    // REQUIRES: exercises does not contain an exercise with the same name
     // MODIFIES: this
     // EFFECTS: gets user input for exercise name and time and additional exercise information
     private void additionalExerciseInfo(Map<String, String> exerciseData) {
@@ -932,6 +942,7 @@ public class FitnessApp {
         scanner.nextLine(); // clears scanner so that next cycle does not result in invalid input
     }
 
+    // REQUIRES: input to muscle group and difficulty matches an option
     // MODIFIES: this
     // EFFECTS: gets user input for weight, sets, and reps for a weights exercise
     private Exercise createWeightsExercise(Map<String, String> exerciseData) {
@@ -953,6 +964,7 @@ public class FitnessApp {
                 parseInt(exerciseData.get("time")));
     }
 
+    // REQUIRES: input to muscle group and difficulty matches an option
     // MODIFIES: this
     // EFFECTS: gets user input for sets and reps for a bodyweights exercise
     private Exercise createBodyWeightsExercise(Map<String, String> exerciseData) {
@@ -970,6 +982,7 @@ public class FitnessApp {
                 editDifficulty(), parseInt(exerciseData.get("time")));
     }
 
+    // REQUIRES: input to muscle group and difficulty matches an option
     // MODIFIES: this
     // EFFECTS: gets user input for distance for a cardio exercise
     private Exercise createCardioExercise(Map<String, String> exerciseData) {
@@ -1161,6 +1174,7 @@ public class FitnessApp {
         menuNavigation(input);
     }
 
+    // REQUIRES: workouts does not contain a workout with the same name
     // MODIFIES: this
     // EFFECTS: renames workout given name inputted by user
     private void renameWorkout() {
@@ -1174,6 +1188,7 @@ public class FitnessApp {
         workoutsByName.addWorkout(workout);
     }
 
+    // REQUIRES: input to difficulty matches an option
     // MODIFIES: this
     // EFFECTS: sets workout difficulty given user input
     private void setWorkoutDifficulty() {
@@ -1235,6 +1250,7 @@ public class FitnessApp {
         }
     }
 
+    // REQUIRES: input to name matches an exercise in workout exercises
     // MODIFIES: this
     // EFFECTS: adds an exercise from the user profile to workout given user input
     private void addExercise() {
@@ -1242,6 +1258,7 @@ public class FitnessApp {
         workout.addExercise(exercise);
     }
 
+    // REQUIRES: input to position is an integer
     // MODIFIES: this
     // EFFECTS: inserts an exercise from the user exercises to a given position in workout
     private void insertExercise() {
@@ -1251,6 +1268,7 @@ public class FitnessApp {
         workout.insertExercise(exercise, parseInt(input));
     }
 
+    // REQUIRES: input to name matches an exercise in workout exercises and input to position is an integer
     // MODIFIES: this
     // EFFECTS: replaces an exercise in workout at a given position by an exercise from the user exercises
     private void replaceExercise() {
@@ -1260,6 +1278,7 @@ public class FitnessApp {
         workout.setExercise(exercise, parseInt(input));
     }
 
+    // REQUIRES: input to name matches an exercise in workout exercises
     // MODIFIES: this
     // EFFECTS: removes an exercise from the workout given a name inputted by user
     private void removeExerciseByName() {
@@ -1268,6 +1287,7 @@ public class FitnessApp {
         workout.removeExercise(input);
     }
 
+    // REQUIRES: input is an integer
     // MODIFIES: this
     // EFFECTS: removes an exercise from the workout given its position inputted by user
     private void removeExerciseByPosition() {
@@ -1277,7 +1297,7 @@ public class FitnessApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: returns an exercise from the user exercises matching name inputted by user if found, otherwise
+    // EFFECTS: returns an exercise from the profile exercises matching name inputted by user if found, otherwise
     //          does nothing
     private Exercise getExerciseFromExercisesByName() {
         String input;
@@ -1285,11 +1305,7 @@ public class FitnessApp {
         System.out.println("Enter the name of the exercise:");
         input = scanner.nextLine();
 
-        if (exercisesByName.contains(input)) {
-            return exercisesByName.getExercise(input);
-        } else {
-            return null;
-        }
+        return profile.getExercises().getExercise(input);
     }
 
     // MODIFIES: this
@@ -1347,6 +1363,7 @@ public class FitnessApp {
         workoutsByName = workoutsByName.filter(input);
     }
 
+    // REQUIRES: input to difficulty matches an option
     // MODIFIES: this
     // EFFECTS: filters workouts by difficulty matching user input
     private void filterWorkoutsByDifficulty() {
@@ -1354,6 +1371,7 @@ public class FitnessApp {
         workoutsByName = workoutsByName.filterDifficulty(difficulty);
     }
 
+    // REQUIRES: input is an integer
     // MODIFIES: this
     // EFFECTS: filters workouts with time <= user inputted time
     private void filterWorkoutsByTime() {
@@ -1365,6 +1383,7 @@ public class FitnessApp {
         workoutsByName = workoutsByName.filterTime(parseInt(input));
     }
 
+    // REQUIRES: input is an integer
     // MODIFIES: this
     // EFFECTS: filters workouts with number of exercises <= user inputted number
     private void filterWorkoutsByNumberOfExercises() {
