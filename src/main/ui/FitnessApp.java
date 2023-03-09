@@ -1448,11 +1448,11 @@ public class FitnessApp {
             if (parseInt(input) > workout.length()) {
                 throw new InvalidPositionException();
             }
+
+            workout.removeExercise(parseInt(input));
         } else {
             throw new InvalidInputException();
         }
-
-        workout.removeExercise(parseInt(input));
     }
 
     // MODIFIES: this
