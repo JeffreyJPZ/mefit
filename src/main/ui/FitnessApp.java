@@ -1330,7 +1330,7 @@ public class FitnessApp {
         try {
             workoutExerciseOptionsSelection(input);
         } catch (InvalidPositionException e) {
-            System.out.println("No exercise found at the given position. Try another position.\n");
+            System.out.println("Position is invalid. Try another position.\n");
         } catch (InvalidNameException e) {
             System.out.println("No exercise found with the given name. Try another name.\n");
         } catch (InvalidInputException e) {
@@ -1385,14 +1385,14 @@ public class FitnessApp {
             input = scanner.next();
             scanner.nextLine();
 
-            if (parseInt(input) > workout.length()) {
+            if (parseInt(input) > workout.length() || parseInt(input) < 0) {
                 throw new InvalidPositionException();
             }
+
+            workout.insertExercise(exercise, parseInt(input));
         } else {
             throw new InvalidInputException();
         }
-
-        workout.insertExercise(exercise, parseInt(input));
     }
 
     // MODIFIES: this
@@ -1409,14 +1409,14 @@ public class FitnessApp {
             input = scanner.next();
             scanner.nextLine();
 
-            if (parseInt(input) > workout.length()) {
+            if (parseInt(input) > workout.length() || parseInt(input) < 0) {
                 throw new InvalidPositionException();
             }
+
+            workout.setExercise(exercise, parseInt(input));
         } else {
             throw new InvalidInputException();
         }
-
-        workout.setExercise(exercise, parseInt(input));
     }
 
     // MODIFIES: this
@@ -1445,7 +1445,7 @@ public class FitnessApp {
             input = scanner.next();
             scanner.nextLine();
 
-            if (parseInt(input) > workout.length()) {
+            if (parseInt(input) > workout.length() || parseInt(input) < 0) {
                 throw new InvalidPositionException();
             }
 
