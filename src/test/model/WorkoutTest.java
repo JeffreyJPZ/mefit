@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.InvalidPositionException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -68,145 +69,258 @@ public class WorkoutTest {
 
     @Test
     public void testInsertExerciseOnceEmptyList() {
-        workoutTest1.insertExercise(new WeightsExercise("1", MuscleGroup.CHEST, 1, 1, 1,
-                Difficulty.LIGHT, 1), 1);
+        try {
+            workoutTest1.insertExercise(new WeightsExercise("1", MuscleGroup.CHEST, 1, 1, 1,
+                    Difficulty.LIGHT, 1), 1);
 
-        assertEquals(1, workoutTest1.length());
-        assertEquals("1", workoutTest1.getExercise(1).getName());
-        assertEquals(1, workoutTest1.getTime());
+            assertEquals(1, workoutTest1.length());
+            assertEquals("1", workoutTest1.getExercise(1).getName());
+            assertEquals(1, workoutTest1.getTime());
+        } catch (InvalidPositionException e) {
+            fail("InvalidPositionException caught, expected none");
+        }
     }
 
     @Test
     public void testInsertExerciseOnceNonEmptyList() {
         addExerciseHelper(workoutTest1, 3);
 
-        workoutTest1.insertExercise(new CardioExercise("4", MuscleGroup.LEGS, 4,
-                        Difficulty.INTENSE, 4),
-                2);
+        try {
+            workoutTest1.insertExercise(new CardioExercise("4", MuscleGroup.LEGS, 4,
+                            Difficulty.INTENSE, 4),
+                    2);
 
-        assertEquals(4, workoutTest1.length());
-        assertEquals("4", workoutTest1.getExercise(2).getName());
-        assertEquals(10, workoutTest1.getTime());
+            assertEquals(4, workoutTest1.length());
+            assertEquals("4", workoutTest1.getExercise(2).getName());
+            assertEquals(10, workoutTest1.getTime());
+        } catch (InvalidPositionException e) {
+            fail("InvalidPositionException caught, expected none");
+        }
     }
 
     @Test
     public void testInsertExerciseMultipleToListDifferentPositions() {
         addExerciseHelper(workoutTest1, 3);
 
-        workoutTest1.insertExercise(new CardioExercise("4", MuscleGroup.LEGS, 4,
-                        Difficulty.INTENSE, 4),
-                1);
-        workoutTest1.insertExercise(new CardioExercise("5", MuscleGroup.LEGS, 4,
-                        Difficulty.INTENSE, 4),
-                2);
-        workoutTest1.insertExercise(new CardioExercise("6", MuscleGroup.LEGS, 4,
-                        Difficulty.INTENSE, 4),
-                3);
+        try {
+            workoutTest1.insertExercise(new CardioExercise("4", MuscleGroup.LEGS, 4,
+                            Difficulty.INTENSE, 4),
+                    1);
+            workoutTest1.insertExercise(new CardioExercise("5", MuscleGroup.LEGS, 4,
+                            Difficulty.INTENSE, 4),
+                    2);
+            workoutTest1.insertExercise(new CardioExercise("6", MuscleGroup.LEGS, 4,
+                            Difficulty.INTENSE, 4),
+                    6);
 
-        assertEquals(6, workoutTest1.length());
-        assertEquals("4", workoutTest1.getExercise(1).getName());
-        assertEquals("5", workoutTest1.getExercise(2).getName());
-        assertEquals("6", workoutTest1.getExercise(3).getName());
-        assertEquals(18, workoutTest1.getTime());
+            assertEquals(6, workoutTest1.length());
+            assertEquals("4", workoutTest1.getExercise(1).getName());
+            assertEquals("5", workoutTest1.getExercise(2).getName());
+            assertEquals("6", workoutTest1.getExercise(6).getName());
+            assertEquals(18, workoutTest1.getTime());
+        } catch (InvalidPositionException e) {
+            fail("InvalidPositionException caught, expected none");
+        }
     }
 
     @Test
     public void testInsertExerciseMultipleToListSamePositions() {
         addExerciseHelper(workoutTest1, 3);
 
-        workoutTest1.insertExercise(new CardioExercise("4", MuscleGroup.LEGS, 4,
-                        Difficulty.INTENSE, 4),
-                2);
-        workoutTest1.insertExercise(new CardioExercise("5", MuscleGroup.LEGS, 4,
-                        Difficulty.INTENSE, 4),
-                2);
-        workoutTest1.insertExercise(new CardioExercise("6", MuscleGroup.LEGS, 4,
-                        Difficulty.INTENSE, 4),
-                2);
+        try {
+            workoutTest1.insertExercise(new CardioExercise("4", MuscleGroup.LEGS, 4,
+                            Difficulty.INTENSE, 4),
+                    2);
+            workoutTest1.insertExercise(new CardioExercise("5", MuscleGroup.LEGS, 4,
+                            Difficulty.INTENSE, 4),
+                    2);
+            workoutTest1.insertExercise(new CardioExercise("6", MuscleGroup.LEGS, 4,
+                            Difficulty.INTENSE, 4),
+                    2);
 
-        assertEquals(6, workoutTest1.length());
-        assertEquals("4", workoutTest1.getExercise(4).getName());
-        assertEquals("5", workoutTest1.getExercise(3).getName());
-        assertEquals("6", workoutTest1.getExercise(2).getName());
-        assertEquals(18, workoutTest1.getTime());
+            assertEquals(6, workoutTest1.length());
+            assertEquals("4", workoutTest1.getExercise(4).getName());
+            assertEquals("5", workoutTest1.getExercise(3).getName());
+            assertEquals("6", workoutTest1.getExercise(2).getName());
+            assertEquals(18, workoutTest1.getTime());
+        }
+        catch (InvalidPositionException e) {
+            fail("InvalidPositionException caught, expected none");
+        }
     }
 
+    @Test
+    public void testInsertExerciseZeroPosition() {
+        try {
+            workoutTest1.insertExercise(new WeightsExercise("1", MuscleGroup.CHEST, 1, 1, 1,
+                    Difficulty.LIGHT, 1), 0);
+            fail("InvalidPositionException expected, caught none");
+        } catch (InvalidPositionException e) {
+            // passes
+        }
+    }
+
+    @Test
+    public void testInsertExerciseNegativePosition() {
+        try {
+            workoutTest1.insertExercise(new WeightsExercise("1", MuscleGroup.CHEST, 1, 1, 1,
+                    Difficulty.LIGHT, 1), -2);
+            fail("InvalidPositionException expected, caught none");
+        } catch (InvalidPositionException e) {
+            // passes
+        }
+    }
+
+    @Test
+    public void testInsertExercisePositionGreaterThanWorkoutLengthPlusOne() {
+        addExerciseHelper(workoutTest1, 3);
+
+        try {
+            assertEquals(3, workoutTest1.length());
+
+            workoutTest1.insertExercise(new WeightsExercise("1", MuscleGroup.CHEST, 1, 1, 1,
+                    Difficulty.LIGHT, 1), 5);
+            fail("InvalidPositionException expected, caught none");
+        } catch (InvalidPositionException e) {
+            // passes
+        }
+    }
 
     @Test
     public void testSetExerciseOnceGreaterThan() {
         addExerciseHelper(workoutTest1, 1);
 
-        assertEquals(1, workoutTest1.length());
-        assertEquals(1, workoutTest1.getTime());
+        try {
+            assertEquals(1, workoutTest1.length());
+            assertEquals(1, workoutTest1.getTime());
 
-        workoutTest1.setExercise(new CardioExercise("4", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 4),
-                1);
+            workoutTest1.setExercise(new CardioExercise("4", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 4),
+                    1);
 
-        assertEquals(1, workoutTest1.length());
-        assertEquals("4", workoutTest1.getExercise(1).getName());
-        assertEquals(4, workoutTest1.getTime());
+            assertEquals(1, workoutTest1.length());
+            assertEquals("4", workoutTest1.getExercise(1).getName());
+            assertEquals(4, workoutTest1.getTime());
+        } catch (InvalidPositionException e) {
+            fail("InvalidPositionException caught, expected none");
+        }
+
     }
 
     @Test
     public void testSetExerciseOnceEqualTo() {
         addExerciseHelper(workoutTest1, 1);
 
-        assertEquals(1, workoutTest1.length());
-        assertEquals(1, workoutTest1.getTime());
+        try {
+            assertEquals(1, workoutTest1.length());
+            assertEquals(1, workoutTest1.getTime());
 
-        workoutTest1.setExercise(new CardioExercise("4", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 1),
-                1);
+            workoutTest1.setExercise(new CardioExercise("4", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 1),
+                    1);
 
-        assertEquals(1, workoutTest1.length());
-        assertEquals("4", workoutTest1.getExercise(1).getName());
-        assertEquals(1, workoutTest1.getTime());
+            assertEquals(1, workoutTest1.length());
+            assertEquals("4", workoutTest1.getExercise(1).getName());
+            assertEquals(1, workoutTest1.getTime());
+        } catch (InvalidPositionException e) {
+            fail("InvalidPositionException caught, expected none");
+        }
     }
 
     @Test
     public void testSetExerciseLessThan() {
         addExerciseHelper(workoutTest1, 2);
 
-        assertEquals(2, workoutTest1.length());
-        assertEquals(3, workoutTest1.getTime());
+        try {
+            assertEquals(2, workoutTest1.length());
+            assertEquals(3, workoutTest1.getTime());
 
-        workoutTest1.setExercise(new CardioExercise("4", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 1),
-                2);
+            workoutTest1.setExercise(new CardioExercise("4", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 1),
+                    2);
 
-        assertEquals(2, workoutTest1.length());
-        assertEquals("4", workoutTest1.getExercise(2).getName());
-        assertEquals(2, workoutTest1.getTime());
+            assertEquals(2, workoutTest1.length());
+            assertEquals("4", workoutTest1.getExercise(2).getName());
+            assertEquals(2, workoutTest1.getTime());
+        }
+
+         catch (InvalidPositionException e) {
+            fail("InvalidPositionException caught, expected none");
+        }
     }
 
     @Test
     public void testSetExerciseMultipleInList() {
         addExerciseHelper(workoutTest1, 5);
 
-        assertEquals(5, workoutTest1.length());
-        assertEquals(15, workoutTest1.getTime());
+        try {
+            assertEquals(5, workoutTest1.length());
+            assertEquals(15, workoutTest1.getTime());
 
-        workoutTest1.setExercise(new CardioExercise("4", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 1),
-                1);
-        workoutTest1.setExercise(new CardioExercise("5", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 2),
-                3);
-        workoutTest1.setExercise(new CardioExercise("6", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 7),
-                5);
+            workoutTest1.setExercise(new CardioExercise("4", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 1),
+                    1);
+            workoutTest1.setExercise(new CardioExercise("5", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 2),
+                    3);
+            workoutTest1.setExercise(new CardioExercise("6", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 7),
+                    5);
 
-        assertEquals(5, workoutTest1.length());
-        assertEquals("4", workoutTest1.getExercise(1).getName());
-        assertEquals("5", workoutTest1.getExercise(3).getName());
-        assertEquals("6", workoutTest1.getExercise(5).getName());
-        assertEquals(16, workoutTest1.getTime());
+            assertEquals(5, workoutTest1.length());
+            assertEquals("4", workoutTest1.getExercise(1).getName());
+            assertEquals("5", workoutTest1.getExercise(3).getName());
+            assertEquals("6", workoutTest1.getExercise(5).getName());
+            assertEquals(16, workoutTest1.getTime());
+        } catch (InvalidPositionException e) {
+            fail("InvalidPositionException caught, expected none");
+        }
+    }
+
+    @Test
+    public void testSetExerciseZeroPosition() {
+        try {
+            workoutTest1.setExercise(new WeightsExercise("1", MuscleGroup.CHEST, 1, 1, 1,
+                    Difficulty.LIGHT, 1), 0);
+            fail("InvalidPositionException expected, caught none");
+        } catch (InvalidPositionException e) {
+            // passes
+        }
+    }
+
+    @Test
+    public void testSetExerciseNegativePosition() {
+        try {
+            workoutTest1.setExercise(new WeightsExercise("1", MuscleGroup.CHEST, 1, 1, 1,
+                    Difficulty.LIGHT, 1), -2);
+            fail("InvalidPositionException expected, caught none");
+        } catch (InvalidPositionException e) {
+            // passes
+        }
+    }
+
+    @Test
+    public void testSetExercisePositionGreaterThanWorkoutLength() {
+        addExerciseHelper(workoutTest1, 3);
+
+        try {
+            assertEquals(3, workoutTest1.length());
+
+            workoutTest1.setExercise(new WeightsExercise("1", MuscleGroup.CHEST, 1, 1, 1,
+                    Difficulty.LIGHT, 1), 4);
+            fail("InvalidPositionException expected, caught none");
+        } catch (InvalidPositionException e) {
+            // passes
+        }
     }
 
     @Test
     public void testRemoveByPositionExerciseOnce() {
         addExerciseHelper(workoutTest1, 1);
 
-        assertEquals(1, workoutTest1.length());
+        try {
+            assertEquals(1, workoutTest1.length());
 
-        workoutTest1.removeExercise(1);
+            workoutTest1.removeExercise(1);
 
-        assertEquals(0, workoutTest1.length());
+            assertEquals(0, workoutTest1.length());
+        } catch (InvalidPositionException e) {
+            fail("InvalidPositionException caught, expected none");
+        }
 
     }
 
@@ -214,15 +328,52 @@ public class WorkoutTest {
     public void testRemoveByPositionExerciseMultipleInList() {
         addExerciseHelper(workoutTest1, 5);
 
-        assertEquals(5, workoutTest1.length());
+        try {
+            assertEquals(5, workoutTest1.length());
 
-        workoutTest1.removeExercise(1);
-        workoutTest1.removeExercise(2);
-        workoutTest1.removeExercise(3);
+            workoutTest1.removeExercise(1);
+            workoutTest1.removeExercise(2);
+            workoutTest1.removeExercise(3);
 
-        assertEquals(2, workoutTest1.length());
-        assertEquals("2", workoutTest1.getExercise(1).getName());
-        assertEquals("4", workoutTest1.getExercise(2).getName());
+            assertEquals(2, workoutTest1.length());
+            assertEquals("2", workoutTest1.getExercise(1).getName());
+            assertEquals("4", workoutTest1.getExercise(2).getName());
+        } catch (InvalidPositionException e) {
+            fail("InvalidPositionException caught, expected none");
+        }
+    }
+
+    @Test
+    public void testRemoveByPositionZeroPosition() {
+        try {
+            workoutTest1.removeExercise(0);
+            fail("InvalidPositionException expected, caught none");
+        } catch (InvalidPositionException e) {
+            // passes
+        }
+    }
+
+    @Test
+    public void testRemoveByPositionNegativePosition() {
+        try {
+            workoutTest1.removeExercise(-1);
+            fail("InvalidPositionException expected, caught none");
+        } catch (InvalidPositionException e) {
+            // passes
+        }
+    }
+
+    @Test
+    public void testRemoveByPositionGreaterThanWorkoutLength() {
+        addExerciseHelper(workoutTest1, 3);
+
+        try {
+            assertEquals(3, workoutTest1.length());
+            workoutTest1.removeExercise(4);
+            fail("InvalidPositionException expected, caught none");
+        } catch (InvalidPositionException e) {
+            // passes
+        }
     }
 
     @Test

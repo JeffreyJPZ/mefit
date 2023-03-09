@@ -1385,10 +1385,6 @@ public class FitnessApp {
             input = scanner.next();
             scanner.nextLine();
 
-            if (parseInt(input) > workout.length() || parseInt(input) < 0) {
-                throw new InvalidPositionException();
-            }
-
             workout.insertExercise(exercise, parseInt(input));
         } else {
             throw new InvalidInputException();
@@ -1408,10 +1404,6 @@ public class FitnessApp {
         if (scanner.hasNextInt()) {
             input = scanner.next();
             scanner.nextLine();
-
-            if (parseInt(input) > workout.length() || parseInt(input) < 0) {
-                throw new InvalidPositionException();
-            }
 
             workout.setExercise(exercise, parseInt(input));
         } else {
@@ -1444,10 +1436,6 @@ public class FitnessApp {
         if (scanner.hasNextInt()) {
             input = scanner.next();
             scanner.nextLine();
-
-            if (parseInt(input) > workout.length() || parseInt(input) < 0) {
-                throw new InvalidPositionException();
-            }
 
             workout.removeExercise(parseInt(input));
         } else {

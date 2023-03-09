@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.InvalidPositionException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.JsonWritable;
@@ -36,21 +37,29 @@ public class Workout implements JsonWritable {
         time += exercise.getTime();
     }
 
-    // REQUIRES: exercises does not contain an exercise with the same name and 1 <= position <= exercises.size()
+    // REQUIRES: exercises does not contain an exercise with the same name
     // MODIFIES: this
     // EFFECTS: adds an exercise to the given position in the workout and increases the workout time by exercise time
-    public void insertExercise(Exercise exercise, int position) {
+    public void insertExercise(Exercise exercise, int position) throws InvalidPositionException {
+        if ((position < 1 || position > (this.length() + 1)) && position != 1) {
+            throw new InvalidPositionException();
+        }
+
         exercises.add(position - 1, exercise);
         time += exercise.getTime();
     }
 
-    // REQUIRES: exercises does not contain an exercise with the same name and 1 <= position <= exercises.size()
+    // REQUIRES: exercises does not contain an exercise with the same name
     // MODIFIES: this
     // EFFECTS: replaces the exercise at the given position in the workout
     //          and if given exercise time is greater or equal to the replaced exercise time,
     //          increases workout time by their difference,
     //          otherwise decreases workout time by their difference
-    public void setExercise(Exercise exercise, int position) {
+    public void setExercise(Exercise exercise, int position) throws InvalidPositionException {
+        if (position < 1 || position > this.length()) {
+            throw new InvalidPositionException();
+        }
+
         int prevExerciseTime = exercises.get(position - 1).getTime();
 
         exercises.set(position - 1, exercise);
@@ -62,11 +71,14 @@ public class Workout implements JsonWritable {
         }
     }
 
-    // REQUIRES: 1 <= position <= exercises.size()
     // MODIFIES: this
     // EFFECTS: removes the exercise from the given position in the workout and
     //          decreases the workout time by exercise time
-    public void removeExercise(int position) {
+    public void removeExercise(int position) throws InvalidPositionException {
+        if (position < 1 || position > this.length()) {
+            throw new InvalidPositionException();
+        }
+
         int removedExerciseTime = exercises.get(position - 1).getTime();
 
         exercises.remove(position - 1);
@@ -111,26 +123,27 @@ public class Workout implements JsonWritable {
     // EFFECTS: returns a string representation of the workout name, difficulty, time (min), number of exercises,
     //          whether it is favourited and exercises
     public String toString() {
-        String retString = "Name\tDifficulty\tTime (min)\t # of Exercises\tFavourite?" + "\n"
-                        + "[" + name + "]" + "\t"
-                        + difficulty.getDifficulty() + "\t"
-                        + time + "\t"
-                        + length() + "\t"
-                        + isFavourite()
-                        + "\n"
-                        + "\n"
-                        + "Exercises" + "\n"
-                        + "Name\tMuscle Group\tDifficulty\tTime (min)\tFavourite?" + "\n";
+        StringBuilder workoutString = new StringBuilder();
+
+        workoutString.append("Name\tDifficulty\tTime (min)\t # of Exercises\tFavourite?\n");
+        workoutString.append("[").append(name).append("]\t");
+        workoutString.append(difficulty.getDifficulty()).append("\t");
+        workoutString.append(time).append("\t");
+        workoutString.append(length()).append("\t");
+        workoutString.append(isFavourite());
+        workoutString.append("\n\n");
+        workoutString.append("Exercises\n");
+        workoutString.append("Name\tMuscle Group\tDifficulty\tTime (min)\tFavourite?\n");
 
         for (Exercise exercise : exercises) {
-            retString += "[" + exercise.getName() + "]" + "\t"
-                    + exercise.getMuscleGroup().getMuscleGroup() + "\t"
-                    + exercise.getDifficulty().getDifficulty() + "\t"
-                    + exercise.getTime() + "\t"
-                    + exercise.isFavourite() + "\n";
+            workoutString.append("[").append(exercise.getName()).append("]\t");
+            workoutString.append(exercise.getMuscleGroup().getMuscleGroup()).append("\t");
+            workoutString.append(exercise.getDifficulty().getDifficulty()).append("\t");
+            workoutString.append(exercise.getTime()).append("\t");
+            workoutString.append(exercise.isFavourite()).append("\n");
         }
 
-        return retString;
+        return workoutString.toString();
     }
 
     // MODIFIES: this
