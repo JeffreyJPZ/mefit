@@ -3,128 +3,41 @@
         "gender": "Male",
         "exercises": {"exercises": [
             {
-                "difficulty": 2,
-                "reps": 15,
-                "sets": 3,
-                "muscleGroup": "Chest",
-                "name": "Pushups",
-                "time": 10,
-                "type": "BodyWeightsExercise",
-                "favourite": true
-            },
-            {
-                "difficulty": 1,
+                "difficulty": 3,
                 "reps": 5,
                 "sets": 5,
-                "muscleGroup": "Legs",
-                "name": "Squats",
+                "muscleGroup": "Chest",
+                "name": "Bench Press",
                 "weight": 225,
-                "time": 30,
+                "time": 15,
                 "type": "WeightsExercise",
                 "favourite": false
             },
             {
-                "difficulty": 3,
-                "distance": 2000,
-                "muscleGroup": "Back",
-                "name": "Rowing",
-                "time": 10,
-                "type": "CardioExercise",
-                "favourite": false
-            },
-            {
                 "difficulty": 2,
-                "reps": 1,
-                "sets": 3,
-                "muscleGroup": "Core",
-                "name": "Plank",
+                "reps": 5,
+                "sets": 5,
+                "muscleGroup": "Legs",
+                "name": "Squats",
+                "weight": 250,
                 "time": 10,
-                "type": "BodyWeightsExercise",
+                "type": "WeightsExercise",
                 "favourite": false
             }
         ]},
-        "workouts": {"workouts": [
-            {
-                "difficulty": 1,
-                "exercises": [
-                    {
-                        "difficulty": 2,
-                        "reps": 15,
-                        "sets": 3,
-                        "muscleGroup": "Chest",
-                        "name": "Pushups",
-                        "time": 10,
-                        "type": "BodyWeightsExercise",
-                        "favourite": true
-                    },
-                    {
-                        "difficulty": 2,
-                        "reps": 1,
-                        "sets": 3,
-                        "muscleGroup": "Core",
-                        "name": "Plank",
-                        "time": 10,
-                        "type": "BodyWeightsExercise",
-                        "favourite": false
-                    },
-                    {
-                        "difficulty": 1,
-                        "reps": 5,
-                        "sets": 5,
-                        "muscleGroup": "Legs",
-                        "name": "Squats",
-                        "weight": 225,
-                        "time": 30,
-                        "type": "WeightsExercise",
-                        "favourite": false
-                    }
-                ],
-                "name": "Holy Hell",
-                "time": 50,
-                "favourite": true
-            },
-            {
-                "difficulty": 3,
-                "exercises": [{
-                    "difficulty": 3,
-                    "distance": 2000,
-                    "muscleGroup": "Back",
-                    "name": "Rowing",
-                    "time": 10,
-                    "type": "CardioExercise",
-                    "favourite": false
-                }],
-                "name": "Hell Holy",
-                "time": 10,
-                "favourite": false
-            }
-        ]},
+        "workouts": {"workouts": []},
         "name": "Jeff",
-        "weight": 150,
+        "weight": 180,
         "id": 1,
-        "age": 18
+        "age": 10
     },
     {
-        "gender": "Other",
-        "exercises": {"exercises": [{
-            "difficulty": 1,
-            "distance": 200,
-            "muscleGroup": "Legs",
-            "name": "Sprints",
-            "time": 20,
-            "type": "CardioExercise",
-            "favourite": false
-        }]},
-        "workouts": {"workouts": [{
-            "difficulty": 3,
-            "exercises": [],
-            "name": "Deadge",
-            "time": 0,
-            "favourite": false
-        }]},
-        "name": "Kai",
-        "weight": 135,
+        "gender": "1",
+        "exercises": {"exercises": []},
+        "workouts": {"workouts": []},
+        "name": "Jefff",
+        "weight": 1,
         "id": 2,
-        "age": 20
+        "age": 1
     }
 ]}
