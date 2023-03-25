@@ -12,9 +12,9 @@ import static ui.FitnessAppCommands.*;
 // Represents the panel for adding profiles for the fitness application
 public class AddProfilePanel extends JPanel implements ActionListener {
     private static final String NAME_COMMAND = "Name";
-    private static final String AGE_COMMAND = "Age";
     private static final String GENDER_COMMAND = "Gender";
-    private static final String WEIGHT_COMMAND = "Weight";
+    private static final String AGE_COMMAND = "Age (yrs)";
+    private static final String WEIGHT_COMMAND = "Weight (lbs)";
 
     private FitnessApp fitnessApp;
     private ProfilesPanel profilesPanel;

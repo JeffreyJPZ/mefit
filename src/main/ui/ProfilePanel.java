@@ -16,7 +16,8 @@ import static ui.FitnessAppCommands.*;
 
 // Represents the profile panel for the fitness application
 public class ProfilePanel extends JPanel implements ActionListener {
-    private static final List<String> PROFILE_INFO_COLUMN_NAMES = List.of("ID", "Name", "Gender", "Age", "Weight");
+    private static final List<String> PROFILE_INFO_COLUMN_NAMES = List.of("ID", "Name", "Gender",
+            "Age (yrs)", "Weight (lbs)");
     private static final Vector<String> PROFILE_INFO_COLUMN_NAMES_VECTOR = new Vector<>(PROFILE_INFO_COLUMN_NAMES);
 
     private ExercisesPanel exercisesPanel;
@@ -125,7 +126,7 @@ public class ProfilePanel extends JPanel implements ActionListener {
         profileInfoDataVector.add(profile.getName());
         profileInfoDataVector.add(profile.getGender());
         profileInfoDataVector.add(profile.getAge());
-        profileInfoDataVector.add(profile.getGender());
+        profileInfoDataVector.add(profile.getWeight());
 
         profileInfoData.add(profileInfoDataVector);
     }

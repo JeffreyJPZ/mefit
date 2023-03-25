@@ -23,6 +23,15 @@
                 "time": 10,
                 "type": "WeightsExercise",
                 "favourite": false
+            },
+            {
+                "difficulty": 3,
+                "distance": 2000,
+                "muscleGroup": "Back",
+                "name": "Rowing",
+                "time": 10,
+                "type": "CardioExercise",
+                "favourite": false
             }
         ]},
         "workouts": {"workouts": []},
@@ -32,12 +41,61 @@
         "age": 10
     },
     {
-        "gender": "1",
-        "exercises": {"exercises": []},
+        "gender": "Other",
+        "exercises": {"exercises": [
+            {
+                "difficulty": 2,
+                "distance": 200,
+                "muscleGroup": "Legs",
+                "name": "Sprints",
+                "time": 15,
+                "type": "CardioExercise",
+                "favourite": false
+            },
+            {
+                "difficulty": 3,
+                "reps": 10,
+                "sets": 3,
+                "muscleGroup": "Shoulders",
+                "name": "Pullups",
+                "time": 20,
+                "type": "BodyWeightsExercise",
+                "favourite": false
+            },
+            {
+                "difficulty": 1,
+                "reps": 20,
+                "sets": 3,
+                "muscleGroup": "Core",
+                "name": "Situps",
+                "time": 10,
+                "type": "BodyWeightsExercise",
+                "favourite": false
+            }
+        ]},
         "workouts": {"workouts": []},
-        "name": "Jefff",
-        "weight": 1,
+        "name": "Kai",
+        "weight": 130,
         "id": 2,
-        "age": 1
+        "age": 18
+    },
+    {
+        "gender": "None",
+        "exercises": {"exercises": [{
+            "difficulty": 2,
+            "reps": 20,
+            "sets": 3,
+            "muscleGroup": "Arms",
+            "name": "Bent Over Rows",
+            "weight": 50,
+            "time": 15,
+            "type": "WeightsExercise",
+            "favourite": false
+        }]},
+        "workouts": {"workouts": []},
+        "name": "Atticus",
+        "weight": 140,
+        "id": 3,
+        "age": 18
     }
 ]}

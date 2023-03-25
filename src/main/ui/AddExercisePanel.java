@@ -114,7 +114,7 @@ public class AddExercisePanel extends JPanel implements ActionListener {
         add(new JLabel("Muscle Group"));
         add(selectMuscleGroup);
         add(Box.createVerticalGlue());
-        add(new JLabel("Time"));
+        add(new JLabel("Time (min)"));
         add(time);
     }
 

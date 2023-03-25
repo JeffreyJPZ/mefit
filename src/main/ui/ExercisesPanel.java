@@ -23,7 +23,7 @@ public class ExercisesPanel extends JPanel implements ActionListener {
     private static final String EXERCISE_NAME = "Name";
     private static final String EXERCISE_MUSCLE_GROUP = "Muscle Group";
     private static final String EXERCISE_DIFFICULTY = "Difficulty";
-    private static final String EXERCISE_TIME = "Time";
+    private static final String EXERCISE_TIME = "Time (min)";
     private static final String EXERCISE_FAVOURITE = "Favourite?";
     private static final int EXERCISE_NAME_POSITION = 0; // column for all exercise names
 
