@@ -190,8 +190,7 @@ public class ProfilesPanel extends JPanel implements ActionListener {
     // EFFECTS: switches to the profile panel for the selected profile, if more than one profile is selected
     //          indicates only one selection should be made
     private void profilePanel() {
-        int selectedProfile = profilesDataTable.getSelectedRow();
-        int id = (int) tableModel.getDataVector().elementAt(selectedProfile).get(PROFILE_ID_POSITION);
+        int id = getIdFromSelectedProfile();
 
         if (profilesDataTable.getSelectedRowCount() > 1) {
             splashText.setText("Please select one profile only.");
@@ -206,6 +205,14 @@ public class ProfilesPanel extends JPanel implements ActionListener {
         fitnessApp.switchPanel(PROFILE_COMMAND.getFitnessAppCommand());
     }
 
+    // REQUIRES: selected profile is not null
+    // EFFECTS: returns the id associated with the selected profile
+    private int getIdFromSelectedProfile() {
+        int selectedProfile = profilesDataTable.getSelectedRow();
+
+        return (int) profilesDataTable.getValueAt(selectedProfile, PROFILE_ID_POSITION);
+    }
+
     // MODIFIES: fitnessApp
     // EFFECTS: switches to the panel for adding a profile
     private void addProfilePanel() {
@@ -216,8 +223,7 @@ public class ProfilesPanel extends JPanel implements ActionListener {
     // MODIFIES: this
     // EFFECTS: deletes the selected profile from the display
     private void deleteSelectedProfile() {
-        int selectedProfile = profilesDataTable.getSelectedRow();
-        int id = (int) profilesDataTable.getValueAt(selectedProfile, PROFILE_ID_POSITION);
+        int id = getIdFromSelectedProfile();
 
         profilesById.removeProfile(id);
         updateProfiles();
