@@ -8,12 +8,12 @@ import persistence.JsonWriter;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
@@ -21,9 +21,12 @@ import static ui.FitnessAppCommands.*;
 
 // Represents the panel with profiles for the fitness application
 public class ProfilesPanel extends JPanel implements ActionListener {
-    private static final List<String> PROFILES_COLUMN_NAMES = List.of("ID", "Name");
-    private static final Vector<String> PROFILE_COLUMN_NAMES_VECTOR = new Vector<>(PROFILES_COLUMN_NAMES);
+    private static final String PROFILE_ID = "ID";
+    private static final String PROFILE_NAME = "Name";
     private static final int PROFILE_ID_POSITION = 0; // column for all profile ids
+
+    private static final List<String> PROFILES_COLUMN_NAMES = Arrays.asList(PROFILE_ID, PROFILE_NAME);
+    private static final Vector<String> PROFILE_COLUMN_NAMES_VECTOR = new Vector<>(PROFILES_COLUMN_NAMES);
 
     private static final String SAVE_PROFILES = "Save Profiles";
     private static final String LOAD_PROFILES = "Load Profiles";
@@ -214,7 +217,7 @@ public class ProfilesPanel extends JPanel implements ActionListener {
     // EFFECTS: deletes the selected profile from the display
     private void deleteSelectedProfile() {
         int selectedProfile = profilesDataTable.getSelectedRow();
-        int id = (int) tableModel.getDataVector().elementAt(selectedProfile).get(PROFILE_ID_POSITION);
+        int id = (int) tableModel.getDataVector().elementAt(selectedProfile).elementAt(PROFILE_ID_POSITION);
 
         profilesById.removeProfile(id);
         updateProfiles();
