@@ -25,6 +25,7 @@ public class ExercisesPanel extends JPanel implements ActionListener {
     private static final String EXERCISE_DIFFICULTY = "Difficulty";
     private static final String EXERCISE_TIME = "Time";
     private static final String EXERCISE_FAVOURITE = "Favourite?";
+    private static final int EXERCISE_NAME_POSITION = 0; // column for all exercise names
 
     private static final List<String> EXERCISE_INFO = List.of(EXERCISE_NAME, EXERCISE_MUSCLE_GROUP,
             EXERCISE_DIFFICULTY, EXERCISE_TIME, EXERCISE_FAVOURITE);
@@ -213,7 +214,7 @@ public class ExercisesPanel extends JPanel implements ActionListener {
     // EFFECTS: deletes the selected exercises from the display
     private void deleteSelectedExercises() {
         for (int i : exercisesDataTable.getSelectedRows()) {
-            String exerciseName = (String) tableModel.getDataVector().elementAt(i).get(0);
+            String exerciseName = (String) tableModel.getDataVector().elementAt(i).get(EXERCISE_NAME_POSITION);
             exercisesByName.removeExercise(exerciseName);
         }
 

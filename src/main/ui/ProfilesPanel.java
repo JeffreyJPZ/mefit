@@ -7,16 +7,24 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
+import java.util.Vector;
 
 import static ui.FitnessAppCommands.*;
 
 // Represents the panel with profiles for the fitness application
 public class ProfilesPanel extends JPanel implements ActionListener {
+    private static final List<String> PROFILES_COLUMN_NAMES = List.of("ID", "Name");
+    private static final Vector<String> PROFILE_COLUMN_NAMES_VECTOR = new Vector<>(PROFILES_COLUMN_NAMES);
+    private static final int PROFILE_ID_POSITION = 0; // column for all profile ids
+
     private static final String SAVE_PROFILES = "Save Profiles";
     private static final String LOAD_PROFILES = "Load Profiles";
     private static final String PATH = "./data/fitnessapp.json";
@@ -28,6 +36,11 @@ public class ProfilesPanel extends JPanel implements ActionListener {
     private ProfilesById profilesById;
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
+
+    private JTable profilesDataTable;
+    private JScrollPane profilesScrollableTable;
+    private Vector<Vector<Object>> profilesData;
+    private DefaultTableModel tableModel;
 
     private JLabel splashText;
     private JButton viewProfileButton;
@@ -56,6 +69,16 @@ public class ProfilesPanel extends JPanel implements ActionListener {
         this.jsonReader = new JsonReader(PATH);
         this.jsonWriter = new JsonWriter(PATH);
 
+        this.profilesData = new Vector<>();
+
+        extractProfilesData();
+
+        this.tableModel = new DefaultTableModel(profilesData, PROFILE_COLUMN_NAMES_VECTOR);
+        this.profilesDataTable = new JTable(tableModel);
+
+        this.profilesScrollableTable = new JScrollPane(profilesDataTable,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+
         this.splashText = new JLabel(WELCOME_TEXT);
         this.viewProfileButton = new JButton(PROFILE_COMMAND.getFitnessAppCommand());
         this.addProfileButton = new JButton(ADD_PROFILE_COMMAND.getFitnessAppCommand());
@@ -64,6 +87,19 @@ public class ProfilesPanel extends JPanel implements ActionListener {
         this.loadButton = new JButton(LOAD_PROFILES);
         this.backButton = new JButton(BACK_COMMAND.getFitnessAppCommand());
         this.profiles = new JComboBox<>();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: extracts profile information from each profile in profiles
+    private void extractProfilesData() {
+        for (Profile profile : profilesById.getProfiles().values()) {
+            Vector<Object> profileData = new Vector<>();
+
+            profileData.add(profile.getId());
+            profileData.add(profile.getName());
+
+            profilesData.add(profileData);
+        }
     }
 
     // MODIFIES: this
@@ -107,6 +143,8 @@ public class ProfilesPanel extends JPanel implements ActionListener {
     // EFFECTS: adds the appropriate components to the profiles panel
     private void addComponents() {
         add(Box.createVerticalGlue());
+        add(profilesScrollableTable);
+        add(Box.createVerticalGlue());
         add(profiles);
         add(Box.createVerticalGlue());
         add(splashText);
@@ -134,7 +172,7 @@ public class ProfilesPanel extends JPanel implements ActionListener {
         } else if (e.getActionCommand().equals(ADD_PROFILE_COMMAND.getFitnessAppCommand())) {
             addProfilePanel();
         } else if (e.getActionCommand().equals(DELETE_PROFILE_COMMAND.getFitnessAppCommand())) {
-            deleteProfile();
+            deleteSelectedProfile();
         } else if (e.getActionCommand().equals(SAVE_PROFILES)) {
             saveProfiles();
         } else if (e.getActionCommand().equals(LOAD_PROFILES)) {
@@ -146,9 +184,16 @@ public class ProfilesPanel extends JPanel implements ActionListener {
 
     // REQUIRES: selected profile is not null
     // MODIFIES: this, profilesPanel, fitnessApp
-    // EFFECTS: switches to the profile panel for the selected profile
+    // EFFECTS: switches to the profile panel for the selected profile, if more than one profile is selected
+    //          indicates only one selection should be made
     private void profilePanel() {
-        int id = (int) profiles.getSelectedItem();
+        int selectedProfile = profilesDataTable.getSelectedRow();
+        int id = (int) tableModel.getDataVector().elementAt(selectedProfile).get(PROFILE_ID_POSITION);
+
+        if (profilesDataTable.getSelectedRowCount() > 1) {
+            splashText.setText("Please select one profile only.");
+            return;
+        }
 
         profilePanel.setProfile(profilesById.getProfile(id));
         profilePanel.updateTable();
@@ -167,11 +212,12 @@ public class ProfilesPanel extends JPanel implements ActionListener {
     // REQUIRES: selected profile is not null
     // MODIFIES: this
     // EFFECTS: deletes the selected profile from the display
-    private void deleteProfile() {
-        int id = (int) profiles.getSelectedItem();
-        profilesById.removeProfile(id);
+    private void deleteSelectedProfile() {
+        int selectedProfile = profilesDataTable.getSelectedRow();
+        int id = (int) tableModel.getDataVector().elementAt(selectedProfile).get(PROFILE_ID_POSITION);
 
-        profiles.removeItem(id);
+        profilesById.removeProfile(id);
+        updateProfiles();
     }
 
     // MODIFIES: this
@@ -204,12 +250,12 @@ public class ProfilesPanel extends JPanel implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS: updates the display of profiles
-    private void updateProfiles() {
-        profiles.removeAllItems();
-
-        for (Integer i : profilesById.getProfiles().keySet()) {
-            profiles.addItem(i);
-        }
+    public void updateProfiles() {
+        profilesData.clear();
+        extractProfilesData();
+        tableModel.setDataVector(profilesData, PROFILE_COLUMN_NAMES_VECTOR);
+        profilesDataTable.setModel(tableModel);
+        profilesScrollableTable.setViewportView(profilesDataTable);
     }
 
     // MODIFIES: this, fitnessApp
@@ -240,12 +286,6 @@ public class ProfilesPanel extends JPanel implements ActionListener {
     // EFFECTS: adds the given profile to the profiles
     public void addProfile(Profile profile) {
         profilesById.addProfile(profile);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds the given profile to the display of profiles
-    public void addProfileToMenu(Profile profile) {
-        profiles.addItem(profile.getId());
     }
 
     public JComboBox<Integer> getProfiles() {

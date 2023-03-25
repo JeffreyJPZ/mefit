@@ -107,7 +107,7 @@ public class AddProfilePanel extends JPanel implements ActionListener {
                 parseInt(age.getText()), parseInt(weight.getText()));
 
         profilesPanel.addProfile(profile);
-        profilesPanel.addProfileToMenu(profile);
+        profilesPanel.updateProfiles();
 
         fitnessApp.switchPanel(PROFILES_COMMAND.getFitnessAppCommand());
     }

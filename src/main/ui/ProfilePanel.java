@@ -26,9 +26,9 @@ public class ProfilePanel extends JPanel implements ActionListener {
 
     private Vector<Vector<Object>> profileInfoData;
     private DefaultTableModel tableModel;
-
     private JTableHeader profileInfoHeader;
     private JTable profileInfoTable;
+
     private JButton exercisesButton;
     private JButton backButton;
 
