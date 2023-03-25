@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
@@ -16,8 +17,13 @@ import static ui.FitnessAppCommands.*;
 
 // Represents the profile panel for the fitness application
 public class ProfilePanel extends JPanel implements ActionListener {
-    private static final List<String> PROFILE_INFO_COLUMN_NAMES = List.of("ID", "Name", "Gender",
-            "Age (yrs)", "Weight (lbs)");
+    private static final String PROFILE_ID = "ID";
+    private static final String PROFILE_NAME = "Name";
+    private static final String PROFILE_GENDER = "Gender";
+    private static final String PROFILE_AGE = "Age (yrs)";
+    private static final String PROFILE_WEIGHT = "Weight (lbs)";
+    private static final List<String> PROFILE_INFO_COLUMN_NAMES = Arrays.asList(PROFILE_ID, PROFILE_NAME,
+            PROFILE_GENDER, PROFILE_AGE, PROFILE_WEIGHT);
     private static final Vector<String> PROFILE_INFO_COLUMN_NAMES_VECTOR = new Vector<>(PROFILE_INFO_COLUMN_NAMES);
 
     private ExercisesPanel exercisesPanel;

@@ -217,7 +217,7 @@ public class ProfilesPanel extends JPanel implements ActionListener {
     // EFFECTS: deletes the selected profile from the display
     private void deleteSelectedProfile() {
         int selectedProfile = profilesDataTable.getSelectedRow();
-        int id = (int) tableModel.getDataVector().elementAt(selectedProfile).elementAt(PROFILE_ID_POSITION);
+        int id = (int) profilesDataTable.getValueAt(selectedProfile, PROFILE_ID_POSITION);
 
         profilesById.removeProfile(id);
         updateProfiles();

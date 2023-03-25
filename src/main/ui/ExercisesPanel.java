@@ -215,7 +215,7 @@ public class ExercisesPanel extends JPanel implements ActionListener {
     // EFFECTS: deletes the selected exercises from the display
     private void deleteSelectedExercises() {
         for (int i : exercisesDataTable.getSelectedRows()) {
-            String exerciseName = (String) tableModel.getDataVector().elementAt(i).elementAt(EXERCISE_NAME_POSITION);
+            String exerciseName = (String) exercisesDataTable.getValueAt(i, EXERCISE_NAME_POSITION);
             exercisesByName.removeExercise(exerciseName);
         }
 
