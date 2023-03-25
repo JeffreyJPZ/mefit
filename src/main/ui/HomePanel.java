@@ -9,9 +9,13 @@ import static ui.FitnessAppCommands.*;
 
 // Represents the home panel for the fitness application
 public class HomePanel extends JPanel implements ActionListener {
+    private static final String CREATOR_PICTURE_PATH = "./data/creatorpicture.jpg";
+
     private FitnessApp fitnessApp;
 
     private JLabel applicationName;
+    private JLabel attributeText;
+    private JLabel creatorPicture;
     private JButton profilesButton;
 
     // EFFECTS: creates the home panel for the application
@@ -28,6 +32,8 @@ public class HomePanel extends JPanel implements ActionListener {
         this.fitnessApp = fitnessApp;
 
         this.applicationName = new JLabel("Fitness App");
+        this.attributeText = new JLabel("Created by Jeffrey Zhang");
+        this.creatorPicture = new JLabel(new ImageIcon(CREATOR_PICTURE_PATH));
         this.profilesButton = new JButton(PROFILES_COMMAND.getFitnessAppCommand());
     }
 
@@ -35,6 +41,8 @@ public class HomePanel extends JPanel implements ActionListener {
     // EFFECTS: sets the placement for the home panel components
     private void initializePlacements() {
         applicationName.setAlignmentX(Component.CENTER_ALIGNMENT);
+        attributeText.setAlignmentX(Component.CENTER_ALIGNMENT);
+        creatorPicture.setAlignmentX(Component.CENTER_ALIGNMENT);
         profilesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -54,6 +62,10 @@ public class HomePanel extends JPanel implements ActionListener {
         add(applicationName);
         add(Box.createVerticalGlue());
         add(profilesButton);
+        add(Box.createVerticalGlue());
+        add(attributeText);
+        add(Box.createVerticalGlue());
+        add(creatorPicture);
         add(Box.createVerticalGlue());
     }
 
