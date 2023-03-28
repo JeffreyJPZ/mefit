@@ -6,7 +6,6 @@ import java.awt.*;
 import static ui.FitnessAppCommands.*;
 
 // Represents a graphical interface for exercise application
-// Credit to SimpleDrawingPlayer and https://stackoverflow.com/questions/6175899/how-to-change-card-layout-panels-from-another-panel
 public class FitnessApp extends JFrame {
     private static final int WIDTH = 600;
     private static final int HEIGHT = 400;

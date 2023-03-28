@@ -20,7 +20,13 @@ You can view saved exercises by various filters, and edit them.
 You will also be able to generate a workout schedule with your list of exercises. 
 These workouts can be named and saved.
 
-Inspiration was taken from TellerApp and JsonSerializationDemo from CPSC 210.
+Inspiration for the console application was taken from TellerApp and JsonSerializationDemo from CPSC 210.
+
+Additional inspiration for the GUI was from:
+- SimpleDrawingPlayer and SpaceInvadersStarter from CPSC 210
+- https://stackoverflow.com/questions/6175899/how-to-change-card-layout-panels-from-another-panel
+- https://stackoverflow.com/questions/47841447/how-to-refresh-jtable-after-click-the-jbutton
+- https://stackoverflow.com/questions/14393112/jtable-in-jscrollpane
 
 ## User Stories
 - As a user, I want to be able to make a new exercise and add it to a list of exercises for my profile.
@@ -31,6 +37,7 @@ Inspiration was taken from TellerApp and JsonSerializationDemo from CPSC 210.
 
 - As a user, I want to be able to save all the profiles in the fitness application to file from the main menu.
 - As a user, I want to be able to be able to load saved profiles from file from the main menu.
+
 # Instructions for Grader
 
 - You can generate the first required action related to adding an exercises to the exercises on profile by:
@@ -60,8 +67,8 @@ Inspiration was taken from TellerApp and JsonSerializationDemo from CPSC 210.
 
 - You can save the state of my application by:
   - Pressing the "Profiles" button on the home screen
-  - Pressing the "Save Profiles" button on profiles screen (after adding or removing some profile/exercise)
+  - Pressing the "Save Profiles" button on the profiles screen (after adding or removing some profile/exercise)
 
 - You can reload the state of my application by:
   - Pressing the "Profiles" button on the home screen
-  - Pressing the "Load Profiles" button on profiles screen (after adding or removing some profile/exercise)
+  - Pressing the "Load Profiles" button on the profiles screen (after adding or removing some profile/exercise)
