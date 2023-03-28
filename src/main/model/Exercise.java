@@ -2,7 +2,6 @@ package model;
 
 import org.json.JSONObject;
 import persistence.JsonWritable;
-import persistence.JsonWriter;
 
 import static java.lang.Boolean.*;
 
