@@ -5,7 +5,7 @@ import java.awt.*;
 
 import static ui.FitnessAppCommands.*;
 
-// Represents a graphical interface for exercise application
+// Represents a graphical interface for the exercise application
 public class FitnessApp extends JFrame {
     private static final int WIDTH = 600;
     private static final int HEIGHT = 400;
