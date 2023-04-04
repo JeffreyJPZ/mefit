@@ -5,11 +5,11 @@ public enum FitnessAppCommands {
     HOME_COMMAND("Home"),
     PROFILES_COMMAND("Profiles"),
     ADD_PROFILE_COMMAND("Add Profile"),
-    DELETE_PROFILE_COMMAND("Delete Selected Profile"),
+    REMOVE_PROFILE_COMMAND("Remove Selected Profile"),
     PROFILE_COMMAND("View Selected Profile"),
     EXERCISES_COMMAND("Exercises"),
     ADD_EXERCISE_COMMAND("Add Exercise"),
-    DELETE_EXERCISE_COMMAND("Delete Selected Exercise(s)"),
+    REMOVE_EXERCISE_COMMAND("Remove Selected Exercise(s)"),
     FILTER_EXERCISE_COMMAND("Filter Exercises"),
     RESET_EXERCISE_FILTERS_COMMAND("Reset Exercise Filters"),
     BACK_COMMAND("Back");

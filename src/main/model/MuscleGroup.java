@@ -1,6 +1,6 @@
 package model;
 
-// Represents muscle groups
+// Represents muscle groups worked by exercises
 public enum MuscleGroup {
     CHEST("Chest"),
     BACK("Back"),

@@ -12,28 +12,36 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Unit tests for the Event class
  */
 public class EventTest {
-    private Event e;
+    private Event e1;
+    private Event e2;
+    private Event e3;
     private Date d;
-
-    //NOTE: these tests might fail if time at which line (2) below is executed
-    //is different from time that line (1) is executed.  Lines (1) and (2) must
-    //run in same millisecond for this test to make sense and pass.
 
     @BeforeEach
     public void runBefore() {
-        e = new Event("Sensor open at door");   // (1)
-        d = Calendar.getInstance().getTime();   // (2)
+        e1 = new Event(EventDescription.ADD_EXERCISE.getDescription());
+        e2 = new Event(EventDescription.REMOVE_EXERCISE.getDescription());
+        e3 = new Event(EventDescription.FILTER_EXERCISES.getDescription());
+        d = Calendar.getInstance().getTime();
     }
 
     @Test
     public void testEvent() {
-        assertEquals("Sensor open at door", e.getDescription());
-        assertEquals(d, e.getDate());
+        assertEquals(EventDescription.ADD_EXERCISE.getDescription(), e1.getDescription());
+        assertEquals(EventDescription.REMOVE_EXERCISE.getDescription(), e2.getDescription());
+        assertEquals(EventDescription.FILTER_EXERCISES.getDescription(), e3.getDescription());
+
+        assertEquals(d, e1.getDate());
+        assertEquals(d, e2.getDate());
+        assertEquals(d, e3.getDate());
     }
 
     @Test
     public void testToString() {
-        assertEquals(d.toString() + "\n" + "Sensor open at door", e.toString());
+        assertEquals(d.toString() + "\n" + EventDescription.ADD_EXERCISE.getDescription(), e1.toString());
+        assertEquals(d.toString() + "\n" + EventDescription.REMOVE_EXERCISE.getDescription(), e2.toString());
+        assertEquals(d.toString() + "\n" + EventDescription.FILTER_EXERCISES.getDescription(), e3.toString());
+
     }
 }
 

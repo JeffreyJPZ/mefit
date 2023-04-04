@@ -1,12 +1,17 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import static ui.FitnessAppCommands.*;
 
 // Represents a graphical interface for the exercise application
-public class FitnessApp extends JFrame {
+public class FitnessApp extends JFrame implements WindowListener {
     private static final int WIDTH = 600;
     private static final int HEIGHT = 400;
 
@@ -21,6 +26,7 @@ public class FitnessApp extends JFrame {
         initializePanels();
 
         add(panels);
+        addWindowListener(this);
 
         pack();
     }
@@ -37,7 +43,7 @@ public class FitnessApp extends JFrame {
     private void initializeWindow() {
         panels.setLayout(layout);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
 
@@ -64,5 +70,49 @@ public class FitnessApp extends JFrame {
     // EFFECTS: switches the current panel to the panel with the given name
     public void switchPanel(String name) {
         layout.show(panels, name);
+    }
+
+    // EFFECTS: does nothing when window is opened
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    // EFFECTS: does nothing when window is closing
+    @Override
+    public void windowClosing(WindowEvent e) {
+
+    }
+
+    // EFFECTS: prints all logged events to console
+    @Override
+    public void windowClosed(WindowEvent e) {
+        for (Event event : EventLog.getInstance()) {
+            System.out.println(event.toString());
+        }
+    }
+
+    // EFFECTS: does nothing when window is minimized
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    // EFFECTS: does nothing when window is maximized
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    // EFFECTS: does nothing when window gains focus
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    // EFFECTS: does nothing when window loses focus
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 }

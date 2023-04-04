@@ -20,6 +20,8 @@ You can view saved exercises by various filters, and edit them.
 You will also be able to generate a workout schedule with your list of exercises. 
 These workouts can be named and saved.
 
+Event logging classes and their tests were derived from AlarmSystem from CPSC 210.
+
 Inspiration for the console application was taken from TellerApp and JsonSerializationDemo from CPSC 210.
 
 Additional inspiration for the GUI was from:
@@ -27,6 +29,7 @@ Additional inspiration for the GUI was from:
 - https://stackoverflow.com/questions/6175899/how-to-change-card-layout-panels-from-another-panel
 - https://stackoverflow.com/questions/47841447/how-to-refresh-jtable-after-click-the-jbutton
 - https://stackoverflow.com/questions/14393112/jtable-in-jscrollpane
+- https://stackoverflow.com/questions/13264907/why-is-windowclosed-not-being-called
 
 ## User Stories
 - As a user, I want to be able to make a new exercise and add it to a list of exercises for my profile.

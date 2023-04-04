@@ -25,6 +25,7 @@ public class ExercisesByName implements FitnessCollection, JsonWritable {
     // EFFECTS: adds an exercise to the exercises
     public void addExercise(Exercise exercise) {
         exercises.put(exercise.getName(), exercise);
+        EventLog.getInstance().logEvent(new Event(EventDescription.ADD_EXERCISE.getDescription()));
     }
 
     // REQUIRES: exercises is not empty and name matches an exercise
@@ -32,6 +33,7 @@ public class ExercisesByName implements FitnessCollection, JsonWritable {
     // EFFECTS: removes an exercise from the exercises with the given name
     public void removeExercise(String name) {
         exercises.remove(name);
+        EventLog.getInstance().logEvent(new Event(EventDescription.REMOVE_EXERCISE.getDescription()));
     }
 
     @Override
@@ -78,6 +80,8 @@ public class ExercisesByName implements FitnessCollection, JsonWritable {
             }
         }
 
+        EventLog.getInstance().logEvent(new Event(EventDescription.FILTER_EXERCISES.getDescription()));
+
         return exercisesByName;
     }
 
@@ -90,6 +94,8 @@ public class ExercisesByName implements FitnessCollection, JsonWritable {
                 exercisesByName.getExercises().put(exercise.getName(), exercise);
             }
         }
+
+        EventLog.getInstance().logEvent(new Event(EventDescription.FILTER_EXERCISES.getDescription()));
 
         return exercisesByName;
     }
@@ -104,6 +110,8 @@ public class ExercisesByName implements FitnessCollection, JsonWritable {
             }
         }
 
+        EventLog.getInstance().logEvent(new Event(EventDescription.FILTER_EXERCISES.getDescription()));
+
         return exercisesByName;
     }
 
@@ -116,6 +124,9 @@ public class ExercisesByName implements FitnessCollection, JsonWritable {
                 exercisesByName.getExercises().put(exercise.getName(), exercise);
             }
         }
+
+        EventLog.getInstance().logEvent(new Event(EventDescription.FILTER_EXERCISES.getDescription()));
+
         return exercisesByName;
     }
 
@@ -128,6 +139,9 @@ public class ExercisesByName implements FitnessCollection, JsonWritable {
                 exercisesByName.getExercises().put(exercise.getName(), exercise);
             }
         }
+
+        EventLog.getInstance().logEvent(new Event(EventDescription.FILTER_EXERCISES.getDescription()));
+
         return exercisesByName;
     }
 

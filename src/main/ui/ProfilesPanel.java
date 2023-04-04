@@ -85,7 +85,7 @@ public class ProfilesPanel extends JPanel implements ActionListener {
         this.splashText = new JLabel(WELCOME_TEXT);
         this.viewProfileButton = new JButton(PROFILE_COMMAND.getFitnessAppCommand());
         this.addProfileButton = new JButton(ADD_PROFILE_COMMAND.getFitnessAppCommand());
-        this.deleteProfileButton = new JButton(DELETE_PROFILE_COMMAND.getFitnessAppCommand());
+        this.deleteProfileButton = new JButton(REMOVE_PROFILE_COMMAND.getFitnessAppCommand());
         this.saveButton = new JButton(SAVE_PROFILES);
         this.loadButton = new JButton(LOAD_PROFILES);
         this.backButton = new JButton(BACK_COMMAND.getFitnessAppCommand());
@@ -129,7 +129,7 @@ public class ProfilesPanel extends JPanel implements ActionListener {
         addProfileButton.setActionCommand(ADD_PROFILE_COMMAND.getFitnessAppCommand());
         addProfileButton.addActionListener(this);
 
-        deleteProfileButton.setActionCommand(DELETE_PROFILE_COMMAND.getFitnessAppCommand());
+        deleteProfileButton.setActionCommand(REMOVE_PROFILE_COMMAND.getFitnessAppCommand());
         deleteProfileButton.addActionListener(this);
 
         saveButton.setActionCommand(SAVE_PROFILES);
@@ -174,8 +174,8 @@ public class ProfilesPanel extends JPanel implements ActionListener {
             profilePanel();
         } else if (e.getActionCommand().equals(ADD_PROFILE_COMMAND.getFitnessAppCommand())) {
             addProfilePanel();
-        } else if (e.getActionCommand().equals(DELETE_PROFILE_COMMAND.getFitnessAppCommand())) {
-            deleteSelectedProfile();
+        } else if (e.getActionCommand().equals(REMOVE_PROFILE_COMMAND.getFitnessAppCommand())) {
+            removeSelectedProfile();
         } else if (e.getActionCommand().equals(SAVE_PROFILES)) {
             saveProfiles();
         } else if (e.getActionCommand().equals(LOAD_PROFILES)) {
@@ -221,8 +221,8 @@ public class ProfilesPanel extends JPanel implements ActionListener {
 
     // REQUIRES: selected profile is not null
     // MODIFIES: this
-    // EFFECTS: deletes the selected profile from the display
-    private void deleteSelectedProfile() {
+    // EFFECTS: removes the selected profile from the display
+    private void removeSelectedProfile() {
         int id = getIdFromSelectedProfile();
 
         profilesById.removeProfile(id);

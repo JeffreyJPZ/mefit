@@ -82,7 +82,7 @@ public class ExercisesPanel extends JPanel implements ActionListener {
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         this.addExerciseButton = new JButton(ADD_EXERCISE_COMMAND.getFitnessAppCommand());
-        this.deleteExerciseButton = new JButton(DELETE_EXERCISE_COMMAND.getFitnessAppCommand());
+        this.deleteExerciseButton = new JButton(REMOVE_EXERCISE_COMMAND.getFitnessAppCommand());
         this.filterLabel = new JLabel("Filters");
         this.inputFilter = new JTextField("Enter the desired filter here");
         this.filterExercisesButton = new JButton(FILTER_EXERCISE_COMMAND.getFitnessAppCommand());
@@ -115,7 +115,7 @@ public class ExercisesPanel extends JPanel implements ActionListener {
     private void initializeActions() {
         addExerciseButton.setActionCommand(ADD_EXERCISE_COMMAND.getFitnessAppCommand());
         addExerciseButton.addActionListener(this);
-        deleteExerciseButton.setActionCommand(DELETE_EXERCISE_COMMAND.getFitnessAppCommand());
+        deleteExerciseButton.setActionCommand(REMOVE_EXERCISE_COMMAND.getFitnessAppCommand());
         deleteExerciseButton.addActionListener(this);
         filterExercisesButton.setActionCommand(FILTER_EXERCISE_COMMAND.getFitnessAppCommand());
         filterExercisesButton.addActionListener(this);
@@ -192,8 +192,8 @@ public class ExercisesPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals(ADD_EXERCISE_COMMAND.getFitnessAppCommand())) {
             addExercisePanel();
-        } else if (e.getActionCommand().equals(DELETE_EXERCISE_COMMAND.getFitnessAppCommand())) {
-            deleteSelectedExercises();
+        } else if (e.getActionCommand().equals(REMOVE_EXERCISE_COMMAND.getFitnessAppCommand())) {
+            removeSelectedExercises();
         } else if (e.getActionCommand().equals(FILTER_EXERCISE_COMMAND.getFitnessAppCommand())) {
             filterExercises();
         } else if (e.getActionCommand().equals(RESET_EXERCISE_FILTERS_COMMAND.getFitnessAppCommand())) {
@@ -212,8 +212,8 @@ public class ExercisesPanel extends JPanel implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: deletes the selected exercises from the display
-    private void deleteSelectedExercises() {
+    // EFFECTS: removes the selected exercises from the display
+    private void removeSelectedExercises() {
         for (int i : exercisesDataTable.getSelectedRows()) {
             String exerciseName = (String) exercisesDataTable.getValueAt(i, EXERCISE_NAME_POSITION);
             exercisesByName.removeExercise(exerciseName);

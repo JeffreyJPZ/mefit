@@ -19,9 +19,9 @@ public class EventLogTest {
 
     @BeforeEach
     public void loadEvents() {
-        e1 = new Event("A1");
-        e2 = new Event("A2");
-        e3 = new Event("A3");
+        e1 = new Event(EventDescription.ADD_EXERCISE.getDescription());
+        e2 = new Event(EventDescription.REMOVE_EXERCISE.getDescription());
+        e3 = new Event(EventDescription.FILTER_EXERCISES.getDescription());
         EventLog el = EventLog.getInstance();
         el.logEvent(e1);
         el.logEvent(e2);
