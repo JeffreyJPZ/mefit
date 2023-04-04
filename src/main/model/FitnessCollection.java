@@ -1,7 +1,9 @@
 package model;
 
+import persistence.JsonWritable;
+
 // Represents a collection of objects for a fitness application
-public interface FitnessCollection {
+public interface FitnessCollection extends JsonWritable {
 
     // EFFECTS: returns a string representation of the given collection
     @Override

@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 // Represents a mapping of workouts by name
-public class WorkoutsByName implements FitnessCollection, JsonWritable {
+public class WorkoutsByName implements FitnessCollection {
     public static final int DISPLAY_NUMBER_OF_WORKOUTS = 10;
     public static final String ADDITIONAL_WORKOUT_MESSAGE = " additional workouts";
 

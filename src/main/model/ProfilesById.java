@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 // Represents a mapping of profiles by their id
-public class ProfilesById implements FitnessCollection, JsonWritable {
+public class ProfilesById implements FitnessCollection {
     public static final int DISPLAY_NUMBER_OF_PROFILES = 10;
     public static final String ADDITIONAL_PROFILE_MESSAGE = " additional profiles";
 
