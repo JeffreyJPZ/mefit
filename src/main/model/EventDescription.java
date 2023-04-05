@@ -2,8 +2,8 @@ package model;
 
 // Represents descriptions for events taken in the fitness application
 public enum EventDescription {
-    ADD_EXERCISE("Added exercise to a profile's exercises"),
-    REMOVE_EXERCISE("Removed exercise from a profile's exercises"),
+    ADD_EXERCISE("Added an exercise to a profile's exercises"),
+    REMOVE_EXERCISE("Removed an exercise from a profile's exercises"),
     FILTER_EXERCISES("Filtered a profile's exercises");
 
     private final String description;

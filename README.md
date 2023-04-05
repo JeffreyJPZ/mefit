@@ -75,3 +75,34 @@ Additional inspiration for the GUI was from:
 - You can reload the state of my application by:
   - Pressing the "Profiles" button on the home screen
   - Pressing the "Load Profiles" button on the profiles screen (after adding or removing some profile/exercise)
+
+### Phase 4: Task 2
+Tue Apr 04 17:56:25 PDT 2023 \
+Added an exercise to a profile's exercises \
+Tue Apr 04 17:56:25 PDT 2023 \
+Added an exercise to a profile's exercises \
+Tue Apr 04 17:56:25 PDT 2023 \
+Added an exercise to a profile's exercises \
+Tue Apr 04 17:56:25 PDT 2023 \
+Added an exercise to a profile's exercises \
+Tue Apr 04 17:56:25 PDT 2023 \
+Added an exercise to a profile's exercises \
+Tue Apr 04 17:56:25 PDT 2023 \
+Added an exercise to a profile's exercises \
+Tue Apr 04 17:56:25 PDT 2023 \
+Added an exercise to a profile's exercises \
+Tue Apr 04 17:57:03 PDT 2023 \
+Added an exercise to a profile's exercises \
+Tue Apr 04 17:57:10 PDT 2023 \
+Added an exercise to a profile's exercises \
+Tue Apr 04 17:57:20 PDT 2023 \
+Filtered a profile's exercises \
+Tue Apr 04 17:57:29 PDT 2023 \
+Removed an exercise from a profile's exercises \
+Tue Apr 04 17:57:29 PDT 2023 \
+Removed an exercise from a profile's exercises
+
+### Phase 4: Task 3
+- iterator pattern for FitnessCollection
+- observer pattern for gui
+- separate classes for gui event handling and display
