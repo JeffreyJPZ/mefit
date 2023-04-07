@@ -115,15 +115,16 @@ and references the single FitnessApp instance. I would also make the constructor
 and have a public static method that returns the single instance.
 
 I could also increase the cohesion of the panel classes, as right now they are responsible for storing the model
-and event handling in addition to displaying the model (using buttons and other components).
-Refactoring would include separating each panel into respective model and display classes.
+and event handling in addition to displaying the model (using buttons and other components). This can be seen in
+the ProfilesPanel and ProfilePanel classes in the UML diagram, which have associations to classes in the model package
+and to other panels. Refactoring would include separating each panel into respective model and display classes.
 However, this might introduce coupling as the methods in the current panel classes modify the same fields. One way to
 avoid this could be to have the model class extend JPanel, while having the display class extend the model class to
 inherit the necessary fields. But this would violate the Liskov Substitution Principle as the display class would have
 additional behaviours that the model class would not have, so this might not be "good" design.
 
 I could also apply the observer pattern to the GUI to reduce coupling, comprising the FitnessApp class
-and many panels that are associated with it. For example, the diagram shows that all panels are associated with 
+and many panels that are associated with it. For example, the UML diagram shows that all panels are associated with 
 FitnessApp as FitnessApp needs to change state when events are handled. However, some panels such as
 ExercisesPanel need to update their state when an event is handled in the ProfilePanel class. Currently, I need
 to explicitly update FitnessApp and any additional panels when events are handled, which could get confusing if I decide
