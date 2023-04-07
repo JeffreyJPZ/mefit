@@ -37,7 +37,6 @@ Additional inspiration for the GUI was from:
 - As a user, I want to be able to select an exercise and edit its information,
   including its name, muscle group, difficulty, and time.
 - As a user, I want to be able to generate a workout schedule with the list of exercises for my profile.
-
 - As a user, I want to be able to save all the profiles in the fitness application to file from the main menu.
 - As a user, I want to be able to be able to load saved profiles from file from the main menu.
 
@@ -77,6 +76,8 @@ Additional inspiration for the GUI was from:
   - Pressing the "Load Profiles" button on the profiles screen (after adding or removing some profile/exercise)
 
 ### Phase 4: Task 2
+**NOTE: First 7 events are from loading profiles from JSON** 
+
 Tue Apr 04 17:56:25 PDT 2023 \
 Added an exercise to a profile's exercises \
 Tue Apr 04 17:56:25 PDT 2023 \
@@ -103,6 +104,34 @@ Tue Apr 04 17:57:29 PDT 2023 \
 Removed an exercise from a profile's exercises
 
 ### Phase 4: Task 3
-- iterator pattern for FitnessCollection
-- observer pattern for gui
-- separate classes for gui event handling and display
+From the project's UML diagram, it could make sense to apply the Singleton pattern to the FitnessApp class.
+There should really only be one instance of the FitnessApp class, as it the frame that contains the different panels
+of the application. All the panels need to have a reference to FitnessApp, as FitnessApp needs to switch between panels
+when certain events are handled (such as a button press), thus it should be accessible to all classes in the package.
+Static methods would not really be applicable, as the fields of FitnessApp inherit from supertypes
+and therefore cannot be static. To refactor FitnessApp,
+I would have a static field that instantiates the FitnessApp at runtime (since main will need the instance)
+and references the single FitnessApp instance. I would also make the constructor private,
+and have a public static method that returns the single instance.
+
+I could also increase the cohesion of the panel classes, as right now they are responsible for storing the model
+and event handling in addition to displaying the model (using buttons and other components).
+Refactoring would include separating each panel into respective model and display classes.
+However, this might introduce coupling as the methods in the current panel classes modify the same fields. One way to
+avoid this could be to have the model class extend JPanel, while having the display class extend the model class to
+inherit the necessary fields. But this would violate the Liskov Substitution Principle as the display class would have
+additional behaviours that the model class would not have, so this might not be "good" design.
+
+I could also apply the observer pattern to the GUI to reduce coupling, comprising the FitnessApp class
+and many panels that are associated with it. For example, the diagram shows that all panels are associated with 
+FitnessApp as FitnessApp needs to change state when events are handled. However, some panels such as
+ExercisesPanel need to update their state when an event is handled in the ProfilePanel class. Currently, I need
+to explicitly update FitnessApp and any additional panels when events are handled, which could get confusing if I decide
+to add more features and panels in the future. To refactor, I could
+have multiple abstract Subject classes that extend JPanel corresponding to the different panels.
+Each panel would extend their own Subject class, and each subject would maintain a list of some observers
+(FitnessApp and other panels). Each observer would implement
+the Observer interface, with their own update method that is called when an event is handled.
+However, some subjects would also need to be observers to other subjects as some panels will need
+to update in response to other panels changing state. Therefore, those panels must also implement the Observer
+interface.
