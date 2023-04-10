@@ -137,6 +137,7 @@ parameter(s) that is called when an event is handled. However, some subjects wou
 subjects as well. Therefore, those panels must also implement the Observer interface.
 
 If I implement the observer pattern, I could improve cohesion by making event handling its own class. 
-However, event handling will need implementation details of both the model and display classes.
+However, event handling will need implementation details of the model and display classes.
 Seeing as each display has different components and therefore will handle different events,
-it may be worthwhile to make event handling an inner class of each display class. This way, it cannot be accessed o
+it may be worthwhile to make event handling an inner class of each display class. This way, it is only used by its
+parent display class.
