@@ -4,13 +4,12 @@ import model.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import static java.lang.Integer.parseInt;
 import static ui.FitnessAppCommands.*;
 
-// Represents the panel for adding exercises for the fitness application
-public class AddExercisePanel extends JPanel implements ActionListener {
+// Represents a panel for adding exercises for the fitness application
+public class AddExercisePanel extends FitnessPanel {
     private static final String WEIGHTS_EXERCISE = "Weights";
     private static final String BODYWEIGHTS_EXERCISE = "Bodyweights";
     private static final String CARDIO_EXERCISE = "Cardio";
@@ -32,8 +31,9 @@ public class AddExercisePanel extends JPanel implements ActionListener {
     private JButton addExerciseButton;
     private JButton backButton;
 
-    // EFFECTS: creates the add exercise panel
+    // EFFECTS: creates a panel for adding exercises
     public AddExercisePanel(FitnessApp fitnessApp, ExercisesPanel exercisesPanel) {
+        super();
         initializeFields(fitnessApp, exercisesPanel);
         initializePlacements();
         initializeActions();
@@ -72,77 +72,42 @@ public class AddExercisePanel extends JPanel implements ActionListener {
 
         this.addExerciseButton = new JButton(ADD_EXERCISE_COMMAND.getFitnessAppCommand());
         this.backButton = new JButton(BACK_COMMAND.getFitnessAppCommand());
+
+        addDisplayComponents();
     }
 
+    @Override
     // MODIFIES: this
-    // EFFECTS: sets the placements of components for the add exercise panel
-    private void initializePlacements() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    // EFFECTS: adds each component to be displayed to components
+    protected void addDisplayComponents() {
+        components.add(new JLabel("Name"));
+        components.add(name);
+        components.add(new JLabel("Exercise Type"));
+        components.add(selectType);
+        components.add(new JLabel("Difficulty"));
+        components.add(selectDifficulty);
+        components.add(new JLabel("Muscle Group"));
+        components.add(selectMuscleGroup);
+        components.add(new JLabel("Time (min)"));
+        components.add(time);
+        components.add(new JLabel("Weight (lbs)"));
+        components.add(weight);
+        components.add(new JLabel("Sets"));
+        components.add(sets);
+        components.add(new JLabel("Reps"));
+        components.add(reps);
+        components.add(new JLabel("Distance (m)"));
+        components.add(distance);
+        components.add(addExerciseButton);
+        components.add(backButton);
     }
 
+    @Override
     // MODIFIES: this
-    // EFFECTS: sets the components to respond to appropriate events
-    private void initializeActions() {
-        addExerciseButton.setActionCommand(ADD_EXERCISE_COMMAND.getFitnessAppCommand());
-        addExerciseButton.addActionListener(this);
-
-        backButton.setActionCommand(BACK_COMMAND.getFitnessAppCommand());
-        backButton.addActionListener(this);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds the components to the add exercise panel
-    private void addComponents() {
-        addDefaultExerciseComponents();
-        addAdditionalExerciseComponents();
-        addButtons();
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds the components relating to default exercise information
-    private void addDefaultExerciseComponents() {
-        add(Box.createVerticalGlue());
-        add(new JLabel("Name"));
-        add(name);
-        add(Box.createVerticalGlue());
-        add(new JLabel("Exercise Type"));
-        add(selectType);
-        add(Box.createVerticalGlue());
-        add(new JLabel("Difficulty"));
-        add(selectDifficulty);
-        add(Box.createVerticalGlue());
-        add(new JLabel("Muscle Group"));
-        add(selectMuscleGroup);
-        add(Box.createVerticalGlue());
-        add(new JLabel("Time (min)"));
-        add(time);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds the components relating to additional exercise information
-    private void addAdditionalExerciseComponents() {
-        add(Box.createVerticalGlue());
-        add(new JLabel("Weight"));
-        add(weight);
-        add(Box.createVerticalGlue());
-        add(new JLabel("Sets"));
-        add(sets);
-        add(Box.createVerticalGlue());
-        add(new JLabel("Reps"));
-        add(reps);
-        add(Box.createVerticalGlue());
-        add(new JLabel("Distance"));
-        add(distance);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds the navigation buttons for the add exercise panel
-    private void addButtons() {
-        add(Box.createVerticalGlue());
-        add(addExerciseButton);
-        add(Box.createVerticalGlue());
-        add(backButton);
-        add(Box.createVerticalGlue());
+    // EFFECTS: sets the appropriate components to respond to appropriate events
+    protected void initializeActions() {
+        initializeAction(addExerciseButton, ADD_EXERCISE_COMMAND.getFitnessAppCommand());
+        initializeAction(backButton, BACK_COMMAND.getFitnessAppCommand());
     }
 
     // MODIFIES: exercisesPanel, fitnessApp

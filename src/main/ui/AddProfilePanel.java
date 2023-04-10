@@ -4,13 +4,12 @@ import model.Profile;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import static java.lang.Integer.parseInt;
 import static ui.FitnessAppCommands.*;
 
-// Represents the panel for adding profiles for the fitness application
-public class AddProfilePanel extends JPanel implements ActionListener {
+// Represents a panel for adding profiles for the fitness application
+public class AddProfilePanel extends FitnessPanel {
     private static final String NAME_COMMAND = "Name";
     private static final String GENDER_COMMAND = "Gender";
     private static final String AGE_COMMAND = "Age (yrs)";
@@ -26,7 +25,9 @@ public class AddProfilePanel extends JPanel implements ActionListener {
     private JButton addProfileButton;
     private JButton backButton;
 
+    // EFFECTS: makes a panel for adding a new profile
     public AddProfilePanel(FitnessApp fitnessApp, ProfilesPanel profilesPanel) {
+        super();
         initializeFields(fitnessApp, profilesPanel);
         initializePlacements();
         initializeActions();
@@ -45,48 +46,32 @@ public class AddProfilePanel extends JPanel implements ActionListener {
         this.weight = new JTextField("225");
         this.addProfileButton = new JButton(ADD_PROFILE_COMMAND.getFitnessAppCommand());
         this.backButton = new JButton(BACK_COMMAND.getFitnessAppCommand());
+
+        addDisplayComponents();
     }
 
+    @Override
     // MODIFIES: this
-    // EFFECTS: sets the placement of components for the add profile panel
-    private void initializePlacements() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    // EFFECTS: adds each component to be displayed to components
+    protected void addDisplayComponents() {
+        components.add(new JLabel(NAME_COMMAND));
+        components.add(name);
+        components.add(new JLabel(GENDER_COMMAND));
+        components.add(gender);
+        components.add(new JLabel(AGE_COMMAND));
+        components.add(age);
+        components.add(new JLabel(WEIGHT_COMMAND));
+        components.add(weight);
+        components.add(addProfileButton);
+        components.add(backButton);
     }
 
+    @Override
     // MODIFIES: this
-    // EFFECTS: sets the components to respond to appropriate events
-    private void initializeActions() {
-        addProfileButton.setActionCommand(ADD_PROFILE_COMMAND.getFitnessAppCommand());
-        addProfileButton.addActionListener(this);
-
-        backButton.setActionCommand(BACK_COMMAND.getFitnessAppCommand());
-        backButton.addActionListener(this);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds the components to the profile panel
-    private void addComponents() {
-        add(Box.createVerticalGlue());
-        add(new JLabel(NAME_COMMAND));
-        add(Box.createVerticalGlue());
-        add(name);
-        add(Box.createVerticalGlue());
-        add(new JLabel(GENDER_COMMAND));
-        add(Box.createVerticalGlue());
-        add(gender);
-        add(Box.createVerticalGlue());
-        add(new JLabel(AGE_COMMAND));
-        add(Box.createVerticalGlue());
-        add(age);
-        add(Box.createVerticalGlue());
-        add(new JLabel(WEIGHT_COMMAND));
-        add(Box.createVerticalGlue());
-        add(weight);
-        add(Box.createVerticalGlue());
-        add(addProfileButton);
-        add(Box.createVerticalGlue());
-        add(backButton);
-        add(Box.createVerticalGlue());
+    // EFFECTS: sets the appropriate components to respond to appropriate events
+    protected void initializeActions() {
+        initializeAction(addProfileButton, ADD_PROFILE_COMMAND.getFitnessAppCommand());
+        initializeAction(backButton, BACK_COMMAND.getFitnessAppCommand());
     }
 
     // MODIFIES: profilesPanel, fitnessApp

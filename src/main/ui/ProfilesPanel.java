@@ -8,9 +8,7 @@ import persistence.JsonWriter;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
@@ -19,8 +17,8 @@ import java.util.Vector;
 
 import static ui.FitnessAppCommands.*;
 
-// Represents the panel with profiles for the fitness application
-public class ProfilesPanel extends JPanel implements ActionListener {
+// Represents a panel with profiles for the fitness application
+public class ProfilesPanel extends FitnessPanel {
     private static final String PROFILE_ID = "ID";
     private static final String PROFILE_NAME = "Name";
     private static final int PROFILE_ID_POSITION = 0; // column for all profile ids
@@ -48,14 +46,14 @@ public class ProfilesPanel extends JPanel implements ActionListener {
     private JLabel splashText;
     private JButton viewProfileButton;
     private JButton addProfileButton;
-    private JButton deleteProfileButton;
+    private JButton removeProfileButton;
     private JButton saveButton;
     private JButton loadButton;
     private JButton backButton;
-    private JComboBox<Integer> profiles;
 
-    // EFFECTS: Creates the profiles panel
+    // EFFECTS: creates a profiles panel
     public ProfilesPanel(FitnessApp fitnessApp, ProfilePanel profilePanel) {
+        super();
         initializeFields(fitnessApp, profilePanel);
         initializePlacements();
         initializeActions();
@@ -85,11 +83,26 @@ public class ProfilesPanel extends JPanel implements ActionListener {
         this.splashText = new JLabel(WELCOME_TEXT);
         this.viewProfileButton = new JButton(PROFILE_COMMAND.getFitnessAppCommand());
         this.addProfileButton = new JButton(ADD_PROFILE_COMMAND.getFitnessAppCommand());
-        this.deleteProfileButton = new JButton(REMOVE_PROFILE_COMMAND.getFitnessAppCommand());
+        this.removeProfileButton = new JButton(REMOVE_PROFILE_COMMAND.getFitnessAppCommand());
         this.saveButton = new JButton(SAVE_PROFILES);
         this.loadButton = new JButton(LOAD_PROFILES);
         this.backButton = new JButton(BACK_COMMAND.getFitnessAppCommand());
-        this.profiles = new JComboBox<>();
+
+        addDisplayComponents();
+    }
+
+    @Override
+    // MODIFIES: this
+    // EFFECTS: adds each component to be displayed to components
+    protected void addDisplayComponents() {
+        components.add(profilesScrollableTable);
+        components.add(splashText);
+        components.add(viewProfileButton);
+        components.add(addProfileButton);
+        components.add(removeProfileButton);
+        components.add(saveButton);
+        components.add(loadButton);
+        components.add(backButton);
     }
 
     // MODIFIES: this
@@ -105,65 +118,16 @@ public class ProfilesPanel extends JPanel implements ActionListener {
         }
     }
 
+    @Override
     // MODIFIES: this
-    // EFFECTS: sets the placement of the components for the profiles panel
-    private void initializePlacements() {
-        profiles.setAlignmentX(Component.CENTER_ALIGNMENT);
-        splashText.setAlignmentX(Component.CENTER_ALIGNMENT);
-        viewProfileButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        addProfileButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        deleteProfileButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        saveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        loadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    }
-
-    // MODIFIES: this
-    // EFFECTS: sets the components to respond to appropriate events
-    private void initializeActions() {
-        viewProfileButton.setActionCommand(PROFILE_COMMAND.getFitnessAppCommand());
-        viewProfileButton.addActionListener(this);
-
-        addProfileButton.setActionCommand(ADD_PROFILE_COMMAND.getFitnessAppCommand());
-        addProfileButton.addActionListener(this);
-
-        deleteProfileButton.setActionCommand(REMOVE_PROFILE_COMMAND.getFitnessAppCommand());
-        deleteProfileButton.addActionListener(this);
-
-        saveButton.setActionCommand(SAVE_PROFILES);
-        saveButton.addActionListener(this);
-
-        loadButton.setActionCommand(LOAD_PROFILES);
-        loadButton.addActionListener(this);
-
-        backButton.setActionCommand(BACK_COMMAND.getFitnessAppCommand());
-        backButton.addActionListener(this);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds the appropriate components to the profiles panel
-    private void addComponents() {
-        add(Box.createVerticalGlue());
-        add(profilesScrollableTable);
-        add(Box.createVerticalGlue());
-        add(profiles);
-        add(Box.createVerticalGlue());
-        add(splashText);
-        add(Box.createVerticalGlue());
-        add(viewProfileButton);
-        add(Box.createVerticalGlue());
-        add(addProfileButton);
-        add(Box.createVerticalGlue());
-        add(deleteProfileButton);
-        add(Box.createVerticalGlue());
-        add(saveButton);
-        add(Box.createVerticalGlue());
-        add(loadButton);
-        add(Box.createVerticalGlue());
-        add(backButton);
-        add(Box.createVerticalGlue());
+    // EFFECTS: sets the appropriate components to respond to appropriate events
+    protected void initializeActions() {
+        initializeAction(viewProfileButton, PROFILE_COMMAND.getFitnessAppCommand());
+        initializeAction(addProfileButton, ADD_PROFILE_COMMAND.getFitnessAppCommand());
+        initializeAction(removeProfileButton, REMOVE_PROFILE_COMMAND.getFitnessAppCommand());
+        initializeAction(saveButton, SAVE_PROFILES);
+        initializeAction(loadButton, LOAD_PROFILES);
+        initializeAction(backButton, BACK_COMMAND.getFitnessAppCommand());
     }
 
     // MODIFIES: this, fitnessApp, profilePanel
@@ -295,9 +259,5 @@ public class ProfilesPanel extends JPanel implements ActionListener {
     // EFFECTS: adds the given profile to the profiles
     public void addProfile(Profile profile) {
         profilesById.addProfile(profile);
-    }
-
-    public JComboBox<Integer> getProfiles() {
-        return profiles;
     }
 }

@@ -5,9 +5,7 @@ import model.Profile;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,8 +13,8 @@ import java.util.Vector;
 
 import static ui.FitnessAppCommands.*;
 
-// Represents the profile panel for the fitness application
-public class ProfilePanel extends JPanel implements ActionListener {
+// Represents a profile panel for the fitness application
+public class ProfilePanel extends FitnessPanel {
     private static final String PROFILE_ID = "ID";
     private static final String PROFILE_NAME = "Name";
     private static final String PROFILE_GENDER = "Gender";
@@ -39,8 +37,9 @@ public class ProfilePanel extends JPanel implements ActionListener {
     private JButton exercisesButton;
     private JButton backButton;
 
-    // EFFECTS: creates the profile panel
+    // EFFECTS: creates a profile panel
     public ProfilePanel(FitnessApp fitnessApp, ExercisesPanel exercisesPanel) {
+        super();
         initializeFields(fitnessApp, exercisesPanel);
         initializePlacements();
         initializeActions();
@@ -64,38 +63,34 @@ public class ProfilePanel extends JPanel implements ActionListener {
 
         this.exercisesButton = new JButton(EXERCISES_COMMAND.getFitnessAppCommand());
         this.backButton = new JButton(BACK_COMMAND.getFitnessAppCommand());
+
+        addDisplayComponents();
     }
 
+    @Override
     // MODIFIES: this
-    // EFFECTS: sets the placement of the components for the profile panel
-    private void initializePlacements() {
-        exercisesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    // EFFECTS: adds each component to be displayed to components
+    protected void addDisplayComponents() {
+        components.add(profileInfoTable);
+        components.add(exercisesButton);
+        components.add(backButton);
     }
 
+    @Override
     // MODIFIES: this
-    // EFFECTS: sets the components to respond to appropriate events
-    private void initializeActions() {
-        exercisesButton.setActionCommand(EXERCISES_COMMAND.getFitnessAppCommand());
-        exercisesButton.addActionListener(this);
-
-        backButton.setActionCommand(BACK_COMMAND.getFitnessAppCommand());
-        backButton.addActionListener(this);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds the components to the profile panel
-    private void addComponents() {
+    // EFFECTS: adds each component to be displayed to the profile panel
+    protected void addComponents() {
         add(Box.createVerticalGlue());
         add(profileInfoHeader);
-        add(profileInfoTable);
-        add(Box.createVerticalGlue());
-        add(exercisesButton);
-        add(Box.createVerticalGlue());
-        add(backButton);
-        add(Box.createVerticalGlue());
+        super.addComponents();
+    }
+
+    @Override
+    // MODIFIES: this
+    // EFFECTS: sets the appropriate components to respond to appropriate events
+    protected void initializeActions() {
+        initializeAction(exercisesButton, EXERCISES_COMMAND.getFitnessAppCommand());
+        initializeAction(backButton, BACK_COMMAND.getFitnessAppCommand());
     }
 
     // MODIFIES: exercisesPanel, fitnessApp

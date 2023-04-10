@@ -9,7 +9,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
@@ -17,8 +16,8 @@ import java.util.Vector;
 import static java.lang.Integer.parseInt;
 import static ui.FitnessAppCommands.*;
 
-// Represents the exercises panel for the fitness application
-public class ExercisesPanel extends JPanel implements ActionListener {
+// Represents a panel with exercises for the fitness application
+public class ExercisesPanel extends FitnessPanel {
     private static final int EXERCISES_WIDTH = 300;
     private static final int EXERCISES_HEIGHT = 300;
     private static final String EXERCISE_NAME = "Name";
@@ -43,7 +42,7 @@ public class ExercisesPanel extends JPanel implements ActionListener {
     private JTable exercisesDataTable;
     private JScrollPane exercisesScrollableTable;
     private JButton addExerciseButton;
-    private JButton deleteExerciseButton;
+    private JButton removeExerciseButton;
     private JLabel filterLabel;
     private JComboBox<String> exerciseFilters;
     private JTextField inputFilter;
@@ -51,8 +50,9 @@ public class ExercisesPanel extends JPanel implements ActionListener {
     private JButton resetExerciseFiltersButton;
     private JButton backButton;
 
-    // EFFECTS: creates the exercises panel
+    // EFFECTS: creates an exercises panel
     public ExercisesPanel(FitnessApp fitnessApp) {
+        super();
         initializeFields(fitnessApp);
         initializePlacements();
         initializeActions();
@@ -82,71 +82,52 @@ public class ExercisesPanel extends JPanel implements ActionListener {
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         this.addExerciseButton = new JButton(ADD_EXERCISE_COMMAND.getFitnessAppCommand());
-        this.deleteExerciseButton = new JButton(REMOVE_EXERCISE_COMMAND.getFitnessAppCommand());
+        this.removeExerciseButton = new JButton(REMOVE_EXERCISE_COMMAND.getFitnessAppCommand());
         this.filterLabel = new JLabel("Filters");
         this.inputFilter = new JTextField("Enter the desired filter here");
         this.filterExercisesButton = new JButton(FILTER_EXERCISE_COMMAND.getFitnessAppCommand());
         this.resetExerciseFiltersButton = new JButton(RESET_EXERCISE_FILTERS_COMMAND.getFitnessAppCommand());
         this.backButton = new JButton(BACK_COMMAND.getFitnessAppCommand());
+
+        addDisplayComponents();
     }
 
+    @Override
     // MODIFIES: this
     // EFFECTS: sets the placements of the components for the exercises panel
-    private void initializePlacements() {
-        addExerciseButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        deleteExerciseButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        filterLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        exerciseFilters.setAlignmentX(Component.CENTER_ALIGNMENT);
-        inputFilter.setAlignmentX(Component.CENTER_ALIGNMENT);
-        filterExercisesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        resetExerciseFiltersButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+    protected void initializePlacements() {
+        super.initializePlacements();
 
         exercisesScrollableTable.setPreferredSize(new Dimension(EXERCISES_WIDTH, EXERCISES_HEIGHT));
         exercisesScrollableTable.setVisible(true);
 
         inputFilter.setMaximumSize(new Dimension(EXERCISES_WIDTH, 10));
-
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     // MODIFIES: this
-    // EFFECTS: sets the components to respond to appropriate events
-    private void initializeActions() {
-        addExerciseButton.setActionCommand(ADD_EXERCISE_COMMAND.getFitnessAppCommand());
-        addExerciseButton.addActionListener(this);
-        deleteExerciseButton.setActionCommand(REMOVE_EXERCISE_COMMAND.getFitnessAppCommand());
-        deleteExerciseButton.addActionListener(this);
-        filterExercisesButton.setActionCommand(FILTER_EXERCISE_COMMAND.getFitnessAppCommand());
-        filterExercisesButton.addActionListener(this);
-        resetExerciseFiltersButton.setActionCommand(RESET_EXERCISE_FILTERS_COMMAND.getFitnessAppCommand());
-        resetExerciseFiltersButton.addActionListener(this);
-        backButton.setActionCommand(BACK_COMMAND.getFitnessAppCommand());
-        backButton.addActionListener(this);
+    // EFFECTS: adds each component to be displayed to components
+    @Override
+    protected void addDisplayComponents() {
+        components.add(exercisesScrollableTable);
+        components.add(addExerciseButton);
+        components.add(removeExerciseButton);
+        components.add(filterLabel);
+        components.add(exerciseFilters);
+        components.add(inputFilter);
+        components.add(filterExercisesButton);
+        components.add(resetExerciseFiltersButton);
+        components.add(backButton);
     }
 
+    @Override
     // MODIFIES: this
-    // EFFECTS: adds components to the exercises panel
-    private void addComponents() {
-        add(Box.createVerticalGlue());
-        add(exercisesScrollableTable);
-        add(Box.createVerticalGlue());
-        add(addExerciseButton);
-        add(Box.createVerticalGlue());
-        add(deleteExerciseButton);
-        add(Box.createVerticalGlue());
-        add(filterLabel);
-        add(Box.createVerticalGlue());
-        add(exerciseFilters);
-        add(Box.createVerticalGlue());
-        add(inputFilter);
-        add(Box.createVerticalGlue());
-        add(filterExercisesButton);
-        add(Box.createVerticalGlue());
-        add(resetExerciseFiltersButton);
-        add(Box.createVerticalGlue());
-        add(backButton);
-        add(Box.createVerticalGlue());
+    // EFFECTS: sets the appropriate components to respond to appropriate events
+    protected void initializeActions() {
+        initializeAction(addExerciseButton, ADD_EXERCISE_COMMAND.getFitnessAppCommand());
+        initializeAction(removeExerciseButton, REMOVE_EXERCISE_COMMAND.getFitnessAppCommand());
+        initializeAction(filterExercisesButton, FILTER_EXERCISE_COMMAND.getFitnessAppCommand());
+        initializeAction(resetExerciseFiltersButton, RESET_EXERCISE_FILTERS_COMMAND.getFitnessAppCommand());
+        initializeAction(backButton, BACK_COMMAND.getFitnessAppCommand());
     }
 
     // MODIFIES: this

@@ -1,14 +1,12 @@
 package ui;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import static ui.FitnessAppCommands.*;
 
-// Represents the home panel for the fitness application
-public class HomePanel extends JPanel implements ActionListener {
+// Represents a home panel for the fitness application
+public class HomePanel extends FitnessPanel {
     private static final String CREATOR_PICTURE_PATH = "./data/creatorpicture.jpg";
 
     private FitnessApp fitnessApp;
@@ -18,8 +16,9 @@ public class HomePanel extends JPanel implements ActionListener {
     private JLabel creatorPicture;
     private JButton profilesButton;
 
-    // EFFECTS: creates the home panel for the application
+    // EFFECTS: creates a home panel
     public HomePanel(FitnessApp fitnessApp) {
+        super();
         initializeFields(fitnessApp);
         initializePlacements();
         initializeActions();
@@ -35,38 +34,25 @@ public class HomePanel extends JPanel implements ActionListener {
         this.attributeText = new JLabel("Created by Jeffrey Zhang");
         this.creatorPicture = new JLabel(new ImageIcon(CREATOR_PICTURE_PATH));
         this.profilesButton = new JButton(PROFILES_COMMAND.getFitnessAppCommand());
+
+        addDisplayComponents();
     }
 
+    @Override
     // MODIFIES: this
-    // EFFECTS: sets the placement for the home panel components
-    private void initializePlacements() {
-        applicationName.setAlignmentX(Component.CENTER_ALIGNMENT);
-        attributeText.setAlignmentX(Component.CENTER_ALIGNMENT);
-        creatorPicture.setAlignmentX(Component.CENTER_ALIGNMENT);
-        profilesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    // EFFECTS: adds each component to be displayed to the components
+    protected void addDisplayComponents() {
+        components.add(applicationName);
+        components.add(attributeText);
+        components.add(creatorPicture);
+        components.add(profilesButton);
     }
 
+    @Override
     // MODIFIES: this
-    // EFFECTS: sets the components to respond to appropriate events
-    private void initializeActions() {
-        profilesButton.setActionCommand(PROFILES_COMMAND.getFitnessAppCommand());
-        profilesButton.addActionListener(this);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds the appropriate components to the home panel
-    private void addComponents() {
-        add(Box.createVerticalGlue());
-        add(applicationName);
-        add(Box.createVerticalGlue());
-        add(profilesButton);
-        add(Box.createVerticalGlue());
-        add(attributeText);
-        add(Box.createVerticalGlue());
-        add(creatorPicture);
-        add(Box.createVerticalGlue());
+    // EFFECTS: sets the appropriate components to respond to appropriate events
+    protected void initializeActions() {
+        initializeAction(profilesButton, PROFILES_COMMAND.getFitnessAppCommand());
     }
 
     // MODIFIES: fitnessApp

@@ -119,10 +119,11 @@ and event handling in addition to displaying the model (using buttons and other 
 the ProfilesPanel and ProfilePanel classes in the UML diagram, which have associations to classes in the model package
 and to other panels. Refactoring would include separating each panel into a class that contains the model and a
 class that updates the display, respectively. However, this might introduce coupling as the methods in the
-current panel classes modify the same fields. One way to avoid this could be to have the model class extend JPanel, 
-while having the display class extend the model class to
-inherit the necessary fields. But this would violate the Liskov Substitution Principle as the display class would have
-additional behaviours that the model class would not have, so this is not "good" design.
+current panel classes modify the same fields. One way to reduce this could be to have the model class extend JPanel, 
+while having the display class extend the model class to inherit the necessary fields. 
+While this might not violate Liskov Substitution Principle as the display class would only add
+behaviour that the model class would not have, it would defeat the point of separating the classes in the first place, 
+so this might not be a good solution.
 
 I could also apply the observer pattern to the GUI to reduce coupling, comprising the FitnessApp class
 and many panels that are associated with it. For example, the UML diagram shows that all panels are associated with 
