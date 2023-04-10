@@ -117,22 +117,26 @@ and have a public static method that returns the single instance.
 I could also increase the cohesion of the panel classes, as right now they are responsible for storing the model
 and event handling in addition to displaying the model (using buttons and other components). This can be seen in
 the ProfilesPanel and ProfilePanel classes in the UML diagram, which have associations to classes in the model package
-and to other panels. Refactoring would include separating each panel into respective model and display classes.
-However, this might introduce coupling as the methods in the current panel classes modify the same fields. One way to
-avoid this could be to have the model class extend JPanel, while having the display class extend the model class to
+and to other panels. Refactoring would include separating each panel into a class that contains the model and a
+class that updates the display, respectively. However, this might introduce coupling as the methods in the
+current panel classes modify the same fields. One way to avoid this could be to have the model class extend JPanel, 
+while having the display class extend the model class to
 inherit the necessary fields. But this would violate the Liskov Substitution Principle as the display class would have
-additional behaviours that the model class would not have, so this might not be "good" design.
+additional behaviours that the model class would not have, so this is not "good" design.
 
 I could also apply the observer pattern to the GUI to reduce coupling, comprising the FitnessApp class
 and many panels that are associated with it. For example, the UML diagram shows that all panels are associated with 
 FitnessApp as FitnessApp needs to change state when events are handled. However, some panels such as
 ExercisesPanel need to update their state when an event is handled in the ProfilePanel class. Currently, I need
 to explicitly update FitnessApp and any additional panels when events are handled, which could get confusing if I decide
-to add more features and panels in the future. To refactor, I could
-have multiple abstract Subject classes that extend JPanel corresponding to the different panels.
-Each panel would extend their own Subject class, and each subject would maintain a list of some observers
-(FitnessApp and other panels). Each observer would implement
-the Observer interface, with their own update method that is called when an event is handled.
-However, some subjects would also need to be observers to other subjects as some panels will need
-to update in response to other panels changing state. Therefore, those panels must also implement the Observer
-interface.
+to add more features and panels in the future. To refactor, I could first separate each panel into
+model and display classes as mentioned above and have the model class extend an abstract Subject class.
+Each subject would maintain a list of some observers (FitnessApp, the display class, other model classes).
+Each observer would implement the Observer interface, implementing their own update method that takes in the necessary
+parameter(s) that is called when an event is handled. However, some subjects would also need to be observers to other 
+subjects as well. Therefore, those panels must also implement the Observer interface.
+
+If I implement the observer pattern, I could improve cohesion by making event handling its own class. 
+However, event handling will need implementation details of both the model and display classes.
+Seeing as each display has different components and therefore will handle different events,
+it may be worthwhile to make event handling an inner class of each display class. This way, it cannot be accessed o
