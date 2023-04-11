@@ -91,15 +91,12 @@ Added an exercise to a profile's exercises \
 Tue Apr 04 17:56:25 PDT 2023 \
 Added an exercise to a profile's exercises \
 Tue Apr 04 17:56:25 PDT 2023 \
-Added an exercise to a profile's exercises \
-Tue Apr 04 17:57:03 PDT 2023 \
-Added an exercise to a profile's exercises \
+Added an exercise to a profile's exercises
+
 Tue Apr 04 17:57:10 PDT 2023 \
 Added an exercise to a profile's exercises \
 Tue Apr 04 17:57:20 PDT 2023 \
 Filtered a profile's exercises \
-Tue Apr 04 17:57:29 PDT 2023 \
-Removed an exercise from a profile's exercises \
 Tue Apr 04 17:57:29 PDT 2023 \
 Removed an exercise from a profile's exercises
 
