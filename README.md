@@ -76,7 +76,7 @@ Additional inspiration for the GUI was from:
   - Pressing the "Load Profiles" button on the profiles screen (after adding or removing some profile/exercise)
 
 ### Phase 4: Task 2
-**NOTE: First 7 events are from loading profiles from JSON** 
+**NOTE: First 7 events are from loading sample profiles from JSON** 
 
 Tue Apr 04 17:56:25 PDT 2023 \
 Added an exercise to a profile's exercises \
