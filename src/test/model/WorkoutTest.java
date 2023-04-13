@@ -578,15 +578,6 @@ public class WorkoutTest {
     }
 
     @Test
-    public void testSetTime() {
-        workoutTest1.setTime(1);
-        workoutTest2.setTime(100);
-
-        assertEquals(1, workoutTest1.getTime());
-        assertEquals(100, workoutTest2.getTime());
-    }
-
-    @Test
     public void testSetExercisesEmptyExercises() {
         assertTrue(workoutTest1.getExercises().isEmpty());
 
@@ -633,7 +624,6 @@ public class WorkoutTest {
 
         assertEquals("1", jsonObjectTest1.getString("name"));
         assertEquals(1, jsonObjectTest1.get("difficulty"));
-        assertEquals(0, jsonObjectTest1.getInt("time"));
         assertFalse(jsonObjectTest1.getBoolean("favourite"));
         assertTrue(jsonObjectTest1.getJSONArray("exercises").isEmpty());
     }
@@ -646,7 +636,6 @@ public class WorkoutTest {
 
         assertEquals("1", jsonObjectTest1.getString("name"));
         assertEquals(1, jsonObjectTest1.get("difficulty"));
-        assertEquals(3, jsonObjectTest1.getInt("time"));
         assertFalse(jsonObjectTest1.getBoolean("favourite"));
 
         JSONObject jsonObjectExercise1 = jsonObjectTest1.getJSONArray("exercises").getJSONObject(0);

@@ -179,7 +179,6 @@ public class JsonReader {
         Workout workout = new Workout(workoutJson.getString("name"),
                 getDifficulty(workoutJson.getInt("difficulty")));
 
-        workout.setTime(workoutJson.getInt("time"));
         workout.setFavourite(workoutJson.getBoolean("favourite"));
         workout.setExercises(exercises);
 

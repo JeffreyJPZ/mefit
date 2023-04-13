@@ -14,75 +14,54 @@ import static java.lang.Boolean.*;
 public class Workout implements JsonWritable {
     private String name;
     private Difficulty difficulty;
-    private int time;
     private boolean favourite;
     private List<Exercise> exercises;
 
     // REQUIRES: name is not empty, difficulty > 0
-    // EFFECTS: Makes a new workout with a name, difficulty, time (min) equal to 0,
-    //          unfavourited and with no exercises
+    // EFFECTS: Makes a new workout with a name, difficulty, unfavourited and with no exercises
     public Workout(String name, Difficulty difficulty) {
         this.name = name;
         this.difficulty = difficulty;
-        this.time = 0;
         this.favourite = FALSE;
         this.exercises = new ArrayList<>();
     }
 
     // REQUIRES: exercises does not contain an exercise with the same name
     // MODIFIES: this
-    // EFFECTS: adds an exercise to the end of the workout, increases the workout time by exercise time
+    // EFFECTS: adds an exercise to the end of the workout
     public void addExercise(Exercise exercise) {
         exercises.add(exercise);
-        time += exercise.getTime();
     }
 
     // REQUIRES: exercises does not contain an exercise with the same name
     // MODIFIES: this
-    // EFFECTS: adds an exercise to the given position in the workout and increases the workout time by exercise time
+    // EFFECTS: adds an exercise to the given position in the workout
     public void insertExercise(Exercise exercise, int position) throws InvalidPositionException {
         if (position < 1 || position > (this.length() + 1)) {
             throw new InvalidPositionException();
         }
 
         exercises.add(position - 1, exercise);
-        time += exercise.getTime();
     }
 
     // REQUIRES: exercises does not contain an exercise with the same name
     // MODIFIES: this
     // EFFECTS: replaces the exercise at the given position in the workout
-    //          and if given exercise time is greater or equal to the replaced exercise time,
-    //          increases workout time by their difference,
-    //          otherwise decreases workout time by their difference
     public void setExercise(Exercise exercise, int position) throws InvalidPositionException {
         if (position < 1 || position > this.length()) {
             throw new InvalidPositionException();
         }
 
-        int prevExerciseTime = exercises.get(position - 1).getTime();
-
         exercises.set(position - 1, exercise);
-
-        if (prevExerciseTime <= exercise.getTime()) {
-            time += exercise.getTime() - prevExerciseTime;
-        } else {
-            time -= prevExerciseTime - exercise.getTime();
-        }
     }
 
     // MODIFIES: this
-    // EFFECTS: removes the exercise from the given position in the workout and
-    //          decreases the workout time by exercise time
+    // EFFECTS: removes the exercise from the given position in the workout
     public void removeExercise(int position) throws InvalidPositionException {
         if (position < 1 || position > this.length()) {
             throw new InvalidPositionException();
         }
-
-        int removedExerciseTime = exercises.get(position - 1).getTime();
-
         exercises.remove(position - 1);
-        time -= removedExerciseTime;
     }
 
     // REQUIRES: string is not empty and matches an exercise in workout
@@ -92,21 +71,16 @@ public class Workout implements JsonWritable {
     public void removeExercise(String name) {
         for (Exercise exercise : exercises) {
             if (exercise.getName().equalsIgnoreCase(name)) {
-                int removedExerciseTime = exercise.getTime();
-
                 exercises.remove(exercise);
-                time -= removedExerciseTime;
-
                 break;
             }
         }
     }
 
     // MODIFIES: this
-    // EFFECTS: removes all exercises from the workout and sets the workout time to zero
+    // EFFECTS: removes all exercises from the workout
     public void clear() {
         exercises.clear();
-        time = 0;
     }
 
     // EFFECTS: returns true if exercise with the same name ignoring case is in list, otherwise returns false
@@ -128,7 +102,7 @@ public class Workout implements JsonWritable {
         workoutString.append("Name\tDifficulty\tTime (min)\t # of Exercises\tFavourite?\n");
         workoutString.append("[").append(name).append("]\t");
         workoutString.append(difficulty.getDifficulty()).append("\t");
-        workoutString.append(time).append("\t");
+        workoutString.append(getTime()).append("\t");
         workoutString.append(length()).append("\t");
         workoutString.append(isFavourite());
         workoutString.append("\n\n");
@@ -164,10 +138,6 @@ public class Workout implements JsonWritable {
         this.favourite = favourite;
     }
 
-    public void setTime(int time) {
-        this.time = time;
-    }
-
     public void setExercises(List<Exercise> exercises) {
         this.exercises = exercises;
     }
@@ -199,7 +169,14 @@ public class Workout implements JsonWritable {
         return difficulty;
     }
 
+    // EFFECTS: returns the total time of exercises in the workout
     public int getTime() {
+        int time = 0;
+
+        for (Exercise exercise : exercises) {
+            time += exercise.getTime();
+        }
+
         return time;
     }
 
@@ -211,14 +188,13 @@ public class Workout implements JsonWritable {
         return exercises;
     }
 
-    // EFFECTS: Makes a json object with workout name, difficulty, time, favourite status, and exercises
+    // EFFECTS: Makes a json object with workout name, difficulty, favourite status, and exercises
     @Override
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("name", name);
         jsonObject.put("difficulty", difficulty.getDifficulty());
-        jsonObject.put("time", time);
         jsonObject.put("favourite", favourite);
         jsonObject.put("exercises", exercisesToJson());
 

@@ -514,12 +514,10 @@ public class WorkoutsByNameTest {
 
         assertEquals("1", jsonObjectWorkout1.getString("name"));
         assertEquals(1, jsonObjectWorkout1.get("difficulty"));
-        assertEquals(0, jsonObjectWorkout1.getInt("time"));
         assertFalse(jsonObjectWorkout1.getBoolean("favourite"));
 
         assertEquals("2", jsonObjectWorkout2.getString("name"));
         assertEquals(2, jsonObjectWorkout2.get("difficulty"));
-        assertEquals(0, jsonObjectWorkout2.getInt("time"));
         assertFalse(jsonObjectWorkout2.getBoolean("favourite"));
     }
 
