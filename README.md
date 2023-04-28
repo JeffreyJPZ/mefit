@@ -1,6 +1,6 @@
-# Fitness Application
+# MeFit
 
-###  Improve your gains
+###  Improve your gains today
 This application serves as a fitness hub for users. Whether you are:
 
 - a new gym goer
