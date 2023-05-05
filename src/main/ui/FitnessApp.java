@@ -12,6 +12,7 @@ import static ui.FitnessAppCommands.*;
 
 // Represents a graphical interface for the exercise application
 public class FitnessApp extends JFrame implements WindowListener {
+    private static FitnessApp fitnessApp = new FitnessApp();
     private static final int WIDTH = 600;
     private static final int HEIGHT = 400;
 
@@ -19,7 +20,7 @@ public class FitnessApp extends JFrame implements WindowListener {
     private CardLayout layout;
 
     // EFFECTS: runs the application and creates a new window
-    public FitnessApp() {
+    private FitnessApp() {
         super("Fitness Application");
         initializeFields();
         initializeWindow();
@@ -31,14 +32,19 @@ public class FitnessApp extends JFrame implements WindowListener {
         pack();
     }
 
-    // MODIFIES: this
+    // EFFECTS: returns the instance of the fitness application
+    public static FitnessApp getInstance() {
+        return fitnessApp;
+    }
+
+    // MODIFIES: fitnessApp
     // EFFECTS: initializes the appropriate components for the window
     private void initializeFields() {
         this.panels = new JPanel();
         this.layout = new CardLayout();
     }
 
-    // MODIFIES: this
+    // MODIFIES: fitnessApp
     // EFFECTS: displays the window with the appropriate default size and layout
     private void initializeWindow() {
         panels.setLayout(layout);
@@ -47,15 +53,15 @@ public class FitnessApp extends JFrame implements WindowListener {
         setVisible(true);
     }
 
-    // MODIFIES: this
+    // MODIFIES: fitnessApp
     // EFFECTS: creates the panels for the application
     private void initializePanels() {
-        HomePanel homePanel = new HomePanel(this);
-        ExercisesPanel exercisesPanel = new ExercisesPanel(this);
-        AddExercisePanel addExercisePanel = new AddExercisePanel(this, exercisesPanel);
-        ProfilePanel profilePanel = new ProfilePanel(this, exercisesPanel);
-        ProfilesPanel profilesPanel = new ProfilesPanel(this, profilePanel);
-        AddProfilePanel addProfilePanel = new AddProfilePanel(this, profilesPanel);
+        HomePanel homePanel = new HomePanel();
+        ExercisesPanel exercisesPanel = new ExercisesPanel();
+        AddExercisePanel addExercisePanel = new AddExercisePanel(exercisesPanel); // exercisesPanel is observer
+        ProfilePanel profilePanel = new ProfilePanel(exercisesPanel); // exercisesPanel is observer
+        ProfilesPanel profilesPanel = new ProfilesPanel(profilePanel); // profilePanel is observer
+        AddProfilePanel addProfilePanel = new AddProfilePanel(profilesPanel); // profilesPanel is observer
 
         panels.add(homePanel, HOME_COMMAND.getFitnessAppCommand());
         panels.add(profilesPanel, PROFILES_COMMAND.getFitnessAppCommand());

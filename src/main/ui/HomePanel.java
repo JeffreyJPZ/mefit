@@ -9,17 +9,15 @@ import static ui.FitnessAppCommands.*;
 public class HomePanel extends FitnessPanel {
     private static final String CREATOR_PICTURE_PATH = "./data/creatorpicture.jpg";
 
-    private FitnessApp fitnessApp;
-
     private JLabel applicationName;
     private JLabel attributeText;
     private JLabel creatorPicture;
     private JButton profilesButton;
 
     // EFFECTS: creates a home panel
-    public HomePanel(FitnessApp fitnessApp) {
+    public HomePanel() {
         super();
-        initializeFields(fitnessApp);
+        initializeFields();
         initializePlacements();
         initializeActions();
         addComponents();
@@ -27,8 +25,7 @@ public class HomePanel extends FitnessPanel {
 
     // MODIFIES: this
     // EFFECTS: initializes the components for the home panel
-    public void initializeFields(FitnessApp fitnessApp) {
-        this.fitnessApp = fitnessApp;
+    public void initializeFields() {
 
         this.applicationName = new JLabel("Fitness App");
         this.attributeText = new JLabel("Created by Jeffrey Zhang");
@@ -60,7 +57,7 @@ public class HomePanel extends FitnessPanel {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals(PROFILES_COMMAND.getFitnessAppCommand())) {
-            fitnessApp.switchPanel(PROFILES_COMMAND.getFitnessAppCommand());
+            FitnessApp.getInstance().switchPanel(PROFILES_COMMAND.getFitnessAppCommand());
         }
     }
 }

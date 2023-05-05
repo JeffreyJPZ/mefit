@@ -10,6 +10,8 @@ import java.util.List;
 
 import static java.lang.Boolean.*;
 
+// TODO: implement Composite for workout and exercise
+
 // Represents a number of exercises organized into a workout
 public class Workout implements JsonWritable {
     private String name;

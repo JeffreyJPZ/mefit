@@ -25,7 +25,6 @@ public class ProfilePanel extends FitnessPanel {
     private static final Vector<String> PROFILE_INFO_COLUMN_NAMES_VECTOR = new Vector<>(PROFILE_INFO_COLUMN_NAMES);
 
     private ExercisesPanel exercisesPanel;
-    private FitnessApp fitnessApp;
 
     private Profile profile;
 
@@ -38,9 +37,9 @@ public class ProfilePanel extends FitnessPanel {
     private JButton backButton;
 
     // EFFECTS: creates a profile panel
-    public ProfilePanel(FitnessApp fitnessApp, ExercisesPanel exercisesPanel) {
+    public ProfilePanel(ExercisesPanel exercisesPanel) {
         super();
-        initializeFields(fitnessApp, exercisesPanel);
+        initializeFields(exercisesPanel);
         initializePlacements();
         initializeActions();
         addComponents();
@@ -48,8 +47,7 @@ public class ProfilePanel extends FitnessPanel {
 
     // MODIFIES: this
     // EFFECTS: initializes the components for the profile panel
-    private void initializeFields(FitnessApp fitnessApp, ExercisesPanel exercisesPanel) {
-        this.fitnessApp = fitnessApp;
+    private void initializeFields(ExercisesPanel exercisesPanel) {
         this.exercisesPanel = exercisesPanel;
 
         this.profile = new Profile("Test", "Test", 0, 0); // initialize sample profile
@@ -109,13 +107,13 @@ public class ProfilePanel extends FitnessPanel {
     private void exercisesPanel() {
         exercisesPanel.setExercises(profile.getExercises());
         exercisesPanel.updateTable();
-        fitnessApp.switchPanel(EXERCISES_COMMAND.getFitnessAppCommand());
+        FitnessApp.getInstance().switchPanel(EXERCISES_COMMAND.getFitnessAppCommand());
     }
 
     // MODIFIES: fitnessApp
     // EFFECTS: switches to the profiles panel
     private void profilesPanel() {
-        fitnessApp.switchPanel(PROFILES_COMMAND.getFitnessAppCommand());
+        FitnessApp.getInstance().switchPanel(PROFILES_COMMAND.getFitnessAppCommand());
     }
 
     // MODIFIES: this

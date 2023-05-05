@@ -17,7 +17,6 @@ public class AddExercisePanel extends FitnessPanel {
     private static final String[] exerciseTypes = {WEIGHTS_EXERCISE, BODYWEIGHTS_EXERCISE, CARDIO_EXERCISE};
 
     private ExercisesPanel exercisesPanel;
-    private FitnessApp fitnessApp;
 
     private JTextField name;
     private JComboBox<String> selectType;
@@ -32,9 +31,9 @@ public class AddExercisePanel extends FitnessPanel {
     private JButton backButton;
 
     // EFFECTS: creates a panel for adding exercises
-    public AddExercisePanel(FitnessApp fitnessApp, ExercisesPanel exercisesPanel) {
+    public AddExercisePanel(ExercisesPanel exercisesPanel) {
         super();
-        initializeFields(fitnessApp, exercisesPanel);
+        initializeFields(exercisesPanel);
         initializePlacements();
         initializeActions();
         addComponents();
@@ -42,8 +41,7 @@ public class AddExercisePanel extends FitnessPanel {
 
     // MODIFIES: this
     // EFFECTS: initializes the components of the add exercise panel
-    private void initializeFields(FitnessApp fitnessApp, ExercisesPanel exercisesPanel) {
-        this.fitnessApp = fitnessApp;
+    private void initializeFields(ExercisesPanel exercisesPanel) {
         this.exercisesPanel = exercisesPanel;
 
         this.name = new JTextField("Example Name");
@@ -134,7 +132,7 @@ public class AddExercisePanel extends FitnessPanel {
         exercisesPanel.addExercise(exercise);
         exercisesPanel.updateTable();
 
-        fitnessApp.switchPanel(EXERCISES_COMMAND.getFitnessAppCommand());
+        FitnessApp.getInstance().switchPanel(EXERCISES_COMMAND.getFitnessAppCommand());
     }
 
     // REQUIRES: exerciseType matches a valid exercise type
@@ -160,7 +158,7 @@ public class AddExercisePanel extends FitnessPanel {
     // MODIFIES: fitnessApp
     // EFFECTS: switches to the exercises panel
     private void exercisesPanel() {
-        fitnessApp.switchPanel(EXERCISES_COMMAND.getFitnessAppCommand());
+        FitnessApp.getInstance().switchPanel(EXERCISES_COMMAND.getFitnessAppCommand());
     }
 
     // REQUIRES: muscleGroupName matches a value in MuscleGroup

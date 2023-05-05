@@ -25,7 +25,7 @@ public class ExercisesPanel extends FitnessPanel {
     private static final String EXERCISE_DIFFICULTY = "Difficulty";
     private static final String EXERCISE_TIME = "Time (min)";
     private static final String EXERCISE_FAVOURITE = "Favourite?";
-    private static final int EXERCISE_NAME_POSITION = 0; // column for all exercise names
+    private static final int EXERCISE_NAME_POSITION = 0; // column index for all exercise names
 
     private static final List<String> EXERCISE_INFO = Arrays.asList(EXERCISE_NAME, EXERCISE_MUSCLE_GROUP,
             EXERCISE_DIFFICULTY, EXERCISE_TIME, EXERCISE_FAVOURITE);
@@ -33,8 +33,6 @@ public class ExercisesPanel extends FitnessPanel {
 
     private ExercisesByName exercisesByName;
     private ExercisesByName exercisesByNameMaster;
-
-    private FitnessApp fitnessApp;
 
     private Vector<Vector<Object>> exercisesData;
     private DefaultTableModel tableModel;
@@ -51,9 +49,9 @@ public class ExercisesPanel extends FitnessPanel {
     private JButton backButton;
 
     // EFFECTS: creates an exercises panel
-    public ExercisesPanel(FitnessApp fitnessApp) {
+    public ExercisesPanel() {
         super();
-        initializeFields(fitnessApp);
+        initializeFields();
         initializePlacements();
         initializeActions();
         addComponents();
@@ -61,8 +59,7 @@ public class ExercisesPanel extends FitnessPanel {
 
     // MODIFIES: this
     // EFFECTS: initializes the components for the exercises panel
-    private void initializeFields(FitnessApp fitnessApp) {
-        this.fitnessApp = fitnessApp;
+    private void initializeFields() {
 
         this.exercisesByName = new ExercisesByName(); // initializes sample exercises
         this.exercisesByNameMaster = exercisesByName;
@@ -189,7 +186,7 @@ public class ExercisesPanel extends FitnessPanel {
     // EFFECTS: switches to the panel for adding an exercise
     private void addExercisePanel() {
         resetExercises();
-        fitnessApp.switchPanel(ADD_EXERCISE_COMMAND.getFitnessAppCommand());
+        FitnessApp.getInstance().switchPanel(ADD_EXERCISE_COMMAND.getFitnessAppCommand());
     }
 
     // MODIFIES: this
@@ -241,7 +238,7 @@ public class ExercisesPanel extends FitnessPanel {
     // EFFECTS: switches to the profile panel
     private void profilePanel() {
         resetExercises();
-        fitnessApp.switchPanel(PROFILE_COMMAND.getFitnessAppCommand());
+        FitnessApp.getInstance().switchPanel(PROFILE_COMMAND.getFitnessAppCommand());
     }
 
     // MODIFIES: this
@@ -260,6 +257,7 @@ public class ExercisesPanel extends FitnessPanel {
         exercisesByName = exercisesByNameMaster;
     }
 
+    // TODO: abstract duplicated methods into abstract class
     // REQUIRES: muscleGroupName matches a muscle group
     // EFFECTS: returns the muscle group associated with the given name
     private MuscleGroup getMuscleGroupByName(String muscleGroupName) {

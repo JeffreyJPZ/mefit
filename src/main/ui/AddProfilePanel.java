@@ -15,7 +15,6 @@ public class AddProfilePanel extends FitnessPanel {
     private static final String AGE_COMMAND = "Age (yrs)";
     private static final String WEIGHT_COMMAND = "Weight (lbs)";
 
-    private FitnessApp fitnessApp;
     private ProfilesPanel profilesPanel;
 
     private JTextField name;
@@ -26,9 +25,9 @@ public class AddProfilePanel extends FitnessPanel {
     private JButton backButton;
 
     // EFFECTS: makes a panel for adding a new profile
-    public AddProfilePanel(FitnessApp fitnessApp, ProfilesPanel profilesPanel) {
+    public AddProfilePanel(ProfilesPanel profilesPanel) {
         super();
-        initializeFields(fitnessApp, profilesPanel);
+        initializeFields(profilesPanel);
         initializePlacements();
         initializeActions();
         addComponents();
@@ -36,8 +35,7 @@ public class AddProfilePanel extends FitnessPanel {
 
     // MODIFIES: this
     // EFFECTS: initializes the components of the add profile panel
-    private void initializeFields(FitnessApp fitnessApp, ProfilesPanel profilesPanel) {
-        this.fitnessApp = fitnessApp;
+    private void initializeFields(ProfilesPanel profilesPanel) {
         this.profilesPanel = profilesPanel;
 
         this.name = new JTextField("John");
@@ -94,12 +92,12 @@ public class AddProfilePanel extends FitnessPanel {
         profilesPanel.addProfile(profile);
         profilesPanel.updateProfiles();
 
-        fitnessApp.switchPanel(PROFILES_COMMAND.getFitnessAppCommand());
+        FitnessApp.getInstance().switchPanel(PROFILES_COMMAND.getFitnessAppCommand());
     }
 
     // MODIFIES: fitnessApp
     // EFFECTS: switches to the profiles panel
     private void profilesPanel() {
-        fitnessApp.switchPanel(PROFILES_COMMAND.getFitnessAppCommand());
+        FitnessApp.getInstance().switchPanel(PROFILES_COMMAND.getFitnessAppCommand());
     }
 }

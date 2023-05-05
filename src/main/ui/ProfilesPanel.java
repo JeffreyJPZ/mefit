@@ -31,7 +31,6 @@ public class ProfilesPanel extends FitnessPanel {
     private static final String PATH = "./data/fitnessapp.json";
     private static final String WELCOME_TEXT = "Welcome to the application!";
 
-    private FitnessApp fitnessApp;
     private ProfilePanel profilePanel;
 
     private ProfilesById profilesById;
@@ -52,9 +51,9 @@ public class ProfilesPanel extends FitnessPanel {
     private JButton backButton;
 
     // EFFECTS: creates a profiles panel
-    public ProfilesPanel(FitnessApp fitnessApp, ProfilePanel profilePanel) {
+    public ProfilesPanel(ProfilePanel profilePanel) {
         super();
-        initializeFields(fitnessApp, profilePanel);
+        initializeFields();
         initializePlacements();
         initializeActions();
         addComponents();
@@ -62,8 +61,7 @@ public class ProfilesPanel extends FitnessPanel {
 
     // MODIFIES: this
     // EFFECTS: initializes the components for the profiles panel
-    private void initializeFields(FitnessApp fitnessApp, ProfilePanel profilePanel) {
-        this.fitnessApp = fitnessApp;
+    private void initializeFields(ProfilePanel profilePanel) {
         this.profilePanel = profilePanel;
 
         this.profilesById = new ProfilesById();
@@ -166,7 +164,7 @@ public class ProfilesPanel extends FitnessPanel {
 
         splashText.setText(WELCOME_TEXT);
 
-        fitnessApp.switchPanel(PROFILE_COMMAND.getFitnessAppCommand());
+        FitnessApp.getInstance().switchPanel(PROFILE_COMMAND.getFitnessAppCommand());
     }
 
     // REQUIRES: selected profile is not null
@@ -180,7 +178,7 @@ public class ProfilesPanel extends FitnessPanel {
     // MODIFIES: fitnessApp
     // EFFECTS: switches to the panel for adding a profile
     private void addProfilePanel() {
-        fitnessApp.switchPanel(ADD_PROFILE_COMMAND.getFitnessAppCommand());
+        FitnessApp.getInstance().switchPanel(ADD_PROFILE_COMMAND.getFitnessAppCommand());
     }
 
     // REQUIRES: selected profile is not null
@@ -235,7 +233,7 @@ public class ProfilesPanel extends FitnessPanel {
     // EFFECTS: returns to the previous panel to the profiles panel
     private void previousPanel() {
         splashText.setText(WELCOME_TEXT);
-        fitnessApp.switchPanel(HOME_COMMAND.getFitnessAppCommand());
+        FitnessApp.getInstance().switchPanel(HOME_COMMAND.getFitnessAppCommand());
     }
 
     // MODIFIES: this
