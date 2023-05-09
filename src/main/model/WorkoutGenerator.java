@@ -2,7 +2,6 @@ package model;
 
 import exceptions.NoValidWorkoutException;
 
-import java.lang.reflect.Type;
 import java.util.*;
 
 // Represents an algorithm for generating a random workout
