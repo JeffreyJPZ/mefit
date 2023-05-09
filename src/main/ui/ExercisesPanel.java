@@ -257,7 +257,7 @@ public class ExercisesPanel extends FitnessPanel {
         exercisesByName = exercisesByNameMaster;
     }
 
-    // TODO: abstract duplicated methods into abstract class
+    // TODO: abstract duplicated methods into abstract class w/ update abstract method
     // REQUIRES: muscleGroupName matches a muscle group
     // EFFECTS: returns the muscle group associated with the given name
     private MuscleGroup getMuscleGroupByName(String muscleGroupName) {

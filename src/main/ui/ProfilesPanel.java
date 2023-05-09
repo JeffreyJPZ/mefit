@@ -53,7 +53,7 @@ public class ProfilesPanel extends FitnessPanel {
     // EFFECTS: creates a profiles panel
     public ProfilesPanel(ProfilePanel profilePanel) {
         super();
-        initializeFields();
+        initializeFields(profilePanel);
         initializePlacements();
         initializeActions();
         addComponents();

@@ -13,8 +13,7 @@ import static java.lang.Boolean.*;
 // TODO: implement Composite for workout and exercise
 
 // Represents a number of exercises organized into a workout
-public class Workout implements JsonWritable {
-    private String name;
+public class Workout extends ExerciseComponent implements JsonWritable {
     private Difficulty difficulty;
     private boolean favourite;
     private List<Exercise> exercises;
@@ -22,7 +21,7 @@ public class Workout implements JsonWritable {
     // REQUIRES: name is not empty, difficulty > 0
     // EFFECTS: Makes a new workout with a name, difficulty, unfavourited and with no exercises
     public Workout(String name, Difficulty difficulty) {
-        this.name = name;
+        super(name);
         this.difficulty = difficulty;
         this.favourite = FALSE;
         this.exercises = new ArrayList<>();
@@ -96,13 +95,18 @@ public class Workout implements JsonWritable {
     }
 
     @Override
+    public int getSize() {
+        return 1;
+    }
+
+    @Override
     // EFFECTS: returns a string representation of the workout name, difficulty, time (min), number of exercises,
     //          whether it is favourited and exercises
     public String toString() {
         StringBuilder workoutString = new StringBuilder();
 
         workoutString.append("Name\tDifficulty\tTime (min)\t # of Exercises\tFavourite?\n");
-        workoutString.append("[").append(name).append("]\t");
+        workoutString.append("[").append(getName()).append("]\t");
         workoutString.append(difficulty.getDifficulty()).append("\t");
         workoutString.append(getTime()).append("\t");
         workoutString.append(length()).append("\t");
@@ -126,10 +130,6 @@ public class Workout implements JsonWritable {
     // EFFECTS: returns the number of exercises in workout
     public int length() {
         return exercises.size();
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setDifficulty(Difficulty difficulty) {
@@ -163,14 +163,11 @@ public class Workout implements JsonWritable {
         return null;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public Difficulty getDifficulty() {
         return difficulty;
     }
 
+    @Override
     // EFFECTS: returns the total time of exercises in the workout
     public int getTime() {
         int time = 0;
@@ -195,7 +192,7 @@ public class Workout implements JsonWritable {
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("name", name);
+        jsonObject.put("name", getName());
         jsonObject.put("difficulty", difficulty.getDifficulty());
         jsonObject.put("favourite", favourite);
         jsonObject.put("exercises", exercisesToJson());

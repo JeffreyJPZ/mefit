@@ -6,34 +6,30 @@ import persistence.JsonWritable;
 import static java.lang.Boolean.*;
 
 // Represents an exercise with basic information of name, muscle group, difficulty, and time (min)
-public abstract class Exercise implements JsonWritable {
-    protected String name;
-    protected MuscleGroup muscleGroup;
-    protected Difficulty difficulty;
-    protected int time;
-    protected Boolean favourite;
+public abstract class Exercise extends ExerciseComponent implements JsonWritable {
+    private MuscleGroup muscleGroup;
+    private Difficulty difficulty;
+    private int time;
+    private Boolean favourite;
 
     // REQUIRES: name is not empty; time > 0
     // EFFECTS: Makes a new exercise with a name, muscle group worked, difficulty, and time (min)
     public Exercise(String name, MuscleGroup muscleGroup, Difficulty difficulty, int time) {
-        this.name = name;
+        super(name);
         this.muscleGroup = muscleGroup;
         this.difficulty = difficulty;
         this.time = time;
         this.favourite = FALSE;
     }
 
+    @Override
     // EFFECTS: returns a string representation of the exercise description
     public String toString() {
-        return "Exercise Name: " + name + "\n"
+        return "Exercise Name: " + getName() + "\n"
                 + "Muscle Group: " + muscleGroup.getMuscleGroup() + "\n"
                 + "Difficulty: " + difficulty.getDifficulty() + "\n"
                 + "Time (min): " + time + "\n"
                 + "Favourite?: " + favourite;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public MuscleGroup getMuscleGroup() {
@@ -44,16 +40,18 @@ public abstract class Exercise implements JsonWritable {
         return difficulty;
     }
 
+    @Override
     public int getTime() {
         return time;
     }
 
-    public Boolean isFavourite() {
-        return favourite;
+    @Override
+    public int getSize() {
+        return 1;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Boolean isFavourite() {
+        return favourite;
     }
 
     public void setMuscleGroup(MuscleGroup muscleGroup) {
@@ -78,7 +76,7 @@ public abstract class Exercise implements JsonWritable {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("type", getClass().getSimpleName());
-        jsonObject.put("name", name);
+        jsonObject.put("name", getName());
         jsonObject.put("muscleGroup", muscleGroup.getMuscleGroup());
         jsonObject.put("difficulty", difficulty.getDifficulty());
         jsonObject.put("time", time);

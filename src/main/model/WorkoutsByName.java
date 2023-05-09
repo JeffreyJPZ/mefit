@@ -20,6 +20,7 @@ public class WorkoutsByName implements FitnessCollection {
         workouts = new LinkedHashMap<>();
     }
 
+    // TODO: throw exception if workout with same name is already contained
     // REQUIRES: workouts does not contain a workout with the same name ignoring case
     // MODIFIES: this
     // EFFECTS: adds a workout to the workouts
