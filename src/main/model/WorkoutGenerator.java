@@ -27,7 +27,7 @@ public class WorkoutGenerator {
     //          otherwise, if no workout can be generated, throws NoValidWorkoutException
     public Workout generateWorkout(String name, int exercisesNum, int time, Difficulty difficulty,
                                    MuscleGroup muscleGroup, ExercisesByName exercisesByName,
-                                   int sampleSize) throws NoValidWorkoutException {
+                                   int sampleSize, Random random) throws NoValidWorkoutException {
         if (exercisesByName.isEmpty()) {
             throw new NoValidWorkoutException();
         }
@@ -35,7 +35,7 @@ public class WorkoutGenerator {
         Workout workout = new Workout(name, difficulty);
         // All exercises that can be added
         List<Exercise> allExercises = new ArrayList<>(exercisesByName.getExercises().values());
-        List<Exercise> exercisesAvailable = selectExercises(sampleSize, allExercises);
+        List<Exercise> exercisesAvailable = selectExercises(sampleSize, allExercises, random);
 
         Workout result = addNextExercise(name, workout, exercisesNum, time, difficulty,
                 muscleGroup, exercisesAvailable);
@@ -48,10 +48,9 @@ public class WorkoutGenerator {
     }
 
     // EFFECTS: returns sampleSize randomly selected exercises from the given exercises;
-    private List<Exercise> selectExercises(int sampleSize, List<Exercise> allExercises) {
+    private List<Exercise> selectExercises(int sampleSize, List<Exercise> allExercises, Random random) {
         // Choose sampleSize amount of exercises from profile for search space
         List<Exercise> exercisesAvailable = new ArrayList<>();
-        Random random = new Random();
         int i = 0;
 
         while (i < sampleSize) {
