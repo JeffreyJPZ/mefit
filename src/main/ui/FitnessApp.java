@@ -58,10 +58,15 @@ public class FitnessApp extends JFrame implements WindowListener {
     private void initializePanels() {
         HomePanel homePanel = new HomePanel();
         ExercisesPanel exercisesPanel = new ExercisesPanel();
-        AddExercisePanel addExercisePanel = new AddExercisePanel(exercisesPanel); // exercisesPanel is observer
-        ProfilePanel profilePanel = new ProfilePanel(exercisesPanel); // exercisesPanel is observer
-        ProfilesPanel profilesPanel = new ProfilesPanel(profilePanel); // profilePanel is observer
-        AddProfilePanel addProfilePanel = new AddProfilePanel(profilesPanel); // profilesPanel is observer
+        AddExercisePanel addExercisePanel = new AddExercisePanel();
+        ProfilePanel profilePanel = new ProfilePanel();
+        ProfilesPanel profilesPanel = new ProfilesPanel();
+        AddProfilePanel addProfilePanel = new AddProfilePanel();
+
+        addExercisePanel.addObserver(exercisesPanel);
+        profilePanel.addObserver(exercisesPanel);
+        profilesPanel.addObserver(profilePanel);
+        addProfilePanel.addObserver(profilesPanel);
 
         panels.add(homePanel, HOME_COMMAND.getFitnessAppCommand());
         panels.add(profilesPanel, PROFILES_COMMAND.getFitnessAppCommand());

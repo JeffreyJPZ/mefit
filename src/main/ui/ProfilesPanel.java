@@ -18,7 +18,7 @@ import java.util.Vector;
 import static ui.FitnessAppCommands.*;
 
 // Represents a panel with profiles for the fitness application
-public class ProfilesPanel extends FitnessPanel {
+public class ProfilesPanel extends FitnessPanel implements UIObserver {
     private static final String PROFILE_ID = "ID";
     private static final String PROFILE_NAME = "Name";
     private static final int PROFILE_ID_POSITION = 0; // column for all profile ids
@@ -30,8 +30,6 @@ public class ProfilesPanel extends FitnessPanel {
     private static final String LOAD_PROFILES = "Load Profiles";
     private static final String PATH = "./data/fitnessapp.json";
     private static final String WELCOME_TEXT = "Welcome to the application!";
-
-    private ProfilePanel profilePanel;
 
     private ProfilesById profilesById;
     private JsonReader jsonReader;
@@ -51,9 +49,9 @@ public class ProfilesPanel extends FitnessPanel {
     private JButton backButton;
 
     // EFFECTS: creates a profiles panel
-    public ProfilesPanel(ProfilePanel profilePanel) {
+    public ProfilesPanel() {
         super();
-        initializeFields(profilePanel);
+        initializeFields();
         initializePlacements();
         initializeActions();
         addComponents();
@@ -61,9 +59,7 @@ public class ProfilesPanel extends FitnessPanel {
 
     // MODIFIES: this
     // EFFECTS: initializes the components for the profiles panel
-    private void initializeFields(ProfilePanel profilePanel) {
-        this.profilePanel = profilePanel;
-
+    private void initializeFields() {
         this.profilesById = new ProfilesById();
         this.jsonReader = new JsonReader(PATH);
         this.jsonWriter = new JsonWriter(PATH);
@@ -143,7 +139,7 @@ public class ProfilesPanel extends FitnessPanel {
         } else if (e.getActionCommand().equals(LOAD_PROFILES)) {
             loadProfiles();
         } else if (e.getActionCommand().equals(BACK_COMMAND.getFitnessAppCommand())) {
-            previousPanel();
+            back();
         }
     }
 
@@ -159,8 +155,7 @@ public class ProfilesPanel extends FitnessPanel {
             return;
         }
 
-        profilePanel.setProfile(profilesById.getProfile(id));
-        profilePanel.updateTable();
+        notifyAll(profilesById.getProfile(id), PROFILES_COMMAND);
 
         splashText.setText(WELCOME_TEXT);
 
@@ -173,6 +168,12 @@ public class ProfilesPanel extends FitnessPanel {
         int selectedProfile = profilesDataTable.getSelectedRow();
 
         return (int) profilesDataTable.getValueAt(selectedProfile, PROFILE_ID_POSITION);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds the given profile to profiles
+    private void addProfile(Profile profile) {
+        profilesById.addProfile(profile);
     }
 
     // MODIFIES: fitnessApp
@@ -231,7 +232,7 @@ public class ProfilesPanel extends FitnessPanel {
 
     // MODIFIES: this, fitnessApp
     // EFFECTS: returns to the previous panel to the profiles panel
-    private void previousPanel() {
+    private void back() {
         splashText.setText(WELCOME_TEXT);
         FitnessApp.getInstance().switchPanel(HOME_COMMAND.getFitnessAppCommand());
     }
@@ -254,8 +255,12 @@ public class ProfilesPanel extends FitnessPanel {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds the given profile to the profiles
-    public void addProfile(Profile profile) {
-        profilesById.addProfile(profile);
+    // EFFECTS: updates profiles panel with t if key is a match
+    public <T> void update(T t, FitnessAppCommands key) {
+        if (key.getFitnessAppCommand().equals(ADD_PROFILE_COMMAND)) {
+            Profile profile = (Profile) t;
+            addProfile(profile);
+        }
+        updateProfiles();
     }
 }

@@ -17,7 +17,7 @@ import static java.lang.Integer.parseInt;
 import static ui.FitnessAppCommands.*;
 
 // Represents a panel with exercises for the fitness application
-public class ExercisesPanel extends FitnessPanel {
+public class ExercisesPanel extends FitnessPanel implements UIObserver {
     private static final int EXERCISES_WIDTH = 300;
     private static final int EXERCISES_HEIGHT = 300;
     private static final String EXERCISE_NAME = "Name";
@@ -145,14 +145,14 @@ public class ExercisesPanel extends FitnessPanel {
 
     // MODIFIES: this
     // EFFECTS: sets the current exercises to the given exercises
-    public void setExercises(ExercisesByName exercisesByName) {
+    private void setExercises(ExercisesByName exercisesByName) {
         this.exercisesByName = exercisesByName;
         exercisesByNameMaster = this.exercisesByName;
     }
 
     // MODIFIES: this
     // EFFECTS: adds an exercise to the exercises
-    public void addExercise(Exercise exercise) {
+    private void addExercise(Exercise exercise) {
         exercisesByName.addExercise(exercise);
     }
 
@@ -178,7 +178,7 @@ public class ExercisesPanel extends FitnessPanel {
             resetExercises();
             updateTable();
         } else if (e.getActionCommand().equals(BACK_COMMAND.getFitnessAppCommand())) {
-            profilePanel();
+            back();
         }
     }
 
@@ -236,14 +236,14 @@ public class ExercisesPanel extends FitnessPanel {
 
     // MODIFIES: this, fitnessApp
     // EFFECTS: switches to the profile panel
-    private void profilePanel() {
+    private void back() {
         resetExercises();
         FitnessApp.getInstance().switchPanel(PROFILE_COMMAND.getFitnessAppCommand());
     }
 
     // MODIFIES: this
     // EFFECTS: updates the exercises display
-    public void updateTable() {
+    private void updateTable() {
         exercisesData.clear();
         extractExercisesData();
         tableModel.setDataVector(exercisesData, EXERCISE_INFO_VECTOR);
@@ -284,5 +284,19 @@ public class ExercisesPanel extends FitnessPanel {
             }
         }
         return difficulty;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: updates the exercises panel with t if key is a match
+    @Override
+    public <T> void update(T t, FitnessAppCommands key) {
+        if (key.getFitnessAppCommand().equals(ADD_EXERCISE_COMMAND.getFitnessAppCommand())) {
+            Exercise exercise = (Exercise) t;
+            addExercise(exercise);
+        } else if (key.getFitnessAppCommand().equals(PROFILE_COMMAND.getFitnessAppCommand())) {
+            ExercisesByName exercises = (ExercisesByName) t;
+            setExercises(exercises);
+        }
+        updateTable();
     }
 }

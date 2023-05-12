@@ -9,6 +9,7 @@ public enum FitnessAppCommands {
     PROFILE_COMMAND("View Selected Profile"),
     EXERCISES_COMMAND("Exercises"),
     ADD_EXERCISE_COMMAND("Add Exercise"),
+    SELECT_TYPE_COMMAND("Select Type"),
     REMOVE_EXERCISE_COMMAND("Remove Selected Exercise(s)"),
     FILTER_EXERCISE_COMMAND("Filter Exercises"),
     RESET_EXERCISE_FILTERS_COMMAND("Reset Exercise Filters"),

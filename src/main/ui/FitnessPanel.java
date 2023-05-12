@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Represents a panel of the fitness application
-public abstract class FitnessPanel extends JPanel implements ActionListener {
+public abstract class FitnessPanel extends UIObservablePanel implements ActionListener {
     protected List<JComponent> components;
 
     // EFFECTS: creates a fitness panel with components

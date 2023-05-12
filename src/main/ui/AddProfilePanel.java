@@ -15,8 +15,6 @@ public class AddProfilePanel extends FitnessPanel {
     private static final String AGE_COMMAND = "Age (yrs)";
     private static final String WEIGHT_COMMAND = "Weight (lbs)";
 
-    private ProfilesPanel profilesPanel;
-
     private JTextField name;
     private JTextField age;
     private JTextField gender;
@@ -25,9 +23,9 @@ public class AddProfilePanel extends FitnessPanel {
     private JButton backButton;
 
     // EFFECTS: makes a panel for adding a new profile
-    public AddProfilePanel(ProfilesPanel profilesPanel) {
+    public AddProfilePanel() {
         super();
-        initializeFields(profilesPanel);
+        initializeFields();
         initializePlacements();
         initializeActions();
         addComponents();
@@ -35,9 +33,7 @@ public class AddProfilePanel extends FitnessPanel {
 
     // MODIFIES: this
     // EFFECTS: initializes the components of the add profile panel
-    private void initializeFields(ProfilesPanel profilesPanel) {
-        this.profilesPanel = profilesPanel;
-
+    private void initializeFields() {
         this.name = new JTextField("John");
         this.gender = new JTextField("Example");
         this.age = new JTextField("30");
@@ -79,7 +75,7 @@ public class AddProfilePanel extends FitnessPanel {
         if (e.getActionCommand().equals(ADD_PROFILE_COMMAND.getFitnessAppCommand())) {
             addProfile();
         } else if (e.getActionCommand().equals(BACK_COMMAND.getFitnessAppCommand())) {
-            profilesPanel();
+            back();
         }
     }
 
@@ -89,15 +85,14 @@ public class AddProfilePanel extends FitnessPanel {
         Profile profile = new Profile(name.getText(), gender.getText(),
                 parseInt(age.getText()), parseInt(weight.getText()));
 
-        profilesPanel.addProfile(profile);
-        profilesPanel.updateProfiles();
+        notifyAll(profile, ADD_PROFILE_COMMAND);
 
         FitnessApp.getInstance().switchPanel(PROFILES_COMMAND.getFitnessAppCommand());
     }
 
     // MODIFIES: fitnessApp
     // EFFECTS: switches to the profiles panel
-    private void profilesPanel() {
+    private void back() {
         FitnessApp.getInstance().switchPanel(PROFILES_COMMAND.getFitnessAppCommand());
     }
 }

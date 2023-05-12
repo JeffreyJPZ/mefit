@@ -14,7 +14,7 @@ import java.util.Vector;
 import static ui.FitnessAppCommands.*;
 
 // Represents a profile panel for the fitness application
-public class ProfilePanel extends FitnessPanel {
+public class ProfilePanel extends FitnessPanel implements UIObserver {
     private static final String PROFILE_ID = "ID";
     private static final String PROFILE_NAME = "Name";
     private static final String PROFILE_GENDER = "Gender";
@@ -23,8 +23,6 @@ public class ProfilePanel extends FitnessPanel {
     private static final List<String> PROFILE_INFO_COLUMN_NAMES = Arrays.asList(PROFILE_ID, PROFILE_NAME,
             PROFILE_GENDER, PROFILE_AGE, PROFILE_WEIGHT);
     private static final Vector<String> PROFILE_INFO_COLUMN_NAMES_VECTOR = new Vector<>(PROFILE_INFO_COLUMN_NAMES);
-
-    private ExercisesPanel exercisesPanel;
 
     private Profile profile;
 
@@ -37,9 +35,9 @@ public class ProfilePanel extends FitnessPanel {
     private JButton backButton;
 
     // EFFECTS: creates a profile panel
-    public ProfilePanel(ExercisesPanel exercisesPanel) {
+    public ProfilePanel() {
         super();
-        initializeFields(exercisesPanel);
+        initializeFields();
         initializePlacements();
         initializeActions();
         addComponents();
@@ -47,9 +45,7 @@ public class ProfilePanel extends FitnessPanel {
 
     // MODIFIES: this
     // EFFECTS: initializes the components for the profile panel
-    private void initializeFields(ExercisesPanel exercisesPanel) {
-        this.exercisesPanel = exercisesPanel;
-
+    private void initializeFields() {
         this.profile = new Profile("Test", "Test", 0, 0); // initialize sample profile
         this.profileInfoData = new Vector<>();
 
@@ -98,21 +94,20 @@ public class ProfilePanel extends FitnessPanel {
         if (e.getActionCommand().equals(EXERCISES_COMMAND.getFitnessAppCommand())) {
             exercisesPanel();
         } else if (e.getActionCommand().equals(BACK_COMMAND.getFitnessAppCommand())) {
-            profilesPanel();
+            back();
         }
     }
 
     // MODIFIES: exercisesPanel, fitnessApp
     // EFFECTS: updates and switches to the exercises panel for the current profile
     private void exercisesPanel() {
-        exercisesPanel.setExercises(profile.getExercises());
-        exercisesPanel.updateTable();
+        notifyAll(profile.getExercises(), PROFILE_COMMAND);
         FitnessApp.getInstance().switchPanel(EXERCISES_COMMAND.getFitnessAppCommand());
     }
 
     // MODIFIES: fitnessApp
     // EFFECTS: switches to the profiles panel
-    private void profilesPanel() {
+    private void back() {
         FitnessApp.getInstance().switchPanel(PROFILES_COMMAND.getFitnessAppCommand());
     }
 
@@ -132,16 +127,27 @@ public class ProfilePanel extends FitnessPanel {
 
     // MODIFIES: this
     // EFFECTS: sets the profile for the profile panel to the given profile
-    public void setProfile(Profile profile) {
+    private void setProfile(Profile profile) {
         this.profile = profile;
     }
 
     // MODIFIES: this
     // EFFECTS: updates the display of the current profile
-    public void updateTable() {
+    private void updateTable() {
         profileInfoData.clear();
         extractProfileInfo();
         tableModel.setDataVector(profileInfoData, PROFILE_INFO_COLUMN_NAMES_VECTOR);
         profileInfoTable.setModel(tableModel);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: updates the profile panel with t if key is a match
+    @Override
+    public <T> void update(T t, FitnessAppCommands key) {
+        if (key.getFitnessAppCommand().equals(PROFILES_COMMAND.getFitnessAppCommand())) {
+            Profile profile = (Profile) t;
+            setProfile(profile);
+        }
+        updateTable();
     }
 }
