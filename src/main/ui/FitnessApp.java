@@ -2,6 +2,7 @@ package ui;
 
 import model.Event;
 import model.EventLog;
+import model.FitnessCollection;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,12 +57,12 @@ public class FitnessApp extends JFrame implements WindowListener {
     // MODIFIES: fitnessApp
     // EFFECTS: creates the panels for the application
     private void initializePanels() {
-        HomePanel homePanel = new HomePanel();
-        ExercisesPanel exercisesPanel = new ExercisesPanel();
-        AddExercisePanel addExercisePanel = new AddExercisePanel();
-        ProfilePanel profilePanel = new ProfilePanel();
-        ProfilesPanel profilesPanel = new ProfilesPanel();
-        AddProfilePanel addProfilePanel = new AddProfilePanel();
+        FitnessPanel homePanel = new HomePanel();
+        FitnessPanel exercisesPanel = new ExercisesPanel();
+        FitnessPanel addExercisePanel = new AddExercisePanel();
+        FitnessPanel profilePanel = new ProfilePanel();
+        FitnessPanel profilesPanel = new ProfilesPanel();
+        FitnessPanel addProfilePanel = new AddProfilePanel();
 
         addExercisePanel.addObserver(exercisesPanel);
         profilePanel.addObserver(exercisesPanel);

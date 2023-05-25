@@ -1,14 +1,18 @@
 package ui;
 
+import model.Profile;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ui.FitnessAppCommands.PROFILES_COMMAND;
+
 // Represents a panel of the fitness application
-public abstract class FitnessPanel extends UIObservablePanel implements ActionListener {
-    protected List<JComponent> components;
+public abstract class FitnessPanel extends UIObservablePanel implements UIObserver, ActionListener {
+    protected List<JComponent> components; // TODO: make components a map with name
 
     // EFFECTS: creates a fitness panel with components
     protected FitnessPanel() {
@@ -47,4 +51,8 @@ public abstract class FitnessPanel extends UIObservablePanel implements ActionLi
             add(Box.createVerticalGlue());
         }
     }
+
+    // EFFECTS: does nothing if key is a match
+    @Override
+    public <T> void update(T t, FitnessAppCommands key) {}
 }

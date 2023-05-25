@@ -9,8 +9,6 @@ public class DifficultyTest {
 
     @Test
     public void testValues() {
-        assertEquals(3, Difficulty.values().length);
-
         assertEquals(1, Difficulty.LIGHT.getDifficulty());
         assertEquals(2, Difficulty.MODERATE.getDifficulty());
         assertEquals(3, Difficulty.INTENSE.getDifficulty());

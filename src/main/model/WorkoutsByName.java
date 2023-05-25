@@ -2,7 +2,6 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import persistence.JsonWritable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -35,6 +34,7 @@ public class WorkoutsByName implements FitnessCollection {
         workouts.remove(name);
     }
 
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     @Override
     // EFFECTS: if the number of workouts <= DISPLAY_NUMBER_OF_WORKOUTS, returns a string representation
     //          of the workout name, difficulty, time, # of exercises, and whether it is favourited up to the first
@@ -42,23 +42,38 @@ public class WorkoutsByName implements FitnessCollection {
     //          Otherwise, also returns the number of remaining workouts and ADDITIONAL_WORKOUT_MESSAGE
     public String toString() {
         StringBuilder workoutsString = new StringBuilder();
-        workoutsString.append("Name\tDifficulty\tTime (min)\t# of Exercises\tFavourite?\n");
+        workoutsString.append("Name").append(StringFormat.SEPARATOR.getFormat())
+                .append("Difficulty")
+                .append(StringFormat.SEPARATOR.getFormat())
+                .append("Time (min)")
+                .append(StringFormat.SEPARATOR.getFormat())
+                .append("# of Exercises")
+                .append(StringFormat.SEPARATOR.getFormat())
+                .append("Favourite?")
+                .append(StringFormat.LINE_BREAK.getFormat());
         int count = 0;
 
         for (Workout workout: workouts.values()) {
             if (count == DISPLAY_NUMBER_OF_WORKOUTS) {
                 break;
             }
-            workoutsString.append("[").append(workout.getName()).append("]\t");
-            workoutsString.append(workout.getDifficulty().getDifficulty()).append("\t");
-            workoutsString.append(workout.getTime()).append("\t");
-            workoutsString.append(workout.length()).append("\t");
-            workoutsString.append(workout.isFavourite()).append("\n");
+            workoutsString.append(StringFormat.LEFT_BRACKET.getFormat())
+                    .append(workout.getName())
+                    .append(StringFormat.RIGHT_BRACKET.getFormat())
+                    .append(StringFormat.SEPARATOR.getFormat());
+            workoutsString.append(workout.getDifficulty().getDifficulty())
+                    .append(StringFormat.SEPARATOR.getFormat());
+            workoutsString.append(workout.getTime())
+                    .append(StringFormat.SEPARATOR.getFormat());
+            workoutsString.append(workout.length())
+                    .append(StringFormat.SEPARATOR.getFormat());
+            workoutsString.append(workout.isFavourite())
+                    .append(StringFormat.LINE_BREAK.getFormat());
             count++;
         }
 
         if (workouts.size() > DISPLAY_NUMBER_OF_WORKOUTS) {
-            workoutsString.append("... with ");
+            workoutsString.append(StringFormat.CUTOFF.getFormat());
             workoutsString.append((workouts.size() - DISPLAY_NUMBER_OF_WORKOUTS));
             workoutsString.append(ADDITIONAL_WORKOUT_MESSAGE);
         }

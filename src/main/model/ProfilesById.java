@@ -2,7 +2,6 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import persistence.JsonWritable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -39,19 +38,24 @@ public class ProfilesById implements FitnessCollection {
     //          otherwise also returns the number of remaining profiles and ADDITIONAL_PROFILE_MESSAGE
     public String toString() {
         StringBuilder profilesString = new StringBuilder();
-        profilesString.append("ID\tName").append("\n");
+        profilesString.append("ID").append(StringFormat.SEPARATOR.getFormat())
+                .append("Name").append(StringFormat.LINE_BREAK.getFormat());
         int count = 0;
 
         for (Profile profile: profiles.values()) {
             if (count == DISPLAY_NUMBER_OF_PROFILES) {
                 break;
             }
-            profilesString.append("[").append(profile.getId()).append("]\t").append(profile.getName()).append("\n");
+            profilesString.append(StringFormat.LEFT_BRACKET.getFormat())
+                    .append(profile.getId())
+                    .append(StringFormat.RIGHT_BRACKET.getFormat())
+                    .append(StringFormat.SEPARATOR.getFormat())
+                    .append(profile.getName()).append(StringFormat.LINE_BREAK.getFormat());
             count++;
         }
 
         if (profiles.size() > DISPLAY_NUMBER_OF_PROFILES) {
-            profilesString.append("... with ");
+            profilesString.append(StringFormat.CUTOFF.getFormat());
             profilesString.append((profiles.size() - DISPLAY_NUMBER_OF_PROFILES));
             profilesString.append(ADDITIONAL_PROFILE_MESSAGE);
         }

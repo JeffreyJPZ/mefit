@@ -5,8 +5,9 @@ import java.util.Random;
 public class MockRandom extends Random {
     private int returnNum;
 
-    // EFFECTS: makes a new random
-    public MockRandom() {
+    // EFFECTS: makes a new random with a given seed
+    public MockRandom(int seed) {
+        super(seed);
         returnNum = 0;
     }
 

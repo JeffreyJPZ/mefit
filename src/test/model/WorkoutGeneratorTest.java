@@ -34,7 +34,7 @@ public class WorkoutGeneratorTest {
     public void testNoExercisesWantedEmptyExercises() {
         try {
             testWorkout = workoutGenerator.generateWorkout("w1", 0, 0,
-                    Difficulty.INTENSE, MuscleGroup.BACK, new ExercisesByName(), 0, new MockRandom());
+                    Difficulty.INTENSE, MuscleGroup.BACK, new ExercisesByName(), 0, new MockRandom(0));
             fail("NoValidWorkoutException not caught when expected");
         } catch (NoValidWorkoutException e) {
             // success
@@ -45,7 +45,7 @@ public class WorkoutGeneratorTest {
     public void testExercisesWantedEmptyExercises() {
         try {
             testWorkout = workoutGenerator.generateWorkout("w1", 2, 30,
-                    Difficulty.INTENSE, MuscleGroup.BACK, new ExercisesByName(), 3, new MockRandom());
+                    Difficulty.INTENSE, MuscleGroup.BACK, new ExercisesByName(), 3, new MockRandom(0));
             fail("NoValidWorkoutException not caught when expected");
         } catch (NoValidWorkoutException e) {
             // success
@@ -62,7 +62,7 @@ public class WorkoutGeneratorTest {
 
         try {
             testWorkout = workoutGenerator.generateWorkout("w1", 0, 5,
-                    Difficulty.INTENSE, MuscleGroup.LEGS, exercisesByName, 3, new MockRandom());
+                    Difficulty.INTENSE, MuscleGroup.LEGS, exercisesByName, 3, new MockRandom(0));
         } catch (NoValidWorkoutException e) {
             fail("NoValidWorkoutException caught, none expected");
         }
@@ -78,7 +78,7 @@ public class WorkoutGeneratorTest {
 
         try {
             testWorkout = workoutGenerator.generateWorkout("w1", 2, 20,
-                    Difficulty.INTENSE, MuscleGroup.BACK, exercisesByName, 3, new MockRandom());
+                    Difficulty.INTENSE, MuscleGroup.BACK, exercisesByName, 3, new MockRandom(0));
         } catch (NoValidWorkoutException e) {
             fail("NoValidWorkoutException caught, none expected");
         }
@@ -104,7 +104,7 @@ public class WorkoutGeneratorTest {
 
         try {
             testWorkout = workoutGenerator.generateWorkout("w1", 2, 23,
-                    Difficulty.LIGHT, MuscleGroup.BACK, exercisesByName, 3, new MockRandom());
+                    Difficulty.LIGHT, MuscleGroup.BACK, exercisesByName, 3, new MockRandom(0));
         } catch (NoValidWorkoutException e) {
             fail("NoValidWorkoutException caught, none expected");
         }
@@ -136,14 +136,17 @@ public class WorkoutGeneratorTest {
 
         try {
             testWorkout = workoutGenerator.generateWorkout("w1", 2, 25,
-                    Difficulty.LIGHT, MuscleGroup.BACK, exercisesByName, 5, new MockRandom());
+                    Difficulty.LIGHT, MuscleGroup.BACK, exercisesByName, 5, new MockRandom(0));
         } catch (NoValidWorkoutException e) {
             fail("NoValidWorkoutException caught, none expected");
         }
 
         assertEquals(2, testWorkout.length());
-        assertEquals(e3, testWorkout.getExercise("Deadlifts"));
+        for (Exercise e : testWorkout.getExercises()) {
+            System.out.println(e.toString());
+        }
         assertEquals(e4, testWorkout.getExercise("Pullups"));
+        assertEquals(e5, testWorkout.getExercise("Curls"));
     }
 
     @Test
@@ -159,7 +162,7 @@ public class WorkoutGeneratorTest {
 
         try {
             testWorkout = workoutGenerator.generateWorkout("w1", 2, 20,
-                    Difficulty.INTENSE, MuscleGroup.SHOULDERS, exercisesByName, 3, new MockRandom());
+                    Difficulty.INTENSE, MuscleGroup.SHOULDERS, exercisesByName, 3, new MockRandom(0));
             fail("NoValidWorkoutException not caught when expected");
         } catch (NoValidWorkoutException e) {
             // success

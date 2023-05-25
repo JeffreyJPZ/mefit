@@ -11,7 +11,7 @@ public class MockRandomTest {
 
     @BeforeEach
     public void runBefore() {
-        mockRandom = new MockRandom();
+        mockRandom = new MockRandom(0);
     }
 
     @Test

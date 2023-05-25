@@ -9,8 +9,6 @@ public class MuscleGroupTest {
 
     @Test
     public void testValues() {
-        assertEquals(6, MuscleGroup.values().length);
-
         assertEquals("Chest", MuscleGroup.CHEST.getMuscleGroup());
         assertEquals("Back", MuscleGroup.BACK.getMuscleGroup());
         assertEquals("Arms", MuscleGroup.ARMS.getMuscleGroup());

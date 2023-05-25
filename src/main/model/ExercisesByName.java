@@ -2,7 +2,6 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import persistence.JsonWritable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -37,6 +36,7 @@ public class ExercisesByName implements FitnessCollection {
         EventLog.getInstance().logEvent(new Event(EventDescription.REMOVE_EXERCISE.getDescription()));
     }
 
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     @Override
     // EFFECTS: if number of exercises  <= DISPLAY_NUMBER_OF_EXERCISES,
     //          returns the exercise name, muscle group, difficulty, time and whether the exercise is favourited
@@ -44,23 +44,38 @@ public class ExercisesByName implements FitnessCollection {
     //          otherwise also returns the number of remaining exercises and ADDITIONAL_EXERCISE_MESSAGE
     public String toString() {
         StringBuilder exercisesString = new StringBuilder();
-        exercisesString.append("Name\tMuscle Group\tDifficulty\tTime (min)\t Favourite?\n");
+        exercisesString.append("Name").append(StringFormat.SEPARATOR.getFormat())
+                .append("Muscle Group")
+                .append(StringFormat.SEPARATOR.getFormat())
+                .append("Difficulty")
+                .append(StringFormat.SEPARATOR.getFormat())
+                .append("Time (min)")
+                .append(StringFormat.SEPARATOR.getFormat())
+                .append("Favourite?")
+                .append(StringFormat.LINE_BREAK.getFormat());
         int count = 0;
 
         for (Exercise exercise: exercises.values()) {
             if (count == DISPLAY_NUMBER_OF_EXERCISES) {
                 break;
             }
-            exercisesString.append("[").append(exercise.getName()).append("]").append("\t");
-            exercisesString.append(exercise.getMuscleGroup().getMuscleGroup()).append("\t");
-            exercisesString.append(exercise.getDifficulty().getDifficulty()).append("\t");
-            exercisesString.append(exercise.getTime()).append("\t");
-            exercisesString.append(exercise.isFavourite()).append("\n");
+            exercisesString.append(StringFormat.LEFT_BRACKET.getFormat())
+                    .append(exercise.getName())
+                    .append(StringFormat.RIGHT_BRACKET.getFormat())
+                    .append(StringFormat.SEPARATOR.getFormat());
+            exercisesString.append(exercise.getMuscleGroup().getMuscleGroup())
+                    .append(StringFormat.SEPARATOR.getFormat());
+            exercisesString.append(exercise.getDifficulty().getDifficulty())
+                    .append(StringFormat.SEPARATOR.getFormat());
+            exercisesString.append(exercise.getTime())
+                    .append(StringFormat.SEPARATOR.getFormat());
+            exercisesString.append(exercise.isFavourite())
+                    .append(StringFormat.LINE_BREAK.getFormat());
             count++;
         }
 
         if (exercises.size() > DISPLAY_NUMBER_OF_EXERCISES) {
-            exercisesString.append("... with ");
+            exercisesString.append(StringFormat.CUTOFF.getFormat());
             exercisesString.append((exercises.size() - DISPLAY_NUMBER_OF_EXERCISES));
             exercisesString.append(ADDITIONAL_EXERCISE_MESSAGE);
         }

@@ -153,7 +153,7 @@ public class ExercisesByNameTest {
 
     @Test
     public void testToStringNoExercises() {
-        assertEquals("Name\tMuscle Group\tDifficulty\tTime (min)\t Favourite?" + "\n",
+        assertEquals("Name\tMuscle Group\tDifficulty\tTime (min)\tFavourite?" + "\n",
                 exercisesByNameTest1.toString());
     }
 
@@ -161,7 +161,7 @@ public class ExercisesByNameTest {
     public void testToStringOneExerciseInMap() {
         addExerciseHelper(exercisesByNameTest1, 1);
 
-        assertEquals("Name\tMuscle Group\tDifficulty\tTime (min)\t Favourite?" + "\n"
+        assertEquals("Name\tMuscle Group\tDifficulty\tTime (min)\tFavourite?" + "\n"
                             + "[1]\tChest\t1\t1\tfalse" + "\n", exercisesByNameTest1.toString());
     }
 
@@ -169,7 +169,7 @@ public class ExercisesByNameTest {
     public void testToStringMultipleExerciseInMap() {
         addExerciseHelper(exercisesByNameTest1, 2);
 
-        assertEquals("Name\tMuscle Group\tDifficulty\tTime (min)\t Favourite?" + "\n"
+        assertEquals("Name\tMuscle Group\tDifficulty\tTime (min)\tFavourite?" + "\n"
                             + "[1]\tChest\t1\t1\tfalse" + "\n"
                             + "[2]\tCore\t2\t2\tfalse" + "\n", exercisesByNameTest1.toString());
     }
@@ -178,7 +178,7 @@ public class ExercisesByNameTest {
     public void testToStringMultipleExerciseInMapBoundary() {
         addExerciseHelper(exercisesByNameTest1, DISPLAY_NUMBER_OF_EXERCISES);
 
-        assertEquals("Name\tMuscle Group\tDifficulty\tTime (min)\t Favourite?" + "\n"
+        assertEquals("Name\tMuscle Group\tDifficulty\tTime (min)\tFavourite?" + "\n"
                             + "[1]\tChest\t1\t1\tfalse" + "\n"
                             + "[2]\tCore\t2\t2\tfalse" + "\n"
                             + "[3]\tChest\t1\t3\tfalse" + "\n"
@@ -195,7 +195,7 @@ public class ExercisesByNameTest {
     public void testToStringMultipleExerciseInMapGreaterThanBoundary() {
         addExerciseHelper(exercisesByNameTest1, DISPLAY_NUMBER_OF_EXERCISES + 1);
 
-        assertEquals("Name\tMuscle Group\tDifficulty\tTime (min)\t Favourite?" + "\n"
+        assertEquals("Name\tMuscle Group\tDifficulty\tTime (min)\tFavourite?" + "\n"
                             + "[1]\tChest\t1\t1\tfalse" + "\n"
                             + "[2]\tCore\t2\t2\tfalse" + "\n"
                             + "[3]\tChest\t1\t3\tfalse" + "\n"
