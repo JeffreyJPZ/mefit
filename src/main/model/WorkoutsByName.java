@@ -90,7 +90,7 @@ public class WorkoutsByName implements FitnessCollection {
 
         for (Workout workout : workouts.values()) {
             if (pattern.matcher(workout.getName()).matches()) {
-                workoutsByName.getWorkouts().put(workout.getName(), workout);
+                workoutsByName.addWorkout(workout);
             }
         }
 
@@ -102,8 +102,8 @@ public class WorkoutsByName implements FitnessCollection {
         WorkoutsByName workoutsByName = new WorkoutsByName();
 
         for (Workout workout : workouts.values()) {
-            if (workout.getDifficulty().getDifficulty() == difficulty.getDifficulty()) {
-                workoutsByName.getWorkouts().put(workout.getName(), workout);
+            if (workout.getDifficulty().equals(difficulty)) {
+                workoutsByName.addWorkout(workout);
             }
         }
 
@@ -116,7 +116,7 @@ public class WorkoutsByName implements FitnessCollection {
 
         for (Workout workout : workouts.values()) {
             if (workout.getTime() <= time) {
-                workoutsByName.getWorkouts().put(workout.getName(), workout);
+                workoutsByName.addWorkout(workout);
             }
         }
 
@@ -129,7 +129,7 @@ public class WorkoutsByName implements FitnessCollection {
 
         for (Workout workout : workouts.values()) {
             if (workout.length() <= numberOfExercises) {
-                workoutsByName.getWorkouts().put(workout.getName(), workout);
+                workoutsByName.addWorkout(workout);
             }
         }
 
@@ -142,7 +142,7 @@ public class WorkoutsByName implements FitnessCollection {
 
         for (Workout workout : workouts.values()) {
             if (workout.isFavourite()) {
-                workoutsByName.getWorkouts().put(workout.getName(), workout);
+                workoutsByName.addWorkout(workout);
             }
         }
 

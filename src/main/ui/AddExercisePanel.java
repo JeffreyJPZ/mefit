@@ -162,32 +162,4 @@ public class AddExercisePanel extends FitnessPanel {
     private void back() {
         FitnessApp.getInstance().switchPanel(EXERCISES_COMMAND.getFitnessAppCommand());
     }
-
-    // REQUIRES: muscleGroupName matches a value in MuscleGroup
-    // EFFECTS: returns the muscle group associated with the given muscle group name
-    private MuscleGroup getMuscleGroupByName(String muscleGroupName) {
-        MuscleGroup muscleGroup = null;
-
-        for (MuscleGroup m : MuscleGroup.values()) {
-            if (m.getMuscleGroup().equals(muscleGroupName)) {
-                muscleGroup = m;
-                break;
-            }
-        }
-        return muscleGroup;
-    }
-
-    // REQUIRES: difficultyLevel matches a value in Difficulty
-    // EFFECTS: returns the difficulty associated with the given difficulty level
-    private Difficulty getDifficultyByLevel(int difficultyLevel) {
-        Difficulty difficulty = null;
-
-        for (Difficulty d : Difficulty.values()) {
-            if (d.getDifficulty() == difficultyLevel) {
-                difficulty = d;
-                break;
-            }
-        }
-        return difficulty;
-    }
 }

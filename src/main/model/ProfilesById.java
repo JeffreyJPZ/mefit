@@ -4,8 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 // Represents a mapping of profiles by their id
 public class ProfilesById implements FitnessCollection {
@@ -63,7 +65,8 @@ public class ProfilesById implements FitnessCollection {
         return profilesString.toString();
     }
 
-    // EFFECTS: returns the profiles where string matches the beginning of the profile name case insensitively
+    @Override
+    // EFFECTS: filters the profiles where string matches the beginning of the profile name case insensitively
     public ProfilesById filter(String name) {
         ProfilesById profilesById = new ProfilesById();
 
@@ -71,7 +74,7 @@ public class ProfilesById implements FitnessCollection {
 
         for (Profile profile : this.profiles.values()) {
             if (pattern.matcher(profile.getName()).matches()) {
-                profilesById.getProfiles().put(profile.getId(), profile);
+                profilesById.addProfile(profile);
             }
         }
 

@@ -1,9 +1,7 @@
 package ui;
 
-import model.Difficulty;
 import model.Exercise;
 import model.ExercisesByName;
-import model.MuscleGroup;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -255,35 +253,6 @@ public class ExercisesPanel extends FitnessPanel implements UIObserver {
     // EFFECTS: resets the exercise display to unfiltered state
     private void resetExercises() {
         exercisesByName = exercisesByNameMaster;
-    }
-
-    // TODO: abstract duplicated methods into abstract class w/ update abstract method
-    // REQUIRES: muscleGroupName matches a muscle group
-    // EFFECTS: returns the muscle group associated with the given name
-    private MuscleGroup getMuscleGroupByName(String muscleGroupName) {
-        MuscleGroup muscleGroup = null;
-
-        for (MuscleGroup m : MuscleGroup.values()) {
-            if (m.getMuscleGroup().equals(muscleGroupName)) {
-                muscleGroup = m;
-                break;
-            }
-        }
-        return muscleGroup;
-    }
-
-    // REQUIRES: difficultyLevel matches a difficulty
-    // EFFECTS: returns the difficulty associated with the given difficulty level
-    private Difficulty getDifficultyByLevel(int difficultyLevel) {
-        Difficulty difficulty = null;
-
-        for (Difficulty d : Difficulty.values()) {
-            if (d.getDifficulty() == difficultyLevel) {
-                difficulty = d;
-                break;
-            }
-        }
-        return difficulty;
     }
 
     // MODIFIES: this

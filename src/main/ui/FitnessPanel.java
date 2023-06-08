@@ -1,6 +1,7 @@
 package ui;
 
-import model.Profile;
+import model.Difficulty;
+import model.MuscleGroup;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,11 +9,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ui.FitnessAppCommands.PROFILES_COMMAND;
-
 // Represents a panel of the fitness application
 public abstract class FitnessPanel extends UIObservablePanel implements UIObserver, ActionListener {
-    protected List<JComponent> components; // TODO: make components a map with name
+    protected List<JComponent> components;
 
     // EFFECTS: creates a fitness panel with components
     protected FitnessPanel() {
@@ -55,4 +54,32 @@ public abstract class FitnessPanel extends UIObservablePanel implements UIObserv
     // EFFECTS: does nothing if key is a match
     @Override
     public <T> void update(T t, FitnessAppCommands key) {}
+
+    // REQUIRES: muscleGroupName matches a muscle group
+    // EFFECTS: returns the muscle group associated with the given name
+    protected MuscleGroup getMuscleGroupByName(String muscleGroupName) {
+        MuscleGroup muscleGroup = null;
+
+        for (MuscleGroup m : MuscleGroup.values()) {
+            if (m.getMuscleGroup().equals(muscleGroupName)) {
+                muscleGroup = m;
+                break;
+            }
+        }
+        return muscleGroup;
+    }
+
+    // REQUIRES: difficultyLevel matches a difficulty
+    // EFFECTS: returns the difficulty associated with the given difficulty level
+    protected Difficulty getDifficultyByLevel(int difficultyLevel) {
+        Difficulty difficulty = null;
+
+        for (Difficulty d : Difficulty.values()) {
+            if (d.getDifficulty() == difficultyLevel) {
+                difficulty = d;
+                break;
+            }
+        }
+        return difficulty;
+    }
 }

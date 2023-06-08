@@ -9,8 +9,7 @@ public interface FitnessCollection extends JsonWritable {
     @Override
     String toString();
 
-    // REQUIRES: name is not empty
-    // EFFECTS: returns a collection of elements satisfying the given name
+    // EFFECTS: filters the collection with the given name
     FitnessCollection filter(String name);
 
     // REQUIRES: name is not empty

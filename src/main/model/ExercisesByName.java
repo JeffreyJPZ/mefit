@@ -92,7 +92,7 @@ public class ExercisesByName implements FitnessCollection {
 
         for (Exercise exercise : exercises.values()) {
             if (pattern.matcher(exercise.getName()).matches()) {
-                exercisesByName.getExercises().put(exercise.getName(), exercise);
+                exercisesByName.addExercise(exercise);
             }
         }
 
@@ -107,7 +107,7 @@ public class ExercisesByName implements FitnessCollection {
 
         for (Exercise exercise : exercises.values()) {
             if (exercise.getMuscleGroup().equals(muscleGroup)) {
-                exercisesByName.getExercises().put(exercise.getName(), exercise);
+                exercisesByName.addExercise(exercise);
             }
         }
 
@@ -121,8 +121,8 @@ public class ExercisesByName implements FitnessCollection {
         ExercisesByName exercisesByName = new ExercisesByName();
 
         for (Exercise exercise : exercises.values()) {
-            if (exercise.getDifficulty().getDifficulty() == difficulty.getDifficulty()) {
-                exercisesByName.getExercises().put(exercise.getName(), exercise);
+            if (exercise.getDifficulty().equals(difficulty)) {
+                exercisesByName.addExercise(exercise);
             }
         }
 
