@@ -196,4 +196,30 @@ public class WorkoutGeneratorTest {
 
         assertNull(testWorkout);
     }
+
+    @Test
+    public void testExercisesWantedSampleSizeNotEnough() {
+        ExercisesByName exercisesByName = new ExercisesByName();
+
+        exercisesByName.addExercise(new CardioExercise("Sprints", MuscleGroup.LEGS, 10,
+                Difficulty.MODERATE, 10));
+        exercisesByName.addExercise(new BodyWeightsExercise("Pullups", MuscleGroup.BACK, 5, 5,
+                Difficulty.INTENSE, 15));
+        exercisesByName.addExercise(new WeightsExercise("Curls", MuscleGroup.ARMS, 50,
+                3, 8, Difficulty.LIGHT, 30));
+
+        WorkoutParameters parameters = new WorkoutParameters
+                .WorkoutParametersBuilder(MuscleGroup.SHOULDERS, Difficulty.INTENSE, 2, 20, 1)
+                .build();
+
+        try {
+            testWorkout = workoutGenerator.generateWorkout("w1", exercisesByName,
+                    parameters, new MockRandom(0));
+            fail("NoValidWorkoutException not caught when expected");
+        } catch (NoValidWorkoutException e) {
+            // success
+        }
+
+        assertNull(testWorkout);
+    }
 }
