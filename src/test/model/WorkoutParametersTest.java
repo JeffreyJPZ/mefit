@@ -16,7 +16,7 @@ public class WorkoutParametersTest {
                 .WorkoutParametersBuilder(MuscleGroup.BACK, Difficulty.LIGHT, 0, 0, 0)
                 .build();
         parameters2 = new WorkoutParameters
-                .WorkoutParametersBuilder(MuscleGroup.CHEST, Difficulty.INTENSE, 5, 300, 10)
+                .WorkoutParametersBuilder(MuscleGroup.SHOULDERS, Difficulty.INTENSE, 5, 300, 10)
                 .build();
     }
 
@@ -28,7 +28,7 @@ public class WorkoutParametersTest {
         assertEquals(0, parameters1.getTime());
         assertEquals(0, parameters1.getSampleSize());
 
-        assertEquals(MuscleGroup.CHEST, parameters2.getMuscleGroup());
+        assertEquals(MuscleGroup.SHOULDERS, parameters2.getMuscleGroup());
         assertEquals(Difficulty.INTENSE, parameters2.getDifficulty());
         assertEquals(5, parameters2.getExercisesNum());
         assertEquals(300, parameters2.getTime());

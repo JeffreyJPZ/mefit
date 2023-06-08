@@ -209,7 +209,7 @@ public class WorkoutGeneratorTest {
                 3, 8, Difficulty.LIGHT, 30));
 
         WorkoutParameters parameters = new WorkoutParameters
-                .WorkoutParametersBuilder(MuscleGroup.SHOULDERS, Difficulty.INTENSE, 2, 20, 1)
+                .WorkoutParametersBuilder(MuscleGroup.SHOULDERS, Difficulty.INTENSE, 3, 20, 1)
                 .build();
 
         try {
