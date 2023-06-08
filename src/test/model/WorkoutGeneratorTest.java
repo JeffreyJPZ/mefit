@@ -32,9 +32,12 @@ public class WorkoutGeneratorTest {
 
     @Test
     public void testNoExercisesWantedEmptyExercises() {
+        WorkoutParameters parameters = new WorkoutParameters
+                .WorkoutParametersBuilder(MuscleGroup.BACK, Difficulty.INTENSE, 0, 0, 0)
+                .build();
         try {
-            testWorkout = workoutGenerator.generateWorkout("w1", 0, 0,
-                    Difficulty.INTENSE, MuscleGroup.BACK, new ExercisesByName(), 0, new MockRandom(0));
+            testWorkout = workoutGenerator.generateWorkout("w1", new ExercisesByName(),
+                    parameters, new MockRandom(0));
             fail("NoValidWorkoutException not caught when expected");
         } catch (NoValidWorkoutException e) {
             // success
@@ -43,9 +46,12 @@ public class WorkoutGeneratorTest {
 
     @Test
     public void testExercisesWantedEmptyExercises() {
+        WorkoutParameters parameters = new WorkoutParameters
+                .WorkoutParametersBuilder(MuscleGroup.BACK, Difficulty.INTENSE, 2, 30, 3)
+                .build();
         try {
-            testWorkout = workoutGenerator.generateWorkout("w1", 2, 30,
-                    Difficulty.INTENSE, MuscleGroup.BACK, new ExercisesByName(), 3, new MockRandom(0));
+            testWorkout = workoutGenerator.generateWorkout("w1", new ExercisesByName(),
+                    parameters, new MockRandom(0));
             fail("NoValidWorkoutException not caught when expected");
         } catch (NoValidWorkoutException e) {
             // success
@@ -60,9 +66,13 @@ public class WorkoutGeneratorTest {
         exercisesByName.addExercise(e2);
         exercisesByName.addExercise(e3);
 
+        WorkoutParameters parameters = new WorkoutParameters
+                .WorkoutParametersBuilder(MuscleGroup.BACK, Difficulty.INTENSE, 0, 5, 3)
+                .build();
+
         try {
-            testWorkout = workoutGenerator.generateWorkout("w1", 0, 5,
-                    Difficulty.INTENSE, MuscleGroup.LEGS, exercisesByName, 3, new MockRandom(0));
+            testWorkout = workoutGenerator.generateWorkout("w1", exercisesByName,
+                    parameters, new MockRandom(0));
         } catch (NoValidWorkoutException e) {
             fail("NoValidWorkoutException caught, none expected");
         }
@@ -76,9 +86,13 @@ public class WorkoutGeneratorTest {
         exercisesByName.addExercise(e2);
         exercisesByName.addExercise(e3);
 
+        WorkoutParameters parameters = new WorkoutParameters
+                .WorkoutParametersBuilder(MuscleGroup.BACK, Difficulty.INTENSE, 2, 20, 3)
+                .build();
+
         try {
-            testWorkout = workoutGenerator.generateWorkout("w1", 2, 20,
-                    Difficulty.INTENSE, MuscleGroup.BACK, exercisesByName, 3, new MockRandom(0));
+            testWorkout = workoutGenerator.generateWorkout("w1", exercisesByName,
+                    parameters, new MockRandom(0));
         } catch (NoValidWorkoutException e) {
             fail("NoValidWorkoutException caught, none expected");
         }
@@ -96,15 +110,19 @@ public class WorkoutGeneratorTest {
         Exercise e2 = new BodyWeightsExercise("Pullups", MuscleGroup.BACK, 5, 5,
                 Difficulty.LIGHT, 15);
         Exercise e3 = new WeightsExercise("Curls", MuscleGroup.ARMS, 50,
-                3, 8, Difficulty.LIGHT, 5);
+                3, 8, Difficulty.MODERATE, 5);
 
         exercisesByName.addExercise(e1);
         exercisesByName.addExercise(e2);
         exercisesByName.addExercise(e3);
 
+        WorkoutParameters parameters = new WorkoutParameters
+                .WorkoutParametersBuilder(MuscleGroup.BACK, Difficulty.MODERATE, 2, 23, 3)
+                .build();
+
         try {
-            testWorkout = workoutGenerator.generateWorkout("w1", 2, 23,
-                    Difficulty.LIGHT, MuscleGroup.BACK, exercisesByName, 3, new MockRandom(0));
+            testWorkout = workoutGenerator.generateWorkout("w1", exercisesByName,
+                    parameters, new MockRandom(0));
         } catch (NoValidWorkoutException e) {
             fail("NoValidWorkoutException caught, none expected");
         }
@@ -134,9 +152,13 @@ public class WorkoutGeneratorTest {
         exercisesByName.addExercise(e4);
         exercisesByName.addExercise(e5);
 
+        WorkoutParameters parameters = new WorkoutParameters
+                .WorkoutParametersBuilder(MuscleGroup.BACK, Difficulty.LIGHT, 2, 25, 5)
+                .build();
+
         try {
-            testWorkout = workoutGenerator.generateWorkout("w1", 2, 25,
-                    Difficulty.LIGHT, MuscleGroup.BACK, exercisesByName, 5, new MockRandom(0));
+            testWorkout = workoutGenerator.generateWorkout("w1", exercisesByName,
+                    parameters, new MockRandom(0));
         } catch (NoValidWorkoutException e) {
             fail("NoValidWorkoutException caught, none expected");
         }
@@ -160,9 +182,13 @@ public class WorkoutGeneratorTest {
         exercisesByName.addExercise(new WeightsExercise("Curls", MuscleGroup.ARMS, 50,
                 3, 8, Difficulty.LIGHT, 30));
 
+        WorkoutParameters parameters = new WorkoutParameters
+                .WorkoutParametersBuilder(MuscleGroup.SHOULDERS, Difficulty.INTENSE, 2, 20, 3)
+                .build();
+
         try {
-            testWorkout = workoutGenerator.generateWorkout("w1", 2, 20,
-                    Difficulty.INTENSE, MuscleGroup.SHOULDERS, exercisesByName, 3, new MockRandom(0));
+            testWorkout = workoutGenerator.generateWorkout("w1", exercisesByName,
+                    parameters, new MockRandom(0));
             fail("NoValidWorkoutException not caught when expected");
         } catch (NoValidWorkoutException e) {
             // success
