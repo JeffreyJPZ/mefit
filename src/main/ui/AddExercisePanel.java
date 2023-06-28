@@ -4,6 +4,7 @@ import model.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 import static java.lang.Integer.parseInt;
 import static ui.FitnessAppCommands.*;
@@ -14,7 +15,7 @@ public class AddExercisePanel extends FitnessPanel {
     private static final String BODYWEIGHTS_EXERCISE = "Bodyweights";
     private static final String CARDIO_EXERCISE = "Cardio";
 
-    private static final String[] exerciseTypes = {WEIGHTS_EXERCISE, BODYWEIGHTS_EXERCISE, CARDIO_EXERCISE};
+    private static final List<String> exerciseTypes = List.of(WEIGHTS_EXERCISE, BODYWEIGHTS_EXERCISE, CARDIO_EXERCISE);
 
     private JTextField name;
     private JComboBox<String> selectType;
@@ -64,7 +65,7 @@ public class AddExercisePanel extends FitnessPanel {
         this.reps = new JTextField("Reps: Edit only for weights and bodyweights exercises");
         this.distance = new JTextField("Distance: Edit only for cardio exercises");
 
-        this.addExerciseButton = new JButton(ADD_EXERCISE_COMMAND.getFitnessAppCommand());
+        this.addExerciseButton = new JButton(ADD_COMMAND.getFitnessAppCommand());
         this.backButton = new JButton(BACK_COMMAND.getFitnessAppCommand());
 
         addDisplayComponents();
@@ -100,7 +101,7 @@ public class AddExercisePanel extends FitnessPanel {
     // MODIFIES: this
     // EFFECTS: sets the appropriate components to respond to appropriate events
     protected void initializeActions() {
-        initializeAction(addExerciseButton, ADD_EXERCISE_COMMAND.getFitnessAppCommand());
+        initializeAction(addExerciseButton, ADD_COMMAND.getFitnessAppCommand());
         initializeAction(backButton, BACK_COMMAND.getFitnessAppCommand());
         selectType.setActionCommand(SELECT_TYPE_COMMAND.getFitnessAppCommand());
         selectType.addActionListener(this);
@@ -110,16 +111,11 @@ public class AddExercisePanel extends FitnessPanel {
     // EFFECTS: handles the appropriate event for each component
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals(ADD_EXERCISE_COMMAND.getFitnessAppCommand())) {
+        if (e.getActionCommand().equals(ADD_COMMAND.getFitnessAppCommand())) {
             addExercise();
-        } else if (e.getActionCommand().equals(SELECT_TYPE_COMMAND.getFitnessAppCommand())) {
-            updatePrompts();
         } else if (e.getActionCommand().equals(BACK_COMMAND.getFitnessAppCommand())) {
             back();
         }
-    }
-
-    private void updatePrompts() {
     }
 
     // REQUIRES: selected exercise type, muscle group, and difficulty are not null
@@ -132,9 +128,9 @@ public class AddExercisePanel extends FitnessPanel {
 
         Exercise exercise = getExerciseFromType(exerciseType, muscleGroupName, difficultyLevel);
 
-        notifyAll(exercise, ADD_EXERCISE_COMMAND);
+        notifyAll(exercise, ADD_COMMAND);
 
-        FitnessApp.getInstance().switchPanel(EXERCISES_COMMAND.getFitnessAppCommand());
+        back();
     }
 
     // REQUIRES: exerciseType matches a valid exercise type

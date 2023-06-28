@@ -38,7 +38,7 @@ public class AddProfilePanel extends FitnessPanel {
         this.gender = new JTextField("Example");
         this.age = new JTextField("30");
         this.weight = new JTextField("225");
-        this.addProfileButton = new JButton(ADD_PROFILE_COMMAND.getFitnessAppCommand());
+        this.addProfileButton = new JButton(ADD_COMMAND.getFitnessAppCommand());
         this.backButton = new JButton(BACK_COMMAND.getFitnessAppCommand());
 
         addDisplayComponents();
@@ -64,7 +64,7 @@ public class AddProfilePanel extends FitnessPanel {
     // MODIFIES: this
     // EFFECTS: sets the appropriate components to respond to appropriate events
     protected void initializeActions() {
-        initializeAction(addProfileButton, ADD_PROFILE_COMMAND.getFitnessAppCommand());
+        initializeAction(addProfileButton, ADD_COMMAND.getFitnessAppCommand());
         initializeAction(backButton, BACK_COMMAND.getFitnessAppCommand());
     }
 
@@ -72,7 +72,7 @@ public class AddProfilePanel extends FitnessPanel {
     // EFFECTS: handles the appropriate event for each component
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals(ADD_PROFILE_COMMAND.getFitnessAppCommand())) {
+        if (e.getActionCommand().equals(ADD_COMMAND.getFitnessAppCommand())) {
             addProfile();
         } else if (e.getActionCommand().equals(BACK_COMMAND.getFitnessAppCommand())) {
             back();
@@ -85,9 +85,9 @@ public class AddProfilePanel extends FitnessPanel {
         Profile profile = new Profile(name.getText(), gender.getText(),
                 parseInt(age.getText()), parseInt(weight.getText()));
 
-        notifyAll(profile, ADD_PROFILE_COMMAND);
+        notifyAll(profile, ADD_COMMAND);
 
-        FitnessApp.getInstance().switchPanel(PROFILES_COMMAND.getFitnessAppCommand());
+        back();
     }
 
     // MODIFIES: fitnessApp

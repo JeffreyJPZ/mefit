@@ -2,7 +2,6 @@ package ui;
 
 import model.Event;
 import model.EventLog;
-import model.FitnessCollection;
 
 import javax.swing.*;
 import java.awt.*;

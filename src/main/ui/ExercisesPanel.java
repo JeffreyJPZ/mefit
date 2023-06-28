@@ -5,9 +5,7 @@ import model.ExercisesByName;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
@@ -15,114 +13,70 @@ import static java.lang.Integer.parseInt;
 import static ui.FitnessAppCommands.*;
 
 // Represents a panel with exercises for the fitness application
-public class ExercisesPanel extends FitnessPanel implements UIObserver {
-    private static final int EXERCISES_WIDTH = 300;
-    private static final int EXERCISES_HEIGHT = 300;
+public class ExercisesPanel extends DisplayCollectionPanel implements UIObserver {
     private static final String EXERCISE_NAME = "Name";
     private static final String EXERCISE_MUSCLE_GROUP = "Muscle Group";
     private static final String EXERCISE_DIFFICULTY = "Difficulty";
     private static final String EXERCISE_TIME = "Time (min)";
     private static final String EXERCISE_FAVOURITE = "Favourite?";
-    private static final int EXERCISE_NAME_POSITION = 0; // column index for all exercise names
-
-    private static final List<String> EXERCISE_INFO = Arrays.asList(EXERCISE_NAME, EXERCISE_MUSCLE_GROUP,
-            EXERCISE_DIFFICULTY, EXERCISE_TIME, EXERCISE_FAVOURITE);
-    private static final Vector<String> EXERCISE_INFO_VECTOR = new Vector<>(EXERCISE_INFO);
 
     private ExercisesByName exercisesByName;
     private ExercisesByName exercisesByNameMaster;
-
-    private Vector<Vector<Object>> exercisesData;
-    private DefaultTableModel tableModel;
-
-    private JTable exercisesDataTable;
-    private JScrollPane exercisesScrollableTable;
-    private JButton addExerciseButton;
-    private JButton removeExerciseButton;
-    private JLabel filterLabel;
-    private JComboBox<String> exerciseFilters;
-    private JTextField inputFilter;
-    private JButton filterExercisesButton;
-    private JButton resetExerciseFiltersButton;
-    private JButton backButton;
 
     // EFFECTS: creates an exercises panel
     public ExercisesPanel() {
         super();
         initializeFields();
-        initializePlacements();
         initializeActions();
-        addComponents();
-    }
-
-    // MODIFIES: this
-    // EFFECTS: initializes the components for the exercises panel
-    private void initializeFields() {
-
-        this.exercisesByName = new ExercisesByName(); // initializes sample exercises
-        this.exercisesByNameMaster = exercisesByName;
-
-        this.exercisesData = new Vector<>();
-
-        extractExercisesData();
-
-        this.exerciseFilters = new JComboBox<>();
-
-        addFilters();
-
-        this.tableModel = new DefaultTableModel(exercisesData, EXERCISE_INFO_VECTOR);
-        this.exercisesDataTable = new JTable(tableModel);
-
-        this.exercisesScrollableTable = new JScrollPane(exercisesDataTable,
-                ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-
-        this.addExerciseButton = new JButton(ADD_EXERCISE_COMMAND.getFitnessAppCommand());
-        this.removeExerciseButton = new JButton(REMOVE_EXERCISE_COMMAND.getFitnessAppCommand());
-        this.filterLabel = new JLabel("Filters");
-        this.inputFilter = new JTextField("Enter the desired filter here");
-        this.filterExercisesButton = new JButton(FILTER_EXERCISE_COMMAND.getFitnessAppCommand());
-        this.resetExerciseFiltersButton = new JButton(RESET_EXERCISE_FILTERS_COMMAND.getFitnessAppCommand());
-        this.backButton = new JButton(BACK_COMMAND.getFitnessAppCommand());
-
         addDisplayComponents();
+        addComponents();
+        initializePlacements();
     }
 
     @Override
     // MODIFIES: this
-    // EFFECTS: sets the placements of the components for the exercises panel
-    protected void initializePlacements() {
-        super.initializePlacements();
+    // EFFECTS: initializes the components for the exercises panel
+    protected void initializeFields() {
+        super.initializeFields();
 
-        exercisesScrollableTable.setPreferredSize(new Dimension(EXERCISES_WIDTH, EXERCISES_HEIGHT));
-        exercisesScrollableTable.setVisible(true);
+        this.info = List.of(EXERCISE_NAME, EXERCISE_MUSCLE_GROUP,
+                EXERCISE_DIFFICULTY, EXERCISE_TIME, EXERCISE_FAVOURITE);
+        this.infoHeader = new Vector<>(info);
 
-        inputFilter.setMaximumSize(new Dimension(EXERCISES_WIDTH, 10));
+        this.filterable = info;
+
+        this.exercisesByName = new ExercisesByName(); // initializes sample exercises
+        this.exercisesByNameMaster = exercisesByName;
+
+        this.data = new Vector<>();
+
+        extractExercisesData();
+        addFilters();
+
+        this.tableModel = new DefaultTableModel(data, infoHeader);
+        this.dataTable = new JTable(tableModel);
+
+        this.scrollableDataTable = new JScrollPane(dataTable,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
     }
 
     // MODIFIES: this
     // EFFECTS: adds each component to be displayed to components
     @Override
     protected void addDisplayComponents() {
-        components.add(exercisesScrollableTable);
-        components.add(addExerciseButton);
-        components.add(removeExerciseButton);
-        components.add(filterLabel);
-        components.add(exerciseFilters);
-        components.add(inputFilter);
-        components.add(filterExercisesButton);
-        components.add(resetExerciseFiltersButton);
-        components.add(backButton);
+        super.addDisplayComponents();
+        components.add(0, scrollableDataTable);
     }
 
-    @Override
     // MODIFIES: this
-    // EFFECTS: sets the appropriate components to respond to appropriate events
-    protected void initializeActions() {
-        initializeAction(addExerciseButton, ADD_EXERCISE_COMMAND.getFitnessAppCommand());
-        initializeAction(removeExerciseButton, REMOVE_EXERCISE_COMMAND.getFitnessAppCommand());
-        initializeAction(filterExercisesButton, FILTER_EXERCISE_COMMAND.getFitnessAppCommand());
-        initializeAction(resetExerciseFiltersButton, RESET_EXERCISE_FILTERS_COMMAND.getFitnessAppCommand());
-        initializeAction(backButton, BACK_COMMAND.getFitnessAppCommand());
+    // EFFECTS: updates the exercises display
+    @Override
+    protected void updateDisplayCollection() {
+        data.clear();
+        extractExercisesData();
+        tableModel.setDataVector(data, infoHeader);
+        dataTable.setModel(tableModel);
+        scrollableDataTable.setViewportView(dataTable);
     }
 
     // MODIFIES: this
@@ -137,7 +91,7 @@ public class ExercisesPanel extends FitnessPanel implements UIObserver {
             exerciseData.add(exercise.getTime());
             exerciseData.add(exercise.isFavourite());
 
-            exercisesData.add(exerciseData);
+            data.add(exerciseData);
         }
     }
 
@@ -157,8 +111,8 @@ public class ExercisesPanel extends FitnessPanel implements UIObserver {
     // MODIFIES: this
     // EFFECTS: adds filter options to display
     private void addFilters() {
-        for (String filter : EXERCISE_INFO) {
-            exerciseFilters.addItem(filter);
+        for (String filter : filterable) {
+            filters.addItem(filter);
         }
     }
 
@@ -166,15 +120,15 @@ public class ExercisesPanel extends FitnessPanel implements UIObserver {
     // EFFECTS: handles the appropriate event for each component
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals(ADD_EXERCISE_COMMAND.getFitnessAppCommand())) {
+        if (e.getActionCommand().equals(ADD_COMMAND.getFitnessAppCommand())) {
             addExercisePanel();
-        } else if (e.getActionCommand().equals(REMOVE_EXERCISE_COMMAND.getFitnessAppCommand())) {
+        } else if (e.getActionCommand().equals(REMOVE_COMMAND.getFitnessAppCommand())) {
             removeSelectedExercises();
-        } else if (e.getActionCommand().equals(FILTER_EXERCISE_COMMAND.getFitnessAppCommand())) {
+        } else if (e.getActionCommand().equals(FILTER_COMMAND.getFitnessAppCommand())) {
             filterExercises();
-        } else if (e.getActionCommand().equals(RESET_EXERCISE_FILTERS_COMMAND.getFitnessAppCommand())) {
+        } else if (e.getActionCommand().equals(RESET_FILTERS_COMMAND.getFitnessAppCommand())) {
             resetExercises();
-            updateTable();
+            updateDisplayCollection();
         } else if (e.getActionCommand().equals(BACK_COMMAND.getFitnessAppCommand())) {
             back();
         }
@@ -190,24 +144,24 @@ public class ExercisesPanel extends FitnessPanel implements UIObserver {
     // MODIFIES: this
     // EFFECTS: removes the selected exercises from the display
     private void removeSelectedExercises() {
-        for (int i : exercisesDataTable.getSelectedRows()) {
-            String exerciseName = (String) exercisesDataTable.getValueAt(i, EXERCISE_NAME_POSITION);
+        for (int i : dataTable.getSelectedRows()) {
+            String exerciseName = (String) dataTable.getValueAt(i, ID_POSITION);
             exercisesByName.removeExercise(exerciseName);
         }
 
-        updateTable();
+        updateDisplayCollection();
     }
 
     // REQUIRES: selected filter and user input are not null
     // MODIFIES: this
     // EFFECTS: filters the exercises on the display
     private void filterExercises() {
-        String selectedFilter = (String) exerciseFilters.getSelectedItem();
+        String selectedFilter = (String) filters.getSelectedItem();
         String input = inputFilter.getText();
 
         filterExercisesBySelectedFilter(selectedFilter, input);
 
-        updateTable();
+        updateDisplayCollection();
     }
 
     // REQUIRES: selected filter and user input are not null
@@ -240,16 +194,6 @@ public class ExercisesPanel extends FitnessPanel implements UIObserver {
     }
 
     // MODIFIES: this
-    // EFFECTS: updates the exercises display
-    private void updateTable() {
-        exercisesData.clear();
-        extractExercisesData();
-        tableModel.setDataVector(exercisesData, EXERCISE_INFO_VECTOR);
-        exercisesDataTable.setModel(tableModel);
-        exercisesScrollableTable.setViewportView(exercisesDataTable);
-    }
-
-    // MODIFIES: this
     // EFFECTS: resets the exercise display to unfiltered state
     private void resetExercises() {
         exercisesByName = exercisesByNameMaster;
@@ -259,13 +203,13 @@ public class ExercisesPanel extends FitnessPanel implements UIObserver {
     // EFFECTS: updates the exercises panel with t if key is a match
     @Override
     public <T> void update(T t, FitnessAppCommands key) {
-        if (key.getFitnessAppCommand().equals(ADD_EXERCISE_COMMAND.getFitnessAppCommand())) {
+        if (key.getFitnessAppCommand().equals(ADD_COMMAND.getFitnessAppCommand())) {
             Exercise exercise = (Exercise) t;
             addExercise(exercise);
         } else if (key.getFitnessAppCommand().equals(PROFILE_COMMAND.getFitnessAppCommand())) {
             ExercisesByName exercises = (ExercisesByName) t;
             setExercises(exercises);
         }
-        updateTable();
+        updateDisplayCollection();
     }
 }

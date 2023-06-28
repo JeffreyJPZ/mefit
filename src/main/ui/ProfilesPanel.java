@@ -8,23 +8,19 @@ import persistence.JsonWriter;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
 import static ui.FitnessAppCommands.*;
 
 // Represents a panel with profiles for the fitness application
-public class ProfilesPanel extends FitnessPanel implements UIObserver {
+public class ProfilesPanel extends DisplayCollectionPanel implements UIObserver {
     private static final String PROFILE_ID = "ID";
     private static final String PROFILE_NAME = "Name";
-    private static final int PROFILE_ID_POSITION = 0; // column for all profile ids
-
-    private static final List<String> PROFILES_COLUMN_NAMES = Arrays.asList(PROFILE_ID, PROFILE_NAME);
-    private static final Vector<String> PROFILE_COLUMN_NAMES_VECTOR = new Vector<>(PROFILES_COLUMN_NAMES);
 
     private static final String SAVE_PROFILES = "Save Profiles";
     private static final String LOAD_PROFILES = "Load Profiles";
@@ -35,68 +31,68 @@ public class ProfilesPanel extends FitnessPanel implements UIObserver {
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
 
-    private JTable profilesDataTable;
-    private JScrollPane profilesScrollableTable;
-    private Vector<Vector<Object>> profilesData;
-    private DefaultTableModel tableModel;
-
     private JLabel splashText;
-    private JButton viewProfileButton;
-    private JButton addProfileButton;
-    private JButton removeProfileButton;
     private JButton saveButton;
     private JButton loadButton;
-    private JButton backButton;
 
     // EFFECTS: creates a profiles panel
     public ProfilesPanel() {
         super();
         initializeFields();
-        initializePlacements();
         initializeActions();
+        addDisplayComponents();
         addComponents();
+        initializePlacements();
     }
 
     // MODIFIES: this
     // EFFECTS: initializes the components for the profiles panel
-    private void initializeFields() {
+    protected void initializeFields() {
+        super.initializeFields();
+
+        this.info = List.of(PROFILE_ID, PROFILE_NAME);
+        this.infoHeader = new Vector<>(info);
+        this.filterable = List.of(PROFILE_NAME);
+
         this.profilesById = new ProfilesById();
         this.jsonReader = new JsonReader(PATH);
         this.jsonWriter = new JsonWriter(PATH);
 
-        this.profilesData = new Vector<>();
+        this.data = new Vector<>();
 
         extractProfilesData();
 
-        this.tableModel = new DefaultTableModel(profilesData, PROFILE_COLUMN_NAMES_VECTOR);
-        this.profilesDataTable = new JTable(tableModel);
+        this.tableModel = new DefaultTableModel(data, infoHeader);
+        this.dataTable = new JTable(tableModel);
 
-        this.profilesScrollableTable = new JScrollPane(profilesDataTable,
+        this.scrollableDataTable = new JScrollPane(dataTable,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         this.splashText = new JLabel(WELCOME_TEXT);
-        this.viewProfileButton = new JButton(PROFILE_COMMAND.getFitnessAppCommand());
-        this.addProfileButton = new JButton(ADD_PROFILE_COMMAND.getFitnessAppCommand());
-        this.removeProfileButton = new JButton(REMOVE_PROFILE_COMMAND.getFitnessAppCommand());
         this.saveButton = new JButton(SAVE_PROFILES);
         this.loadButton = new JButton(LOAD_PROFILES);
-        this.backButton = new JButton(BACK_COMMAND.getFitnessAppCommand());
+    }
 
-        addDisplayComponents();
+    @Override
+    protected void initializePlacements() {
+        super.initializePlacements();
+
+        scrollableDataTable.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        scrollableDataTable.setVisible(true);
+
+        inputFilter.setMaximumSize(new Dimension(WIDTH, 10));
     }
 
     @Override
     // MODIFIES: this
     // EFFECTS: adds each component to be displayed to components
     protected void addDisplayComponents() {
-        components.add(profilesScrollableTable);
-        components.add(splashText);
-        components.add(viewProfileButton);
-        components.add(addProfileButton);
-        components.add(removeProfileButton);
-        components.add(saveButton);
-        components.add(loadButton);
-        components.add(backButton);
+        super.addDisplayComponents();
+
+        components.add(0, splashText);
+        components.add(0, scrollableDataTable);
+        components.add(components.size() - 1, saveButton);
+        components.add(components.size() - 1, loadButton);
     }
 
     // MODIFIES: this
@@ -108,7 +104,7 @@ public class ProfilesPanel extends FitnessPanel implements UIObserver {
             profileData.add(profile.getId());
             profileData.add(profile.getName());
 
-            profilesData.add(profileData);
+            data.add(profileData);
         }
     }
 
@@ -116,23 +112,22 @@ public class ProfilesPanel extends FitnessPanel implements UIObserver {
     // MODIFIES: this
     // EFFECTS: sets the appropriate components to respond to appropriate events
     protected void initializeActions() {
-        initializeAction(viewProfileButton, PROFILE_COMMAND.getFitnessAppCommand());
-        initializeAction(addProfileButton, ADD_PROFILE_COMMAND.getFitnessAppCommand());
-        initializeAction(removeProfileButton, REMOVE_PROFILE_COMMAND.getFitnessAppCommand());
+        super.initializeActions();
+
+        initializeAction(viewButton, VIEW_COMMAND.getFitnessAppCommand());
         initializeAction(saveButton, SAVE_PROFILES);
         initializeAction(loadButton, LOAD_PROFILES);
-        initializeAction(backButton, BACK_COMMAND.getFitnessAppCommand());
     }
 
     // MODIFIES: this, fitnessApp, profilePanel
     // EFFECTS: handles the appropriate event for each component
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals(PROFILE_COMMAND.getFitnessAppCommand())) {
+        if (e.getActionCommand().equals(VIEW_COMMAND.getFitnessAppCommand())) {
             profilePanel();
-        } else if (e.getActionCommand().equals(ADD_PROFILE_COMMAND.getFitnessAppCommand())) {
+        } else if (e.getActionCommand().equals(ADD_COMMAND.getFitnessAppCommand())) {
             addProfilePanel();
-        } else if (e.getActionCommand().equals(REMOVE_PROFILE_COMMAND.getFitnessAppCommand())) {
+        } else if (e.getActionCommand().equals(REMOVE_COMMAND.getFitnessAppCommand())) {
             removeSelectedProfile();
         } else if (e.getActionCommand().equals(SAVE_PROFILES)) {
             saveProfiles();
@@ -150,7 +145,7 @@ public class ProfilesPanel extends FitnessPanel implements UIObserver {
     private void profilePanel() {
         int id = getIdFromSelectedProfile();
 
-        if (profilesDataTable.getSelectedRowCount() > 1) {
+        if (dataTable.getSelectedRowCount() > 1) {
             splashText.setText("Please select one profile only.");
             return;
         }
@@ -165,9 +160,9 @@ public class ProfilesPanel extends FitnessPanel implements UIObserver {
     // REQUIRES: selected profile is not null
     // EFFECTS: returns the id associated with the selected profile
     private int getIdFromSelectedProfile() {
-        int selectedProfile = profilesDataTable.getSelectedRow();
+        int selectedProfile = dataTable.getSelectedRow();
 
-        return (int) profilesDataTable.getValueAt(selectedProfile, PROFILE_ID_POSITION);
+        return (int) dataTable.getValueAt(selectedProfile, ID_POSITION);
     }
 
     // MODIFIES: this
@@ -189,7 +184,7 @@ public class ProfilesPanel extends FitnessPanel implements UIObserver {
         int id = getIdFromSelectedProfile();
 
         profilesById.removeProfile(id);
-        updateProfiles();
+        updateDisplayCollection();
     }
 
     // MODIFIES: this
@@ -217,17 +212,7 @@ public class ProfilesPanel extends FitnessPanel implements UIObserver {
             splashText.setText("Could not load from: " + PATH + "\n");
         }
 
-        updateProfiles();
-    }
-
-    // MODIFIES: this
-    // EFFECTS: updates the display of profiles
-    public void updateProfiles() {
-        profilesData.clear();
-        extractProfilesData();
-        tableModel.setDataVector(profilesData, PROFILE_COLUMN_NAMES_VECTOR);
-        profilesDataTable.setModel(tableModel);
-        profilesScrollableTable.setViewportView(profilesDataTable);
+        updateDisplayCollection();
     }
 
     // MODIFIES: this, fitnessApp
@@ -254,13 +239,25 @@ public class ProfilesPanel extends FitnessPanel implements UIObserver {
         profilesById = jsonReader.read();
     }
 
+    @Override
+    // MODIFIES: this
+    // EFFECTS: updates the exercises display
+    protected void updateDisplayCollection() {
+        data.clear();
+        extractProfilesData();
+        tableModel.setDataVector(data, infoHeader);
+        dataTable.setModel(tableModel);
+        scrollableDataTable.setViewportView(dataTable);
+    }
+
+    @Override
     // MODIFIES: this
     // EFFECTS: updates profiles panel with t if key is a match
     public <T> void update(T t, FitnessAppCommands key) {
-        if (key.getFitnessAppCommand().equals(ADD_PROFILE_COMMAND)) {
+        if (key.getFitnessAppCommand().equals(ADD_COMMAND.getFitnessAppCommand())) {
             Profile profile = (Profile) t;
             addProfile(profile);
         }
-        updateProfiles();
+        updateDisplayCollection();
     }
 }
