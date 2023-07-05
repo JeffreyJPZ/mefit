@@ -91,9 +91,7 @@ public class ExercisesByName implements FitnessCollection {
         Pattern pattern = Pattern.compile("^" + name + ".*", Pattern.CASE_INSENSITIVE);
 
         for (Exercise exercise : exercises.values()) {
-            if (pattern.matcher(exercise.getName()).matches()) {
-                exercisesByName.addExercise(exercise);
-            }
+            filterPredicate(exercisesByName, exercise, pattern.matcher(exercise.getName()).matches());
         }
 
         EventLog.getInstance().logEvent(new Event(EventDescription.FILTER_EXERCISES.getDescription()));
@@ -106,9 +104,7 @@ public class ExercisesByName implements FitnessCollection {
         ExercisesByName exercisesByName = new ExercisesByName();
 
         for (Exercise exercise : exercises.values()) {
-            if (exercise.getMuscleGroup().equals(muscleGroup)) {
-                exercisesByName.addExercise(exercise);
-            }
+            filterPredicate(exercisesByName, exercise, exercise.getMuscleGroup().equals(muscleGroup));
         }
 
         EventLog.getInstance().logEvent(new Event(EventDescription.FILTER_EXERCISES.getDescription()));
@@ -121,9 +117,7 @@ public class ExercisesByName implements FitnessCollection {
         ExercisesByName exercisesByName = new ExercisesByName();
 
         for (Exercise exercise : exercises.values()) {
-            if (exercise.getDifficulty().equals(difficulty)) {
-                exercisesByName.addExercise(exercise);
-            }
+            filterPredicate(exercisesByName, exercise, exercise.getDifficulty().equals(difficulty));
         }
 
         EventLog.getInstance().logEvent(new Event(EventDescription.FILTER_EXERCISES.getDescription()));
@@ -136,9 +130,7 @@ public class ExercisesByName implements FitnessCollection {
         ExercisesByName exercisesByName = new ExercisesByName();
 
         for (Exercise exercise : exercises.values()) {
-            if (exercise.getTime() <= time) {
-                exercisesByName.getExercises().put(exercise.getName(), exercise);
-            }
+            filterPredicate(exercisesByName, exercise, exercise.getTime() <= time);
         }
 
         EventLog.getInstance().logEvent(new Event(EventDescription.FILTER_EXERCISES.getDescription()));
@@ -151,14 +143,20 @@ public class ExercisesByName implements FitnessCollection {
         ExercisesByName exercisesByName = new ExercisesByName();
 
         for (Exercise exercise : exercises.values()) {
-            if (exercise.isFavourite()) {
-                exercisesByName.getExercises().put(exercise.getName(), exercise);
-            }
+            filterPredicate(exercisesByName, exercise, exercise.isFavourite());
         }
 
         EventLog.getInstance().logEvent(new Event(EventDescription.FILTER_EXERCISES.getDescription()));
 
         return exercisesByName;
+    }
+
+    // EFFECTS: adds the given exercise to the exercises if predicate matches
+    //          otherwise does nothing
+    private void filterPredicate(ExercisesByName exercisesByName, Exercise exercise, boolean predicate) {
+        if (predicate) {
+            exercisesByName.addExercise(exercise);
+        }
     }
 
     // EFFECTS: returns true if exercise with same name in the exercises, otherwise returns false

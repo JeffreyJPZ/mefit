@@ -4,10 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 // Represents a mapping of profiles by their id
 public class ProfilesById implements FitnessCollection {
@@ -71,14 +69,19 @@ public class ProfilesById implements FitnessCollection {
         ProfilesById profilesById = new ProfilesById();
 
         Pattern pattern = Pattern.compile("^" + name + ".*", Pattern.CASE_INSENSITIVE);
-
         for (Profile profile : this.profiles.values()) {
-            if (pattern.matcher(profile.getName()).matches()) {
-                profilesById.addProfile(profile);
-            }
+            filterPredicate(profilesById, profile, pattern.matcher(profile.getName()).matches());
         }
 
         return profilesById;
+    }
+
+    // EFFECTS: adds the given profile to the profiles if predicate matches
+    //          otherwise does nothing
+    private void filterPredicate(ProfilesById profilesById, Profile profile, boolean predicate) {
+        if (predicate) {
+            profilesById.addProfile(profile);
+        }
     }
 
     // EFFECTS: returns true if profile with same name ignoring case is in map, otherwise returns false

@@ -89,9 +89,7 @@ public class WorkoutsByName implements FitnessCollection {
         Pattern pattern = Pattern.compile("^" + name + ".*", Pattern.CASE_INSENSITIVE);
 
         for (Workout workout : workouts.values()) {
-            if (pattern.matcher(workout.getName()).matches()) {
-                workoutsByName.addWorkout(workout);
-            }
+            filterPredicate(workoutsByName, workout, pattern.matcher(workout.getName()).matches());
         }
 
         return workoutsByName;
@@ -102,9 +100,7 @@ public class WorkoutsByName implements FitnessCollection {
         WorkoutsByName workoutsByName = new WorkoutsByName();
 
         for (Workout workout : workouts.values()) {
-            if (workout.getDifficulty().equals(difficulty)) {
-                workoutsByName.addWorkout(workout);
-            }
+            filterPredicate(workoutsByName, workout, workout.getDifficulty().equals(difficulty));
         }
 
         return workoutsByName;
@@ -115,9 +111,7 @@ public class WorkoutsByName implements FitnessCollection {
         WorkoutsByName workoutsByName = new WorkoutsByName();
 
         for (Workout workout : workouts.values()) {
-            if (workout.getTime() <= time) {
-                workoutsByName.addWorkout(workout);
-            }
+            filterPredicate(workoutsByName, workout, workout.getTime() <= time);
         }
 
         return workoutsByName;
@@ -128,9 +122,7 @@ public class WorkoutsByName implements FitnessCollection {
         WorkoutsByName workoutsByName = new WorkoutsByName();
 
         for (Workout workout : workouts.values()) {
-            if (workout.length() <= numberOfExercises) {
-                workoutsByName.addWorkout(workout);
-            }
+            filterPredicate(workoutsByName, workout, workout.length() <= numberOfExercises);
         }
 
         return workoutsByName;
@@ -141,12 +133,18 @@ public class WorkoutsByName implements FitnessCollection {
         WorkoutsByName workoutsByName = new WorkoutsByName();
 
         for (Workout workout : workouts.values()) {
-            if (workout.isFavourite()) {
-                workoutsByName.addWorkout(workout);
-            }
+            filterPredicate(workoutsByName, workout, workout.isFavourite());
         }
 
         return workoutsByName;
+    }
+
+    // EFFECTS: adds the given workout to the workouts if predicate matches
+    //          otherwise does nothing
+    private void filterPredicate(WorkoutsByName workoutsByName, Workout workout, boolean predicate) {
+        if (predicate) {
+            workoutsByName.addWorkout(workout);
+        }
     }
 
     // EFFECTS: returns true if workouts contains a workout with the given name, otherwise returns false
