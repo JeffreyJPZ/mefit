@@ -8,8 +8,6 @@ import persistence.JsonWritable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Boolean.*;
-
 // TODO: implement Composite for workout and exercise
 
 // Represents a number of exercises organized into a workout
@@ -21,9 +19,9 @@ public class Workout extends ExerciseComponent implements JsonWritable {
     // REQUIRES: name is not empty, difficulty > 0
     // EFFECTS: Makes a new workout with a name, difficulty, unfavourited and with no exercises
     public Workout(String name, Difficulty difficulty) {
-        super(name);
+        super(name, ExerciseComponentTypes.WORKOUT);
         this.difficulty = difficulty;
-        this.favourite = FALSE;
+        this.favourite = false;
         this.exercises = new ArrayList<>();
     }
 

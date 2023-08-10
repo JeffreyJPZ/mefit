@@ -28,12 +28,14 @@ public class WorkoutTest {
         assertEquals(0, workoutTest1.getTime());
         assertFalse(workoutTest1.isFavourite());
         assertTrue(workoutTest1.getExercises().isEmpty());
+        assertEquals(ExerciseComponentTypes.WORKOUT, workoutTest1.getType());
 
         assertEquals("2", workoutTest2.getName());
         assertEquals(Difficulty.MODERATE, workoutTest2.getDifficulty());
         assertEquals(0, workoutTest2.getTime());
         assertFalse(workoutTest2.isFavourite());
         assertTrue(workoutTest2.getExercises().isEmpty());
+        assertEquals(ExerciseComponentTypes.WORKOUT, workoutTest2.getType());
     }
 
     @Test

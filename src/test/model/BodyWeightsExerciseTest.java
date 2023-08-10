@@ -28,6 +28,7 @@ public class BodyWeightsExerciseTest {
         assertEquals(Difficulty.INTENSE, bodyWeightsExerciseTest1.getDifficulty());
         assertEquals(30, bodyWeightsExerciseTest1.getTime());
         assertFalse(bodyWeightsExerciseTest1.isFavourite());
+        assertEquals(ExerciseComponentTypes.EXERCISE, bodyWeightsExerciseTest1.getType());
 
         assertEquals("Situps", bodyWeightsExerciseTest2.getName());
         assertEquals(MuscleGroup.CORE, bodyWeightsExerciseTest2.getMuscleGroup());
@@ -36,6 +37,7 @@ public class BodyWeightsExerciseTest {
         assertEquals(Difficulty.LIGHT, bodyWeightsExerciseTest2.getDifficulty());
         assertEquals(15, bodyWeightsExerciseTest2.getTime());
         assertFalse(bodyWeightsExerciseTest1.isFavourite());
+        assertEquals(ExerciseComponentTypes.EXERCISE, bodyWeightsExerciseTest2.getType());
     }
 
     @Test

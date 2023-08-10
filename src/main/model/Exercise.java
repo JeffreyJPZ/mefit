@@ -3,8 +3,6 @@ package model;
 import org.json.JSONObject;
 import persistence.JsonWritable;
 
-import static java.lang.Boolean.*;
-
 // Represents an exercise with basic information of name, muscle group, difficulty, and time (min)
 public abstract class Exercise extends ExerciseComponent implements JsonWritable {
     private MuscleGroup muscleGroup;
@@ -15,11 +13,11 @@ public abstract class Exercise extends ExerciseComponent implements JsonWritable
     // REQUIRES: name is not empty; time > 0
     // EFFECTS: Makes a new exercise with a name, muscle group worked, difficulty, and time (min)
     public Exercise(String name, MuscleGroup muscleGroup, Difficulty difficulty, int time) {
-        super(name);
+        super(name, ExerciseComponentTypes.EXERCISE);
         this.muscleGroup = muscleGroup;
         this.difficulty = difficulty;
         this.time = time;
-        this.favourite = FALSE;
+        this.favourite = false;
     }
 
     @Override

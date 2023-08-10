@@ -2,6 +2,9 @@ package model;
 
 
 import exceptions.AlreadyContainedException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.JsonWritable;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,7 +15,7 @@ public class Folder extends ExerciseComponent {
 
     // EFFECTS: makes a new folder
     public Folder(String name) {
-        super(name);
+        super(name, ExerciseComponentTypes.FOLDER);
         components = new HashMap<>();
     }
 
@@ -62,5 +65,28 @@ public class Folder extends ExerciseComponent {
             size += c.getSize();
         }
         return size;
+    }
+
+    // EFFECTS: returns a json representation of the folder
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("folder", folderToJson());
+
+        return jsonObject;
+    }
+
+    // EFFECTS: returns a json array of all components in the folder
+    private JSONArray folderToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (ExerciseComponent c : components.values()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put(c.getName(), c.toJson());
+            jsonArray.put(jsonObject);
+        }
+
+        return jsonArray;
     }
 }

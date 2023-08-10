@@ -27,6 +27,7 @@ public class CardioExerciseTest {
         assertEquals(Difficulty.MODERATE, cardioExerciseTest1.getDifficulty());
         assertEquals(45, cardioExerciseTest1.getTime());
         assertFalse(cardioExerciseTest1.isFavourite());
+        assertEquals(ExerciseComponentTypes.EXERCISE, cardioExerciseTest1.getType());
 
         assertEquals("Rowing", cardioExerciseTest2.getName());
         assertEquals(MuscleGroup.BACK, cardioExerciseTest2.getMuscleGroup());
@@ -34,6 +35,7 @@ public class CardioExerciseTest {
         assertEquals(Difficulty.INTENSE, cardioExerciseTest2.getDifficulty());
         assertEquals(10, cardioExerciseTest2.getTime());
         assertFalse(cardioExerciseTest2.isFavourite());
+        assertEquals(ExerciseComponentTypes.EXERCISE, cardioExerciseTest2.getType());
     }
 
     @Test

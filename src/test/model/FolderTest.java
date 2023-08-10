@@ -19,6 +19,7 @@ public class FolderTest {
         assertEquals("f1", folder.getName());
         assertEquals(0, folder.getTime());
         assertEquals(0, folder.getSize());
+        assertEquals(ExerciseComponentTypes.FOLDER, folder.getType());
     }
 
     @Test
