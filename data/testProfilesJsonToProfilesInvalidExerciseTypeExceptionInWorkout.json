@@ -7,9 +7,10 @@
         "reps": 15,
         "sets": 3,
         "muscleGroup": "Chest",
+        "type": "Exercise",
         "name": "Pushups",
         "time": 10,
-        "type": "BodyWeightsExercise",
+        "exerciseType": "BodyWeightsExercise",
         "favourite": true
       },
       {
@@ -17,19 +18,21 @@
         "reps": 5,
         "sets": 5,
         "muscleGroup": "Legs",
+        "type": "Exercise",
         "name": "Squats",
         "weight": 225,
         "time": 30,
-        "type": "WeightsExercise",
+        "exerciseType": "WeightsExercise",
         "favourite": false
       },
       {
         "difficulty": 3,
         "distance": 2000,
         "muscleGroup": "Back",
+        "type": "Exercise",
         "name": "Rowing",
         "time": 10,
-        "type": "CardioExercise",
+        "exerciseType": "CardioExercise",
         "favourite": true
       },
       {
@@ -37,18 +40,20 @@
         "reps": 15,
         "sets": 3,
         "muscleGroup": "Core",
+        "type": "Exercise",
         "name": "Death",
         "time": 15,
-        "type": "BodyWeightsExercise",
+        "exerciseType": "BodyWeightsExercise",
         "favourite": true
       },
       {
         "difficulty": 1,
         "distance": 1000,
         "muscleGroup": "Shoulders",
+        "type": "Exercise",
         "name": "Handstand Sprints",
         "time": 100,
-        "type": "CardioExercise",
+        "exerciseType": "CardioExercise",
         "favourite": false
       },
       {
@@ -56,10 +61,11 @@
         "reps": 8,
         "sets": 10,
         "muscleGroup": "Arms",
+        "type": "Exercise",
         "name": "Bicep Curls",
         "weight": 50,
         "time": 30,
-        "type": "WeightsExercise",
+        "exerciseType": "WeightsExercise",
         "favourite": false
       }
     ]},
@@ -72,9 +78,10 @@
             "reps": 15,
             "sets": 3,
             "muscleGroup": "Chest",
+            "type": "Exercise",
             "name": "Pushups",
             "time": 10,
-            "type": "BodyWeightsExercise",
+            "exerciseType": "BodyWeightsExercise",
             "favourite": true
           },
           {
@@ -82,13 +89,15 @@
             "reps": 5,
             "sets": 5,
             "muscleGroup": "Legs",
+            "type": "Exercise",
             "name": "Squats",
             "weight": 225,
             "time": 30,
-            "type": "WeightsExercise",
+            "exerciseType": "WeightsExercise",
             "favourite": false
           }
         ],
+        "type": "Workout",
         "name": "Holy Hell",
         "time": 40,
         "favourite": true
@@ -99,11 +108,13 @@
           "difficulty": 3,
           "distance": 2000,
           "muscleGroup": "Back",
+          "type": "Exercise",
           "name": "Rowing",
           "time": 10,
-          "type": "En Passant",
+          "exerciseType": "L",
           "favourite": false
         }],
+        "type": "Workout",
         "name": "Hell Holy",
         "time": 10,
         "favourite": false
@@ -120,14 +131,16 @@
       "difficulty": 1,
       "distance": 200,
       "muscleGroup": "Legs",
+      "type": "Exercise",
       "name": "Sprints",
       "time": 20,
-      "type": "CardioExercise",
+      "exerciseType": "CardioExercise",
       "favourite": false
     }]},
     "workouts": {"workouts": [{
       "difficulty": 2,
       "exercises": [],
+      "type": "Workout",
       "name": "Deadge",
       "time": 0,
       "favourite": false
