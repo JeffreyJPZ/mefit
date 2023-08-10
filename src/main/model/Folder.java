@@ -71,8 +71,9 @@ public class Folder extends ExerciseComponent {
     @Override
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("folder", folderToJson());
+        jsonObject.put("exerciseComponentType", getType().getType());
+        jsonObject.put("name", getName());
+        jsonObject.put("data", folderToJson());
 
         return jsonObject;
     }
@@ -82,9 +83,7 @@ public class Folder extends ExerciseComponent {
         JSONArray jsonArray = new JSONArray();
 
         for (ExerciseComponent c : components.values()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put(c.getName(), c.toJson());
-            jsonArray.put(jsonObject);
+            jsonArray.put(c.toJson());
         }
 
         return jsonArray;

@@ -4,6 +4,7 @@ import exceptions.InvalidExerciseException;
 import model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import model.FitnessMetricParser;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -96,7 +97,7 @@ public class JsonReader {
     // EFFECTS: converts json data for exercise to exercise, throws InvalidExerciseException if exercise
     //          type is invalid
     private Exercise exerciseJsonToExercise(JSONObject exerciseJson) throws InvalidExerciseException {
-        switch (exerciseJson.getString("type")) {
+        switch (exerciseJson.getString("exerciseType")) {
             case "WeightsExercise":
                 return exerciseJsonToWeightsExercise(exerciseJson);
             case "BodyWeightsExercise":
@@ -111,11 +112,11 @@ public class JsonReader {
     // EFFECTS: returns a weights exercise with given json data
     private Exercise exerciseJsonToWeightsExercise(JSONObject exerciseJson) {
         Exercise exercise = new WeightsExercise(exerciseJson.getString("name"),
-                getMuscleGroup(exerciseJson.getString("muscleGroup")),
+                FitnessMetricParser.getInstance().getMuscleGroupByName(exerciseJson.getString("muscleGroup")),
                 exerciseJson.getInt("weight"),
                 exerciseJson.getInt("sets"),
                 exerciseJson.getInt("reps"),
-                getDifficulty(exerciseJson.getInt("difficulty")),
+                FitnessMetricParser.getInstance().getDifficultyByLevel(exerciseJson.getInt("difficulty")),
                 exerciseJson.getInt("time"));
 
         exercise.setFavourite(exerciseJson.getBoolean("favourite"));
@@ -126,10 +127,10 @@ public class JsonReader {
     // EFFECTS: returns a bodyweights exercise with given json data
     private Exercise exerciseJsonToBodyWeightsExercise(JSONObject exerciseJson) {
         Exercise exercise = new BodyWeightsExercise(exerciseJson.getString("name"),
-                getMuscleGroup(exerciseJson.getString("muscleGroup")),
+                FitnessMetricParser.getInstance().getMuscleGroupByName(exerciseJson.getString("muscleGroup")),
                 exerciseJson.getInt("sets"),
                 exerciseJson.getInt("reps"),
-                getDifficulty(exerciseJson.getInt("difficulty")),
+                FitnessMetricParser.getInstance().getDifficultyByLevel(exerciseJson.getInt("difficulty")),
                 exerciseJson.getInt("time"));
 
         exercise.setFavourite(exerciseJson.getBoolean("favourite"));
@@ -140,9 +141,9 @@ public class JsonReader {
     // EFFECTS: returns a cardio exercise with given json data
     private Exercise exerciseJsonToCardioExercise(JSONObject exerciseJson) {
         Exercise exercise = new CardioExercise(exerciseJson.getString("name"),
-                getMuscleGroup(exerciseJson.getString("muscleGroup")),
+                FitnessMetricParser.getInstance().getMuscleGroupByName(exerciseJson.getString("muscleGroup")),
                 exerciseJson.getInt("distance"),
-                getDifficulty(exerciseJson.getInt("difficulty")),
+                FitnessMetricParser.getInstance().getDifficultyByLevel(exerciseJson.getInt("difficulty")),
                 exerciseJson.getInt("time"));
 
         exercise.setFavourite(exerciseJson.getBoolean("favourite"));
@@ -177,7 +178,7 @@ public class JsonReader {
         }
 
         Workout workout = new Workout(workoutJson.getString("name"),
-                getDifficulty(workoutJson.getInt("difficulty")));
+                FitnessMetricParser.getInstance().getDifficultyByLevel(workoutJson.getInt("difficulty")));
 
         workout.setFavourite(workoutJson.getBoolean("favourite"));
         workout.setExercises(exercises);
@@ -185,29 +186,4 @@ public class JsonReader {
         return workout;
     }
 
-    // EFFECTS: returns difficulty from given difficulty value
-    private Difficulty getDifficulty(int difficultyValue) {
-        Difficulty retDifficulty = null;
-
-        for (Difficulty difficulty : Difficulty.values()) {
-            if (difficultyValue == difficulty.getDifficulty()) {
-                retDifficulty = difficulty;
-            }
-        }
-
-        return retDifficulty;
-    }
-
-    // EFFECTS: returns muscle group from given muscle group value
-    private MuscleGroup getMuscleGroup(String muscleGroupValue) {
-        MuscleGroup retMuscleGroup = null;
-
-        for (MuscleGroup muscleGroup : MuscleGroup.values()) {
-            if (muscleGroupValue.equals(muscleGroup.getMuscleGroup())) {
-                retMuscleGroup = muscleGroup;
-            }
-        }
-
-        return retMuscleGroup;
-    }
 }

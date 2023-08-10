@@ -73,7 +73,8 @@ public abstract class Exercise extends ExerciseComponent implements JsonWritable
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("type", getClass().getSimpleName());
+        jsonObject.put("exerciseComponentType", getType().getType());
+        jsonObject.put("exerciseType", getClass().getSimpleName());
         jsonObject.put("name", getName());
         jsonObject.put("muscleGroup", muscleGroup.getMuscleGroup());
         jsonObject.put("difficulty", difficulty.getDifficulty());

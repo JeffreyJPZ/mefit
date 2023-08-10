@@ -190,6 +190,7 @@ public class Workout extends ExerciseComponent implements JsonWritable {
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
 
+        jsonObject.put("exerciseComponentType", getType().getType());
         jsonObject.put("name", getName());
         jsonObject.put("difficulty", difficulty.getDifficulty());
         jsonObject.put("favourite", favourite);
