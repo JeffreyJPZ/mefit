@@ -8,10 +8,9 @@ import persistence.JsonWritable;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: implement Composite for workout and exercise
-
 // Represents a number of exercises organized into a workout
-public class Workout extends ExerciseComponent implements JsonWritable {
+public class Workout implements JsonWritable {
+    private String name;
     private Difficulty difficulty;
     private boolean favourite;
     private List<Exercise> exercises;
@@ -19,7 +18,7 @@ public class Workout extends ExerciseComponent implements JsonWritable {
     // REQUIRES: name is not empty, difficulty > 0
     // EFFECTS: Makes a new workout with a name, difficulty, unfavourited and with no exercises
     public Workout(String name, Difficulty difficulty) {
-        super(name, ExerciseComponentTypes.WORKOUT);
+        this.name = name;
         this.difficulty = difficulty;
         this.favourite = false;
         this.exercises = new ArrayList<>();
@@ -92,10 +91,6 @@ public class Workout extends ExerciseComponent implements JsonWritable {
         return false;
     }
 
-    @Override
-    public int getSize() {
-        return 1;
-    }
 
     @Override
     // EFFECTS: returns a string representation of the workout name, difficulty, time (min), number of exercises,
@@ -106,7 +101,7 @@ public class Workout extends ExerciseComponent implements JsonWritable {
         workoutString.append("Name\tDifficulty\tTime (min)\t # of Exercises\tFavourite?\n");
         workoutString.append("[").append(getName()).append("]\t");
         workoutString.append(difficulty.getDifficulty()).append("\t");
-        workoutString.append(getTime()).append("\t");
+        workoutString.append(getTimeMinutes()).append("\t");
         workoutString.append(length()).append("\t");
         workoutString.append(isFavourite());
         workoutString.append("\n\n");
@@ -117,7 +112,7 @@ public class Workout extends ExerciseComponent implements JsonWritable {
             workoutString.append("[").append(exercise.getName()).append("]\t");
             workoutString.append(exercise.getMuscleGroup().getMuscleGroup()).append("\t");
             workoutString.append(exercise.getDifficulty().getDifficulty()).append("\t");
-            workoutString.append(exercise.getTime()).append("\t");
+            workoutString.append(exercise.getTimeMinutes()).append("\t");
             workoutString.append(exercise.isFavourite()).append("\n");
         }
 
@@ -130,6 +125,10 @@ public class Workout extends ExerciseComponent implements JsonWritable {
         return exercises.size();
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
     }
@@ -140,6 +139,10 @@ public class Workout extends ExerciseComponent implements JsonWritable {
 
     public void setExercises(List<Exercise> exercises) {
         this.exercises = exercises;
+    }
+
+    public String getName() {
+        return name;
     }
 
     // REQUIRES: 1 <= position <= exercises.size()
@@ -165,13 +168,12 @@ public class Workout extends ExerciseComponent implements JsonWritable {
         return difficulty;
     }
 
-    @Override
     // EFFECTS: returns the total time of exercises in the workout
-    public int getTime() {
+    public int getTimeMinutes() {
         int time = 0;
 
         for (Exercise exercise : exercises) {
-            time += exercise.getTime();
+            time += exercise.getTimeMinutes();
         }
 
         return time;
@@ -190,7 +192,6 @@ public class Workout extends ExerciseComponent implements JsonWritable {
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("exerciseComponentType", getType().getType());
         jsonObject.put("name", getName());
         jsonObject.put("difficulty", difficulty.getDifficulty());
         jsonObject.put("favourite", favourite);

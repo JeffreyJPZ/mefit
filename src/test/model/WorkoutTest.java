@@ -25,17 +25,15 @@ public class WorkoutTest {
     public void testConstructor() {
         assertEquals("1", workoutTest1.getName());
         assertEquals(Difficulty.LIGHT, workoutTest1.getDifficulty());
-        assertEquals(0, workoutTest1.getTime());
+        assertEquals(0, workoutTest1.getTimeMinutes());
         assertFalse(workoutTest1.isFavourite());
         assertTrue(workoutTest1.getExercises().isEmpty());
-        assertEquals(ExerciseComponentTypes.WORKOUT, workoutTest1.getType());
 
         assertEquals("2", workoutTest2.getName());
         assertEquals(Difficulty.MODERATE, workoutTest2.getDifficulty());
-        assertEquals(0, workoutTest2.getTime());
+        assertEquals(0, workoutTest2.getTimeMinutes());
         assertFalse(workoutTest2.isFavourite());
         assertTrue(workoutTest2.getExercises().isEmpty());
-        assertEquals(ExerciseComponentTypes.WORKOUT, workoutTest2.getType());
     }
 
     @Test
@@ -44,7 +42,7 @@ public class WorkoutTest {
 
         assertEquals(1, workoutTest1.length());
         assertEquals("1", workoutTest1.getExercise(1).getName());
-        assertEquals(1, workoutTest1.getTime());
+        assertEquals(1, workoutTest1.getTimeMinutes());
     }
 
     @Test
@@ -55,7 +53,7 @@ public class WorkoutTest {
 
         assertEquals(3, workoutTest1.length());
         assertEquals("3", workoutTest1.getExercise(3).getName());
-        assertEquals(6, workoutTest1.getTime());
+        assertEquals(6, workoutTest1.getTimeMinutes());
     }
 
     @Test
@@ -66,7 +64,7 @@ public class WorkoutTest {
         assertEquals("1", workoutTest1.getExercise(1).getName());
         assertEquals("2", workoutTest1.getExercise(2).getName());
         assertEquals("3", workoutTest1.getExercise(3).getName());
-        assertEquals(6, workoutTest1.getTime());
+        assertEquals(6, workoutTest1.getTimeMinutes());
     }
 
     @Test
@@ -77,7 +75,7 @@ public class WorkoutTest {
 
             assertEquals(1, workoutTest1.length());
             assertEquals("1", workoutTest1.getExercise(1).getName());
-            assertEquals(1, workoutTest1.getTime());
+            assertEquals(1, workoutTest1.getTimeMinutes());
         } catch (InvalidPositionException e) {
             fail("InvalidPositionException caught, expected none");
         }
@@ -94,7 +92,7 @@ public class WorkoutTest {
 
             assertEquals(4, workoutTest1.length());
             assertEquals("4", workoutTest1.getExercise(2).getName());
-            assertEquals(10, workoutTest1.getTime());
+            assertEquals(10, workoutTest1.getTimeMinutes());
         } catch (InvalidPositionException e) {
             fail("InvalidPositionException caught, expected none");
         }
@@ -119,7 +117,7 @@ public class WorkoutTest {
             assertEquals("4", workoutTest1.getExercise(1).getName());
             assertEquals("5", workoutTest1.getExercise(2).getName());
             assertEquals("6", workoutTest1.getExercise(6).getName());
-            assertEquals(18, workoutTest1.getTime());
+            assertEquals(18, workoutTest1.getTimeMinutes());
         } catch (InvalidPositionException e) {
             fail("InvalidPositionException caught, expected none");
         }
@@ -144,7 +142,7 @@ public class WorkoutTest {
             assertEquals("4", workoutTest1.getExercise(4).getName());
             assertEquals("5", workoutTest1.getExercise(3).getName());
             assertEquals("6", workoutTest1.getExercise(2).getName());
-            assertEquals(18, workoutTest1.getTime());
+            assertEquals(18, workoutTest1.getTimeMinutes());
         }
         catch (InvalidPositionException e) {
             fail("InvalidPositionException caught, expected none");
@@ -194,14 +192,14 @@ public class WorkoutTest {
 
         try {
             assertEquals(1, workoutTest1.length());
-            assertEquals(1, workoutTest1.getTime());
+            assertEquals(1, workoutTest1.getTimeMinutes());
 
             workoutTest1.setExercise(new CardioExercise("4", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 4),
                     1);
 
             assertEquals(1, workoutTest1.length());
             assertEquals("4", workoutTest1.getExercise(1).getName());
-            assertEquals(4, workoutTest1.getTime());
+            assertEquals(4, workoutTest1.getTimeMinutes());
         } catch (InvalidPositionException e) {
             fail("InvalidPositionException caught, expected none");
         }
@@ -214,14 +212,14 @@ public class WorkoutTest {
 
         try {
             assertEquals(1, workoutTest1.length());
-            assertEquals(1, workoutTest1.getTime());
+            assertEquals(1, workoutTest1.getTimeMinutes());
 
             workoutTest1.setExercise(new CardioExercise("4", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 1),
                     1);
 
             assertEquals(1, workoutTest1.length());
             assertEquals("4", workoutTest1.getExercise(1).getName());
-            assertEquals(1, workoutTest1.getTime());
+            assertEquals(1, workoutTest1.getTimeMinutes());
         } catch (InvalidPositionException e) {
             fail("InvalidPositionException caught, expected none");
         }
@@ -233,14 +231,14 @@ public class WorkoutTest {
 
         try {
             assertEquals(2, workoutTest1.length());
-            assertEquals(3, workoutTest1.getTime());
+            assertEquals(3, workoutTest1.getTimeMinutes());
 
             workoutTest1.setExercise(new CardioExercise("4", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 1),
                     2);
 
             assertEquals(2, workoutTest1.length());
             assertEquals("4", workoutTest1.getExercise(2).getName());
-            assertEquals(2, workoutTest1.getTime());
+            assertEquals(2, workoutTest1.getTimeMinutes());
         }
 
          catch (InvalidPositionException e) {
@@ -254,7 +252,7 @@ public class WorkoutTest {
 
         try {
             assertEquals(5, workoutTest1.length());
-            assertEquals(15, workoutTest1.getTime());
+            assertEquals(15, workoutTest1.getTimeMinutes());
 
             workoutTest1.setExercise(new CardioExercise("4", MuscleGroup.LEGS, 4, Difficulty.INTENSE, 1),
                     1);
@@ -267,7 +265,7 @@ public class WorkoutTest {
             assertEquals("4", workoutTest1.getExercise(1).getName());
             assertEquals("5", workoutTest1.getExercise(3).getName());
             assertEquals("6", workoutTest1.getExercise(5).getName());
-            assertEquals(16, workoutTest1.getTime());
+            assertEquals(16, workoutTest1.getTimeMinutes());
         } catch (InvalidPositionException e) {
             fail("InvalidPositionException caught, expected none");
         }

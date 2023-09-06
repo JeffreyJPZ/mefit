@@ -25,17 +25,15 @@ public class CardioExerciseTest {
         assertEquals(MuscleGroup.LEGS, cardioExerciseTest1.getMuscleGroup());
         assertEquals(5000, cardioExerciseTest1.getDistance());
         assertEquals(Difficulty.MODERATE, cardioExerciseTest1.getDifficulty());
-        assertEquals(45, cardioExerciseTest1.getTime());
+        assertEquals(45, cardioExerciseTest1.getTimeMinutes());
         assertFalse(cardioExerciseTest1.isFavourite());
-        assertEquals(ExerciseComponentTypes.EXERCISE, cardioExerciseTest1.getType());
 
         assertEquals("Rowing", cardioExerciseTest2.getName());
         assertEquals(MuscleGroup.BACK, cardioExerciseTest2.getMuscleGroup());
         assertEquals(2000, cardioExerciseTest2.getDistance());
         assertEquals(Difficulty.INTENSE, cardioExerciseTest2.getDifficulty());
-        assertEquals(10, cardioExerciseTest2.getTime());
+        assertEquals(10, cardioExerciseTest2.getTimeMinutes());
         assertFalse(cardioExerciseTest2.isFavourite());
-        assertEquals(ExerciseComponentTypes.EXERCISE, cardioExerciseTest2.getType());
     }
 
     @Test
@@ -47,7 +45,7 @@ public class CardioExerciseTest {
         assertEquals(MuscleGroup.LEGS, cardioExerciseTest3.getMuscleGroup());
         assertEquals(1, cardioExerciseTest3.getDistance());
         assertEquals(Difficulty.LIGHT, cardioExerciseTest3.getDifficulty());
-        assertEquals(1, cardioExerciseTest3.getTime());
+        assertEquals(1, cardioExerciseTest3.getTimeMinutes());
         assertFalse(cardioExerciseTest3.isFavourite());
     }
 
@@ -56,7 +54,7 @@ public class CardioExerciseTest {
         assertEquals("Exercise Name: " + cardioExerciseTest1.getName() + "\n"
                         + "Muscle Group: " + cardioExerciseTest1.getMuscleGroup().getMuscleGroup() + "\n"
                         + "Difficulty: " + cardioExerciseTest1.getDifficulty().getDifficulty() + "\n"
-                        + "Time (min): " + cardioExerciseTest1.getTime() + "\n"
+                        + "Time (min): " + cardioExerciseTest1.getTimeMinutes() + "\n"
                         + "Favourite?: " + cardioExerciseTest1.isFavourite() + "\n"
                         + "Distance (m): " + cardioExerciseTest1.getDistance(),
                 cardioExerciseTest1.toString());
@@ -64,7 +62,7 @@ public class CardioExerciseTest {
         assertEquals("Exercise Name: " + cardioExerciseTest2.getName() + "\n"
                         + "Muscle Group: " + cardioExerciseTest2.getMuscleGroup().getMuscleGroup() + "\n"
                         + "Difficulty: " + cardioExerciseTest2.getDifficulty().getDifficulty() + "\n"
-                        + "Time (min): " + cardioExerciseTest2.getTime() + "\n"
+                        + "Time (min): " + cardioExerciseTest2.getTimeMinutes() + "\n"
                         + "Favourite?: " + cardioExerciseTest2.isFavourite() + "\n"
                         + "Distance (m): " + cardioExerciseTest2.getDistance(),
                 cardioExerciseTest2.toString());
@@ -84,7 +82,7 @@ public class CardioExerciseTest {
         JSONObject jsonObjectTest1 = cardioExerciseTest1.toJson();
         JSONObject jsonObjectTest2 = cardioExerciseTest2.toJson();
 
-        assertEquals("CardioExercise", jsonObjectTest1.getString("type"));
+        assertEquals("CardioExercise", jsonObjectTest1.getString("exerciseType"));
         assertEquals("Treadmill", jsonObjectTest1.getString("name"));
         assertEquals("Legs", jsonObjectTest1.get("muscleGroup"));
         assertEquals(5000, jsonObjectTest1.getInt("distance"));
@@ -92,7 +90,7 @@ public class CardioExerciseTest {
         assertEquals(45, jsonObjectTest1.getInt("time"));
         assertFalse(jsonObjectTest1.getBoolean("favourite"));
 
-        assertEquals("CardioExercise", jsonObjectTest2.getString("type"));
+        assertEquals("CardioExercise", jsonObjectTest2.getString("exerciseType"));
         assertEquals("Rowing", jsonObjectTest2.getString("name"));
         assertEquals("Back", jsonObjectTest2.get("muscleGroup"));
         assertEquals(2000, jsonObjectTest2.getInt("distance"));

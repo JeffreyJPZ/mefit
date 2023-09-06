@@ -61,6 +61,7 @@ public class WeightsExercise extends Exercise {
     public JSONObject toJson() {
         JSONObject jsonObject = super.toJson();
 
+        jsonObject.put("exerciseType", ExerciseType.WEIGHTS_EXERCISE.getType());
         jsonObject.put("weight", weight);
         jsonObject.put("sets", sets);
         jsonObject.put("reps", reps);

@@ -63,10 +63,10 @@ public class FitnessApp extends JFrame implements WindowListener {
         FitnessPanel profilesPanel = new ProfilesPanel();
         FitnessPanel addProfilePanel = new AddProfilePanel();
 
-        addExercisePanel.addObserver(exercisesPanel);
-        profilePanel.addObserver(exercisesPanel);
-        profilesPanel.addObserver(profilePanel);
-        addProfilePanel.addObserver(profilesPanel);
+        addExercisePanel.getPresenter().addObserver(exercisesPanel.getPresenter());
+        profilePanel.getPresenter().addObserver(exercisesPanel.getPresenter());
+        profilesPanel.getPresenter().addObserver(profilePanel.getPresenter());
+        addProfilePanel.getPresenter().addObserver(profilesPanel.getPresenter());
 
         panels.add(homePanel, HOME_COMMAND.getFitnessAppCommand());
         panels.add(profilesPanel, PROFILES_COMMAND.getFitnessAppCommand());
@@ -81,6 +81,12 @@ public class FitnessApp extends JFrame implements WindowListener {
     // EFFECTS: switches the current panel to the panel with the given name
     public void switchPanel(String name) {
         layout.show(panels, name);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds a panel to the panels with the given panel and name
+    public void addPanel(FitnessPanel panel, String name) {
+        panels.add(panel, name);
     }
 
     // EFFECTS: does nothing when window is opened

@@ -1,26 +1,25 @@
 package ui;
 
-import model.Profile;
+import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-import static java.lang.Integer.parseInt;
 import static ui.FitnessAppCommands.*;
 
 // Represents a panel for adding profiles for the fitness application
-public class AddProfilePanel extends FitnessPanel {
+public class AddProfilePanel extends AddToCollectionPanel {
     private static final String NAME_COMMAND = "Name";
     private static final String GENDER_COMMAND = "Gender";
     private static final String AGE_COMMAND = "Age (yrs)";
     private static final String WEIGHT_COMMAND = "Weight (lbs)";
 
+    private AddProfilePanelPresenter addProfilePanelPresenter;
+
     private JTextField name;
     private JTextField age;
     private JTextField gender;
     private JTextField weight;
-    private JButton addProfileButton;
-    private JButton backButton;
 
     // EFFECTS: makes a panel for adding a new profile
     public AddProfilePanel() {
@@ -28,20 +27,39 @@ public class AddProfilePanel extends FitnessPanel {
         initializeFields();
         initializePlacements();
         initializeActions();
+        addDisplayComponents();
         addComponents();
     }
 
     // MODIFIES: this
     // EFFECTS: initializes the components of the add profile panel
-    private void initializeFields() {
+    protected void initializeFields() {
+        super.initializeFields();
+
+        this.addProfilePanelPresenter = new AddProfilePanelPresenter();
+
+        initializeInputs();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes the text fields and adds them to the collection
+    @Override
+    protected void initializeInputs() {
+        initializeTextFields();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes the text fields and adds them to the collection
+    private void initializeTextFields() {
         this.name = new JTextField("John");
         this.gender = new JTextField("Example");
         this.age = new JTextField("30");
         this.weight = new JTextField("225");
-        this.addProfileButton = new JButton(ADD_COMMAND.getFitnessAppCommand());
-        this.backButton = new JButton(BACK_COMMAND.getFitnessAppCommand());
 
-        addDisplayComponents();
+        inputTextFields.put("name", name);
+        inputTextFields.put("gender", gender);
+        inputTextFields.put("age", age);
+        inputTextFields.put("weight", weight);
     }
 
     @Override
@@ -56,16 +74,8 @@ public class AddProfilePanel extends FitnessPanel {
         components.add(age);
         components.add(new JLabel(WEIGHT_COMMAND));
         components.add(weight);
-        components.add(addProfileButton);
+        components.add(addButton);
         components.add(backButton);
-    }
-
-    @Override
-    // MODIFIES: this
-    // EFFECTS: sets the appropriate components to respond to appropriate events
-    protected void initializeActions() {
-        initializeAction(addProfileButton, ADD_COMMAND.getFitnessAppCommand());
-        initializeAction(backButton, BACK_COMMAND.getFitnessAppCommand());
     }
 
     // MODIFIES: profilesPanel, fitnessApp
@@ -82,10 +92,19 @@ public class AddProfilePanel extends FitnessPanel {
     // MODIFIES: profilesPanel, fitnessApp
     // EFFECTS: adds a profile with given inputs to the profiles and switches to the profiles panel
     private void addProfile() {
-        Profile profile = new Profile(name.getText(), gender.getText(),
-                parseInt(age.getText()), parseInt(weight.getText()));
+        JSONObject data = new JSONObject();
+        JSONObject inputs = new JSONObject();
+        JSONObject inputTextFieldsJson = new JSONObject();
 
-        notifyAll(profile, ADD_COMMAND);
+        for (String name : inputTextFields.keySet()) {
+            JTextField field = inputTextFields.get(name);
+            inputTextFieldsJson.put(name, field.getText());
+        }
+
+        inputs.put(JsonKeys.FIELDS.getKey(), inputTextFieldsJson);
+        data.put(JsonKeys.DATA.getKey(), inputs);
+
+        addProfilePanelPresenter.update(data, ADD_PROFILE_COMMAND);
 
         back();
     }
@@ -93,6 +112,11 @@ public class AddProfilePanel extends FitnessPanel {
     // MODIFIES: fitnessApp
     // EFFECTS: switches to the profiles panel
     private void back() {
-        FitnessApp.getInstance().switchPanel(PROFILES_COMMAND.getFitnessAppCommand());
+        addProfilePanelPresenter.update(null, BACK_COMMAND);
+    }
+
+    @Override
+    public Presenter getPresenter() {
+        return addProfilePanelPresenter;
     }
 }

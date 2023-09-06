@@ -8,6 +8,7 @@ public enum FitnessAppCommands {
     PROFILE_COMMAND("View Selected Profile"),
     SAVE_COMMAND("Save Profiles"),
     LOAD_COMMAND("Load Profiles"),
+    EDIT_COMMAND("Save Edits"),
     EXERCISES_COMMAND("Exercises"),
     SELECT_TYPE_COMMAND("Select Type"),
     ADD_COMMAND("Add New"),

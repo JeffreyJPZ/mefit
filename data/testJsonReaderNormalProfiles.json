@@ -7,7 +7,6 @@
         "reps": 15,
         "sets": 3,
         "muscleGroup": "Chest",
-        "type": "Exercise",
         "name": "Pushups",
         "time": 10,
         "exerciseType": "BodyWeightsExercise",
@@ -18,7 +17,6 @@
         "reps": 5,
         "sets": 5,
         "muscleGroup": "Legs",
-        "type": "Exercise",
         "name": "Squats",
         "weight": 225,
         "time": 30,
@@ -29,7 +27,6 @@
         "difficulty": 3,
         "distance": 2000,
         "muscleGroup": "Back",
-        "type": "Exercise",
         "name": "Rowing",
         "time": 10,
         "exerciseType": "CardioExercise",
@@ -45,7 +42,6 @@
             "reps": 15,
             "sets": 3,
             "muscleGroup": "Chest",
-            "type": "Exercise",
             "name": "Pushups",
             "time": 10,
             "exerciseType": "BodyWeightsExercise",
@@ -56,7 +52,6 @@
             "reps": 5,
             "sets": 5,
             "muscleGroup": "Legs",
-            "type": "Exercise",
             "name": "Squats",
             "weight": 225,
             "time": 30,
@@ -64,7 +59,6 @@
             "favourite": false
           }
         ],
-        "type": "Workout",
         "name": "Holy Hell",
         "time": 40,
         "favourite": true
@@ -75,13 +69,11 @@
           "difficulty": 3,
           "distance": 2000,
           "muscleGroup": "Back",
-          "type": "Exercise",
           "name": "Rowing",
           "time": 10,
           "exerciseType": "CardioExercise",
           "favourite": false
         }],
-        "type": "Workout",
         "name": "Hell Holy",
         "time": 10,
         "favourite": false
@@ -107,7 +99,6 @@
       "difficulty": 1,
       "distance": 200,
       "muscleGroup": "Legs",
-      "type": "Exercise",
       "name": "Sprints",
       "time": 20,
       "exerciseType": "CardioExercise",
@@ -116,7 +107,6 @@
     "workouts": {"workouts": [{
       "difficulty": 3,
       "exercises": [],
-      "type": "Workout",
       "name": "Deadge",
       "time": 0,
       "favourite": false

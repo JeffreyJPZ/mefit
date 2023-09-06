@@ -1,38 +1,27 @@
 package ui;
 
 import model.Profile;
+import org.json.JSONObject;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import java.awt.event.ActionEvent;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Vector;
 
 import static ui.FitnessAppCommands.*;
 
 // Represents a profile panel for the fitness application
-public class ProfilePanel extends FitnessPanel implements UIObserver {
-    private static final String PROFILE_ID = "ID";
+public class ProfilePanel extends DisplayElementPanel {
     private static final String PROFILE_NAME = "Name";
     private static final String PROFILE_GENDER = "Gender";
     private static final String PROFILE_AGE = "Age (yrs)";
     private static final String PROFILE_WEIGHT = "Weight (lbs)";
-    private static final List<String> PROFILE_INFO_COLUMN_NAMES = Arrays.asList(PROFILE_ID, PROFILE_NAME,
-            PROFILE_GENDER, PROFILE_AGE, PROFILE_WEIGHT);
-    private static final Vector<String> PROFILE_INFO_COLUMN_NAMES_VECTOR = new Vector<>(PROFILE_INFO_COLUMN_NAMES);
 
-    private Profile profile;
+    private ProfilePanelPresenter profilePanelPresenter;
 
-    private Vector<Vector<Object>> profileInfoData;
-    private DefaultTableModel tableModel;
-    private JTableHeader profileInfoHeader;
-    private JTable profileInfoTable;
-
+    private JTextField name;
+    private JTextField age;
+    private JTextField gender;
+    private JTextField weight;
     private JButton exercisesButton;
-    private JButton backButton;
 
     // EFFECTS: creates a profile panel
     public ProfilePanel() {
@@ -40,58 +29,74 @@ public class ProfilePanel extends FitnessPanel implements UIObserver {
         initializeFields();
         initializePlacements();
         initializeActions();
+        addDisplayComponents();
         addComponents();
     }
 
     // MODIFIES: this
     // EFFECTS: initializes the components for the profile panel
-    private void initializeFields() {
-        this.profile = new Profile("Test", "Test", 0, 0); // initialize sample profile
-        this.profileInfoData = new Vector<>();
+    protected void initializeFields() {
+        super.initializeFields();
 
-        extractProfileInfo();
+        this.profilePanelPresenter = new ProfilePanelPresenter(this);
 
-        this.tableModel = new DefaultTableModel(profileInfoData, PROFILE_INFO_COLUMN_NAMES_VECTOR);
-        this.profileInfoTable = new JTable(tableModel);
-        this.profileInfoHeader = profileInfoTable.getTableHeader();
+        initializeInputs();
 
         this.exercisesButton = new JButton(EXERCISES_COMMAND.getFitnessAppCommand());
-        this.backButton = new JButton(BACK_COMMAND.getFitnessAppCommand());
+    }
 
-        addDisplayComponents();
+    // MODIFIES: this
+    // EFFECTS: initializes the text fields and adds them to the collection
+    private void initializeTextFields() {
+        this.name = new JTextField("John");
+        this.gender = new JTextField("Example");
+        this.age = new JTextField("30");
+        this.weight = new JTextField("225");
+
+        inputTextFields.put("name", name);
+        inputTextFields.put("gender", gender);
+        inputTextFields.put("age", age);
+        inputTextFields.put("weight", weight);
     }
 
     @Override
     // MODIFIES: this
     // EFFECTS: adds each component to be displayed to components
     protected void addDisplayComponents() {
-        components.add(profileInfoTable);
+        components.add(new JLabel(PROFILE_NAME));
+        components.add(name);
+        components.add(new JLabel(PROFILE_GENDER));
+        components.add(gender);
+        components.add(new JLabel(PROFILE_AGE));
+        components.add(age);
+        components.add(new JLabel(PROFILE_WEIGHT));
+        components.add(weight);
+        components.add(editButton);
         components.add(exercisesButton);
         components.add(backButton);
     }
 
     @Override
     // MODIFIES: this
-    // EFFECTS: adds each component to be displayed to the profile panel
-    protected void addComponents() {
-        add(Box.createVerticalGlue());
-        add(profileInfoHeader);
-        super.addComponents();
-    }
-
-    @Override
-    // MODIFIES: this
     // EFFECTS: sets the appropriate components to respond to appropriate events
     protected void initializeActions() {
+        super.initializeActions();
         initializeAction(exercisesButton, EXERCISES_COMMAND.getFitnessAppCommand());
-        initializeAction(backButton, BACK_COMMAND.getFitnessAppCommand());
+    }
+
+    // EFFECTS: initializes the inputs for the profile panel
+    @Override
+    protected void initializeInputs() {
+        initializeTextFields();
     }
 
     // MODIFIES: exercisesPanel, fitnessApp
     // EFFECTS: handles the appropriate event for each component
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals(EXERCISES_COMMAND.getFitnessAppCommand())) {
+        if (e.getActionCommand().equals(EDIT_COMMAND.getFitnessAppCommand())) {
+            editProfile();
+        } else if (e.getActionCommand().equals(EXERCISES_COMMAND.getFitnessAppCommand())) {
             exercisesPanel();
         } else if (e.getActionCommand().equals(BACK_COMMAND.getFitnessAppCommand())) {
             back();
@@ -101,53 +106,51 @@ public class ProfilePanel extends FitnessPanel implements UIObserver {
     // MODIFIES: exercisesPanel, fitnessApp
     // EFFECTS: updates and switches to the exercises panel for the current profile
     private void exercisesPanel() {
-        notifyAll(profile.getExercises(), PROFILE_COMMAND);
-        FitnessApp.getInstance().switchPanel(EXERCISES_COMMAND.getFitnessAppCommand());
+        profilePanelPresenter.update(null, EXERCISES_COMMAND);
     }
 
-    // MODIFIES: fitnessApp
     // EFFECTS: switches to the profiles panel
     private void back() {
-        FitnessApp.getInstance().switchPanel(PROFILES_COMMAND.getFitnessAppCommand());
+        profilePanelPresenter.update(null, BACK_COMMAND);
     }
 
-    // MODIFIES: this
-    // EFFECTS: extracts the profile info from a profile
-    private void extractProfileInfo() {
-        Vector<Object> profileInfoDataVector = new Vector<>();
-
-        profileInfoDataVector.add(profile.getId());
-        profileInfoDataVector.add(profile.getName());
-        profileInfoDataVector.add(profile.getGender());
-        profileInfoDataVector.add(profile.getAge());
-        profileInfoDataVector.add(profile.getWeight());
-
-        profileInfoData.add(profileInfoDataVector);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: sets the profile for the profile panel to the given profile
-    private void setProfile(Profile profile) {
-        this.profile = profile;
+    // MODIFIES: this, profilePanelPresenter
+    // EFFECTS: updates the fields with the profile info associated with the panel
+    private void editProfile() {
+        updateProfile();
+        updateFields();
     }
 
     // MODIFIES: this
     // EFFECTS: updates the display of the current profile
-    private void updateTable() {
-        profileInfoData.clear();
-        extractProfileInfo();
-        tableModel.setDataVector(profileInfoData, PROFILE_INFO_COLUMN_NAMES_VECTOR);
-        profileInfoTable.setModel(tableModel);
+    private void updateProfile() {
+        JSONObject data = new JSONObject();
+        JSONObject profileInfo = new JSONObject();
+
+        for (String name : inputTextFields.keySet()) {
+            JTextField field = inputTextFields.get(name);
+            profileInfo.put(name, field.getText());
+        }
+
+        data.put(JsonKeys.DATA.getKey(), profileInfo);
+
+        profilePanelPresenter.update(data, EDIT_COMMAND);
     }
 
     // MODIFIES: this
-    // EFFECTS: updates the profile panel with t if key is a match
+    // EFFECTS: updates the fields with the profile info associated with the panel
+    public void updateFields() {
+        Profile profile = profilePanelPresenter.getProfile();
+
+        name.setText(profile.getName());
+        gender.setText(profile.getGender());
+        age.setText(Integer.toString(profile.getAge()));
+        weight.setText(Integer.toString(profile.getWeight()));
+    }
+
+    // EFFECTS: returns the presenter for this profile panel
     @Override
-    public <T> void update(T t, FitnessAppCommands key) {
-        if (key.getFitnessAppCommand().equals(PROFILES_COMMAND.getFitnessAppCommand())) {
-            Profile profile = (Profile) t;
-            setProfile(profile);
-        }
-        updateTable();
+    public Presenter getPresenter() {
+        return profilePanelPresenter;
     }
 }

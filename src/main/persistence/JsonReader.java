@@ -18,10 +18,12 @@ import java.util.stream.Stream;
 // attributed to JsonSerializationDemo from CPSC 210
 public class JsonReader {
     private String path;
+    private ExercisesByName exercisesByName; // stores the current exercises worked on
 
     // EFFECTS: creates a json reader to read json file with a given path
     public JsonReader(String path) {
         this.path = path;
+        this.exercisesByName = new ExercisesByName();
     }
 
     // EFFECTS: returns the profiles stored in json file, throws IOException if
@@ -61,10 +63,11 @@ public class JsonReader {
                     profileJson.getInt("age"),
                     profileJson.getInt("weight"));
 
-            ExercisesByName exercises = exercisesJsonToExercises(profileJson.getJSONObject("exercises"));
-            WorkoutsByName workouts = workoutsJsonToWorkouts(profileJson.getJSONObject("workouts"));
-            profile.setExercises(exercises);
-            profile.setWorkouts(workouts);
+            exercisesByName = exercisesJsonToExercises(profileJson.getJSONObject("exercises"));
+            WorkoutsByName workoutsByName = workoutsJsonToWorkouts(profileJson.getJSONObject("workouts"));
+
+            profile.setExercises(exercisesByName);
+            profile.setWorkouts(workoutsByName);
 
             int id = profileJson.getInt("id");
             profile.setId(id);
@@ -94,19 +97,33 @@ public class JsonReader {
         return exercisesByName;
     }
 
-    // EFFECTS: converts json data for exercise to exercise, throws InvalidExerciseException if exercise
-    //          type is invalid
+    // EFFECTS: converts json data for exercise to an exercise with given type,
+    // throws InvalidExerciseException if exercise type is invalid
     private Exercise exerciseJsonToExercise(JSONObject exerciseJson) throws InvalidExerciseException {
-        switch (exerciseJson.getString("exerciseType")) {
-            case "WeightsExercise":
-                return exerciseJsonToWeightsExercise(exerciseJson);
-            case "BodyWeightsExercise":
-                return exerciseJsonToBodyWeightsExercise(exerciseJson);
-            case "CardioExercise":
-                return exerciseJsonToCardioExercise(exerciseJson);
+        Exercise exercise = null;
+
+        String name = exerciseJson.getString("exerciseType");
+        ExerciseType exerciseType = FitnessMetricParser.getInstance().getExerciseTypeByName(name);
+
+        if (exerciseType == null) {
+            throw new InvalidExerciseException();
+        }
+
+        switch (exerciseType) {
+            case WEIGHTS_EXERCISE:
+                exercise = exerciseJsonToWeightsExercise(exerciseJson);
+                break;
+            case BODYWEIGHTS_EXERCISE:
+                exercise = exerciseJsonToBodyWeightsExercise(exerciseJson);
+                break;
+            case CARDIO_EXERCISE:
+                exercise = exerciseJsonToCardioExercise(exerciseJson);
+                break;
             default:
                 throw new InvalidExerciseException();
         }
+
+        return exercise;
     }
 
     // EFFECTS: returns a weights exercise with given json data
@@ -174,7 +191,15 @@ public class JsonReader {
 
         for (int i = 0; i < exercisesJson.length(); i++) {
             exerciseJson = exercisesJson.getJSONObject(i);
-            exercises.add(exerciseJsonToExercise(exerciseJson));
+
+            String exerciseName = exerciseJson.getString("exerciseType");
+            ExerciseType exerciseType = FitnessMetricParser.getInstance().getExerciseTypeByName(exerciseName);
+
+            if (exerciseType == null) {
+                throw new InvalidExerciseException();
+            }
+
+            exercises.add(exercisesByName.getExercise(exerciseName)); // adds the corresponding exercise
         }
 
         Workout workout = new Workout(workoutJson.getString("name"),

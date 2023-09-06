@@ -1,8 +1,5 @@
 package ui;
 
-import model.Difficulty;
-import model.MuscleGroup;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -10,7 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Represents a panel of the fitness application
-public abstract class FitnessPanel extends UIObservablePanel implements UIObserver, ActionListener {
+public abstract class FitnessPanel extends View implements ActionListener {
+    protected static final int WIDTH = 300;
+    protected static final int HEIGHT = 300;
     protected List<JComponent> components;
 
     // EFFECTS: creates a fitness panel with components
@@ -27,7 +26,7 @@ public abstract class FitnessPanel extends UIObservablePanel implements UIObserv
     protected abstract void initializeActions();
 
     // MODIFIES: this
-    // EFFECTS: sets the given component to respond to the appropriate event
+    // EFFECTS: sets the given button to respond to the appropriate event
     protected void initializeAction(JButton b, String command) {
         b.setActionCommand(command);
         b.addActionListener(this);
@@ -53,33 +52,7 @@ public abstract class FitnessPanel extends UIObservablePanel implements UIObserv
 
     // EFFECTS: does nothing if key is a match
     @Override
-    public <T> void update(T t, FitnessAppCommands key) {}
+    public <T> void update(T t, FitnessAppCommands key) {
 
-    // REQUIRES: muscleGroupName matches a muscle group
-    // EFFECTS: returns the muscle group associated with the given name
-    protected MuscleGroup getMuscleGroupByName(String muscleGroupName) {
-        MuscleGroup muscleGroup = null;
-
-        for (MuscleGroup m : MuscleGroup.values()) {
-            if (m.getMuscleGroup().equals(muscleGroupName)) {
-                muscleGroup = m;
-                break;
-            }
-        }
-        return muscleGroup;
-    }
-
-    // REQUIRES: difficultyLevel matches a difficulty
-    // EFFECTS: returns the difficulty associated with the given difficulty level
-    protected Difficulty getDifficultyByLevel(int difficultyLevel) {
-        Difficulty difficulty = null;
-
-        for (Difficulty d : Difficulty.values()) {
-            if (d.getDifficulty() == difficultyLevel) {
-                difficulty = d;
-                break;
-            }
-        }
-        return difficulty;
     }
 }

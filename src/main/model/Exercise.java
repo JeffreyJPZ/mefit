@@ -4,19 +4,20 @@ import org.json.JSONObject;
 import persistence.JsonWritable;
 
 // Represents an exercise with basic information of name, muscle group, difficulty, and time (min)
-public abstract class Exercise extends ExerciseComponent implements JsonWritable {
+public abstract class Exercise implements JsonWritable {
+    private String name;
     private MuscleGroup muscleGroup;
     private Difficulty difficulty;
-    private int time;
+    private int timeMinutes;
     private Boolean favourite;
 
     // REQUIRES: name is not empty; time > 0
     // EFFECTS: Makes a new exercise with a name, muscle group worked, difficulty, and time (min)
-    public Exercise(String name, MuscleGroup muscleGroup, Difficulty difficulty, int time) {
-        super(name, ExerciseComponentTypes.EXERCISE);
+    public Exercise(String name, MuscleGroup muscleGroup, Difficulty difficulty, int timeMinutes) {
+        this.name = name;
         this.muscleGroup = muscleGroup;
         this.difficulty = difficulty;
-        this.time = time;
+        this.timeMinutes = timeMinutes;
         this.favourite = false;
     }
 
@@ -26,8 +27,12 @@ public abstract class Exercise extends ExerciseComponent implements JsonWritable
         return "Exercise Name: " + getName() + "\n"
                 + "Muscle Group: " + muscleGroup.getMuscleGroup() + "\n"
                 + "Difficulty: " + difficulty.getDifficulty() + "\n"
-                + "Time (min): " + time + "\n"
+                + "Time (min): " + timeMinutes + "\n"
                 + "Favourite?: " + favourite;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public MuscleGroup getMuscleGroup() {
@@ -38,18 +43,16 @@ public abstract class Exercise extends ExerciseComponent implements JsonWritable
         return difficulty;
     }
 
-    @Override
-    public int getTime() {
-        return time;
-    }
-
-    @Override
-    public int getSize() {
-        return 1;
+    public int getTimeMinutes() {
+        return timeMinutes;
     }
 
     public Boolean isFavourite() {
         return favourite;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setMuscleGroup(MuscleGroup muscleGroup) {
@@ -60,8 +63,8 @@ public abstract class Exercise extends ExerciseComponent implements JsonWritable
         this.difficulty = difficulty;
     }
 
-    public void setTime(int time) {
-        this.time = time;
+    public void setTimeMinutes(int timeMinutes) {
+        this.timeMinutes = timeMinutes;
     }
 
     public void setFavourite(Boolean favourite) {
@@ -73,12 +76,10 @@ public abstract class Exercise extends ExerciseComponent implements JsonWritable
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("exerciseComponentType", getType().getType());
-        jsonObject.put("exerciseType", getClass().getSimpleName());
-        jsonObject.put("name", getName());
+        jsonObject.put("name", name);
         jsonObject.put("muscleGroup", muscleGroup.getMuscleGroup());
         jsonObject.put("difficulty", difficulty.getDifficulty());
-        jsonObject.put("time", time);
+        jsonObject.put("time", timeMinutes);
         jsonObject.put("favourite", favourite);
 
         return jsonObject;

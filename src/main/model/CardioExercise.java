@@ -37,6 +37,7 @@ public class CardioExercise extends Exercise {
     public JSONObject toJson() {
         JSONObject jsonObject = super.toJson();
 
+        jsonObject.put("exerciseType", ExerciseType.CARDIO_EXERCISE.getType());
         jsonObject.put("distance", distance);
 
         return jsonObject;

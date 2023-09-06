@@ -7,10 +7,10 @@
                 "reps": 5,
                 "sets": 5,
                 "muscleGroup": "Chest",
+                "exerciseType": "WeightsExercise",
                 "name": "Bench Press",
                 "weight": 225,
                 "time": 15,
-                "type": "WeightsExercise",
                 "favourite": false
             },
             {
@@ -18,19 +18,19 @@
                 "reps": 5,
                 "sets": 5,
                 "muscleGroup": "Legs",
+                "exerciseType": "WeightsExercise",
                 "name": "Squats",
                 "weight": 250,
                 "time": 10,
-                "type": "WeightsExercise",
                 "favourite": false
             },
             {
                 "difficulty": 3,
                 "distance": 2000,
                 "muscleGroup": "Back",
+                "exerciseType": "CardioExercise",
                 "name": "Rowing",
                 "time": 10,
-                "type": "CardioExercise",
                 "favourite": false
             }
         ]},
@@ -47,9 +47,9 @@
                 "difficulty": 2,
                 "distance": 200,
                 "muscleGroup": "Legs",
+                "exerciseType": "CardioExercise",
                 "name": "Sprints",
                 "time": 15,
-                "type": "CardioExercise",
                 "favourite": false
             },
             {
@@ -57,9 +57,9 @@
                 "reps": 10,
                 "sets": 3,
                 "muscleGroup": "Shoulders",
+                "exerciseType": "BodyWeightsExercise",
                 "name": "Pullups",
                 "time": 20,
-                "type": "BodyWeightsExercise",
                 "favourite": false
             },
             {
@@ -67,9 +67,9 @@
                 "reps": 20,
                 "sets": 3,
                 "muscleGroup": "Core",
+                "exerciseType": "BodyWeightsExercise",
                 "name": "Situps",
                 "time": 10,
-                "type": "BodyWeightsExercise",
                 "favourite": false
             }
         ]},
@@ -86,15 +86,15 @@
             "reps": 20,
             "sets": 3,
             "muscleGroup": "Arms",
+            "exerciseType": "WeightsExercise",
             "name": "Bent Over Rows",
             "weight": 50,
             "time": 15,
-            "type": "WeightsExercise",
             "favourite": false
         }]},
         "workouts": {"workouts": []},
         "name": "Atticus",
-        "weight": 140,
+        "weight": 145,
         "id": 3,
         "age": 18
     }

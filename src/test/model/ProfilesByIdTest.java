@@ -230,7 +230,7 @@ public class ProfilesByIdTest {
         profilesByIdTest1.addProfile(new Profile("dac", "5", 5, 5));
         profilesByIdTest1.addProfile(new Profile("cAB", "6", 6, 6));
 
-        ProfilesById profilesById = profilesByIdTest1.filter("1");
+        ProfilesById profilesById = profilesByIdTest1.filter("a");
 
         assertEquals(3, profilesById.getProfiles().size());
         assertEquals(1, profilesById.getProfiles().get(1).getId());

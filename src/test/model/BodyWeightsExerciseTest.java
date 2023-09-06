@@ -26,18 +26,16 @@ public class BodyWeightsExerciseTest {
         assertEquals(3, bodyWeightsExerciseTest1.getSets());
         assertEquals(5, bodyWeightsExerciseTest1.getReps());
         assertEquals(Difficulty.INTENSE, bodyWeightsExerciseTest1.getDifficulty());
-        assertEquals(30, bodyWeightsExerciseTest1.getTime());
+        assertEquals(30, bodyWeightsExerciseTest1.getTimeMinutes());
         assertFalse(bodyWeightsExerciseTest1.isFavourite());
-        assertEquals(ExerciseComponentTypes.EXERCISE, bodyWeightsExerciseTest1.getType());
 
         assertEquals("Situps", bodyWeightsExerciseTest2.getName());
         assertEquals(MuscleGroup.CORE, bodyWeightsExerciseTest2.getMuscleGroup());
         assertEquals(2, bodyWeightsExerciseTest2.getSets());
         assertEquals(20, bodyWeightsExerciseTest2.getReps());
         assertEquals(Difficulty.LIGHT, bodyWeightsExerciseTest2.getDifficulty());
-        assertEquals(15, bodyWeightsExerciseTest2.getTime());
+        assertEquals(15, bodyWeightsExerciseTest2.getTimeMinutes());
         assertFalse(bodyWeightsExerciseTest1.isFavourite());
-        assertEquals(ExerciseComponentTypes.EXERCISE, bodyWeightsExerciseTest2.getType());
     }
 
     @Test
@@ -50,7 +48,7 @@ public class BodyWeightsExerciseTest {
         assertEquals(1, bodyWeightsExerciseTest3.getSets());
         assertEquals(1, bodyWeightsExerciseTest3.getReps());
         assertEquals(Difficulty.LIGHT, bodyWeightsExerciseTest3.getDifficulty());
-        assertEquals(1, bodyWeightsExerciseTest3.getTime());
+        assertEquals(1, bodyWeightsExerciseTest3.getTimeMinutes());
         assertFalse(bodyWeightsExerciseTest1.isFavourite());
     }
 
@@ -59,7 +57,7 @@ public class BodyWeightsExerciseTest {
         assertEquals("Exercise Name: " + bodyWeightsExerciseTest1.getName() + "\n"
                         + "Muscle Group: " + bodyWeightsExerciseTest1.getMuscleGroup().getMuscleGroup() + "\n"
                         + "Difficulty: " + bodyWeightsExerciseTest1.getDifficulty().getDifficulty() + "\n"
-                        + "Time (min): " + bodyWeightsExerciseTest1.getTime() + "\n"
+                        + "Time (min): " + bodyWeightsExerciseTest1.getTimeMinutes() + "\n"
                         + "Favourite?: " + bodyWeightsExerciseTest1.isFavourite() + "\n"
                         + "Sets: " + bodyWeightsExerciseTest1.getSets() + "\n"
                         + "Reps: " + bodyWeightsExerciseTest1.getReps(),
@@ -68,7 +66,7 @@ public class BodyWeightsExerciseTest {
         assertEquals("Exercise Name: " + bodyWeightsExerciseTest2.getName() + "\n"
                         + "Muscle Group: " + bodyWeightsExerciseTest2.getMuscleGroup().getMuscleGroup() + "\n"
                         + "Difficulty: " + bodyWeightsExerciseTest2.getDifficulty().getDifficulty() + "\n"
-                        + "Time (min): " + bodyWeightsExerciseTest2.getTime() + "\n"
+                        + "Time (min): " + bodyWeightsExerciseTest2.getTimeMinutes() + "\n"
                         + "Favourite?: " + bodyWeightsExerciseTest2.isFavourite() + "\n"
                         + "Sets: " + bodyWeightsExerciseTest2.getSets() + "\n"
                         + "Reps: " + bodyWeightsExerciseTest2.getReps(),
@@ -98,7 +96,7 @@ public class BodyWeightsExerciseTest {
         JSONObject jsonObjectTest1 = bodyWeightsExerciseTest1.toJson();
         JSONObject jsonObjectTest2 = bodyWeightsExerciseTest2.toJson();
 
-        assertEquals("BodyWeightsExercise", jsonObjectTest1.getString("type"));
+        assertEquals("BodyWeightsExercise", jsonObjectTest1.getString("exerciseType"));
         assertEquals("Pullups", jsonObjectTest1.getString("name"));
         assertEquals("Shoulders", jsonObjectTest1.get("muscleGroup"));
         assertEquals(3, jsonObjectTest1.getInt("sets"));
@@ -107,7 +105,7 @@ public class BodyWeightsExerciseTest {
         assertEquals(30, jsonObjectTest1.getInt("time"));
         assertFalse(jsonObjectTest1.getBoolean("favourite"));
 
-        assertEquals("BodyWeightsExercise", jsonObjectTest2.getString("type"));
+        assertEquals("BodyWeightsExercise", jsonObjectTest2.getString("exerciseType"));
         assertEquals("Situps", jsonObjectTest2.getString("name"));
         assertEquals("Core", jsonObjectTest2.get("muscleGroup"));
         assertEquals(2, jsonObjectTest2.getInt("sets"));

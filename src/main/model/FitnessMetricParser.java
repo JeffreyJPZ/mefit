@@ -43,4 +43,18 @@ public class FitnessMetricParser {
         }
         return difficulty;
     }
+
+    // REQUIRES: exerciseTypeName matches an exercise type
+    // EFFECTS: returns the exercise type associated with the given name
+    public ExerciseType getExerciseTypeByName(String exerciseTypeName) {
+        ExerciseType exerciseType = null;
+
+        for (ExerciseType e : ExerciseType.values()) {
+            if (e.getType().equals(exerciseTypeName)) {
+                exerciseType = e;
+                break;
+            }
+        }
+        return exerciseType;
+    }
 }

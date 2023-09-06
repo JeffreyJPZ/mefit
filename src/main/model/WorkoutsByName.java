@@ -63,7 +63,7 @@ public class WorkoutsByName implements FitnessCollection {
                     .append(StringFormat.SEPARATOR.getFormat());
             workoutsString.append(workout.getDifficulty().getDifficulty())
                     .append(StringFormat.SEPARATOR.getFormat());
-            workoutsString.append(workout.getTime())
+            workoutsString.append(workout.getTimeMinutes())
                     .append(StringFormat.SEPARATOR.getFormat());
             workoutsString.append(workout.length())
                     .append(StringFormat.SEPARATOR.getFormat());
@@ -111,7 +111,7 @@ public class WorkoutsByName implements FitnessCollection {
         WorkoutsByName workoutsByName = new WorkoutsByName();
 
         for (Workout workout : workouts.values()) {
-            filterPredicate(workoutsByName, workout, workout.getTime() <= time);
+            filterPredicate(workoutsByName, workout, workout.getTimeMinutes() <= time);
         }
 
         return workoutsByName;

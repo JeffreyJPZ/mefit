@@ -67,7 +67,7 @@ public class ExercisesByName implements FitnessCollection {
                     .append(StringFormat.SEPARATOR.getFormat());
             exercisesString.append(exercise.getDifficulty().getDifficulty())
                     .append(StringFormat.SEPARATOR.getFormat());
-            exercisesString.append(exercise.getTime())
+            exercisesString.append(exercise.getTimeMinutes())
                     .append(StringFormat.SEPARATOR.getFormat());
             exercisesString.append(exercise.isFavourite())
                     .append(StringFormat.LINE_BREAK.getFormat());
@@ -100,7 +100,7 @@ public class ExercisesByName implements FitnessCollection {
     }
 
     // EFFECTS: returns the exercises with muscle group matching muscleGroup
-    public ExercisesByName filterMuscleGroup(MuscleGroup muscleGroup) {
+    public ExercisesByName filter(MuscleGroup muscleGroup) {
         ExercisesByName exercisesByName = new ExercisesByName();
 
         for (Exercise exercise : exercises.values()) {
@@ -113,7 +113,7 @@ public class ExercisesByName implements FitnessCollection {
     }
 
     // EFFECTS: returns the exercises with difficulty matching given difficulty
-    public ExercisesByName filterDifficulty(Difficulty difficulty) {
+    public ExercisesByName filter(Difficulty difficulty) {
         ExercisesByName exercisesByName = new ExercisesByName();
 
         for (Exercise exercise : exercises.values()) {
@@ -126,11 +126,11 @@ public class ExercisesByName implements FitnessCollection {
     }
 
     // EFFECTS: returns the exercises with their time <= time
-    public ExercisesByName filterTime(int time) {
+    public ExercisesByName filter(int time) {
         ExercisesByName exercisesByName = new ExercisesByName();
 
         for (Exercise exercise : exercises.values()) {
-            filterPredicate(exercisesByName, exercise, exercise.getTime() <= time);
+            filterPredicate(exercisesByName, exercise, exercise.getTimeMinutes() <= time);
         }
 
         EventLog.getInstance().logEvent(new Event(EventDescription.FILTER_EXERCISES.getDescription()));
@@ -139,7 +139,7 @@ public class ExercisesByName implements FitnessCollection {
     }
 
     // EFFECTS: returns the exercises that are favourited
-    public ExercisesByName filterFavourite() {
+    public ExercisesByName filter() {
         ExercisesByName exercisesByName = new ExercisesByName();
 
         for (Exercise exercise : exercises.values()) {

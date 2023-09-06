@@ -4,12 +4,12 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-// Represents a UI component with a number of components that can be notified
-public abstract class UIObservablePanel extends JPanel {
+// Represents a UI component with a number of observers that can be notified
+public abstract class UIObservable extends JPanel {
     private List<UIObserver> observers;
 
     // EFFECTS: makes a new UIObservable
-    public UIObservablePanel() {
+    public UIObservable() {
         observers = new ArrayList<>();
     }
 
@@ -20,12 +20,8 @@ public abstract class UIObservablePanel extends JPanel {
         }
     }
 
-    // EFFECTS: removes the observer if found
-    public void removeObserver(UIObserver o) {
-        observers.remove(o);
-    }
-
-    // EFFECTS: updates each observer with t
+    // EFFECTS: updates each observer with t if key is a match
+    //          otherwise does nothing
     public <T> void notifyAll(T t, FitnessAppCommands key) {
         for (UIObserver observer : observers) {
             observer.update(t, key);

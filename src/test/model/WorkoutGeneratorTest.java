@@ -164,9 +164,6 @@ public class WorkoutGeneratorTest {
         }
 
         assertEquals(2, testWorkout.length());
-        for (Exercise e : testWorkout.getExercises()) {
-            System.out.println(e.toString());
-        }
         assertEquals(e4, testWorkout.getExercise("Pullups"));
         assertEquals(e5, testWorkout.getExercise("Curls"));
     }
