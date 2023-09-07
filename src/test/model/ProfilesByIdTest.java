@@ -33,8 +33,8 @@ public class ProfilesByIdTest {
 
         assertEquals("1", profile1.getName());
         assertEquals("1", profile1.getGender());
-        assertEquals(1, profile1.getAge());
-        assertEquals(1, profile1.getWeight());
+        assertEquals(1, profile1.getAgeYears());
+        assertEquals(1, profile1.getWeightPounds());
     }
 
     @Test
@@ -51,8 +51,8 @@ public class ProfilesByIdTest {
 
         assertEquals("3", profile2.getName());
         assertEquals("3", profile2.getGender());
-        assertEquals(3, profile2.getAge());
-        assertEquals(3, profile2.getWeight());
+        assertEquals(3, profile2.getAgeYears());
+        assertEquals(3, profile2.getWeightPounds());
     }
 
     @Test
@@ -67,13 +67,13 @@ public class ProfilesByIdTest {
 
         assertEquals("1", profile3.getName());
         assertEquals("1", profile3.getGender());
-        assertEquals(1, profile3.getAge());
-        assertEquals(1, profile3.getWeight());
+        assertEquals(1, profile3.getAgeYears());
+        assertEquals(1, profile3.getWeightPounds());
 
         assertEquals("2", profile4.getName());
         assertEquals("2", profile4.getGender());
-        assertEquals(2, profile4.getAge());
-        assertEquals(2, profile4.getWeight());
+        assertEquals(2, profile4.getAgeYears());
+        assertEquals(2, profile4.getWeightPounds());
     }
 
     @Test
@@ -90,13 +90,13 @@ public class ProfilesByIdTest {
 
         assertEquals("3", profile5.getName());
         assertEquals("3", profile5.getGender());
-        assertEquals(3, profile5.getAge());
-        assertEquals(3, profile5.getWeight());
+        assertEquals(3, profile5.getAgeYears());
+        assertEquals(3, profile5.getWeightPounds());
 
         assertEquals("4", profile6.getName());
         assertEquals("4", profile6.getGender());
-        assertEquals(4, profile6.getAge());
-        assertEquals(4, profile6.getWeight());
+        assertEquals(4, profile6.getAgeYears());
+        assertEquals(4, profile6.getWeightPounds());
     }
 
     @Test

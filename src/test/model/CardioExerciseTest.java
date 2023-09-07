@@ -23,14 +23,14 @@ public class CardioExerciseTest {
     public void testConstructorTypical() {
         assertEquals("Treadmill", cardioExerciseTest1.getName());
         assertEquals(MuscleGroup.LEGS, cardioExerciseTest1.getMuscleGroup());
-        assertEquals(5000, cardioExerciseTest1.getDistance());
+        assertEquals(5000, cardioExerciseTest1.getDistanceMetres());
         assertEquals(Difficulty.MODERATE, cardioExerciseTest1.getDifficulty());
         assertEquals(45, cardioExerciseTest1.getTimeMinutes());
         assertFalse(cardioExerciseTest1.isFavourite());
 
         assertEquals("Rowing", cardioExerciseTest2.getName());
         assertEquals(MuscleGroup.BACK, cardioExerciseTest2.getMuscleGroup());
-        assertEquals(2000, cardioExerciseTest2.getDistance());
+        assertEquals(2000, cardioExerciseTest2.getDistanceMetres());
         assertEquals(Difficulty.INTENSE, cardioExerciseTest2.getDifficulty());
         assertEquals(10, cardioExerciseTest2.getTimeMinutes());
         assertFalse(cardioExerciseTest2.isFavourite());
@@ -43,7 +43,7 @@ public class CardioExerciseTest {
 
         assertEquals("Bike", cardioExerciseTest3.getName());
         assertEquals(MuscleGroup.LEGS, cardioExerciseTest3.getMuscleGroup());
-        assertEquals(1, cardioExerciseTest3.getDistance());
+        assertEquals(1, cardioExerciseTest3.getDistanceMetres());
         assertEquals(Difficulty.LIGHT, cardioExerciseTest3.getDifficulty());
         assertEquals(1, cardioExerciseTest3.getTimeMinutes());
         assertFalse(cardioExerciseTest3.isFavourite());
@@ -52,29 +52,29 @@ public class CardioExerciseTest {
     @Test
     public void testToString() {
         assertEquals("Exercise Name: " + cardioExerciseTest1.getName() + "\n"
-                        + "Muscle Group: " + cardioExerciseTest1.getMuscleGroup().getMuscleGroup() + "\n"
-                        + "Difficulty: " + cardioExerciseTest1.getDifficulty().getDifficulty() + "\n"
+                        + "Muscle Group: " + cardioExerciseTest1.getMuscleGroup().getMuscleGroupAsString() + "\n"
+                        + "Difficulty: " + cardioExerciseTest1.getDifficulty().getDifficultyAsInt() + "\n"
                         + "Time (min): " + cardioExerciseTest1.getTimeMinutes() + "\n"
                         + "Favourite?: " + cardioExerciseTest1.isFavourite() + "\n"
-                        + "Distance (m): " + cardioExerciseTest1.getDistance(),
+                        + "Distance (m): " + cardioExerciseTest1.getDistanceMetres(),
                 cardioExerciseTest1.toString());
 
         assertEquals("Exercise Name: " + cardioExerciseTest2.getName() + "\n"
-                        + "Muscle Group: " + cardioExerciseTest2.getMuscleGroup().getMuscleGroup() + "\n"
-                        + "Difficulty: " + cardioExerciseTest2.getDifficulty().getDifficulty() + "\n"
+                        + "Muscle Group: " + cardioExerciseTest2.getMuscleGroup().getMuscleGroupAsString() + "\n"
+                        + "Difficulty: " + cardioExerciseTest2.getDifficulty().getDifficultyAsInt() + "\n"
                         + "Time (min): " + cardioExerciseTest2.getTimeMinutes() + "\n"
                         + "Favourite?: " + cardioExerciseTest2.isFavourite() + "\n"
-                        + "Distance (m): " + cardioExerciseTest2.getDistance(),
+                        + "Distance (m): " + cardioExerciseTest2.getDistanceMetres(),
                 cardioExerciseTest2.toString());
     }
 
     @Test
     public void testSetDistance() {
-        cardioExerciseTest1.setDistance(1);
-        cardioExerciseTest2.setDistance(100);
+        cardioExerciseTest1.setDistanceMetres(1);
+        cardioExerciseTest2.setDistanceMetres(100);
 
-        assertEquals(1, cardioExerciseTest1.getDistance());
-        assertEquals(100, cardioExerciseTest2.getDistance());
+        assertEquals(1, cardioExerciseTest1.getDistanceMetres());
+        assertEquals(100, cardioExerciseTest2.getDistanceMetres());
     }
 
     @Test

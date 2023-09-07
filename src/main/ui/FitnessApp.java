@@ -56,23 +56,27 @@ public class FitnessApp extends JFrame implements WindowListener {
     // MODIFIES: fitnessApp
     // EFFECTS: creates the panels for the application
     private void initializePanels() {
-        FitnessPanel homePanel = new HomePanel();
-        FitnessPanel exercisesPanel = new ExercisesPanel();
-        FitnessPanel addExercisePanel = new AddExercisePanel();
-        FitnessPanel profilePanel = new ProfilePanel();
-        FitnessPanel profilesPanel = new ProfilesPanel();
-        FitnessPanel addProfilePanel = new AddProfilePanel();
+        View homePanel = new HomePanel();
+        View profilesPanel = new ProfilesPanel();
+        View profilePanel = new ProfilePanel();
+        View addProfilePanel = new AddProfilePanel();
+        View exercisesPanel = new ExercisesPanel();
+        View exercisePanel = new ExercisePanel();
+        View addExercisePanel = new AddExercisePanel();
 
-        addExercisePanel.getPresenter().addObserver(exercisesPanel.getPresenter());
-        profilePanel.getPresenter().addObserver(exercisesPanel.getPresenter());
         profilesPanel.getPresenter().addObserver(profilePanel.getPresenter());
+        profilePanel.getPresenter().addObserver(exercisesPanel.getPresenter());
         addProfilePanel.getPresenter().addObserver(profilesPanel.getPresenter());
+        exercisesPanel.getPresenter().addObserver(exercisePanel.getPresenter());
+        exercisePanel.getPresenter().addObserver(exercisesPanel.getPresenter());
+        addExercisePanel.getPresenter().addObserver(exercisesPanel.getPresenter());
 
         panels.add(homePanel, HOME_COMMAND.getFitnessAppCommand());
         panels.add(profilesPanel, PROFILES_COMMAND.getFitnessAppCommand());
-        panels.add(addProfilePanel, ADD_PROFILE_COMMAND.getFitnessAppCommand());
         panels.add(profilePanel, PROFILE_COMMAND.getFitnessAppCommand());
+        panels.add(addProfilePanel, ADD_PROFILE_COMMAND.getFitnessAppCommand());
         panels.add(exercisesPanel, EXERCISES_COMMAND.getFitnessAppCommand());
+        panels.add(exercisePanel, EXERCISE_COMMAND.getFitnessAppCommand());
         panels.add(addExercisePanel, ADD_EXERCISE_COMMAND.getFitnessAppCommand());
     }
 
@@ -81,12 +85,6 @@ public class FitnessApp extends JFrame implements WindowListener {
     // EFFECTS: switches the current panel to the panel with the given name
     public void switchPanel(String name) {
         layout.show(panels, name);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds a panel to the panels with the given panel and name
-    public void addPanel(FitnessPanel panel, String name) {
-        panels.add(panel, name);
     }
 
     // EFFECTS: does nothing when window is opened

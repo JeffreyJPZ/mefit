@@ -17,7 +17,7 @@ public enum MuscleGroup {
         this.muscleGroup = muscleGroup;
     }
 
-    public String getMuscleGroup() {
+    public String getMuscleGroupAsString() {
         return muscleGroup;
     }
 }

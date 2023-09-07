@@ -12,8 +12,6 @@ import static ui.FitnessAppCommands.*;
 
 // Represents a panel for adding exercises for the fitness application
 public class AddExercisePanel extends AddToCollectionPanel {
-    private static final ExerciseType[] exerciseTypes = ExerciseType.values();
-
     private AddExercisePanelPresenter addExercisePanelPresenter;
 
     private Map<String, JComboBox<String>> inputBoxes;
@@ -22,8 +20,9 @@ public class AddExercisePanel extends AddToCollectionPanel {
     private JComboBox<String> selectType;
     private JComboBox<String> selectDifficulty;
     private JComboBox<String> selectMuscleGroup;
-    private JTextField time;
-    private JTextField weight;
+    private JComboBox<String> selectFavourite;
+    private JTextField timeMinutes;
+    private JTextField weightPounds;
     private JTextField sets;
     private JTextField reps;
     private JTextField distance;
@@ -32,9 +31,9 @@ public class AddExercisePanel extends AddToCollectionPanel {
     public AddExercisePanel() {
         super();
         initializeFields();
+        addDisplayComponents();
         initializePlacements();
         initializeActions();
-        addDisplayComponents();
         addComponents();
     }
 
@@ -43,62 +42,78 @@ public class AddExercisePanel extends AddToCollectionPanel {
     protected void initializeFields() {
         super.initializeFields();
 
-        this.addExercisePanelPresenter = new AddExercisePanelPresenter();
+        this.addExercisePanelPresenter = new AddExercisePanelPresenter(this);
 
         this.inputBoxes = new HashMap<>();
 
         initializeInputs();
     }
 
+    // MODIFIES: this
     // EFFECTS: initializes the input components and adds them to the appropriate collection
     @Override
     protected void initializeInputs() {
         initializeTextFields();
+        collectTextFields();
         initializeBoxes();
+        collectBoxes();
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes the text fields and adds them to the collection
+    // EFFECTS: initializes the text fields
     private void initializeTextFields() {
         this.name = new JTextField("Example Name");
 
-        this.time = new JTextField("0");
+        this.timeMinutes = new JTextField("0");
 
-        this.weight = new JTextField("Weight: Edit only for weights exercises");
+        this.weightPounds = new JTextField("Weight: Edit only for weights exercises");
         this.sets = new JTextField("Sets: Edit only for weights and bodyweights exercises");
         this.reps = new JTextField("Reps: Edit only for weights and bodyweights exercises");
         this.distance = new JTextField("Distance: Edit only for cardio exercises");
+    }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the dropdown boxes
+    private void initializeBoxes() {
+        this.selectType = new JComboBox<>();
+        this.selectDifficulty = new JComboBox<>();
+        this.selectMuscleGroup = new JComboBox<>();
+        this.selectFavourite = new JComboBox<>();
+
+        for (ExerciseType exerciseType : ExerciseType.values()) {
+            selectType.addItem(exerciseType.getType());
+        }
+
+        for (Difficulty difficulty : Difficulty.values()) {
+            selectDifficulty.addItem(Integer.toString(difficulty.getDifficultyAsInt()));
+        }
+
+        for (MuscleGroup muscleGroup : MuscleGroup.values()) {
+            selectMuscleGroup.addItem(muscleGroup.getMuscleGroupAsString());
+        }
+
+        selectFavourite.addItem(Boolean.toString(false));
+        selectFavourite.addItem(Boolean.toString(true));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: collects the text fields for convenient parsing
+    private void collectTextFields() {
         inputTextFields.put("name", name);
-        inputTextFields.put("time", time);
-        inputTextFields.put("weight", weight);
+        inputTextFields.put("time", timeMinutes);
+        inputTextFields.put("weight", weightPounds);
         inputTextFields.put("sets", sets);
         inputTextFields.put("reps", reps);
         inputTextFields.put("distance", distance);
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes the boxes and adds them to the collection
-    private void initializeBoxes() {
-        this.selectType = new JComboBox<>();
-        this.selectDifficulty = new JComboBox<>();
-        this.selectMuscleGroup = new JComboBox<>();
-
-        for (Difficulty difficulty : Difficulty.values()) {
-            this.selectDifficulty.addItem(Integer.toString(difficulty.getDifficulty()));
-        }
-
-        for (MuscleGroup muscleGroup : MuscleGroup.values()) {
-            this.selectMuscleGroup.addItem(muscleGroup.getMuscleGroup());
-        }
-
-        for (ExerciseType exerciseType : exerciseTypes) {
-            this.selectType.addItem(exerciseType.getType());
-        }
-
+    // EFFECTS: collects the input boxes for convenient parsing
+    private void collectBoxes() {
         inputBoxes.put("selectType", selectType);
         inputBoxes.put("selectDifficulty", selectDifficulty);
         inputBoxes.put("selectMuscleGroup", selectMuscleGroup);
+        inputBoxes.put("selectFavourite", selectFavourite);
     }
 
     @Override
@@ -113,10 +128,12 @@ public class AddExercisePanel extends AddToCollectionPanel {
         components.add(selectDifficulty);
         components.add(new JLabel("Muscle Group"));
         components.add(selectMuscleGroup);
+        components.add(new JLabel("Favourite?"));
+        components.add(selectFavourite);
         components.add(new JLabel("Time (min)"));
-        components.add(time);
+        components.add(timeMinutes);
         components.add(new JLabel("Weight (lbs)"));
-        components.add(weight);
+        components.add(weightPounds);
         components.add(new JLabel("Sets"));
         components.add(sets);
         components.add(new JLabel("Reps"));
@@ -127,8 +144,8 @@ public class AddExercisePanel extends AddToCollectionPanel {
         components.add(backButton);
     }
 
-    // MODIFIES: exercisesPanel, fitnessApp
-    // EFFECTS: handles the appropriate event for each component
+    // MODIFIES: exercisesPanelPresenter, fitnessApp
+    // EFFECTS: handles the appropriate event for appropriate components
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals(ADD_COMMAND.getFitnessAppCommand())) {
@@ -139,7 +156,7 @@ public class AddExercisePanel extends AddToCollectionPanel {
     }
 
     // REQUIRES: selected exercise type, muscle group, and difficulty are not null
-    // MODIFIES: addExerciseModel, fitnessApp
+    // MODIFIES: exercisesPanelPresenter, fitnessApp
     // EFFECTS: adds an exercise with given inputs to exercises, updates and switches to exercise panel
     private void addExercise() {
         JSONObject data = new JSONObject();
@@ -162,7 +179,6 @@ public class AddExercisePanel extends AddToCollectionPanel {
 
         data.put(JsonKeys.DATA.getKey(), inputs);
 
-        // sends data from input components to model
         addExercisePanelPresenter.update(data, ADD_EXERCISE_COMMAND);
 
         back();
@@ -174,7 +190,7 @@ public class AddExercisePanel extends AddToCollectionPanel {
         addExercisePanelPresenter.update(null, BACK_COMMAND);
     }
 
-    // EFFECTS: returns the model for this panel
+    // EFFECTS: returns the presenter for this panel
     @Override
     public Presenter getPresenter() {
         return addExercisePanelPresenter;

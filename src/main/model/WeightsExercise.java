@@ -2,21 +2,19 @@ package model;
 
 import org.json.JSONObject;
 
-import static java.lang.Boolean.*;
-
 // Represents an exercise using weighted equipment with its description
 public class WeightsExercise extends Exercise {
-    private int weight;
+    private int weightPounds;
     private int sets;
     private int reps;
 
     // REQUIRES: name is not empty; weight, sets, reps, time > 0
     // EFFECTS: makes a new exercise with a name, muscle group, weight in lbs, # of sets, # of reps,
     //          difficulty, time (min), and unfavourited
-    public WeightsExercise(String name, MuscleGroup muscleGroup, int weight, int sets, int reps,
+    public WeightsExercise(String name, MuscleGroup muscleGroup, int weightPounds, int sets, int reps,
                            Difficulty difficulty, int time) {
         super(name, muscleGroup, difficulty, time);
-        this.weight = weight;
+        this.weightPounds = weightPounds;
         this.sets = sets;
         this.reps = reps;
     }
@@ -26,13 +24,13 @@ public class WeightsExercise extends Exercise {
     @Override
     public String toString() {
         return super.toString() + "\n"
-                + "Weight (lbs): " + weight + "\n"
+                + "Weight (lbs): " + weightPounds + "\n"
                 + "Sets: " + sets + "\n"
                 + "Reps: " + reps;
     }
 
-    public int getWeight() {
-        return weight; // stub
+    public int getWeightPounds() {
+        return weightPounds; // stub
     }
 
     public int getSets() {
@@ -43,8 +41,8 @@ public class WeightsExercise extends Exercise {
         return reps; // stub
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
+    public void setWeightPounds(int weightPounds) {
+        this.weightPounds = weightPounds;
     }
 
     public void setSets(int sets) {
@@ -62,7 +60,7 @@ public class WeightsExercise extends Exercise {
         JSONObject jsonObject = super.toJson();
 
         jsonObject.put("exerciseType", ExerciseType.WEIGHTS_EXERCISE.getType());
-        jsonObject.put("weight", weight);
+        jsonObject.put("weight", weightPounds);
         jsonObject.put("sets", sets);
         jsonObject.put("reps", reps);
 

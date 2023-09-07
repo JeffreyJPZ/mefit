@@ -65,31 +65,11 @@ public class ProfilesPanelPresenter extends DisplayCollectionPresenter {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: updates the profiles collection
-    @Override
-    protected void updatePresenter() {
-        data.clear();
-        extractData();
-        tableModel.setDataVector(data, infoHeader);
-    }
-
-    @Override
-    public TableModel getTableModel() {
-        return tableModel;
-    }
-
-    // EFFECTS: returns the filters for the profiles collection
-    @Override
-    public List<String> getFilters() {
-        return filterable;
-    }
-
-    // EFFECTS: updates the model appropriately with t if key matches a fitness app command
-    //          otherwise does nothing
+    // MODIFIES: this, profilesPanel, fitnessApp
+    // EFFECTS: updates the model appropriately with t according to the given key
     @Override
     public <T> void update(T t, FitnessAppCommands key) {
-        if (key.getFitnessAppCommand().equals(PROFILE_COMMAND.getFitnessAppCommand())) {
+        if (key.getFitnessAppCommand().equals(VIEW_COMMAND.getFitnessAppCommand())) {
             profilePanel(t);
         } else if (key.getFitnessAppCommand().equals(ADD_COMMAND.getFitnessAppCommand())) {
             addProfilePanel();
@@ -101,6 +81,10 @@ public class ProfilesPanelPresenter extends DisplayCollectionPresenter {
             filterProfiles(t);
         } else if (key.getFitnessAppCommand().equals(RESET_FILTERS_COMMAND.getFitnessAppCommand())) {
             resetFilters();
+        } else if (key.getFitnessAppCommand().equals(SAVE_COMMAND.getFitnessAppCommand())) {
+            saveProfiles();
+        } else if (key.getFitnessAppCommand().equals(LOAD_COMMAND.getFitnessAppCommand())) {
+            loadProfiles();
         } else if (key.getFitnessAppCommand().equals(BACK_COMMAND.getFitnessAppCommand())) {
             back();
         }
@@ -111,16 +95,18 @@ public class ProfilesPanelPresenter extends DisplayCollectionPresenter {
         JSONObject jsonObject = (JSONObject) t;
         JSONObject data = jsonObject.getJSONObject(JsonKeys.DATA.getKey());
 
-        int id = data.getInt(JsonKeys.PROFILE_ID.getKey());
-
-        profilePanel(id);
+        profilePanel(data);
     }
 
     // MODIFIES: this, fitnessApp
     // EFFECTS: switches to the profile panel for the profile with given id
-    private void profilePanel(int id) {
-        notifyAll(profilesById.getProfile(id), PROFILE_COMMAND);
+    private void profilePanel(JSONObject data) {
+        int id = data.getInt(JsonKeys.PROFILE_ID.getKey());
+
         resetFilters();
+
+        notifyAll(profilesById.getProfile(id), PROFILE_COMMAND);
+
         FitnessApp.getInstance().switchPanel(PROFILE_COMMAND.getFitnessAppCommand());
     }
 
@@ -200,9 +186,35 @@ public class ProfilesPanelPresenter extends DisplayCollectionPresenter {
     }
 
     // MODIFIES: this
+    // EFFECTS: saves profiles to file
+    //          indicates success if saving was successful, otherwise indicates failure
+    private void saveProfiles() {
+        try {
+            saveProfilesFromJson();
+            profilesPanel.setText("Successfully saved to: " + getPath() + "\n");
+        } catch (FileNotFoundException exception) {
+            profilesPanel.setText("Could not load from: " + getPath() + "\n");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads profiles from file and updates the display of profiles
+    //          indicates success if loading was successful, otherwise indicates failure
+    private void loadProfiles() {
+        try {
+            loadProfilesFromJson();
+            profilesPanel.setText("Successfully loaded from: " + getPath() + "\n");
+        } catch (InvalidExerciseException exception) {
+            profilesPanel.setText("Invalid exercise type encountered in: " + getPath() + "\n");
+        } catch (IOException exception) {
+            profilesPanel.setText("Could not load from: " + getPath() + "\n");
+        }
+    }
+
+    // MODIFIES: this
     // EFFECTS: writes profiles to file with given path,
     //          throws FileNotFoundException if file path does not exist or cannot be accessed
-    public void saveProfiles() throws FileNotFoundException {
+    private void saveProfilesFromJson() throws FileNotFoundException {
         jsonWriter.open();
         jsonWriter.write(profilesById);
         jsonWriter.close();
@@ -212,10 +224,10 @@ public class ProfilesPanelPresenter extends DisplayCollectionPresenter {
     // EFFECTS: reads profiles from file and indicates success if successfully read,
     //          throws InvalidExerciseException if an exercise type is invalid,
     //          throws IOException if an error occurs in input or output
-    public void loadProfiles() throws InvalidExerciseException, IOException {
+    private void loadProfilesFromJson() throws InvalidExerciseException, IOException {
         profilesById = jsonReader.read();
         profilesByIdMaster = profilesById;
-        profilesPanel.updateDisplayCollection();
+
         updatePresenter();
         profilesPanel.updateDisplayCollection();
     }
@@ -230,5 +242,25 @@ public class ProfilesPanelPresenter extends DisplayCollectionPresenter {
     // EFFECTS: gets the file path for profiles
     public String getPath() {
         return PATH;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: updates the profiles collection
+    @Override
+    protected void updatePresenter() {
+        data.clear();
+        extractData();
+        tableModel.setDataVector(data, infoHeader);
+    }
+
+    @Override
+    public TableModel getTableModel() {
+        return tableModel;
+    }
+
+    // EFFECTS: returns the filters for the profiles collection
+    @Override
+    public List<String> getFilters() {
+        return filterable;
     }
 }

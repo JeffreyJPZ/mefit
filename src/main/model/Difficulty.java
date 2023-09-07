@@ -14,7 +14,7 @@ public enum Difficulty {
         this.difficulty = difficulty;
     }
 
-    public int getDifficulty() {
+    public int getDifficultyAsInt() {
         return difficulty;
     }
 }

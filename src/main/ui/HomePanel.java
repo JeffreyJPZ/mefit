@@ -20,6 +20,7 @@ public class HomePanel extends FitnessPanel {
     public HomePanel() {
         super();
         initializeFields();
+        addDisplayComponents();
         initializePlacements();
         initializeActions();
         addComponents();
@@ -30,12 +31,10 @@ public class HomePanel extends FitnessPanel {
     public void initializeFields() {
         this.homePanelPresenter = new HomePanelPresenter();
 
-        this.applicationName = new JLabel("Fitness App");
+        this.applicationName = new JLabel("MeFit - A fitness app");
         this.attributeText = new JLabel("Created by Jeffrey Zhang");
         this.creatorPicture = new JLabel(new ImageIcon(CREATOR_PICTURE_PATH));
         this.profilesButton = new JButton(PROFILES_COMMAND.getFitnessAppCommand());
-
-        addDisplayComponents();
     }
 
     @Override
@@ -62,7 +61,7 @@ public class HomePanel extends FitnessPanel {
     }
 
     // MODIFIES: fitnessApp
-    // EFFECTS: handles the appropriate event for each component
+    // EFFECTS: handles the appropriate event for appropriate components
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals(PROFILES_COMMAND.getFitnessAppCommand())) {

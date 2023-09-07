@@ -1,9 +1,10 @@
 package ui;
 
-// Represents the keys used in sending data between viewmodels and views
+// Represents the keys used in loading and saving data, and sending data
 public enum JsonKeys {
     DATA("data"),
     PROFILE_ID("profileID"),
+    EXERCISE_TYPE("exerciseType"),
     EXERCISE_NAME("exerciseName"),
     WORKOUT_NAME("workoutName"),
     FILTER_TYPE("filterType"),

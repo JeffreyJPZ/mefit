@@ -18,6 +18,8 @@ public class ProfilePanelPresenter extends DisplayElementPresenter {
         this.profile = new Profile("Test", "Test", 0, 0); // initialize sample profile
     }
 
+    // MODIFIES: this, profilePanel, fitnessApp
+    // EFFECTS: updates the model appropriately with t according to the given key
     @Override
     public <T> void update(T t, FitnessAppCommands key) {
         if (key.getFitnessAppCommand().equals(EDIT_COMMAND.getFitnessAppCommand())) {
@@ -31,25 +33,29 @@ public class ProfilePanelPresenter extends DisplayElementPresenter {
         }
     }
 
+    // MODIFIES: this, profilePanel
     // EFFECTS: parses the profile data from t and updates the profile with the data
     private <T> void editProfile(T t) {
         JSONObject jsonObject = (JSONObject) t;
         JSONObject data = jsonObject.getJSONObject(JsonKeys.DATA.getKey());
+        JSONObject inputs = data.getJSONObject(JsonKeys.INPUT.getKey());
 
-        editProfile(data);
+        editProfile(inputs);
     }
 
     // EFFECTS: updates the profile with the profile data
-    private void editProfile(JSONObject data) {
-        String name = data.getString("name");
-        String gender = data.getString("gender");
-        String age = data.getString("age");
-        String weight = data.getString("weight");
+    private void editProfile(JSONObject inputs) {
+        String name = inputs.getString("name");
+        String gender = inputs.getString("gender");
+        String age = inputs.getString("age");
+        String weight = inputs.getString("weight");
 
         profile.setName(name);
         profile.setGender(gender);
-        profile.setAge(parseInt(age));
-        profile.setWeight(parseInt(weight));
+        profile.setAgeYears(parseInt(age));
+        profile.setWeightPounds(parseInt(weight));
+
+        profilePanel.updateInputs(profile);
     }
 
     // MODIFIES: this
@@ -64,7 +70,7 @@ public class ProfilePanelPresenter extends DisplayElementPresenter {
     // EFFECTS: sets the profile for the profile panel to the given profile
     private void setProfile(Profile profile) {
         this.profile = profile;
-        profilePanel.updateFields();
+        profilePanel.updateInputs(profile);
     }
 
     // MODIFIES: exercisesPanelPresenter, fitnessApp

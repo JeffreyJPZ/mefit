@@ -1,13 +1,10 @@
 package ui;
 
-import exceptions.InvalidExerciseException;
 import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import static ui.FitnessAppCommands.*;
 
@@ -24,10 +21,10 @@ public class ProfilesPanel extends DisplayCollectionPanel implements UIObserver 
     public ProfilesPanel() {
         super(true);
         initializeFields();
-        initializeActions();
         addDisplayComponents();
-        addComponents();
         initializePlacements();
+        initializeActions();
+        addComponents();
     }
 
     // MODIFIES: this
@@ -88,9 +85,9 @@ public class ProfilesPanel extends DisplayCollectionPanel implements UIObserver 
         initializeAction(loadButton, LOAD_COMMAND.getFitnessAppCommand());
     }
 
-    // MODIFIES: this, fitnessApp, profilePanel
-    // EFFECTS: handles the appropriate event for each component
     @Override
+    // MODIFIES: this, profilesPanelPresenter, fitnessApp
+    // EFFECTS: handles the appropriate event for appropriate components
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals(VIEW_COMMAND.getFitnessAppCommand())) {
             profilePanel();
@@ -111,6 +108,34 @@ public class ProfilesPanel extends DisplayCollectionPanel implements UIObserver 
         }
     }
 
+    // MODIFIES: this, profilePanel, profilePanelPresenter, fitnessApp
+    // EFFECTS: switches to the profile panel for the selected profile,
+    //          if more than one profile is selected, indicates only one selection should be made
+    //          if no profile is selected, indicates that a selection should be made
+    private void profilePanel() {
+        if (dataTable.getSelectedRowCount() > 1) {
+            setText("Please select one profile only.");
+            return;
+        }
+
+        int id = getIdFromSelectedProfile();
+
+        if (id == -1) {
+            setText("Please select one profile.");
+            return;
+        }
+
+        setText(WELCOME_TEXT);
+
+        JSONObject data = new JSONObject();
+        JSONObject profileID = new JSONObject();
+
+        profileID.put(JsonKeys.PROFILE_ID.getKey(), id);
+        data.put(JsonKeys.DATA.getKey(), profileID);
+
+        profilesPanelPresenter.update(data, VIEW_COMMAND);
+    }
+
     // MODIFIES: this
     // EFFECTS: adds filter options to display
     private void addFilters() {
@@ -120,7 +145,7 @@ public class ProfilesPanel extends DisplayCollectionPanel implements UIObserver 
     }
 
     // REQUIRES: selected filter and user input are not null
-    // MODIFIES: profilesPanelModel, this
+    // MODIFIES: this, profilesPanelPresenter
     // EFFECTS: filters the profiles on the display
     private void filterProfiles() {
         String filterType = (String) filters.getSelectedItem();
@@ -137,62 +162,33 @@ public class ProfilesPanel extends DisplayCollectionPanel implements UIObserver 
         profilesPanelPresenter.update(data, FILTER_COMMAND);
     }
 
-    // MODIFIES: profilesPanelModel, this
+    // MODIFIES: this, profilesPanelPresenter
     // EFFECTS: reset the filters on the display
     private void resetFilters() {
         profilesPanelPresenter.update(null, RESET_FILTERS_COMMAND);
     }
 
     // REQUIRES: selected profile is not null
-    // MODIFIES: this, profilesPanelModel, fitnessApp
-    // EFFECTS: switches to the profile panel for the selected profile,
-    //          if more than one profile is selected, indicates only one selection should be made
-    //          if no profile is selected, indicates that a selection should be made
-    private void profilePanel() {
-        if (dataTable.getSelectedRowCount() > 1) {
-            splashText.setText("Please select one profile only.");
-            return;
-        }
-
-        int id = getIdFromSelectedProfile();
-
-        if (id == -1) {
-            splashText.setText("Please select one profile.");
-            return;
-        }
-
-        setText(WELCOME_TEXT);
-
-        JSONObject data = new JSONObject();
-        JSONObject profileID = new JSONObject();
-
-        profileID.put(JsonKeys.PROFILE_ID.getKey(), id);
-        data.put(JsonKeys.DATA.getKey(), profileID);
-
-        profilesPanelPresenter.update(data, PROFILE_COMMAND);
-    }
-
-    // REQUIRES: selected profile is not null
     // EFFECTS: returns the id associated with the selected profile
     //          if no row is selected, returns -1
     private int getIdFromSelectedProfile() {
-        int selectedProfileID = dataTable.getSelectedRow();
+        int selectedProfileRowIndex = dataTable.getSelectedRow();
 
-        if (selectedProfileID == -1) {
-            return selectedProfileID;
+        if (selectedProfileRowIndex == -1) {
+            return selectedProfileRowIndex;
         } else {
-            return (int) dataTable.getValueAt(selectedProfileID, ID_POSITION);
+            return (int) dataTable.getValueAt(selectedProfileRowIndex, ID_POSITION);
         }
     }
 
-    // MODIFIES: fitnessApp, profilesPanelModel
+    // MODIFIES: profilesPanelPresenter, fitnessApp
     // EFFECTS: switches to the panel for adding a profile
     private void addProfilePanel() {
         profilesPanelPresenter.update(null, ADD_COMMAND);
     }
 
     // REQUIRES: selected profile is not null
-    // MODIFIES: profilesPanelModel, this
+    // MODIFIES: this, profilesPanelPresenter
     // EFFECTS: removes the selected profile from the display
     private void removeSelectedProfile() {
         JSONObject data = new JSONObject();
@@ -204,30 +200,16 @@ public class ProfilesPanel extends DisplayCollectionPanel implements UIObserver 
         profilesPanelPresenter.update(data, REMOVE_COMMAND);
     }
 
-    // MODIFIES: this
+    // MODIFIES: profilesPanelPresenter
     // EFFECTS: saves profiles to file
-    //          indicates success if saving was successful, otherwise indicates failure
     private void saveProfiles() {
-        try {
-            profilesPanelPresenter.saveProfiles();
-            setText("Successfully saved to: " + profilesPanelPresenter.getPath() + "\n");
-        } catch (FileNotFoundException exception) {
-            setText("Could not load from: " + profilesPanelPresenter.getPath() + "\n");
-        }
+        profilesPanelPresenter.update(null, SAVE_COMMAND);
     }
 
-    // MODIFIES: this
+    // MODIFIES: profilesPanelPresenter
     // EFFECTS: loads profiles from file and updates the display of profiles
-    //          indicates success if loading was successful, otherwise indicates failure
     private void loadProfiles() {
-        try {
-            profilesPanelPresenter.loadProfiles();
-            setText("Successfully loaded from: " + profilesPanelPresenter.getPath() + "\n");
-        } catch (InvalidExerciseException exception) {
-            setText("Invalid exercise type encountered in: " + profilesPanelPresenter.getPath() + "\n");
-        } catch (IOException exception) {
-            setText("Could not load from: " + profilesPanelPresenter.getPath() + "\n");
-        }
+        profilesPanelPresenter.update(null, LOAD_COMMAND);
     }
 
     // MODIFIES: this, fitnessApp

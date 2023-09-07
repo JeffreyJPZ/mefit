@@ -9,11 +9,11 @@ public class MuscleGroupTest {
 
     @Test
     public void testValues() {
-        assertEquals("Chest", MuscleGroup.CHEST.getMuscleGroup());
-        assertEquals("Back", MuscleGroup.BACK.getMuscleGroup());
-        assertEquals("Arms", MuscleGroup.ARMS.getMuscleGroup());
-        assertEquals("Shoulders", MuscleGroup.SHOULDERS.getMuscleGroup());
-        assertEquals("Legs", MuscleGroup.LEGS.getMuscleGroup());
-        assertEquals("Core", MuscleGroup.CORE.getMuscleGroup());
+        assertEquals("Chest", MuscleGroup.CHEST.getMuscleGroupAsString());
+        assertEquals("Back", MuscleGroup.BACK.getMuscleGroupAsString());
+        assertEquals("Arms", MuscleGroup.ARMS.getMuscleGroupAsString());
+        assertEquals("Shoulders", MuscleGroup.SHOULDERS.getMuscleGroupAsString());
+        assertEquals("Legs", MuscleGroup.LEGS.getMuscleGroupAsString());
+        assertEquals("Core", MuscleGroup.CORE.getMuscleGroupAsString());
     }
 }

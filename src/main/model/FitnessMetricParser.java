@@ -22,7 +22,7 @@ public class FitnessMetricParser {
         MuscleGroup muscleGroup = null;
 
         for (MuscleGroup m : MuscleGroup.values()) {
-            if (m.getMuscleGroup().equals(muscleGroupName)) {
+            if (m.getMuscleGroupAsString().equals(muscleGroupName)) {
                 muscleGroup = m;
                 break;
             }
@@ -36,7 +36,7 @@ public class FitnessMetricParser {
         Difficulty difficulty = null;
 
         for (Difficulty d : Difficulty.values()) {
-            if (d.getDifficulty() == difficultyLevel) {
+            if (d.getDifficultyAsInt() == difficultyLevel) {
                 difficulty = d;
                 break;
             }

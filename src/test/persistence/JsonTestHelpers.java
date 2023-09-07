@@ -11,8 +11,8 @@ public class JsonTestHelpers {
                              int exercises, int workouts, Profile profile) {
         assertEquals(name, profile.getName());
         assertEquals(gender, profile.getGender());
-        assertEquals(age, profile.getAge());
-        assertEquals(weight, profile.getWeight());
+        assertEquals(age, profile.getAgeYears());
+        assertEquals(weight, profile.getWeightPounds());
         assertEquals(id, profile.getId());
 
         assertEquals(exercises, profile.getExercises().length());

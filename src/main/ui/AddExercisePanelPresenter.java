@@ -7,10 +7,17 @@ import org.json.JSONObject;
 import static java.lang.Integer.parseInt;
 import static ui.FitnessAppCommands.*;
 
+// Represents the data and actions for a panel for adding an exercise
 public class AddExercisePanelPresenter extends AddToCollectionPresenter {
+    private AddExercisePanel addExercisePanel;
+
+    // EFFECTS: makes a panel for adding exercises
+    public AddExercisePanelPresenter(AddExercisePanel addExercisePanel) {
+        this.addExercisePanel = addExercisePanel;
+    }
 
     // MODIFIES: exercisesPanelModel, fitnessApp
-    // EFFECTS: updates the add exercise model appropriately with t according to the given key
+    // EFFECTS: updates the model appropriately with t according to the given key
     @Override
     public <T> void update(T t, FitnessAppCommands key) {
         if (key.getFitnessAppCommand().equals(ADD_EXERCISE_COMMAND.getFitnessAppCommand())) {
@@ -47,6 +54,10 @@ public class AddExercisePanelPresenter extends AddToCollectionPresenter {
     private void addExercise(JSONObject textFields, JSONObject boxes) {
         Exercise exercise = makeExercise(textFields, boxes);
 
+        boolean favourite = Boolean.parseBoolean(boxes.getString("selectFavourite"));
+
+        setFavourite(exercise, favourite);
+
         notifyAll(exercise, ADD_EXERCISE_COMMAND);
 
         back();
@@ -56,7 +67,6 @@ public class AddExercisePanelPresenter extends AddToCollectionPresenter {
     // EFFECTS: returns the appropriate exercise given exercise type
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private Exercise makeExercise(JSONObject textFields, JSONObject boxes) {
-
         String inputExerciseType = boxes.getString("selectType");
         ExerciseType exerciseType = FitnessMetricParser.getInstance().getExerciseTypeByName(inputExerciseType);
 
@@ -89,8 +99,13 @@ public class AddExercisePanelPresenter extends AddToCollectionPresenter {
                         difficultyLevel,
                         parseInt(textFields.getString("time")));
         }
-
         return null;
+    }
+
+    // MODIFIES: exercise
+    // EFFECTS: sets the exercise to be either favourite or not favourite
+    private void setFavourite(Exercise exercise, boolean favourite) {
+        exercise.setFavourite(favourite);
     }
 
     // MODIFIES: fitnessApp

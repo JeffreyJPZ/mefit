@@ -6,7 +6,7 @@ import static ui.FitnessAppCommands.PROFILES_COMMAND;
 public class HomePanelPresenter extends Presenter {
 
     // MODIFIES: fitnessApp
-    // EFFECTS: updates the model appropriately with t if key is a match
+    // EFFECTS: updates the model appropriately with t according to the given key
     @Override
     public <T> void update(T t, FitnessAppCommands key) {
         if (key.getFitnessAppCommand().equals(PROFILES_COMMAND.getFitnessAppCommand())) {

@@ -25,8 +25,8 @@ public abstract class Exercise implements JsonWritable {
     // EFFECTS: returns a string representation of the exercise description
     public String toString() {
         return "Exercise Name: " + getName() + "\n"
-                + "Muscle Group: " + muscleGroup.getMuscleGroup() + "\n"
-                + "Difficulty: " + difficulty.getDifficulty() + "\n"
+                + "Muscle Group: " + muscleGroup.getMuscleGroupAsString() + "\n"
+                + "Difficulty: " + difficulty.getDifficultyAsInt() + "\n"
                 + "Time (min): " + timeMinutes + "\n"
                 + "Favourite?: " + favourite;
     }
@@ -77,8 +77,8 @@ public abstract class Exercise implements JsonWritable {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("name", name);
-        jsonObject.put("muscleGroup", muscleGroup.getMuscleGroup());
-        jsonObject.put("difficulty", difficulty.getDifficulty());
+        jsonObject.put("muscleGroup", muscleGroup.getMuscleGroupAsString());
+        jsonObject.put("difficulty", difficulty.getDifficultyAsInt());
         jsonObject.put("time", timeMinutes);
         jsonObject.put("favourite", favourite);
 

@@ -23,7 +23,7 @@ public class WeightsExerciseTest {
     public void testConstructorTypical() {
         assertEquals("Bench Press", weightsExerciseTest1.getName());
         assertEquals(MuscleGroup.CHEST, weightsExerciseTest1.getMuscleGroup());
-        assertEquals(150, weightsExerciseTest1.getWeight());
+        assertEquals(150, weightsExerciseTest1.getWeightPounds());
         assertEquals(3, weightsExerciseTest1.getSets());
         assertEquals(5, weightsExerciseTest1.getReps());
         assertEquals(Difficulty.INTENSE, weightsExerciseTest1.getDifficulty());
@@ -32,7 +32,7 @@ public class WeightsExerciseTest {
 
         assertEquals("Squats", weightsExerciseTest2.getName());
         assertEquals(MuscleGroup.LEGS, weightsExerciseTest2.getMuscleGroup());
-        assertEquals(225, weightsExerciseTest2.getWeight());
+        assertEquals(225, weightsExerciseTest2.getWeightPounds());
         assertEquals(5, weightsExerciseTest2.getSets());
         assertEquals(8, weightsExerciseTest2.getReps());
         assertEquals(Difficulty.MODERATE, weightsExerciseTest2.getDifficulty());
@@ -47,7 +47,7 @@ public class WeightsExerciseTest {
 
         assertEquals("Bicep Curls", weightsExerciseTest3.getName());
         assertEquals(MuscleGroup.ARMS, weightsExerciseTest3.getMuscleGroup());
-        assertEquals(1, weightsExerciseTest3.getWeight());
+        assertEquals(1, weightsExerciseTest3.getWeightPounds());
         assertEquals(1, weightsExerciseTest3.getSets());
         assertEquals(1, weightsExerciseTest3.getReps());
         assertEquals(Difficulty.LIGHT, weightsExerciseTest3.getDifficulty());
@@ -58,21 +58,21 @@ public class WeightsExerciseTest {
     @Test
     public void testToString() {
         assertEquals("Exercise Name: " + weightsExerciseTest1.getName() + "\n"
-                        + "Muscle Group: " + weightsExerciseTest1.getMuscleGroup().getMuscleGroup() + "\n"
-                        + "Difficulty: " + weightsExerciseTest1.getDifficulty().getDifficulty() + "\n"
+                        + "Muscle Group: " + weightsExerciseTest1.getMuscleGroup().getMuscleGroupAsString() + "\n"
+                        + "Difficulty: " + weightsExerciseTest1.getDifficulty().getDifficultyAsInt() + "\n"
                         + "Time (min): " + weightsExerciseTest1.getTimeMinutes() + "\n"
                         + "Favourite?: " + weightsExerciseTest1.isFavourite() + "\n"
-                        + "Weight (lbs): " + weightsExerciseTest1.getWeight() + "\n"
+                        + "Weight (lbs): " + weightsExerciseTest1.getWeightPounds() + "\n"
                         + "Sets: " + weightsExerciseTest1.getSets() + "\n"
                         + "Reps: " + weightsExerciseTest1.getReps(),
                 weightsExerciseTest1.toString());
 
         assertEquals("Exercise Name: " + weightsExerciseTest2.getName() + "\n"
-                        + "Muscle Group: " + weightsExerciseTest2.getMuscleGroup().getMuscleGroup() + "\n"
-                        + "Difficulty: " + weightsExerciseTest2.getDifficulty().getDifficulty() + "\n"
+                        + "Muscle Group: " + weightsExerciseTest2.getMuscleGroup().getMuscleGroupAsString() + "\n"
+                        + "Difficulty: " + weightsExerciseTest2.getDifficulty().getDifficultyAsInt() + "\n"
                         + "Time (min): " + weightsExerciseTest2.getTimeMinutes() + "\n"
                         + "Favourite?: " + weightsExerciseTest2.isFavourite() + "\n"
-                        + "Weight (lbs): " + weightsExerciseTest2.getWeight() + "\n"
+                        + "Weight (lbs): " + weightsExerciseTest2.getWeightPounds() + "\n"
                         + "Sets: " + weightsExerciseTest2.getSets() + "\n"
                         + "Reps: " + weightsExerciseTest2.getReps(),
                 weightsExerciseTest2.toString());
@@ -116,11 +116,11 @@ public class WeightsExerciseTest {
 
     @Test
     public void testSetWeight() {
-        weightsExerciseTest1.setWeight(1);
-        weightsExerciseTest2.setWeight(100);
+        weightsExerciseTest1.setWeightPounds(1);
+        weightsExerciseTest2.setWeightPounds(100);
 
-        assertEquals(1, weightsExerciseTest1.getWeight());
-        assertEquals(100, weightsExerciseTest2.getWeight());
+        assertEquals(1, weightsExerciseTest1.getWeightPounds());
+        assertEquals(100, weightsExerciseTest2.getWeightPounds());
     }
 
     @Test

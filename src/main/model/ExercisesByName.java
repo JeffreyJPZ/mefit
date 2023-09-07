@@ -63,9 +63,9 @@ public class ExercisesByName implements FitnessCollection {
                     .append(exercise.getName())
                     .append(StringFormat.RIGHT_BRACKET.getFormat())
                     .append(StringFormat.SEPARATOR.getFormat());
-            exercisesString.append(exercise.getMuscleGroup().getMuscleGroup())
+            exercisesString.append(exercise.getMuscleGroup().getMuscleGroupAsString())
                     .append(StringFormat.SEPARATOR.getFormat());
-            exercisesString.append(exercise.getDifficulty().getDifficulty())
+            exercisesString.append(exercise.getDifficulty().getDifficultyAsInt())
                     .append(StringFormat.SEPARATOR.getFormat());
             exercisesString.append(exercise.getTimeMinutes())
                     .append(StringFormat.SEPARATOR.getFormat());

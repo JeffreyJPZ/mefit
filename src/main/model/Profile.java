@@ -10,8 +10,8 @@ public class Profile implements JsonWritable {
     private int id;
     private String name;
     private String gender;
-    private int age;
-    private int weight;
+    private int ageYears;
+    private int weightPounds;
     private ExercisesByName exercises;
     private WorkoutsByName workouts;
 
@@ -19,13 +19,13 @@ public class Profile implements JsonWritable {
     // REQUIRES: name, gender are not empty and age, weight are both > 0
     // EFFECTS: makes a profile with a name, gender, age in years, weight in lbs,
     //          empty map of exercises, empty map of workouts, and a unique id
-    public Profile(String name, String gender, int age, int weight) {
+    public Profile(String name, String gender, int ageYears, int weightPounds) {
         this.id = nextId;
         nextId++;
         this.name = name;
         this.gender = gender;
-        this.age = age;
-        this.weight = weight;
+        this.ageYears = ageYears;
+        this.weightPounds = weightPounds;
         this.exercises = new ExercisesByName();
         this.workouts = new WorkoutsByName();
     }
@@ -38,12 +38,12 @@ public class Profile implements JsonWritable {
         return gender;
     }
 
-    public int getAge() {
-        return age;
+    public int getAgeYears() {
+        return ageYears;
     }
 
-    public int getWeight() {
-        return weight;
+    public int getWeightPounds() {
+        return weightPounds;
     }
 
     public int getId() {
@@ -70,12 +70,12 @@ public class Profile implements JsonWritable {
         this.gender = gender;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setAgeYears(int ageYears) {
+        this.ageYears = ageYears;
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
+    public void setWeightPounds(int weightPounds) {
+        this.weightPounds = weightPounds;
     }
 
     public void setExercises(ExercisesByName exercises) {
@@ -105,9 +105,9 @@ public class Profile implements JsonWritable {
                 +
                 "Gender: " + gender + "\n"
                 +
-                "Age (yrs): " + age + "\n"
+                "Age (yrs): " + ageYears + "\n"
                 +
-                "Weight (lbs): " + weight;
+                "Weight (lbs): " + weightPounds;
     }
 
     // EFFECTS: returns a json object with id, profile name, gender, age in years, weight in lbs,
@@ -119,8 +119,8 @@ public class Profile implements JsonWritable {
         jsonObject.put("id", id);
         jsonObject.put("name", name);
         jsonObject.put("gender", gender);
-        jsonObject.put("age", age);
-        jsonObject.put("weight", weight);
+        jsonObject.put("age", ageYears);
+        jsonObject.put("weight", weightPounds);
         jsonObject.put("exercises", exercises.toJson());
         jsonObject.put("workouts", workouts.toJson());
 

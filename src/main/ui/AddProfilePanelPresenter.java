@@ -6,10 +6,11 @@ import org.json.JSONObject;
 import static java.lang.Integer.parseInt;
 import static ui.FitnessAppCommands.*;
 
-// Represents the data and actions for adding a profile to a collection
+// Represents the data and actions for a panel for adding a profile
 public class AddProfilePanelPresenter extends AddToCollectionPresenter {
 
-    // EFFECTS: updates the add profile model appropriately with t according to the given key
+    // MODIFIES: profilesPanelPresenter, fitnessApp
+    // EFFECTS: updates the model appropriately with t according to the given key
     @Override
     public <T> void update(T t, FitnessAppCommands key) {
         if (key.getFitnessAppCommand().equals(ADD_PROFILE_COMMAND.getFitnessAppCommand())) {
@@ -25,6 +26,7 @@ public class AddProfilePanelPresenter extends AddToCollectionPresenter {
 
     }
 
+    // MODIFIES: profilesPanelPresenter, fitnessApp
     // EFFECTS: parses the profile data from t and makes a new profile
     private <T> void addProfile(T t) {
         try {
@@ -38,7 +40,7 @@ public class AddProfilePanelPresenter extends AddToCollectionPresenter {
         }
     }
 
-    // MODIFIES: profilesPanel, fitnessApp
+    // MODIFIES: profilesPanelPresenter, fitnessApp
     // EFFECTS: adds a profile to the profiles with the given profile data
     private void addProfile(JSONObject textFields) {
         Profile profile = makeProfile(textFields);

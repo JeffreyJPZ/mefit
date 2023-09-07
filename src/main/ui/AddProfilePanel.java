@@ -25,9 +25,9 @@ public class AddProfilePanel extends AddToCollectionPanel {
     public AddProfilePanel() {
         super();
         initializeFields();
+        addDisplayComponents();
         initializePlacements();
         initializeActions();
-        addDisplayComponents();
         addComponents();
     }
 
@@ -46,16 +46,21 @@ public class AddProfilePanel extends AddToCollectionPanel {
     @Override
     protected void initializeInputs() {
         initializeTextFields();
+        collectTextFields();
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes the text fields and adds them to the collection
+    // EFFECTS: initializes the text fields
     private void initializeTextFields() {
         this.name = new JTextField("John");
         this.gender = new JTextField("Example");
         this.age = new JTextField("30");
         this.weight = new JTextField("225");
+    }
 
+    // MODIFIES: this
+    // EFFECTS: collects the text fields for convenient parsing
+    private void collectTextFields() {
         inputTextFields.put("name", name);
         inputTextFields.put("gender", gender);
         inputTextFields.put("age", age);
@@ -78,8 +83,8 @@ public class AddProfilePanel extends AddToCollectionPanel {
         components.add(backButton);
     }
 
-    // MODIFIES: profilesPanel, fitnessApp
-    // EFFECTS: handles the appropriate event for each component
+    // MODIFIES: profilesPanelPresenter, fitnessApp
+    // EFFECTS: handles the appropriate event for appropriate components
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals(ADD_COMMAND.getFitnessAppCommand())) {
@@ -89,7 +94,7 @@ public class AddProfilePanel extends AddToCollectionPanel {
         }
     }
 
-    // MODIFIES: profilesPanel, fitnessApp
+    // MODIFIES: profilesPanelPresenter, fitnessApp
     // EFFECTS: adds a profile with given inputs to the profiles and switches to the profiles panel
     private void addProfile() {
         JSONObject data = new JSONObject();

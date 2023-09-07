@@ -18,18 +18,18 @@ public class ProfilePanel extends DisplayElementPanel {
     private ProfilePanelPresenter profilePanelPresenter;
 
     private JTextField name;
-    private JTextField age;
+    private JTextField ageYears;
     private JTextField gender;
-    private JTextField weight;
+    private JTextField weightPounds;
     private JButton exercisesButton;
 
     // EFFECTS: creates a profile panel
     public ProfilePanel() {
         super();
         initializeFields();
+        addDisplayComponents();
         initializePlacements();
         initializeActions();
-        addDisplayComponents();
         addComponents();
     }
 
@@ -40,23 +40,36 @@ public class ProfilePanel extends DisplayElementPanel {
 
         this.profilePanelPresenter = new ProfilePanelPresenter(this);
 
+        this.exercisesButton = new JButton(EXERCISES_COMMAND.getFitnessAppCommand());
+
         initializeInputs();
 
-        this.exercisesButton = new JButton(EXERCISES_COMMAND.getFitnessAppCommand());
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes the text fields and adds them to the collection
+    // EFFECTS: initializes the input areas for the user for the profile panel
+    @Override
+    protected void initializeInputs() {
+        initializeTextFields();
+        collectTextFields();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes the text fields
     private void initializeTextFields() {
         this.name = new JTextField("John");
         this.gender = new JTextField("Example");
-        this.age = new JTextField("30");
-        this.weight = new JTextField("225");
+        this.ageYears = new JTextField("30");
+        this.weightPounds = new JTextField("225");
+    }
 
+    // MODIFIES: this
+    // EFFECTS: collects the text fields for convenient parsing
+    private void collectTextFields() {
         inputTextFields.put("name", name);
         inputTextFields.put("gender", gender);
-        inputTextFields.put("age", age);
-        inputTextFields.put("weight", weight);
+        inputTextFields.put("age", ageYears);
+        inputTextFields.put("weight", weightPounds);
     }
 
     @Override
@@ -68,9 +81,9 @@ public class ProfilePanel extends DisplayElementPanel {
         components.add(new JLabel(PROFILE_GENDER));
         components.add(gender);
         components.add(new JLabel(PROFILE_AGE));
-        components.add(age);
+        components.add(ageYears);
         components.add(new JLabel(PROFILE_WEIGHT));
-        components.add(weight);
+        components.add(weightPounds);
         components.add(editButton);
         components.add(exercisesButton);
         components.add(backButton);
@@ -84,15 +97,9 @@ public class ProfilePanel extends DisplayElementPanel {
         initializeAction(exercisesButton, EXERCISES_COMMAND.getFitnessAppCommand());
     }
 
-    // EFFECTS: initializes the inputs for the profile panel
     @Override
-    protected void initializeInputs() {
-        initializeTextFields();
-    }
-
     // MODIFIES: exercisesPanel, fitnessApp
-    // EFFECTS: handles the appropriate event for each component
-    @Override
+    // EFFECTS: handles the appropriate event for appropriate components
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals(EDIT_COMMAND.getFitnessAppCommand())) {
             editProfile();
@@ -114,38 +121,31 @@ public class ProfilePanel extends DisplayElementPanel {
         profilePanelPresenter.update(null, BACK_COMMAND);
     }
 
-    // MODIFIES: this, profilePanelPresenter
-    // EFFECTS: updates the fields with the profile info associated with the panel
+    // MODIFIES: profilePanelPresenter
+    // EFFECTS: updates the profile info of the profile associated with the panel
     private void editProfile() {
-        updateProfile();
-        updateFields();
-    }
-
-    // MODIFIES: this
-    // EFFECTS: updates the display of the current profile
-    private void updateProfile() {
         JSONObject data = new JSONObject();
-        JSONObject profileInfo = new JSONObject();
+        JSONObject inputs = new JSONObject();
+        JSONObject inputTextFieldsJson = new JSONObject();
 
         for (String name : inputTextFields.keySet()) {
             JTextField field = inputTextFields.get(name);
-            profileInfo.put(name, field.getText());
+            inputTextFieldsJson.put(name, field.getText());
         }
 
-        data.put(JsonKeys.DATA.getKey(), profileInfo);
+        inputs.put(JsonKeys.INPUT.getKey(), inputTextFieldsJson);
+        data.put(JsonKeys.DATA.getKey(), inputs);
 
         profilePanelPresenter.update(data, EDIT_COMMAND);
     }
 
     // MODIFIES: this
-    // EFFECTS: updates the fields with the profile info associated with the panel
-    public void updateFields() {
-        Profile profile = profilePanelPresenter.getProfile();
-
-        name.setText(profile.getName());
-        gender.setText(profile.getGender());
-        age.setText(Integer.toString(profile.getAge()));
-        weight.setText(Integer.toString(profile.getWeight()));
+    // EFFECTS: updates the inputs with the given profile info
+    public void updateInputs(Profile profile) {
+        inputTextFields.get("name").setText(profile.getName());
+        inputTextFields.get("gender").setText(profile.getGender());
+        inputTextFields.get("age").setText(Integer.toString(profile.getAgeYears()));
+        inputTextFields.get("weight").setText(Integer.toString(profile.getWeightPounds()));
     }
 
     // EFFECTS: returns the presenter for this profile panel

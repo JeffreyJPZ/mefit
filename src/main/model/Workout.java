@@ -100,7 +100,7 @@ public class Workout implements JsonWritable {
 
         workoutString.append("Name\tDifficulty\tTime (min)\t # of Exercises\tFavourite?\n");
         workoutString.append("[").append(getName()).append("]\t");
-        workoutString.append(difficulty.getDifficulty()).append("\t");
+        workoutString.append(difficulty.getDifficultyAsInt()).append("\t");
         workoutString.append(getTimeMinutes()).append("\t");
         workoutString.append(length()).append("\t");
         workoutString.append(isFavourite());
@@ -110,8 +110,8 @@ public class Workout implements JsonWritable {
 
         for (Exercise exercise : exercises) {
             workoutString.append("[").append(exercise.getName()).append("]\t");
-            workoutString.append(exercise.getMuscleGroup().getMuscleGroup()).append("\t");
-            workoutString.append(exercise.getDifficulty().getDifficulty()).append("\t");
+            workoutString.append(exercise.getMuscleGroup().getMuscleGroupAsString()).append("\t");
+            workoutString.append(exercise.getDifficulty().getDifficultyAsInt()).append("\t");
             workoutString.append(exercise.getTimeMinutes()).append("\t");
             workoutString.append(exercise.isFavourite()).append("\n");
         }
@@ -193,7 +193,7 @@ public class Workout implements JsonWritable {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("name", getName());
-        jsonObject.put("difficulty", difficulty.getDifficulty());
+        jsonObject.put("difficulty", difficulty.getDifficultyAsInt());
         jsonObject.put("favourite", favourite);
         jsonObject.put("exercises", exercisesToJson());
 
