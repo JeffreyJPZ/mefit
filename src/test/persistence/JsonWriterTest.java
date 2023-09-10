@@ -1,8 +1,8 @@
 package persistence;
 
 import exceptions.InvalidExerciseException;
-import model.Profile;
-import model.ProfilesById;
+import model.profiles.profile.Profile;
+import model.profiles.ProfilesById;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

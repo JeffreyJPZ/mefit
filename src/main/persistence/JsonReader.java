@@ -1,10 +1,16 @@
 package persistence;
 
 import exceptions.InvalidExerciseException;
-import model.*;
+import model.exercises.*;
+import model.exercises.exercise.*;
+import model.metrics.ExerciseType;
+import model.profiles.profile.Profile;
+import model.profiles.ProfilesById;
+import model.workouts.workout.Workout;
+import model.workouts.WorkoutsByName;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import model.FitnessMetricParser;
+import model.metrics.FitnessMetricParser;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

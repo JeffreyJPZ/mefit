@@ -1,6 +1,6 @@
 package persistence;
 
-import model.ProfilesById;
+import model.profiles.ProfilesById;
 import org.json.JSONObject;
 
 import java.io.*;

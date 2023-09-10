@@ -1,6 +1,6 @@
 package persistence;
 
-import model.*;
+import model.profiles.profile.Profile;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
