@@ -17,19 +17,23 @@ The application will allow you to make your **own personal profile** by entering
 age, gender, and weight. For each profile, you can enter exercises with a number of sets,
 repetitions, time per set, muscle groups worked, and a personal difficulty rating. 
 You can view saved exercises by various filters, and edit them.
-You will also be able to generate a workout schedule with your list of exercises. 
-These workouts can be named and saved.
+A unique feature of this application is the ability to generate a random workout schedule 
+given certain parameters. These workouts can also be named and saved.
 
 Event logging classes and their tests were derived from AlarmSystem from CPSC 210.
 
 Inspiration for the console application was taken from TellerApp and JsonSerializationDemo from CPSC 210.
 
-Additional inspiration for the GUI was from:
+Additional inspiration and references for the GUI is from:
 - SimpleDrawingPlayer and SpaceInvadersStarter from CPSC 210
 - https://stackoverflow.com/questions/6175899/how-to-change-card-layout-panels-from-another-panel
 - https://stackoverflow.com/questions/47841447/how-to-refresh-jtable-after-click-the-jbutton
 - https://stackoverflow.com/questions/14393112/jtable-in-jscrollpane
 - https://stackoverflow.com/questions/13264907/why-is-windowclosed-not-being-called
+
+---
+
+**CPSC 210 tasks listed below - please ignore**
 
 ## User Stories
 - As a user, I want to be able to make a new exercise and add it to a list of exercises for my profile.
