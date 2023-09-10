@@ -9,10 +9,10 @@ import static ui.FitnessAppCommands.*;
 
 // Represents a panel for adding profiles for the fitness application
 public class AddProfilePanel extends AddToCollectionPanel {
-    private static final String NAME_COMMAND = "Name";
-    private static final String GENDER_COMMAND = "Gender";
-    private static final String AGE_COMMAND = "Age (yrs)";
-    private static final String WEIGHT_COMMAND = "Weight (lbs)";
+    private static final String PROFILE_NAME = "Profile Name";
+    private static final String PROFILE_GENDER = "Gender";
+    private static final String PROFILE_AGE = "Age (yrs)";
+    private static final String PROFILE_WEIGHT = "Weight (lbs)";
 
     private AddProfilePanelPresenter addProfilePanelPresenter;
 
@@ -71,13 +71,14 @@ public class AddProfilePanel extends AddToCollectionPanel {
     // MODIFIES: this
     // EFFECTS: adds each component to be displayed to components
     protected void addDisplayComponents() {
-        components.add(new JLabel(NAME_COMMAND));
+        components.add(new JLabel("Add New Profile"));
+        components.add(new JLabel(PROFILE_NAME));
         components.add(name);
-        components.add(new JLabel(GENDER_COMMAND));
+        components.add(new JLabel(PROFILE_GENDER));
         components.add(gender);
-        components.add(new JLabel(AGE_COMMAND));
+        components.add(new JLabel(PROFILE_AGE));
         components.add(age);
-        components.add(new JLabel(WEIGHT_COMMAND));
+        components.add(new JLabel(PROFILE_WEIGHT));
         components.add(weight);
         components.add(addButton);
         components.add(backButton);
@@ -94,6 +95,7 @@ public class AddProfilePanel extends AddToCollectionPanel {
         }
     }
 
+    // REQUIRES: all inputs have valid input types
     // MODIFIES: profilesPanelPresenter, fitnessApp
     // EFFECTS: adds a profile with given inputs to the profiles and switches to the profiles panel
     private void addProfile() {

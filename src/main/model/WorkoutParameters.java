@@ -4,15 +4,15 @@ package model;
 public class WorkoutParameters {
     private final MuscleGroup muscleGroup;
     private final Difficulty difficulty;
-    private final int exercisesNum;
     private final int time;
+    private final int size;
     private final int sampleSize;
 
     private WorkoutParameters(WorkoutParametersBuilder parametersBuilder) {
         this.muscleGroup = parametersBuilder.muscleGroup;
         this.difficulty = parametersBuilder.difficulty;
-        this.exercisesNum = parametersBuilder.exercisesNum;
         this.time = parametersBuilder.time;
+        this.size = parametersBuilder.size;
         this.sampleSize = parametersBuilder.sampleSize;
     }
 
@@ -24,12 +24,12 @@ public class WorkoutParameters {
         return difficulty;
     }
 
-    public int getExercisesNum() {
-        return exercisesNum;
-    }
-
     public int getTime() {
         return time;
+    }
+
+    public int getSize() {
+        return size;
     }
 
     public int getSampleSize() {
@@ -39,16 +39,16 @@ public class WorkoutParameters {
     public static class WorkoutParametersBuilder {
         private final MuscleGroup muscleGroup;
         private final Difficulty difficulty;
-        private final int exercisesNum;
         private final int time;
+        private final int size;
         private final int sampleSize;
 
-        public WorkoutParametersBuilder(MuscleGroup muscleGroup, Difficulty difficulty, int exercisesNum, int time,
+        public WorkoutParametersBuilder(MuscleGroup muscleGroup, Difficulty difficulty, int time, int size,
                                         int sampleSize) {
             this.muscleGroup = muscleGroup;
             this.difficulty = difficulty;
-            this.exercisesNum = exercisesNum;
             this.time = time;
+            this.size = size;
             this.sampleSize = sampleSize;
         }
 

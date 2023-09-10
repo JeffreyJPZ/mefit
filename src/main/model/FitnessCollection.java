@@ -10,7 +10,7 @@ public interface FitnessCollection extends JsonWritable {
     String toString();
 
     // EFFECTS: filters the collection with the given name
-    FitnessCollection filter(String name);
+    FitnessCollection filterName(String name);
 
     // REQUIRES: name is not empty
     // EFFECTS: returns true if collection contains an element with the same name, otherwise returns false

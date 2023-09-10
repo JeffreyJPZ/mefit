@@ -195,7 +195,7 @@ public class ProfilesByIdTest {
 
     @Test
     public void testFilterEmptyMapNoMatch() {
-        ProfilesById profilesById = profilesByIdTest1.filter("1");
+        ProfilesById profilesById = profilesByIdTest1.filterName("1");
         assertEquals(0, profilesById.getProfiles().size());
     }
 
@@ -203,7 +203,7 @@ public class ProfilesByIdTest {
     public void testFilterSingleProfileInMapMatches() {
         addProfileHelper(profilesByIdTest1, 1);
 
-        ProfilesById profilesById = profilesByIdTest1.filter("1");
+        ProfilesById profilesById = profilesByIdTest1.filterName("1");
 
         assertEquals(1, profilesById.getProfiles().size());
         assertEquals(1, profilesById.getProfiles().get(1).getId());
@@ -213,7 +213,7 @@ public class ProfilesByIdTest {
     public void testFilterMultipleProfileInMapMatches() {
         addProfileHelper(profilesByIdTest1, 11);
 
-        ProfilesById profilesById = profilesByIdTest1.filter("1");
+        ProfilesById profilesById = profilesByIdTest1.filterName("1");
 
         assertEquals(3, profilesById.getProfiles().size());
         assertEquals(1, profilesById.getProfiles().get(1).getId());
@@ -230,7 +230,7 @@ public class ProfilesByIdTest {
         profilesByIdTest1.addProfile(new Profile("dac", "5", 5, 5));
         profilesByIdTest1.addProfile(new Profile("cAB", "6", 6, 6));
 
-        ProfilesById profilesById = profilesByIdTest1.filter("a");
+        ProfilesById profilesById = profilesByIdTest1.filterName("a");
 
         assertEquals(3, profilesById.getProfiles().size());
         assertEquals(1, profilesById.getProfiles().get(1).getId());

@@ -31,7 +31,7 @@ public class HomePanel extends FitnessPanel {
     public void initializeFields() {
         this.homePanelPresenter = new HomePanelPresenter();
 
-        this.applicationName = new JLabel("MeFit - A fitness app");
+        this.applicationName = new JLabel("MeFit - a fitness app");
         this.attributeText = new JLabel("Created by Jeffrey Zhang");
         this.creatorPicture = new JLabel(new ImageIcon(CREATOR_PICTURE_PATH));
         this.profilesButton = new JButton(PROFILES_COMMAND.getFitnessAppCommand());

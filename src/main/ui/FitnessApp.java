@@ -21,7 +21,7 @@ public class FitnessApp extends JFrame implements WindowListener {
 
     // EFFECTS: runs the application and creates a new window
     private FitnessApp() {
-        super("Fitness Application");
+        super("MeFit");
         initializeFields();
         initializeWindow();
         initializePanels();
@@ -30,6 +30,8 @@ public class FitnessApp extends JFrame implements WindowListener {
         addWindowListener(this);
 
         pack();
+
+        setLocationRelativeTo(null); // centers the window
     }
 
     // EFFECTS: returns the instance of the fitness application
@@ -55,6 +57,7 @@ public class FitnessApp extends JFrame implements WindowListener {
 
     // MODIFIES: fitnessApp
     // EFFECTS: creates the panels for the application
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void initializePanels() {
         View homePanel = new HomePanel();
         View profilesPanel = new ProfilesPanel();
@@ -63,13 +66,20 @@ public class FitnessApp extends JFrame implements WindowListener {
         View exercisesPanel = new ExercisesPanel();
         View exercisePanel = new ExercisePanel();
         View addExercisePanel = new AddExercisePanel();
+        View workoutsPanel = new WorkoutsPanel();
+        View workoutPanel = new WorkoutPanel();
+        View addWorkoutPanel = new WorkoutGeneratorPanel();
 
         profilesPanel.getPresenter().addObserver(profilePanel.getPresenter());
+        profilePanel.getPresenter().addObserver(profilesPanel.getPresenter());
         profilePanel.getPresenter().addObserver(exercisesPanel.getPresenter());
+        profilePanel.getPresenter().addObserver(workoutsPanel.getPresenter());
         addProfilePanel.getPresenter().addObserver(profilesPanel.getPresenter());
         exercisesPanel.getPresenter().addObserver(exercisePanel.getPresenter());
         exercisePanel.getPresenter().addObserver(exercisesPanel.getPresenter());
         addExercisePanel.getPresenter().addObserver(exercisesPanel.getPresenter());
+        workoutsPanel.getPresenter().addObserver(workoutPanel.getPresenter());
+        addWorkoutPanel.getPresenter().addObserver(workoutsPanel.getPresenter());
 
         panels.add(homePanel, HOME_COMMAND.getFitnessAppCommand());
         panels.add(profilesPanel, PROFILES_COMMAND.getFitnessAppCommand());
@@ -78,6 +88,9 @@ public class FitnessApp extends JFrame implements WindowListener {
         panels.add(exercisesPanel, EXERCISES_COMMAND.getFitnessAppCommand());
         panels.add(exercisePanel, EXERCISE_COMMAND.getFitnessAppCommand());
         panels.add(addExercisePanel, ADD_EXERCISE_COMMAND.getFitnessAppCommand());
+        panels.add(workoutsPanel, WORKOUTS_COMMAND.getFitnessAppCommand());
+        panels.add(workoutPanel, WORKOUT_COMMAND.getFitnessAppCommand());
+        panels.add(addWorkoutPanel, ADD_WORKOUT_COMMAND.getFitnessAppCommand());
     }
 
     // REQUIRES: name matches a valid command

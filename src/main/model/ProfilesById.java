@@ -65,7 +65,7 @@ public class ProfilesById implements FitnessCollection {
 
     @Override
     // EFFECTS: filters the profiles where string matches the beginning of the profile name case insensitively
-    public ProfilesById filter(String name) {
+    public ProfilesById filterName(String name) {
         ProfilesById profilesById = new ProfilesById();
 
         Pattern pattern = Pattern.compile("^" + name + ".*", Pattern.CASE_INSENSITIVE);

@@ -16,7 +16,7 @@ public class ExercisePanel extends DisplayElementPanel {
 
     private Map<String, JComboBox<String>> inputBoxes;
 
-    private JTextField name;
+    private JLabel name;
     private JLabel exerciseType;
     private JComboBox<String> selectDifficulty;
     private JComboBox<String> selectMuscleGroup;
@@ -46,11 +46,13 @@ public class ExercisePanel extends DisplayElementPanel {
 
         this.inputBoxes = new HashMap<>();
 
+        this.name = new JLabel("Example Name");
         this.exerciseType = new JLabel("Sample Type");
 
         initializeInputs();
     }
 
+    // MODIFIES: this
     // EFFECTS: initializes the input areas for the user for the exercise panel
     @Override
     protected void initializeInputs() {
@@ -63,8 +65,6 @@ public class ExercisePanel extends DisplayElementPanel {
     // MODIFIES: this
     // EFFECTS: initializes the text fields
     private void initializeTextFields() {
-        this.name = new JTextField("Example Name");
-
         this.timeMinutes = new JTextField("0");
 
         this.weightPounds = new JTextField("Weight: Edit only for weights exercises");
@@ -76,7 +76,6 @@ public class ExercisePanel extends DisplayElementPanel {
     // MODIFIES: this
     // EFFECTS: collects the text fields for convenient parsing
     private void collectTextFields() {
-        inputTextFields.put("name", name);
         inputTextFields.put("time", timeMinutes);
         inputTextFields.put("weight", weightPounds);
         inputTextFields.put("sets", sets);
@@ -85,7 +84,7 @@ public class ExercisePanel extends DisplayElementPanel {
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes the dropdown boxes
+    // EFFECTS: initializes the input boxes
     private void initializeBoxes() {
         this.selectDifficulty = new JComboBox<>();
         this.selectMuscleGroup = new JComboBox<>();
@@ -134,6 +133,7 @@ public class ExercisePanel extends DisplayElementPanel {
         components.add(reps);
         components.add(new JLabel("Distance (m)"));
         components.add(distance);
+        components.add(splashText);
         components.add(editButton);
         components.add(backButton);
     }
@@ -224,13 +224,12 @@ public class ExercisePanel extends DisplayElementPanel {
     // MODIFIES: this
     // EFFECTS: updates the appropriate inputs according to the given exercise type with the given exercise info
     public void updateInputs(Exercise exercise, ExerciseType exerciseType) {
-        inputTextFields.get("name").setText(exercise.getName());
+        name.setText(exercise.getName());
         inputBoxes.get("selectDifficulty")
                 .setSelectedItem(Integer.toString(exercise.getDifficulty().getDifficultyAsInt()));
         inputBoxes.get("selectMuscleGroup").setSelectedItem(exercise.getMuscleGroup().getMuscleGroupAsString());
-        inputBoxes.get("selectFavourite").setSelectedItem(exercise.isFavourite().toString());
+        inputBoxes.get("selectFavourite").setSelectedItem(Boolean.toString(exercise.isFavourite()));
         inputTextFields.get("time").setText(Integer.toString(exercise.getTimeMinutes()));
-
 
         switch (exerciseType) {
             case WEIGHTS_EXERCISE:

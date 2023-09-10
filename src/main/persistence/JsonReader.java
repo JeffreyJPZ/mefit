@@ -192,8 +192,9 @@ public class JsonReader {
         for (int i = 0; i < exercisesJson.length(); i++) {
             exerciseJson = exercisesJson.getJSONObject(i);
 
-            String exerciseName = exerciseJson.getString("exerciseType");
-            ExerciseType exerciseType = FitnessMetricParser.getInstance().getExerciseTypeByName(exerciseName);
+            String exerciseName = exerciseJson.getString("name");
+            String exerciseTypeName = exerciseJson.getString("exerciseType");
+            ExerciseType exerciseType = FitnessMetricParser.getInstance().getExerciseTypeByName(exerciseTypeName);
 
             if (exerciseType == null) {
                 throw new InvalidExerciseException();

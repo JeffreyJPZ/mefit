@@ -173,6 +173,8 @@ public class Workout implements JsonWritable {
         int time = 0;
 
         for (Exercise exercise : exercises) {
+            assert exercise != null;
+
             time += exercise.getTimeMinutes();
         }
 

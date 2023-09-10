@@ -36,12 +36,12 @@ public class AddProfilePanelPresenter extends AddToCollectionPresenter {
 
             addProfile(textFields);
         } catch (ClassCastException e) {
-            throw new RuntimeException("Invalid data type was passed to the model");
+            throw new RuntimeException("Invalid data type was passed to the model.");
         }
     }
 
     // MODIFIES: profilesPanelPresenter, fitnessApp
-    // EFFECTS: adds a profile to the profiles with the given profile data
+    // EFFECTS: makes a profile and adds the profile to the profile collection
     private void addProfile(JSONObject textFields) {
         Profile profile = makeProfile(textFields);
 

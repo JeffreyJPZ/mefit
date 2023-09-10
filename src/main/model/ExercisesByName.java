@@ -19,12 +19,12 @@ public class ExercisesByName implements FitnessCollection {
         exercises = new LinkedHashMap<>();
     }
 
-    // TODO: throw exception if exercise with same name is already contained
-    // REQUIRES: exercises does not contain an exercise with the same name ignoring case
     // MODIFIES: this
     // EFFECTS: adds an exercise to the exercises
     public void addExercise(Exercise exercise) {
-        exercises.put(exercise.getName(), exercise);
+        if (!exercises.containsKey(exercise.getName())) {
+            exercises.put(exercise.getName(), exercise);
+        }
         EventLog.getInstance().logEvent(new Event(EventDescription.ADD_EXERCISE.getDescription()));
     }
 
@@ -85,7 +85,7 @@ public class ExercisesByName implements FitnessCollection {
 
     // EFFECTS: returns the exercises where string matches the beginning of the exercise name
     //          case insensitively
-    public ExercisesByName filter(String name) {
+    public ExercisesByName filterName(String name) {
         ExercisesByName exercisesByName = new ExercisesByName();
 
         Pattern pattern = Pattern.compile("^" + name + ".*", Pattern.CASE_INSENSITIVE);
@@ -100,7 +100,7 @@ public class ExercisesByName implements FitnessCollection {
     }
 
     // EFFECTS: returns the exercises with muscle group matching muscleGroup
-    public ExercisesByName filter(MuscleGroup muscleGroup) {
+    public ExercisesByName filterMuscleGroup(MuscleGroup muscleGroup) {
         ExercisesByName exercisesByName = new ExercisesByName();
 
         for (Exercise exercise : exercises.values()) {
@@ -113,7 +113,7 @@ public class ExercisesByName implements FitnessCollection {
     }
 
     // EFFECTS: returns the exercises with difficulty matching given difficulty
-    public ExercisesByName filter(Difficulty difficulty) {
+    public ExercisesByName filterDifficulty(Difficulty difficulty) {
         ExercisesByName exercisesByName = new ExercisesByName();
 
         for (Exercise exercise : exercises.values()) {
@@ -126,7 +126,7 @@ public class ExercisesByName implements FitnessCollection {
     }
 
     // EFFECTS: returns the exercises with their time <= time
-    public ExercisesByName filter(int time) {
+    public ExercisesByName filterTime(int time) {
         ExercisesByName exercisesByName = new ExercisesByName();
 
         for (Exercise exercise : exercises.values()) {
@@ -139,7 +139,7 @@ public class ExercisesByName implements FitnessCollection {
     }
 
     // EFFECTS: returns the exercises that are favourited
-    public ExercisesByName filter() {
+    public ExercisesByName filterFavourite() {
         ExercisesByName exercisesByName = new ExercisesByName();
 
         for (Exercise exercise : exercises.values()) {

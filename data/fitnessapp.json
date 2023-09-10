@@ -25,7 +25,7 @@
                 "favourite": false
             },
             {
-                "difficulty": 3,
+                "difficulty": 2,
                 "distance": 2000,
                 "muscleGroup": "Back",
                 "exerciseType": "CardioExercise",
@@ -34,7 +34,35 @@
                 "favourite": false
             }
         ]},
-        "workouts": {"workouts": []},
+        "workouts": {"workouts": [{
+            "difficulty": 2,
+            "exercises": [
+                {
+                    "difficulty": 3,
+                    "reps": 5,
+                    "sets": 5,
+                    "muscleGroup": "Chest",
+                    "exerciseType": "WeightsExercise",
+                    "name": "Bench Press",
+                    "weight": 225,
+                    "time": 15,
+                    "favourite": false
+                },
+                {
+                    "difficulty": 2,
+                    "reps": 5,
+                    "sets": 5,
+                    "muscleGroup": "Legs",
+                    "exerciseType": "WeightsExercise",
+                    "name": "Squats",
+                    "weight": 250,
+                    "time": 10,
+                    "favourite": false
+                }
+            ],
+            "name": "Example Name",
+            "favourite": true
+        }]},
         "name": "Jeff",
         "weight": 180,
         "id": 1,
@@ -81,17 +109,28 @@
     },
     {
         "gender": "None",
-        "exercises": {"exercises": [{
-            "difficulty": 2,
-            "reps": 20,
-            "sets": 3,
-            "muscleGroup": "Arms",
-            "exerciseType": "WeightsExercise",
-            "name": "Bent Over Rows",
-            "weight": 50,
-            "time": 15,
-            "favourite": false
-        }]},
+        "exercises": {"exercises": [
+            {
+                "difficulty": 2,
+                "reps": 20,
+                "sets": 3,
+                "muscleGroup": "Arms",
+                "exerciseType": "WeightsExercise",
+                "name": "Bent Over Rows",
+                "weight": 50,
+                "time": 15,
+                "favourite": false
+            },
+            {
+                "difficulty": 3,
+                "distance": 100,
+                "muscleGroup": "Legs",
+                "exerciseType": "CardioExercise",
+                "name": "Suicides",
+                "time": 20,
+                "favourite": false
+            }
+        ]},
         "workouts": {"workouts": []},
         "name": "Atticus",
         "weight": 145,

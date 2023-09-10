@@ -1,6 +1,7 @@
 package ui;
 
 import exceptions.InvalidExerciseException;
+import model.Exercise;
 import model.Profile;
 import model.ProfilesById;
 import org.json.JSONObject;
@@ -14,6 +15,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
 
+import static java.lang.Integer.highestOneBit;
+import static java.lang.Integer.parseInt;
 import static ui.FitnessAppCommands.*;
 
 // Represents the data and actions of a profiles panel
@@ -52,7 +55,7 @@ public class ProfilesPanelPresenter extends DisplayCollectionPresenter {
     }
 
     // MODIFIES: this
-    // EFFECTS: extracts profile information from each profile in profiles
+    // EFFECTS: extracts profile information from the profile collection
     @Override
     protected void extractData() {
         for (Profile profile : profilesById.getProfiles().values()) {
@@ -73,8 +76,6 @@ public class ProfilesPanelPresenter extends DisplayCollectionPresenter {
             profilePanel(t);
         } else if (key.getFitnessAppCommand().equals(ADD_COMMAND.getFitnessAppCommand())) {
             addProfilePanel();
-        } else if (key.getFitnessAppCommand().equals(ADD_PROFILE_COMMAND.getFitnessAppCommand())) {
-            addProfile(t);
         } else if (key.getFitnessAppCommand().equals(REMOVE_COMMAND.getFitnessAppCommand())) {
             removeProfile(t);
         } else if (key.getFitnessAppCommand().equals(FILTER_COMMAND.getFitnessAppCommand())) {
@@ -87,6 +88,10 @@ public class ProfilesPanelPresenter extends DisplayCollectionPresenter {
             loadProfiles();
         } else if (key.getFitnessAppCommand().equals(BACK_COMMAND.getFitnessAppCommand())) {
             back();
+        } else if (key.getFitnessAppCommand().equals(ADD_PROFILE_COMMAND.getFitnessAppCommand())) {
+            addProfile(t);
+        } else if (key.getFitnessAppCommand().equals(SAVE_PROFILE_TO_PROFILES.getFitnessAppCommand())) {
+            updateProfiles(t);
         }
     }
 
@@ -105,6 +110,8 @@ public class ProfilesPanelPresenter extends DisplayCollectionPresenter {
 
         resetFilters();
 
+        profilesPanel.setText("");
+
         notifyAll(profilesById.getProfile(id), PROFILE_COMMAND);
 
         FitnessApp.getInstance().switchPanel(PROFILE_COMMAND.getFitnessAppCommand());
@@ -114,6 +121,9 @@ public class ProfilesPanelPresenter extends DisplayCollectionPresenter {
     // EFFECTS: switches to the add profile panel
     private void addProfilePanel() {
         resetFilters();
+
+        profilesPanel.setText("");
+
         FitnessApp.getInstance().switchPanel(ADD_PROFILE_COMMAND.getFitnessAppCommand());
     }
 
@@ -170,7 +180,7 @@ public class ProfilesPanelPresenter extends DisplayCollectionPresenter {
     // EFFECTS: filters the profiles with the given input
     private void filterProfiles(String filterType, String input) {
         if (filterType.equals(PROFILE_NAME)) {
-            profilesById = profilesById.filter(input);
+            profilesById = profilesById.filterName(input);
         }
         updatePresenter();
         profilesPanel.updateDisplayCollection();
@@ -232,16 +242,37 @@ public class ProfilesPanelPresenter extends DisplayCollectionPresenter {
         profilesPanel.updateDisplayCollection();
     }
 
-    // MODIFIES: fitnessApp
+    // MODIFIES: this, fitnessApp
     // EFFECTS: returns to the previous panel to the profiles panel
     public void back() {
         resetFilters();
         FitnessApp.getInstance().switchPanel(HOME_COMMAND.getFitnessAppCommand());
     }
 
-    // EFFECTS: gets the file path for profiles
-    public String getPath() {
-        return PATH;
+    // MODIFIES: this
+    // EFFECTS: parses the profile data from t and updates the profile collection with the given profile data
+    private <T> void updateProfiles(T t) {
+        JSONObject jsonObject = (JSONObject) t;
+        JSONObject data = jsonObject.getJSONObject(JsonKeys.DATA.getKey());
+
+        updateProfiles(data);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: updates the profile in the profile collection with the same name
+    private void updateProfiles(JSONObject data) {
+        int id = data.getInt(JsonKeys.PROFILE_ID.getKey());
+        Profile updatedProfile = (Profile) data.get(JsonKeys.PROFILE.getKey());
+
+        Profile profile = profilesById.getProfile(id);
+
+        profile.setName(updatedProfile.getName());
+        profile.setGender(updatedProfile.getGender());
+        profile.setAgeYears(updatedProfile.getAgeYears());
+        profile.setWeightPounds(updatedProfile.getWeightPounds());
+
+        updatePresenter();
+        profilesPanel.updateDisplayCollection();
     }
 
     // MODIFIES: this
@@ -251,6 +282,11 @@ public class ProfilesPanelPresenter extends DisplayCollectionPresenter {
         data.clear();
         extractData();
         tableModel.setDataVector(data, infoHeader);
+    }
+
+    // EFFECTS: gets the file path for profiles
+    public String getPath() {
+        return PATH;
     }
 
     @Override

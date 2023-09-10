@@ -4,10 +4,10 @@ import model.*;
 import org.json.JSONObject;
 
 import static java.lang.Integer.parseInt;
-import static ui.FitnessAppCommands.EXERCISES_COMMAND;
-import static ui.FitnessAppCommands.EXERCISE_COMMAND;
+import static ui.FitnessAppCommands.*;
 
-public class ExercisePanelPresenter extends Presenter {
+// Represents the data and actions of a panel for displaying an exercise
+public class ExercisePanelPresenter extends DisplayElementPresenter {
     private ExercisePanel exercisePanel;
 
     private Exercise exercise;
@@ -15,6 +15,10 @@ public class ExercisePanelPresenter extends Presenter {
     // EFFECTS: makes a presenter for the exercise panel
     public ExercisePanelPresenter(ExercisePanel exercisePanel) {
         this.exercisePanel = exercisePanel;
+
+        // initialize sample exercise
+        this.exercise = new CardioExercise("Example Name", MuscleGroup.BACK,
+                0, Difficulty.LIGHT, 0);
     }
 
     @Override
@@ -23,10 +27,10 @@ public class ExercisePanelPresenter extends Presenter {
     public <T> void update(T t, FitnessAppCommands key) {
         if (key.getFitnessAppCommand().equals(FitnessAppCommands.EDIT_COMMAND.getFitnessAppCommand())) {
             editExercise(t);
-        } else if (key.getFitnessAppCommand().equals(FitnessAppCommands.EXERCISE_COMMAND.getFitnessAppCommand())) {
-            setExercise(t);
         } else if (key.getFitnessAppCommand().equals(FitnessAppCommands.BACK_COMMAND.getFitnessAppCommand())) {
             back();
+        } else if (key.getFitnessAppCommand().equals(FitnessAppCommands.EXERCISE_COMMAND.getFitnessAppCommand())) {
+            setExercise(t);
         }
     }
 
@@ -48,37 +52,54 @@ public class ExercisePanelPresenter extends Presenter {
     }
 
     // MODIFIES: this, exercisePanel
-    // EFFECTS: updates the exercise with the exercise info
+    // EFFECTS: updates the exercise with the exercise data
     private void editExercise(JSONObject textFields, JSONObject boxes, String exerciseTypeName) {
         ExerciseType exerciseType = FitnessMetricParser.getInstance().getExerciseTypeByName(exerciseTypeName);
 
         editBasicInfo(textFields, boxes);
-        editAdvancedInfo(textFields, boxes, exerciseType);
+        editAdvancedInfo(textFields, exerciseType);
 
         exercisePanel.updateInputs(exercise, exerciseType);
 
-        notifyAll(exercise, EXERCISE_COMMAND);
+        updateExercises();
     }
 
-    // MODIFIES: this
-    // EFFECTS: updates the exercise with basic exercise info
+    // MODIFIES: exercisesPanelPresenter
+    // EFFECTS: updates the exercises collection with the exercise data
+    private void updateExercises() {
+        JSONObject data = new JSONObject();
+        JSONObject exerciseData = new JSONObject();
+
+        exerciseData.put(JsonKeys.EXERCISE_NAME.getKey(), exercise.getName());
+
+        exerciseData.put(JsonKeys.EXERCISE.getKey(), exercise);
+
+        data.put(JsonKeys.DATA.getKey(), exerciseData);
+
+        notifyAll(data, SAVE_EXERCISE_TO_EXERCISES);
+    }
+
+    // MODIFIES: this, exercisePanel
+    // EFFECTS: updates the exercise with basic exercise data
     private void editBasicInfo(JSONObject textFields, JSONObject boxes) {
-        String name = textFields.getString("name");
         String muscleGroup = boxes.getString("selectMuscleGroup");
         String difficulty = boxes.getString("selectDifficulty");
         String favourite = boxes.getString("selectFavourite");
         String time = textFields.getString("time");
 
-        exercise.setName(name);
-        exercise.setMuscleGroup(FitnessMetricParser.getInstance().getMuscleGroupByName(muscleGroup));
-        exercise.setDifficulty(FitnessMetricParser.getInstance().getDifficultyByLevel(parseInt(difficulty)));
-        exercise.setTimeMinutes(parseInt(time));
-        exercise.setFavourite(Boolean.parseBoolean(favourite));
+        try {
+            exercise.setMuscleGroup(FitnessMetricParser.getInstance().getMuscleGroupByName(muscleGroup));
+            exercise.setDifficulty(FitnessMetricParser.getInstance().getDifficultyByLevel(parseInt(difficulty)));
+            exercise.setTimeMinutes(parseInt(time));
+            exercise.setFavourite(Boolean.parseBoolean(favourite));
+        } catch (IllegalArgumentException e) {
+            exercisePanel.setText(INVALID_INPUT_TEXT);
+        }
     }
 
-    // MODIFIES: this
-    // EFFECTS: updates the exercise with advanced exercise info
-    private void editAdvancedInfo(JSONObject textFields, JSONObject boxes, ExerciseType exerciseType) {
+    // MODIFIES: this, exercisePanel
+    // EFFECTS: updates the exercise with advanced exercise data
+    private void editAdvancedInfo(JSONObject textFields, ExerciseType exerciseType) {
         switch (exerciseType) {
             case WEIGHTS_EXERCISE:
                 WeightsExercise weightsExercise = (WeightsExercise) exercise;
@@ -113,6 +134,16 @@ public class ExercisePanelPresenter extends Presenter {
         }
     }
 
+    // MODIFIES: fitnessApp
+    // EFFECTS: switches to the exercises panel
+    private void back() {
+        exercisePanel.resetInputVisibility();
+
+        exercisePanel.setText("");
+
+        FitnessApp.getInstance().switchPanel(EXERCISES_COMMAND.getFitnessAppCommand());
+    }
+
     // MODIFIES: this
     // EFFECTS: parses an exercise from t and sets the exercise for the current panel as the given exercise
     private <T> void setExercise(T t) {
@@ -122,7 +153,7 @@ public class ExercisePanelPresenter extends Presenter {
     }
 
     // MODIFIES: this, exercisePanel
-    // EFFECTS: updates the
+    // EFFECTS: sets the exercise for the current panel as the given exercise
     private void setExercise(Exercise exercise) {
         this.exercise = exercise;
 
@@ -132,14 +163,6 @@ public class ExercisePanelPresenter extends Presenter {
         exercisePanel.setExerciseType(exerciseType);
         exercisePanel.setInputVisibility(exerciseType);
         exercisePanel.updateInputs(exercise, exerciseType);
-    }
-
-    // MODIFIES: fitnessApp
-    // EFFECTS: switches to the exercises panel
-    private void back() {
-        exercisePanel.resetInputVisibility();
-
-        FitnessApp.getInstance().switchPanel(EXERCISES_COMMAND.getFitnessAppCommand());
     }
 
     @Override

@@ -83,7 +83,7 @@ public class WorkoutsByName implements FitnessCollection {
 
     @Override
     // EFFECTS: returns the workouts with their name matching given name case insensitively
-    public WorkoutsByName filter(String name) {
+    public WorkoutsByName filterName(String name) {
         WorkoutsByName workoutsByName = new WorkoutsByName();
 
         Pattern pattern = Pattern.compile("^" + name + ".*", Pattern.CASE_INSENSITIVE);
@@ -117,23 +117,23 @@ public class WorkoutsByName implements FitnessCollection {
         return workoutsByName;
     }
 
-    // EFFECTS: returns the workouts with their number of exercises <= time
-    public WorkoutsByName filterNumberOfExercises(int numberOfExercises) {
-        WorkoutsByName workoutsByName = new WorkoutsByName();
-
-        for (Workout workout : workouts.values()) {
-            filterPredicate(workoutsByName, workout, workout.length() <= numberOfExercises);
-        }
-
-        return workoutsByName;
-    }
-
     // EFFECTS: returns the workouts that are favourited
     public WorkoutsByName filterFavourite() {
         WorkoutsByName workoutsByName = new WorkoutsByName();
 
         for (Workout workout : workouts.values()) {
             filterPredicate(workoutsByName, workout, workout.isFavourite());
+        }
+
+        return workoutsByName;
+    }
+
+    // EFFECTS: returns the workouts with their number of exercises <= given number
+    public WorkoutsByName filterSize(int numberOfExercises) {
+        WorkoutsByName workoutsByName = new WorkoutsByName();
+
+        for (Workout workout : workouts.values()) {
+            filterPredicate(workoutsByName, workout, workout.length() <= numberOfExercises);
         }
 
         return workoutsByName;

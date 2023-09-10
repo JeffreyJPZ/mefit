@@ -104,7 +104,7 @@ public abstract class DisplayCollectionPanel extends FitnessPanel {
     protected abstract void updateDisplayCollection();
 
     // EFFECTS: updates the text on the panel to the given text
-    public void setText(String text) {
+    protected void setText(String text) {
         splashText.setText(text);
     }
 }

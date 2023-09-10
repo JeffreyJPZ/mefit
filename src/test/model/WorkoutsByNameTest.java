@@ -157,7 +157,7 @@ public class WorkoutsByNameTest {
 
     @Test
     public void testFilterByNameEmptyWorkoutsNoMatch() {
-        WorkoutsByName workoutsByName = workoutsByNameTest1.filter("1");
+        WorkoutsByName workoutsByName = workoutsByNameTest1.filterName("1");
 
         assertEquals(0, workoutsByName.length());
     }
@@ -166,7 +166,7 @@ public class WorkoutsByNameTest {
     public void testFilterByNameSingleWorkoutInMapAndMatches() {
         addWorkoutHelper(workoutsByNameTest1, 1);
 
-        WorkoutsByName workoutsByName = workoutsByNameTest1.filter("1");
+        WorkoutsByName workoutsByName = workoutsByNameTest1.filterName("1");
 
         assertEquals(1, workoutsByName.length());
         assertEquals("1", workoutsByName.getWorkout("1").getName());
@@ -176,7 +176,7 @@ public class WorkoutsByNameTest {
     public void testFilterByNameMultipleWorkoutInMapAndMatches() {
         addWorkoutHelper(workoutsByNameTest1, 10);
 
-        WorkoutsByName workoutsByName = workoutsByNameTest1.filter("1");
+        WorkoutsByName workoutsByName = workoutsByNameTest1.filterName("1");
 
         assertEquals(2, workoutsByName.length());
         assertEquals("1", workoutsByName.getWorkout("1").getName());
@@ -192,8 +192,8 @@ public class WorkoutsByNameTest {
         workoutsByNameTest1.addWorkout(new Workout("de", Difficulty.MODERATE));
         workoutsByNameTest1.addWorkout(new Workout("D", Difficulty.INTENSE));
 
-        WorkoutsByName workoutsByName1 = workoutsByNameTest1.filter("a");
-        WorkoutsByName workoutsByName2 = workoutsByNameTest1.filter("De");
+        WorkoutsByName workoutsByName1 = workoutsByNameTest1.filterName("a");
+        WorkoutsByName workoutsByName2 = workoutsByNameTest1.filterName("De");
 
         assertEquals(3, workoutsByName1.length());
         assertEquals("abc", workoutsByName1.getWorkout("abc").getName());
@@ -300,7 +300,7 @@ public class WorkoutsByNameTest {
 
     @Test
     public void testFilterByNumberOfExercisesEmptyWorkoutsNoMatch() {
-        WorkoutsByName workoutsByName = workoutsByNameTest1.filterNumberOfExercises(5);
+        WorkoutsByName workoutsByName = workoutsByNameTest1.filterSize(5);
 
         assertEquals(0, workoutsByName.length());
     }
@@ -315,7 +315,7 @@ public class WorkoutsByNameTest {
         workoutsByNameTest1.getWorkout("1").addExercise(new BodyWeightsExercise("Pullups",
                 MuscleGroup.SHOULDERS, 3, 5, Difficulty.INTENSE, 2));
 
-        WorkoutsByName workoutsByName = workoutsByNameTest1.filterNumberOfExercises(2);
+        WorkoutsByName workoutsByName = workoutsByNameTest1.filterSize(2);
 
         assertEquals(0, workoutsByName.length());
     }
@@ -330,7 +330,7 @@ public class WorkoutsByNameTest {
         workoutsByNameTest1.getWorkout("1").addExercise(new BodyWeightsExercise("Pullups",
                 MuscleGroup.SHOULDERS, 3, 5, Difficulty.INTENSE, 2));
 
-        WorkoutsByName workoutsByName = workoutsByNameTest1.filterNumberOfExercises(3);
+        WorkoutsByName workoutsByName = workoutsByNameTest1.filterSize(3);
 
         assertEquals(1, workoutsByName.length());
         assertEquals("1", workoutsByName.getWorkout("1").getName());
@@ -346,7 +346,7 @@ public class WorkoutsByNameTest {
         workoutsByNameTest1.getWorkout("1").addExercise(new BodyWeightsExercise("Pullups",
                 MuscleGroup.SHOULDERS, 3, 5, Difficulty.INTENSE, 2));
 
-        WorkoutsByName workoutsByName = workoutsByNameTest1.filterNumberOfExercises(4);
+        WorkoutsByName workoutsByName = workoutsByNameTest1.filterSize(4);
 
         assertEquals(1, workoutsByName.length());
         assertEquals("1", workoutsByName.getWorkout("1").getName());
@@ -370,7 +370,7 @@ public class WorkoutsByNameTest {
         workoutsByNameTest1.getWorkout("3").addExercise(new CardioExercise("1000m", MuscleGroup.LEGS,
                 1000, Difficulty.INTENSE, 20));
 
-        WorkoutsByName workoutsByName = workoutsByNameTest1.filterNumberOfExercises(2);
+        WorkoutsByName workoutsByName = workoutsByNameTest1.filterSize(2);
 
         assertEquals(2, workoutsByName.length());
         assertEquals("2", workoutsByName.getWorkout("2").getName());

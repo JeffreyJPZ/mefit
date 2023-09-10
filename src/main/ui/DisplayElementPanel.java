@@ -12,6 +12,7 @@ import static ui.FitnessAppCommands.*;
 public abstract class DisplayElementPanel extends FitnessPanel {
     protected Map<String, JTextField> inputTextFields;
 
+    protected JLabel splashText;
     protected JButton editButton;
     protected JButton backButton;
 
@@ -21,14 +22,17 @@ public abstract class DisplayElementPanel extends FitnessPanel {
         initializeFields();
     }
 
+    // MODIFIES: this
     // EFFECTS: initializes the components for the panel
     protected void initializeFields() {
         this.inputTextFields = new HashMap<>();
 
+        this.splashText = new JLabel("");
         this.editButton = new JButton(EDIT_COMMAND.getFitnessAppCommand());
         this.backButton = new JButton(BACK_COMMAND.getFitnessAppCommand());
     }
 
+    // MODIFIES: this
     // EFFECTS: sets the appropriate components to respond to the appropriate events
     @Override
     protected void initializeActions() {
@@ -38,4 +42,10 @@ public abstract class DisplayElementPanel extends FitnessPanel {
 
     // EFFECTS: initializes the input components and adds them to the appropriate collection
     protected abstract void initializeInputs();
+
+    // MODIFIES: this
+    // EFFECTS: sets the splash text displayed on the panel to be the given text
+    protected void setText(String text) {
+        splashText.setText(text);
+    }
 }

@@ -69,8 +69,10 @@ public class ProfilesPanel extends DisplayCollectionPanel implements UIObserver 
     protected void addDisplayComponents() {
         super.addDisplayComponents();
 
-        components.add(0, splashText);
-        components.add(0, scrollableDataTable);
+        components.add(0, new JLabel("Profiles"));
+        components.add(1, scrollableDataTable);
+        components.add(2, splashText);
+
         components.add(components.size() - 1, saveButton);
         components.add(components.size() - 1, loadButton);
     }

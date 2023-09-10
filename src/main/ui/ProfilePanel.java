@@ -22,6 +22,7 @@ public class ProfilePanel extends DisplayElementPanel {
     private JTextField gender;
     private JTextField weightPounds;
     private JButton exercisesButton;
+    private JButton workoutsButton;
 
     // EFFECTS: creates a profile panel
     public ProfilePanel() {
@@ -41,6 +42,7 @@ public class ProfilePanel extends DisplayElementPanel {
         this.profilePanelPresenter = new ProfilePanelPresenter(this);
 
         this.exercisesButton = new JButton(EXERCISES_COMMAND.getFitnessAppCommand());
+        this.workoutsButton = new JButton(WORKOUTS_COMMAND.getFitnessAppCommand());
 
         initializeInputs();
 
@@ -76,6 +78,7 @@ public class ProfilePanel extends DisplayElementPanel {
     // MODIFIES: this
     // EFFECTS: adds each component to be displayed to components
     protected void addDisplayComponents() {
+        components.add(new JLabel("Profile"));
         components.add(new JLabel(PROFILE_NAME));
         components.add(name);
         components.add(new JLabel(PROFILE_GENDER));
@@ -84,8 +87,10 @@ public class ProfilePanel extends DisplayElementPanel {
         components.add(ageYears);
         components.add(new JLabel(PROFILE_WEIGHT));
         components.add(weightPounds);
+        components.add(splashText);
         components.add(editButton);
         components.add(exercisesButton);
+        components.add(workoutsButton);
         components.add(backButton);
     }
 
@@ -94,7 +99,9 @@ public class ProfilePanel extends DisplayElementPanel {
     // EFFECTS: sets the appropriate components to respond to appropriate events
     protected void initializeActions() {
         super.initializeActions();
+
         initializeAction(exercisesButton, EXERCISES_COMMAND.getFitnessAppCommand());
+        initializeAction(workoutsButton, WORKOUTS_COMMAND.getFitnessAppCommand());
     }
 
     @Override
@@ -105,20 +112,11 @@ public class ProfilePanel extends DisplayElementPanel {
             editProfile();
         } else if (e.getActionCommand().equals(EXERCISES_COMMAND.getFitnessAppCommand())) {
             exercisesPanel();
+        } else if (e.getActionCommand().equals(WORKOUTS_COMMAND.getFitnessAppCommand())) {
+            workoutsPanel();
         } else if (e.getActionCommand().equals(BACK_COMMAND.getFitnessAppCommand())) {
             back();
         }
-    }
-
-    // MODIFIES: exercisesPanel, fitnessApp
-    // EFFECTS: updates and switches to the exercises panel for the current profile
-    private void exercisesPanel() {
-        profilePanelPresenter.update(null, EXERCISES_COMMAND);
-    }
-
-    // EFFECTS: switches to the profiles panel
-    private void back() {
-        profilePanelPresenter.update(null, BACK_COMMAND);
     }
 
     // MODIFIES: profilePanelPresenter
@@ -137,6 +135,24 @@ public class ProfilePanel extends DisplayElementPanel {
         data.put(JsonKeys.DATA.getKey(), inputs);
 
         profilePanelPresenter.update(data, EDIT_COMMAND);
+    }
+
+    // MODIFIES: exercisesPanel, fitnessApp
+    // EFFECTS: updates and switches to the exercises panel for the current profile
+    private void exercisesPanel() {
+        splashText.setText("");
+        profilePanelPresenter.update(null, EXERCISES_COMMAND);
+    }
+
+    // MODIFIES: workoutsPanel, fitnessApp
+    // EFFECTS: updates and switches to the workouts panel for the current profile
+    private void workoutsPanel() {
+        profilePanelPresenter.update(null, WORKOUTS_COMMAND);
+    }
+
+    // EFFECTS: switches to the profiles panel
+    private void back() {
+        profilePanelPresenter.update(null, BACK_COMMAND);
     }
 
     // MODIFIES: this

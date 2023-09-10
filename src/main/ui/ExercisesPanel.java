@@ -43,7 +43,9 @@ public class ExercisesPanel extends DisplayCollectionPanel {
     @Override
     protected void addDisplayComponents() {
         super.addDisplayComponents();
-        components.add(0, scrollableDataTable);
+
+        components.add(0, new JLabel("Exercises"));
+        components.add(1, scrollableDataTable);
     }
 
     // MODIFIES: this
@@ -111,7 +113,6 @@ public class ExercisesPanel extends DisplayCollectionPanel {
             return (String) dataTable.getValueAt(selectedExerciseRowIndex, ID_POSITION);
         }
     }
-
 
     // MODIFIES: exercisesPanelPresenter, fitnessApp
     // EFFECTS: switches to the panel for adding an exercise

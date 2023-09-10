@@ -9,14 +9,8 @@ import static ui.FitnessAppCommands.*;
 
 // Represents the data and actions for a panel for adding an exercise
 public class AddExercisePanelPresenter extends AddToCollectionPresenter {
-    private AddExercisePanel addExercisePanel;
 
-    // EFFECTS: makes a panel for adding exercises
-    public AddExercisePanelPresenter(AddExercisePanel addExercisePanel) {
-        this.addExercisePanel = addExercisePanel;
-    }
-
-    // MODIFIES: exercisesPanelModel, fitnessApp
+    // MODIFIES: exercisesPanelPresenter, fitnessApp
     // EFFECTS: updates the model appropriately with t according to the given key
     @Override
     public <T> void update(T t, FitnessAppCommands key) {
@@ -27,13 +21,7 @@ public class AddExercisePanelPresenter extends AddToCollectionPresenter {
         }
     }
 
-    // EFFECTS: does nothing
-    @Override
-    protected void updatePresenter() {
-
-    }
-
-    // MODIFIES: exercisesPanelModel, fitnessApp
+    // MODIFIES: exercisesPanelPresenter, fitnessApp
     // EFFECTS: parses the exercise data from t and makes an exercise with the data
     private <T> void addExercise(T t) {
         try {
@@ -49,8 +37,8 @@ public class AddExercisePanelPresenter extends AddToCollectionPresenter {
         }
     }
 
-    // MODIFIES: exercisesPanelModel, fitnessApp
-    // EFFECTS: adds an exercise to the profile with the given information
+    // MODIFIES: exercisesPanelPresenter, fitnessApp
+    // EFFECTS: adds an exercise to the profile with the given data
     private void addExercise(JSONObject textFields, JSONObject boxes) {
         Exercise exercise = makeExercise(textFields, boxes);
 
@@ -112,5 +100,11 @@ public class AddExercisePanelPresenter extends AddToCollectionPresenter {
     // EFFECTS: switches to the exercises panel
     private void back() {
         FitnessApp.getInstance().switchPanel(FitnessAppCommands.EXERCISES_COMMAND.getFitnessAppCommand());
+    }
+
+    // EFFECTS: does nothing
+    @Override
+    protected void updatePresenter() {
+
     }
 }

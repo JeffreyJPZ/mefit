@@ -80,7 +80,7 @@ public class WorkoutGenerator {
         // get new modes for difficulty and muscleGroup
         // recursively call with new params
         // repeat for all exercises until sol'n is found (while loop)
-        if (workout.length() < parameters.getExercisesNum()
+        if (workout.length() < parameters.getSize()
                 && workout.getTimeMinutes() <= parameters.getTime()
                 && !exercisesAvailable.isEmpty()) {
             int index = 0;
@@ -135,7 +135,7 @@ public class WorkoutGenerator {
     // EFFECTS: returns true if the given workout has the same number of exercises as exercisesNum, total time less than
     //          given time, and matches the given difficulty and muscle group
     private boolean isValid(Workout workout, WorkoutParameters parameters) {
-        return workout.length() == parameters.getExercisesNum()
+        return workout.length() == parameters.getSize()
                 && workout.getTimeMinutes() <= parameters.getTime()
                 && matchesParameter(workout, parameters.getDifficulty(), "DIFFICULTY")
                 && matchesParameter(workout, parameters.getMuscleGroup(), "MUSCLE_GROUP");

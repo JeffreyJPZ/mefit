@@ -211,7 +211,7 @@ public class ExercisesByNameTest {
 
     @Test
     public void testFilterEmptyExercisesNoMatch() {
-        ExercisesByName exercisesByName = exercisesByNameTest1.filter("1");
+        ExercisesByName exercisesByName = exercisesByNameTest1.filterName("1");
 
         assertEquals(0, exercisesByName.length());
     }
@@ -219,7 +219,7 @@ public class ExercisesByNameTest {
     @Test
     public void testFilterSingleExerciseInMapMatches() {
         addExerciseHelper(exercisesByNameTest1, 1);
-        ExercisesByName exercisesByName = exercisesByNameTest1.filter("1");
+        ExercisesByName exercisesByName = exercisesByNameTest1.filterName("1");
 
         assertEquals(1, exercisesByName.length());
         assertEquals("1", exercisesByName.getExercises().get("1").getName());
@@ -228,7 +228,7 @@ public class ExercisesByNameTest {
     @Test
     public void testFilterMultipleExerciseInMapMatches() {
         addExerciseHelper(exercisesByNameTest1, 11);
-        ExercisesByName exercisesByName = exercisesByNameTest1.filter("1");
+        ExercisesByName exercisesByName = exercisesByNameTest1.filterName("1");
 
         assertEquals(3, exercisesByName.length());
         assertEquals("1", exercisesByName.getExercises().get("1").getName());
@@ -249,8 +249,8 @@ public class ExercisesByNameTest {
         exercisesByNameTest1.addExercise(new BodyWeightsExercise("d", MuscleGroup.CORE,
                 2, 2, Difficulty.MODERATE, 2));
 
-        ExercisesByName exercisesByName1 = exercisesByNameTest1.filter("ABC");
-        ExercisesByName exercisesByName2 = exercisesByNameTest1.filter("De");
+        ExercisesByName exercisesByName1 = exercisesByNameTest1.filterName("ABC");
+        ExercisesByName exercisesByName2 = exercisesByNameTest1.filterName("De");
 
         assertEquals(2, exercisesByName1.length());
         assertEquals("abc", exercisesByName1.getExercises().get("abc").getName());
@@ -263,7 +263,7 @@ public class ExercisesByNameTest {
 
     @Test
     public void testFilterMuscleGroupEmptyExercisesNoMatch() {
-        ExercisesByName exercisesByName = exercisesByNameTest1.filter(MuscleGroup.BACK);
+        ExercisesByName exercisesByName = exercisesByNameTest1.filterMuscleGroup(MuscleGroup.BACK);
 
         assertEquals(0, exercisesByName.length());
     }
@@ -271,7 +271,7 @@ public class ExercisesByNameTest {
     @Test
     public void testFilterMuscleGroupSingleExerciseInMapMatches() {
         addExerciseHelper(exercisesByNameTest1, 1);
-        ExercisesByName exercisesByName1 = exercisesByNameTest1.filter(MuscleGroup.CHEST);
+        ExercisesByName exercisesByName1 = exercisesByNameTest1.filterMuscleGroup(MuscleGroup.CHEST);
 
         assertEquals(1, exercisesByName1.length());
         assertEquals(MuscleGroup.CHEST, exercisesByName1.getExercises().get("1").getMuscleGroup());
@@ -280,7 +280,7 @@ public class ExercisesByNameTest {
     @Test
     public void testFilterMuscleGroupMultipleExerciseInMapMatches() {
         addExerciseHelper(exercisesByNameTest1, 4);
-        ExercisesByName exercisesByName1 = exercisesByNameTest1.filter(MuscleGroup.CORE);
+        ExercisesByName exercisesByName1 = exercisesByNameTest1.filterMuscleGroup(MuscleGroup.CORE);
 
         assertEquals(2, exercisesByName1.length());
         assertEquals(MuscleGroup.CORE, exercisesByName1.getExercises().get("2").getMuscleGroup());
@@ -289,7 +289,7 @@ public class ExercisesByNameTest {
 
     @Test
     public void testFilterDifficultyEmptyExercisesNoMatch() {
-        ExercisesByName exercisesByName = exercisesByNameTest1.filter(Difficulty.INTENSE);
+        ExercisesByName exercisesByName = exercisesByNameTest1.filterDifficulty(Difficulty.INTENSE);
 
         assertEquals(0, exercisesByName.length());
     }
@@ -297,7 +297,7 @@ public class ExercisesByNameTest {
     @Test
     public void testFilterDifficultySingleExerciseInMapMatches() {
         addExerciseHelper(exercisesByNameTest1, 1);
-        ExercisesByName exercisesByName1 = exercisesByNameTest1.filter(Difficulty.LIGHT);
+        ExercisesByName exercisesByName1 = exercisesByNameTest1.filterDifficulty(Difficulty.LIGHT);
 
         assertEquals(1, exercisesByName1.length());
         assertEquals(Difficulty.LIGHT, exercisesByName1.getExercises().get("1").getDifficulty());
@@ -306,7 +306,7 @@ public class ExercisesByNameTest {
     @Test
     public void testFilterDifficultyMultipleExerciseInMapMatches() {
         addExerciseHelper(exercisesByNameTest1, 4);
-        ExercisesByName exercisesByName1 = exercisesByNameTest1.filter(Difficulty.MODERATE);
+        ExercisesByName exercisesByName1 = exercisesByNameTest1.filterDifficulty(Difficulty.MODERATE);
 
         assertEquals(2, exercisesByName1.length());
         assertEquals(Difficulty.MODERATE, exercisesByName1.getExercises().get("2").getDifficulty());
@@ -315,7 +315,7 @@ public class ExercisesByNameTest {
 
     @Test
     public void testFilterTimeEmptyExercisesNoMatch() {
-        ExercisesByName exercisesByName = exercisesByNameTest1.filter(20);
+        ExercisesByName exercisesByName = exercisesByNameTest1.filterTime(20);
 
         assertEquals(0, exercisesByName.length());
     }
@@ -323,7 +323,7 @@ public class ExercisesByNameTest {
     @Test
     public void testFilterTimeSingleExerciseInMapMatches() {
         addExerciseHelper(exercisesByNameTest1, 1);
-        ExercisesByName exercisesByName1 = exercisesByNameTest1.filter(5);
+        ExercisesByName exercisesByName1 = exercisesByNameTest1.filterTime(5);
 
         assertEquals(1, exercisesByName1.length());
         assertEquals(1, exercisesByName1.getExercises().get("1").getTimeMinutes());
@@ -332,7 +332,7 @@ public class ExercisesByNameTest {
     @Test
     public void testFilterTimeMultipleExerciseInMapMatches() {
         addExerciseHelper(exercisesByNameTest1, 9);
-        ExercisesByName exercisesByName1 = exercisesByNameTest1.filter(3);
+        ExercisesByName exercisesByName1 = exercisesByNameTest1.filterTime(3);
 
         assertEquals(3, exercisesByName1.length());
         assertEquals(1, exercisesByName1.getExercises().get("1").getTimeMinutes());
@@ -342,7 +342,7 @@ public class ExercisesByNameTest {
 
     @Test
     public void testFilterFavouriteEmptyExercisesNoMatch() {
-        ExercisesByName exercisesByName = exercisesByNameTest1.filter();
+        ExercisesByName exercisesByName = exercisesByNameTest1.filterFavourite();
 
         assertEquals(0, exercisesByName.length());
     }
@@ -352,7 +352,7 @@ public class ExercisesByNameTest {
         addExerciseHelper(exercisesByNameTest1, 1);
         exercisesByNameTest1.getExercise("1").setFavourite(TRUE);
 
-        ExercisesByName exercisesByName1 = exercisesByNameTest1.filter();
+        ExercisesByName exercisesByName1 = exercisesByNameTest1.filterFavourite();
 
         assertEquals(1, exercisesByName1.length());
         assertTrue(exercisesByName1.getExercises().get("1").isFavourite());
@@ -365,7 +365,7 @@ public class ExercisesByNameTest {
         exercisesByNameTest1.getExercise("6").setFavourite(TRUE);
         exercisesByNameTest1.getExercise("9").setFavourite(TRUE);
 
-        ExercisesByName exercisesByName1 = exercisesByNameTest1.filter();
+        ExercisesByName exercisesByName1 = exercisesByNameTest1.filterFavourite();
 
         assertEquals(3, exercisesByName1.length());
         assertTrue(exercisesByName1.getExercises().get("3").isFavourite());

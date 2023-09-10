@@ -44,20 +44,31 @@ public class ExercisesPanelPresenter extends DisplayCollectionPresenter {
         this.tableModel = new DefaultTableModel(data, infoHeader);
     }
 
+    // MODIFIES: this
+    // EFFECTS: extracts each exercise's information from the exercise collection
+    @Override
+    protected void extractData() {
+        for (Exercise exercise : exercisesByName.getExercises().values()) {
+            Vector<Object> exerciseData = new Vector<>();
+
+            exerciseData.add(exercise.getName());
+            exerciseData.add(exercise.getMuscleGroup().getMuscleGroupAsString());
+            exerciseData.add(exercise.getDifficulty().getDifficultyAsInt());
+            exerciseData.add(exercise.getTimeMinutes());
+            exerciseData.add(exercise.isFavourite());
+
+            data.add(exerciseData);
+        }
+    }
+
     // MODIFIES: this, exercisesPanel, fitnessApp
     // EFFECTS: updates the model appropriately with t according to the given key
     @Override
     public <T> void update(T t, FitnessAppCommands key) {
         if (key.getFitnessAppCommand().equals(VIEW_COMMAND.getFitnessAppCommand())) {
             exercisePanel(t);
-        } else if (key.getFitnessAppCommand().equals(EXERCISE_COMMAND.getFitnessAppCommand())) {
-            updateExercise(t);
         } else if (key.getFitnessAppCommand().equals(ADD_COMMAND.getFitnessAppCommand())) {
             addExercisePanel();
-        } else if (key.getFitnessAppCommand().equals(ADD_EXERCISE_COMMAND.getFitnessAppCommand())) {
-            addExercise(t);
-        } else if (key.getFitnessAppCommand().equals(EXERCISES_COMMAND.getFitnessAppCommand())) {
-            setExercises(t);
         } else if (key.getFitnessAppCommand().equals(REMOVE_COMMAND.getFitnessAppCommand())) {
             removeExercise(t);
         } else if (key.getFitnessAppCommand().equals(FILTER_COMMAND.getFitnessAppCommand())) {
@@ -66,6 +77,12 @@ public class ExercisesPanelPresenter extends DisplayCollectionPresenter {
             resetFilters();
         } else if (key.getFitnessAppCommand().equals(BACK_COMMAND.getFitnessAppCommand())) {
             back();
+        } else if (key.getFitnessAppCommand().equals(SAVE_EXERCISE_TO_EXERCISES.getFitnessAppCommand())) {
+            updateExercises(t);
+        } else if (key.getFitnessAppCommand().equals(ADD_EXERCISE_COMMAND.getFitnessAppCommand())) {
+            addExercise(t);
+        } else if (key.getFitnessAppCommand().equals(EXERCISES_COMMAND.getFitnessAppCommand())) {
+            setExercises(t);
         }
     }
 
@@ -85,19 +102,115 @@ public class ExercisesPanelPresenter extends DisplayCollectionPresenter {
 
         resetFilters();
 
+        exercisesPanel.setText("");
+
         notifyAll(exercisesByName.getExercise(name), EXERCISE_COMMAND);
 
         FitnessApp.getInstance().switchPanel(EXERCISE_COMMAND.getFitnessAppCommand());
     }
 
-    // MODIFIES: this,
-    // EFFECTS: parses the selected exercise from t
-    //          and updates the exercise in the exercise collection with the same name
-    private <T> void updateExercise(T t) {
-        Exercise exercise = (Exercise) t;
+    // MODIFIES: this, exercisesPanel, fitnessApp
+    // EFFECTS: switches to the panel for adding exercises
+    private void addExercisePanel() {
+        resetFilters();
+        FitnessApp.getInstance().switchPanel(ADD_EXERCISE_COMMAND.getFitnessAppCommand());
+    }
 
-        exercisesByName.removeExercise(exercise.getName());
-        exercisesByName.addExercise(exercise);
+    // MODIFIES: this, exercisesPanel
+    // EFFECTS: parses a name from t and removes the exercise with the given name
+    private <T> void removeExercise(T t) {
+        JSONObject jsonObject = (JSONObject) t;
+        JSONObject data = jsonObject.getJSONObject(JsonKeys.DATA.getKey());
+
+        String name = data.getString(JsonKeys.EXERCISE_NAME.getKey());
+
+        removeExercise(name);
+    }
+
+    // MODIFIES: this, exercisesPanel
+    // EFFECTS: removes an exercise with the given name from the exercise collection
+    private void removeExercise(String name) {
+        exercisesByName.removeExercise(name);
+        updatePresenter();
+        exercisesPanel.updateDisplayCollection();
+    }
+
+    // MODIFIES: this, exercisesPanel
+    // EFFECTS: parses a filter type and user input from t and filters the exercise collection
+    private <T> void filterExercises(T t) {
+        JSONObject jsonObject = (JSONObject) t;
+        JSONObject data = jsonObject.getJSONObject(JsonKeys.DATA.getKey());
+
+        String filterType = data.getString(JsonKeys.FILTER_TYPE.getKey());
+        String input = data.getString(JsonKeys.INPUT.getKey());
+
+        filterExercises(filterType, input);
+    }
+
+    // REQUIRES: selected filter and user input are not null
+    // MODIFIES: this, exercisesPanel
+    // EFFECTS: filters exercises given appropriate filter and input
+    private void filterExercises(String selectedFilter, String input) {
+        switch (selectedFilter) {
+            case EXERCISE_NAME:
+                exercisesByName = exercisesByName.filterName(input);
+                break;
+            case EXERCISE_MUSCLE_GROUP:
+                exercisesByName = exercisesByName
+                        .filterMuscleGroup(FitnessMetricParser.getInstance().getMuscleGroupByName(input));
+                break;
+            case EXERCISE_DIFFICULTY:
+                exercisesByName = exercisesByName
+                        .filterDifficulty(FitnessMetricParser.getInstance().getDifficultyByLevel(parseInt(input)));
+                break;
+            case EXERCISE_TIME:
+                exercisesByName = exercisesByName.filterTime(parseInt(input));
+                break;
+            case EXERCISE_FAVOURITE:
+                exercisesByName = exercisesByName.filterFavourite();
+        }
+        updatePresenter();
+        exercisesPanel.updateDisplayCollection();
+    }
+
+    // MODIFIES: this, exercisesPanel
+    // EFFECTS: removes filters and resets the exercises
+    private void resetFilters() {
+        exercisesByName = exercisesByNameMaster;
+        updatePresenter();
+        exercisesPanel.updateDisplayCollection();
+    }
+
+    // MODIFIES: this, exercisesPanel, fitnessApp
+    // EFFECTS: switches to the profile panel
+    public void back() {
+        resetFilters();
+        exercisesPanel.setText("");
+        FitnessApp.getInstance().switchPanel(PROFILE_COMMAND.getFitnessAppCommand());
+    }
+
+    // MODIFIES: this
+    // EFFECTS: parses the exercise data from t and updates the corresponding exercise with the data
+    private <T> void updateExercises(T t) {
+        JSONObject jsonObject = (JSONObject) t;
+        JSONObject data = jsonObject.getJSONObject(JsonKeys.DATA.getKey());
+
+        updateExercises(data);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: updates the corresponding exercise with the data
+    private void updateExercises(JSONObject data) {
+        String name = data.getString(JsonKeys.EXERCISE_NAME.getKey());
+        Exercise updatedExercise = (Exercise) data.get(JsonKeys.EXERCISE.getKey());
+
+        Exercise exercise = exercisesByName.getExercise(name);
+
+        exercise.setName(updatedExercise.getName());
+        exercise.setMuscleGroup(updatedExercise.getMuscleGroup());
+        exercise.setDifficulty(updatedExercise.getDifficulty());
+        exercise.setTimeMinutes(updatedExercise.getTimeMinutes());
+        exercise.setFavourite(updatedExercise.isFavourite());
 
         updatePresenter();
         exercisesPanel.updateDisplayCollection();
@@ -119,71 +232,14 @@ public class ExercisesPanelPresenter extends DisplayCollectionPresenter {
     }
 
     // MODIFIES: this, exercisesPanel
-    // EFFECTS: parses a name from t and removes the exercise with the given name
-    private <T> void removeExercise(T t) {
-        JSONObject jsonObject = (JSONObject) t;
-        JSONObject data = jsonObject.getJSONObject(JsonKeys.DATA.getKey());
-
-        String name = data.getString(JsonKeys.EXERCISE_NAME.getKey());
-
-        removeExercise(name);
-    }
-
-    // MODIFIES: this, exercisesPanel, exercisesByName
-    // EFFECTS: removes an exercise with the given name from the exercise collection
-    private void removeExercise(String name) {
-        exercisesByName.removeExercise(name);
-        updatePresenter();
-        exercisesPanel.updateDisplayCollection();
-    }
-
-    // MODIFIES: this, exercisesPanel
-    // EFFECTS: parses a filter type and user input from t and filters exercises
-    private <T> void filterExercises(T t) {
-        JSONObject jsonObject = (JSONObject) t;
-        JSONObject data = jsonObject.getJSONObject(JsonKeys.DATA.getKey());
-
-        String filterType = data.getString(JsonKeys.FILTER_TYPE.getKey());
-        String input = data.getString(JsonKeys.INPUT.getKey());
-
-        filterExercises(filterType, input);
-    }
-
-    // REQUIRES: selected filter and user input are not null
-    // MODIFIES: this, exercisesPanel
-    // EFFECTS: filters exercises given appropriate filter and input
-    private void filterExercises(String selectedFilter, String input) {
-        switch (selectedFilter) {
-            case EXERCISE_NAME:
-                exercisesByName = exercisesByName.filter(input);
-                break;
-            case EXERCISE_MUSCLE_GROUP:
-                exercisesByName = exercisesByName
-                        .filter(FitnessMetricParser.getInstance().getMuscleGroupByName(input));
-                break;
-            case EXERCISE_DIFFICULTY:
-                exercisesByName = exercisesByName
-                        .filter(FitnessMetricParser.getInstance().getDifficultyByLevel(parseInt(input)));
-                break;
-            case EXERCISE_TIME:
-                exercisesByName = exercisesByName.filter(parseInt(input));
-                break;
-            case EXERCISE_FAVOURITE:
-                exercisesByName = exercisesByName.filter();
-        }
-        updatePresenter();
-        exercisesPanel.updateDisplayCollection();
-    }
-
-    // MODIFIES: this, exercisesPanel, exercisesByName, exercisesByNameMaster
     // EFFECTS: parses the exercises from t and sets the current exercises to the given exercises
     private <T> void setExercises(T t) {
-        ExercisesByName exercisesByName = (ExercisesByName) t;
+        ExercisesByName exercises = (ExercisesByName) t;
 
-        setExercises(exercisesByName);
+        setExercises(exercises);
     }
 
-    // MODIFIES: this, exercisesPanel, exercisesByName, exercisesByNameMaster
+    // MODIFIES: this, exercisesPanel
     // EFFECTS: sets the current exercises to the given exercises
     private void setExercises(ExercisesByName exercisesByName) {
         this.exercisesByName = exercisesByName;
@@ -191,30 +247,6 @@ public class ExercisesPanelPresenter extends DisplayCollectionPresenter {
 
         updatePresenter();
         exercisesPanel.updateDisplayCollection();
-    }
-
-    // MODIFIES: this, exercisesPanel, fitnessApp
-    // EFFECTS: switches to the panel for adding exercises
-    private void addExercisePanel() {
-        resetFilters();
-        FitnessApp.getInstance().switchPanel(ADD_EXERCISE_COMMAND.getFitnessAppCommand());
-    }
-
-    // MODIFIES: this
-    // EFFECTS: extracts each exercise's information from exercises
-    @Override
-    protected void extractData() {
-        for (Exercise exercise : exercisesByName.getExercises().values()) {
-            Vector<Object> exerciseData = new Vector<>();
-
-            exerciseData.add(exercise.getName());
-            exerciseData.add(exercise.getMuscleGroup().getMuscleGroupAsString());
-            exerciseData.add(exercise.getDifficulty().getDifficultyAsInt());
-            exerciseData.add(exercise.getTimeMinutes());
-            exerciseData.add(exercise.isFavourite());
-
-            data.add(exerciseData);
-        }
     }
 
     // MODIFIES: this
@@ -234,21 +266,6 @@ public class ExercisesPanelPresenter extends DisplayCollectionPresenter {
     @Override
     public List<String> getFilters() {
         return filterable;
-    }
-
-    // MODIFIES: this, exercisesPanel
-    // EFFECTS: removes filters and resets the exercises
-    private void resetFilters() {
-        exercisesByName = exercisesByNameMaster;
-        updatePresenter();
-        exercisesPanel.updateDisplayCollection();
-    }
-
-    // MODIFIES: this, exercisesPanel, fitnessApp
-    // EFFECTS: switches to the profile panel
-    public void back() {
-        resetFilters();
-        FitnessApp.getInstance().switchPanel(PROFILE_COMMAND.getFitnessAppCommand());
     }
 
 }

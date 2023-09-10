@@ -519,6 +519,13 @@ public class WorkoutTest {
     }
 
     @Test
+    public void testGetTimeMinutes() {
+        addExerciseHelper(workoutTest1, 3);
+
+        assertEquals(6, workoutTest1.getTimeMinutes());
+    }
+
+    @Test
     public void testToStringSingleExercise() {
         addExerciseHelper(workoutTest1, 1);
 
