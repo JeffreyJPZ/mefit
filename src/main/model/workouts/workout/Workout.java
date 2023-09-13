@@ -1,6 +1,7 @@
 package model.workouts.workout;
 
 import exceptions.InvalidPositionException;
+import model.json.JsonKeys;
 import model.metrics.Difficulty;
 import model.exercises.exercise.Exercise;
 import org.json.JSONArray;
@@ -196,10 +197,10 @@ public class Workout implements JsonWritable {
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("name", getName());
-        jsonObject.put("difficulty", difficulty.getDifficultyAsInt());
-        jsonObject.put("favourite", favourite);
-        jsonObject.put("exercises", exercisesToJson());
+        jsonObject.put(JsonKeys.WORKOUT_NAME.getKey(), getName());
+        jsonObject.put(JsonKeys.WORKOUT_DIFFICULTY.getKey(), difficulty.getDifficultyAsInt());
+        jsonObject.put(JsonKeys.WORKOUT_FAVOURITE.getKey(), favourite);
+        jsonObject.put(JsonKeys.WORKOUT_EXERCISES.getKey(), exercisesToJson());
 
         return jsonObject;
     }

@@ -55,8 +55,14 @@ public class ProfilePanelPresenter extends DisplayElementPresenter {
 
     // MODIFIES: this, profilePanel
     // EFFECTS: updates the profile with the profile data
+    //          if exercise data cannot be parsed, notifies the user
     private void editProfile(JSONObject inputs) {
-        editBasicInfo(inputs);
+        try {
+            editBasicInfo(inputs);
+        } catch (IllegalArgumentException e) {
+            profilePanel.setText(INVALID_INPUT_TEXT);
+        }
+
         profilePanel.updateInputs(profile);
         updateProfiles();
     }
@@ -64,19 +70,15 @@ public class ProfilePanelPresenter extends DisplayElementPresenter {
     // MODIFIES: this, profilePanel
     // EFFECTS: edits profile with the given basic profile data
     private void editBasicInfo(JSONObject inputs) {
-        String name = inputs.getString("name");
-        String gender = inputs.getString("gender");
-        String age = inputs.getString("age");
-        String weight = inputs.getString("weight");
+        String name = inputs.getString(JsonKeys.PROFILE_NAME.getKey());
+        String gender = inputs.getString(JsonKeys.PROFILE_GENDER.getKey());
+        String age = inputs.getString(JsonKeys.PROFILE_AGE.getKey());
+        String weight = inputs.getString(JsonKeys.PROFILE_WEIGHT.getKey());
 
-        try {
-            profile.setName(name);
-            profile.setGender(gender);
-            profile.setAgeYears(parseInt(age));
-            profile.setWeightPounds(parseInt(weight));
-        } catch (IllegalArgumentException e) {
-            profilePanel.setText(INVALID_INPUT_TEXT);
-        }
+        profile.setName(name);
+        profile.setGender(gender);
+        profile.setAgeYears(parseInt(age));
+        profile.setWeightPounds(parseInt(weight));
     }
 
     // MODIFIES: exercisesPanelPresenter, fitnessApp

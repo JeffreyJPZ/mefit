@@ -6,6 +6,7 @@ import model.formatting.StringFormat;
 import model.events.Event;
 import model.events.EventDescription;
 import model.events.EventLog;
+import model.json.JsonKeys;
 import model.metrics.Difficulty;
 import model.metrics.MuscleGroup;
 import org.json.JSONArray;
@@ -197,7 +198,7 @@ public class ExercisesByName implements FitnessCollection {
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("exercises", exercisesToJson());
+        jsonObject.put(JsonKeys.EXERCISES.getKey(), exercisesToJson());
 
         return jsonObject;
     }

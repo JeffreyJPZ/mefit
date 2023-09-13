@@ -1,8 +1,8 @@
 package model.formatting;
 
-import model.formatting.StringFormat;
 import org.junit.jupiter.api.Test;
 
+import static model.formatting.StringFormat.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 // Test class for StringFormat
@@ -10,10 +10,10 @@ public class StringFormatTest {
 
     @Test
     public void testValues() {
-        assertEquals("\t", StringFormat.SEPARATOR.getFormat());
-        assertEquals("\n", StringFormat.LINE_BREAK.getFormat());
-        assertEquals("... with ", StringFormat.CUTOFF.getFormat());
-        assertEquals("[", StringFormat.LEFT_BRACKET.getFormat());
-        assertEquals("]", StringFormat.RIGHT_BRACKET.getFormat());
+        assertEquals("\t", SEPARATOR.getFormat());
+        assertEquals("\n", LINE_BREAK.getFormat());
+        assertEquals("... with ", CUTOFF.getFormat());
+        assertEquals("[", LEFT_BRACKET.getFormat());
+        assertEquals("]", RIGHT_BRACKET.getFormat());
     }
 }

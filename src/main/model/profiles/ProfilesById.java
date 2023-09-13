@@ -2,6 +2,7 @@ package model.profiles;
 
 import model.FitnessCollection;
 import model.formatting.StringFormat;
+import model.json.JsonKeys;
 import model.profiles.profile.Profile;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -127,7 +128,7 @@ public class ProfilesById implements FitnessCollection {
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("profiles", profilesToJson());
+        jsonObject.put(JsonKeys.PROFILES.getKey(), profilesToJson());
 
         return jsonObject;
     }

@@ -12,6 +12,12 @@ import static ui.gui.app.FitnessAppCommands.*;
 
 // Represents the data and actions for a panel for adding a profile
 public class AddProfilePanelPresenter extends AddToCollectionPresenter {
+    private AddProfilePanel addProfilePanel;
+
+    // EFFECTS: makes a new presenter for adding an exercise{
+    public AddProfilePanelPresenter(AddProfilePanel addProfilePanel) {
+        this.addProfilePanel = addProfilePanel;
+    }
 
     // MODIFIES: profilesPanelPresenter, fitnessApp
     // EFFECTS: updates the model appropriately with t according to the given key
@@ -33,21 +39,24 @@ public class AddProfilePanelPresenter extends AddToCollectionPresenter {
     // MODIFIES: profilesPanelPresenter, fitnessApp
     // EFFECTS: parses the profile data from t and makes a new profile
     private <T> void addProfile(T t) {
-        try {
-            JSONObject jsonObject = (JSONObject) t;
-            JSONObject data = jsonObject.getJSONObject(JsonKeys.DATA.getKey());
-            JSONObject textFields = data.getJSONObject(JsonKeys.FIELDS.getKey());
+        JSONObject jsonObject = (JSONObject) t;
+        JSONObject data = jsonObject.getJSONObject(JsonKeys.DATA.getKey());
+        JSONObject textFields = data.getJSONObject(JsonKeys.FIELDS.getKey());
 
-            addProfile(textFields);
-        } catch (ClassCastException e) {
-            throw new RuntimeException("Invalid data type was passed to the model.");
-        }
+        addProfile(textFields);
     }
 
     // MODIFIES: profilesPanelPresenter, fitnessApp
     // EFFECTS: makes a profile and adds the profile to the profile collection
+    //          if profile data cannot be parsed, notifies the user
     private void addProfile(JSONObject textFields) {
-        Profile profile = makeProfile(textFields);
+        Profile profile = null;
+
+        try {
+            profile = makeProfile(textFields);
+        } catch (IllegalArgumentException e) {
+            addProfilePanel.setText(INVALID_INPUT_TEXT);
+        }
 
         notifyAll(profile, ADD_PROFILE_COMMAND);
 
@@ -56,10 +65,10 @@ public class AddProfilePanelPresenter extends AddToCollectionPresenter {
 
     // EFFECTS: returns a profile with the given profile data
     private Profile makeProfile(JSONObject textFields) {
-        String name = textFields.getString("name");
-        String gender = textFields.getString("gender");
-        String age = textFields.getString("age");
-        String weight = textFields.getString("weight");
+        String name = textFields.getString(JsonKeys.PROFILE_NAME.getKey());
+        String gender = textFields.getString(JsonKeys.PROFILE_GENDER.getKey());
+        String age = textFields.getString(JsonKeys.PROFILE_AGE.getKey());
+        String weight = textFields.getString(JsonKeys.PROFILE_WEIGHT.getKey());
 
         return new Profile(name, gender, parseInt(age), parseInt(weight));
     }

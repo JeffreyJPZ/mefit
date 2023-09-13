@@ -1,11 +1,7 @@
-package ui.gui.json;
+package model.json;
 
-// Represents the keys used in loading, saving, and sending data in the GUI
+// Represents the keys used in loading, saving, and sending data in the model
 public enum JsonKeys {
-    DATA("data"),
-    PROFILE("profile"),
-    EXERCISE("exercise"),
-    WORKOUT("workout"),
     PROFILES("profiles"),
     PROFILE_ID("id"),
     PROFILE_NAME("name"),
@@ -27,16 +23,8 @@ public enum JsonKeys {
     WORKOUT_NAME("name"),
     WORKOUT_DIFFICULTY("difficulty"),
     WORKOUT_FAVOURITE("favourite"),
-    WORKOUT_EXERCISES("exercises"),
-    RANDOM_WORKOUT_MUSCLE_GROUP_FOCUS("muscleGroup"),
-    RANDOM_WORKOUT_DIFFICULTY_MODE("difficulty"),
-    RANDOM_WORKOUT_MAX_TIME("time"),
-    RANDOM_WORKOUT_SIZE("size"),
-    RANDOM_WORKOUT_SAMPLE_SIZE("sampleSize"),
-    FILTER_TYPE("filterType"),
-    INPUT("input"),
-    FIELDS("fields"),
-    BOXES("boxes");
+    WORKOUT_EXERCISES("exercises");
+
 
     private final String key;
 

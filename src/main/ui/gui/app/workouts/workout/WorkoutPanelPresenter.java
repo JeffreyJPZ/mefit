@@ -89,27 +89,28 @@ public class WorkoutPanelPresenter extends DisplayElementPresenter {
     // MODIFIES: this, exercisePanel
     // EFFECTS: parses the workout data from t and updates the workout with the workout data
     private <T> void editWorkout(T t) {
-        try {
-            JSONObject jsonObject = (JSONObject) t;
-            JSONObject data = jsonObject.getJSONObject(JsonKeys.DATA.getKey());
+        JSONObject jsonObject = (JSONObject) t;
+        JSONObject data = jsonObject.getJSONObject(JsonKeys.DATA.getKey());
 
-            JSONObject boxes = data.getJSONObject(JsonKeys.BOXES.getKey());
+        JSONObject boxes = data.getJSONObject(JsonKeys.BOXES.getKey());
 
-            editWorkout(boxes);
-        } catch (ClassCastException e) {
-            throw new RuntimeException("Invalid data type was passed to the model");
-        }
+        editWorkout(boxes);
     }
 
     // MODIFIES: this, workoutPanel
     // EFFECTS: updates the workout with the workout data
+    //          if workout cannot be parsed, notifies the user
     private void editWorkout(JSONObject boxes) {
         JSONObject data = new JSONObject();
         JSONObject workoutData = new JSONObject();
 
         workoutData.put(JsonKeys.WORKOUT_NAME.getKey(), workout.getName());
 
-        editBasicInfo(boxes);
+        try {
+            editBasicInfo(boxes);
+        } catch (IllegalArgumentException e) {
+            workoutPanel.setText(INVALID_INPUT_TEXT);
+        }
 
         workoutPanel.updateInputs(workout);
 
@@ -123,15 +124,11 @@ public class WorkoutPanelPresenter extends DisplayElementPresenter {
     // MODIFIES: this, workoutPanel
     // EFFECTS: edits the basic information of the workout
     private void editBasicInfo(JSONObject boxes) {
-        String difficulty = boxes.getString("selectDifficulty");
-        String favourite = boxes.getString("selectFavourite");
+        String difficulty = boxes.getString(JsonKeys.WORKOUT_DIFFICULTY.getKey());
+        String favourite = boxes.getString(JsonKeys.WORKOUT_FAVOURITE.getKey());
 
-        try {
-            workout.setDifficulty(FitnessMetricParser.getInstance().getDifficultyByLevel(parseInt(difficulty)));
-            workout.setFavourite(Boolean.parseBoolean(favourite));
-        } catch (IllegalArgumentException e) {
-            workoutPanel.setText(INVALID_INPUT_TEXT);
-        }
+        workout.setDifficulty(FitnessMetricParser.getInstance().getDifficultyByLevel(parseInt(difficulty)));
+        workout.setFavourite(Boolean.parseBoolean(favourite));
     }
 
     // MODIFIES: fitnessApp

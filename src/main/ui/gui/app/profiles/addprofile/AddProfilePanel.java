@@ -39,7 +39,7 @@ public class AddProfilePanel extends AddToCollectionPanel {
     protected void initializeFields() {
         super.initializeFields();
 
-        this.addProfilePanelPresenter = new AddProfilePanelPresenter();
+        this.addProfilePanelPresenter = new AddProfilePanelPresenter(this);
 
         initializeInputs();
     }
@@ -64,10 +64,10 @@ public class AddProfilePanel extends AddToCollectionPanel {
     // MODIFIES: this
     // EFFECTS: collects the text fields for convenient parsing
     private void collectTextFields() {
-        inputTextFields.put("name", name);
-        inputTextFields.put("gender", gender);
-        inputTextFields.put("age", age);
-        inputTextFields.put("weight", weight);
+        inputTextFields.put(JsonKeys.PROFILE_NAME.getKey(), name);
+        inputTextFields.put(JsonKeys.PROFILE_GENDER.getKey(), gender);
+        inputTextFields.put(JsonKeys.PROFILE_AGE.getKey(), age);
+        inputTextFields.put(JsonKeys.PROFILE_WEIGHT.getKey(), weight);
     }
 
     @Override

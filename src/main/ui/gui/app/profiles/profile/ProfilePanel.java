@@ -13,10 +13,10 @@ import static ui.gui.app.FitnessAppCommands.*;
 
 // Represents a profile panel for the fitness application
 public class ProfilePanel extends DisplayElementPanel {
-    private static final String PROFILE_NAME = "Name";
-    private static final String PROFILE_GENDER = "Gender";
-    private static final String PROFILE_AGE = "Age (yrs)";
-    private static final String PROFILE_WEIGHT = "Weight (lbs)";
+    private static final String PROFILE_NAME_LABEL = "Name";
+    private static final String PROFILE_GENDER_LABEL = "Gender";
+    private static final String PROFILE_AGE_LABEL = "Age (yrs)";
+    private static final String PROFILE_WEIGHT_LABEL = "Weight (lbs)";
 
     private ProfilePanelPresenter profilePanelPresenter;
 
@@ -71,10 +71,10 @@ public class ProfilePanel extends DisplayElementPanel {
     // MODIFIES: this
     // EFFECTS: collects the text fields for convenient parsing
     private void collectTextFields() {
-        inputTextFields.put("name", name);
-        inputTextFields.put("gender", gender);
-        inputTextFields.put("age", ageYears);
-        inputTextFields.put("weight", weightPounds);
+        inputTextFields.put(JsonKeys.PROFILE_NAME.getKey(), name);
+        inputTextFields.put(JsonKeys.PROFILE_GENDER.getKey(), gender);
+        inputTextFields.put(JsonKeys.PROFILE_AGE.getKey(), ageYears);
+        inputTextFields.put(JsonKeys.PROFILE_WEIGHT.getKey(), weightPounds);
     }
 
     @Override
@@ -82,13 +82,13 @@ public class ProfilePanel extends DisplayElementPanel {
     // EFFECTS: adds each component to be displayed to components
     protected void addDisplayComponents() {
         components.add(new JLabel("Profile"));
-        components.add(new JLabel(PROFILE_NAME));
+        components.add(new JLabel(PROFILE_NAME_LABEL));
         components.add(name);
-        components.add(new JLabel(PROFILE_GENDER));
+        components.add(new JLabel(PROFILE_GENDER_LABEL));
         components.add(gender);
-        components.add(new JLabel(PROFILE_AGE));
+        components.add(new JLabel(PROFILE_AGE_LABEL));
         components.add(ageYears);
-        components.add(new JLabel(PROFILE_WEIGHT));
+        components.add(new JLabel(PROFILE_WEIGHT_LABEL));
         components.add(weightPounds);
         components.add(splashText);
         components.add(editButton);
@@ -161,10 +161,10 @@ public class ProfilePanel extends DisplayElementPanel {
     // MODIFIES: this
     // EFFECTS: updates the inputs with the given profile info
     void updateInputs(Profile profile) {
-        inputTextFields.get("name").setText(profile.getName());
-        inputTextFields.get("gender").setText(profile.getGender());
-        inputTextFields.get("age").setText(Integer.toString(profile.getAgeYears()));
-        inputTextFields.get("weight").setText(Integer.toString(profile.getWeightPounds()));
+        inputTextFields.get(JsonKeys.PROFILE_NAME.getKey()).setText(profile.getName());
+        inputTextFields.get(JsonKeys.PROFILE_GENDER.getKey()).setText(profile.getGender());
+        inputTextFields.get(JsonKeys.PROFILE_AGE.getKey()).setText(Integer.toString(profile.getAgeYears()));
+        inputTextFields.get(JsonKeys.PROFILE_WEIGHT.getKey()).setText(Integer.toString(profile.getWeightPounds()));
     }
 
     // EFFECTS: returns the presenter for this profile panel

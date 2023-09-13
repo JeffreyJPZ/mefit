@@ -1,5 +1,6 @@
 package model.exercises.exercise;
 
+import model.json.JsonKeys;
 import model.metrics.MuscleGroup;
 import model.metrics.Difficulty;
 import org.json.JSONObject;
@@ -78,11 +79,11 @@ public abstract class Exercise implements JsonWritable {
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("name", name);
-        jsonObject.put("muscleGroup", muscleGroup.getMuscleGroupAsString());
-        jsonObject.put("difficulty", difficulty.getDifficultyAsInt());
-        jsonObject.put("time", timeMinutes);
-        jsonObject.put("favourite", favourite);
+        jsonObject.put(JsonKeys.EXERCISE_NAME.getKey(), name);
+        jsonObject.put(JsonKeys.EXERCISE_MUSCLE_GROUP.getKey(), muscleGroup.getMuscleGroupAsString());
+        jsonObject.put(JsonKeys.EXERCISE_DIFFICULTY.getKey(), difficulty.getDifficultyAsInt());
+        jsonObject.put(JsonKeys.EXERCISE_TIME.getKey(), timeMinutes);
+        jsonObject.put(JsonKeys.EXERCISE_FAVOURITE.getKey(), favourite);
 
         return jsonObject;
     }

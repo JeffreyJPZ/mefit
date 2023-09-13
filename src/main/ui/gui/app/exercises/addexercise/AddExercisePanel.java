@@ -17,6 +17,17 @@ import static ui.gui.app.FitnessAppCommands.*;
 
 // Represents a panel for adding exercises for the fitness application
 public class AddExercisePanel extends AddToCollectionPanel {
+    private static final String EXERCISE_NAME_LABEL = "Name";
+    private static final String EXERCISE_TYPE_LABEL = "Exercise Type";
+    private static final String EXERCISE_MUSCLE_GROUP_LABEL = "Muscle Group";
+    private static final String EXERCISE_DIFFICULTY_LABEL = "Difficulty";
+    private static final String EXERCISE_TIME_LABEL = "Time (min)";
+    private static final String EXERCISE_FAVOURITE_LABEL = "Favourite?";
+    private static final String EXERCISE_WEIGHT_LABEL = "Weight (lbs)";
+    private static final String EXERCISE_SETS_LABEL = "Sets";
+    private static final String EXERCISE_REPS_LABEL = "Reps";
+    private static final String EXERCISE_DISTANCE_LABEL = "Distance (m)";
+
     private AddExercisePanelPresenter addExercisePanelPresenter;
 
     private Map<String, JComboBox<String>> inputBoxes;
@@ -47,7 +58,7 @@ public class AddExercisePanel extends AddToCollectionPanel {
     protected void initializeFields() {
         super.initializeFields();
 
-        this.addExercisePanelPresenter = new AddExercisePanelPresenter();
+        this.addExercisePanelPresenter = new AddExercisePanelPresenter(this);
 
         this.inputBoxes = new HashMap<>();
 
@@ -104,21 +115,21 @@ public class AddExercisePanel extends AddToCollectionPanel {
     // MODIFIES: this
     // EFFECTS: collects the text fields for convenient parsing
     private void collectTextFields() {
-        inputTextFields.put("name", name);
-        inputTextFields.put("time", timeMinutes);
-        inputTextFields.put("weight", weightPounds);
-        inputTextFields.put("sets", sets);
-        inputTextFields.put("reps", reps);
-        inputTextFields.put("distance", distance);
+        inputTextFields.put(JsonKeys.EXERCISE_NAME.getKey(), name);
+        inputTextFields.put(JsonKeys.EXERCISE_TIME.getKey(), timeMinutes);
+        inputTextFields.put(JsonKeys.EXERCISE_WEIGHT.getKey(), weightPounds);
+        inputTextFields.put(JsonKeys.EXERCISE_SETS.getKey(), sets);
+        inputTextFields.put(JsonKeys.EXERCISE_REPS.getKey(), reps);
+        inputTextFields.put(JsonKeys.EXERCISE_DISTANCE.getKey(), distance);
     }
 
     // MODIFIES: this
     // EFFECTS: collects the input boxes for convenient parsing
     private void collectBoxes() {
-        inputBoxes.put("selectType", selectType);
-        inputBoxes.put("selectDifficulty", selectDifficulty);
-        inputBoxes.put("selectMuscleGroup", selectMuscleGroup);
-        inputBoxes.put("selectFavourite", selectFavourite);
+        inputBoxes.put(JsonKeys.EXERCISE_TYPE.getKey(), selectType);
+        inputBoxes.put(JsonKeys.EXERCISE_MUSCLE_GROUP.getKey(), selectMuscleGroup);
+        inputBoxes.put(JsonKeys.EXERCISE_DIFFICULTY.getKey(), selectDifficulty);
+        inputBoxes.put(JsonKeys.EXERCISE_FAVOURITE.getKey(), selectFavourite);
     }
 
     @Override
@@ -126,25 +137,25 @@ public class AddExercisePanel extends AddToCollectionPanel {
     // EFFECTS: adds each component to be displayed to components
     protected void addDisplayComponents() {
         components.add(new JLabel("Add New Exercise"));
-        components.add(new JLabel("Exercise Name"));
+        components.add(new JLabel(EXERCISE_NAME_LABEL));
         components.add(name);
-        components.add(new JLabel("Exercise Type"));
+        components.add(new JLabel(EXERCISE_TYPE_LABEL));
         components.add(selectType);
-        components.add(new JLabel("Difficulty"));
-        components.add(selectDifficulty);
-        components.add(new JLabel("Muscle Group"));
+        components.add(new JLabel(EXERCISE_MUSCLE_GROUP_LABEL));
         components.add(selectMuscleGroup);
-        components.add(new JLabel("Favourite?"));
+        components.add(new JLabel(EXERCISE_DIFFICULTY_LABEL));
+        components.add(selectDifficulty);
+        components.add(new JLabel(EXERCISE_FAVOURITE_LABEL));
         components.add(selectFavourite);
-        components.add(new JLabel("Time (min)"));
+        components.add(new JLabel(EXERCISE_TIME_LABEL));
         components.add(timeMinutes);
-        components.add(new JLabel("Weight (lbs)"));
+        components.add(new JLabel(EXERCISE_WEIGHT_LABEL));
         components.add(weightPounds);
-        components.add(new JLabel("Sets"));
+        components.add(new JLabel(EXERCISE_SETS_LABEL));
         components.add(sets);
-        components.add(new JLabel("Reps"));
+        components.add(new JLabel(EXERCISE_REPS_LABEL));
         components.add(reps);
-        components.add(new JLabel("Distance (m)"));
+        components.add(new JLabel(EXERCISE_DISTANCE_LABEL));
         components.add(distance);
         components.add(addButton);
         components.add(backButton);

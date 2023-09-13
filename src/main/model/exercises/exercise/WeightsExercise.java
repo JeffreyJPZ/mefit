@@ -1,5 +1,6 @@
 package model.exercises.exercise;
 
+import model.json.JsonKeys;
 import model.metrics.ExerciseType;
 import model.metrics.Difficulty;
 import model.metrics.MuscleGroup;
@@ -62,10 +63,10 @@ public class WeightsExercise extends Exercise {
     public JSONObject toJson() {
         JSONObject jsonObject = super.toJson();
 
-        jsonObject.put("exerciseType", ExerciseType.WEIGHTS_EXERCISE.getType());
-        jsonObject.put("weight", weightPounds);
-        jsonObject.put("sets", sets);
-        jsonObject.put("reps", reps);
+        jsonObject.put(JsonKeys.EXERCISE_TYPE.getKey(), ExerciseType.WEIGHTS_EXERCISE.getType());
+        jsonObject.put(JsonKeys.EXERCISE_WEIGHT.getKey(), weightPounds);
+        jsonObject.put(JsonKeys.EXERCISE_SETS.getKey(), sets);
+        jsonObject.put(JsonKeys.EXERCISE_REPS.getKey(), reps);
 
         return jsonObject;
     }

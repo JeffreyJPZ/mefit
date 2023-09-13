@@ -49,17 +49,13 @@ public class WorkoutGeneratorPanelPresenter extends AddToCollectionPresenter {
     // MODIFIES: workoutsPanelPresenter, fitnessApp
     // EFFECTS: parses the workout data from t and makes an exercise with the data
     private <T> void addWorkout(T t) {
-        try {
-            JSONObject jsonObject = (JSONObject) t;
-            JSONObject data = jsonObject.getJSONObject(JsonKeys.DATA.getKey());
+        JSONObject jsonObject = (JSONObject) t;
+        JSONObject data = jsonObject.getJSONObject(JsonKeys.DATA.getKey());
 
-            JSONObject textFields = data.getJSONObject(JsonKeys.FIELDS.getKey());
-            JSONObject boxes = data.getJSONObject(JsonKeys.BOXES.getKey());
+        JSONObject textFields = data.getJSONObject(JsonKeys.FIELDS.getKey());
+        JSONObject boxes = data.getJSONObject(JsonKeys.BOXES.getKey());
 
-            addWorkout(textFields, boxes);
-        } catch (ClassCastException e) {
-            throw new RuntimeException("Invalid data type was passed to the model");
-        }
+        addWorkout(textFields, boxes);
     }
 
     // MODIFIES: workoutsPanelPresenter, fitnessApp
@@ -70,6 +66,8 @@ public class WorkoutGeneratorPanelPresenter extends AddToCollectionPresenter {
 
         try {
             workout = generateWorkout(textFields, boxes);
+        } catch (IllegalArgumentException e) {
+            workoutGeneratorPanel.setText(INVALID_INPUT_TEXT);
         } catch (NoValidWorkoutException e) {
             workoutGeneratorPanel.setText(INVALID_WORKOUT_TEXT);
         }
@@ -88,15 +86,15 @@ public class WorkoutGeneratorPanelPresenter extends AddToCollectionPresenter {
     private Workout generateWorkout(JSONObject textFields, JSONObject boxes) throws NoValidWorkoutException {
         notifyAll(null, GET_EXERCISES_COMMAND);
 
-        String name = textFields.getString("name");
-        String timeMinutes = textFields.getString("time");
-        String size = textFields.getString("size");
-        String sampleSize = textFields.getString("sampleSize");
+        String name = textFields.getString(JsonKeys.WORKOUT_NAME.getKey());
+        String timeMinutes = textFields.getString(JsonKeys.RANDOM_WORKOUT_MAX_TIME.getKey());
+        String size = textFields.getString(JsonKeys.RANDOM_WORKOUT_SIZE.getKey());
+        String sampleSize = textFields.getString(JsonKeys.RANDOM_WORKOUT_SAMPLE_SIZE.getKey());
 
-        String inputMuscleGroup = boxes.getString("selectMuscleGroup");
+        String inputMuscleGroup = boxes.getString(JsonKeys.RANDOM_WORKOUT_MUSCLE_GROUP_FOCUS.getKey());
         MuscleGroup muscleGroup = FitnessMetricParser.getInstance().getMuscleGroupByName(inputMuscleGroup);
 
-        String inputDifficulty = boxes.getString("selectDifficulty");
+        String inputDifficulty = boxes.getString(JsonKeys.RANDOM_WORKOUT_DIFFICULTY_MODE.getKey());
         Difficulty difficultyLevel = FitnessMetricParser.getInstance().getDifficultyByLevel(parseInt(inputDifficulty));
 
         WorkoutParameters workoutParameters = new WorkoutParameters

@@ -1,5 +1,6 @@
 package model.workouts;
 
+import model.json.JsonKeys;
 import model.metrics.Difficulty;
 import model.FitnessCollection;
 import model.formatting.StringFormat;
@@ -184,7 +185,7 @@ public class WorkoutsByName implements FitnessCollection {
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("workouts", workoutsToJson());
+        jsonObject.put(JsonKeys.WORKOUTS.getKey(), workoutsToJson());
 
         return jsonObject;
     }

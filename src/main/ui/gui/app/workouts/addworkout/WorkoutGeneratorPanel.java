@@ -17,6 +17,14 @@ import static ui.gui.app.FitnessAppCommands.BACK_COMMAND;
 
 // Represents a panel for generating a workout with random exercises
 public class WorkoutGeneratorPanel extends AddToCollectionPanel {
+    private static final String WORKOUT_NAME_LABEL = "Name";
+    private static final String WORKOUT_MUSCLE_GROUP_LABEL = "Muscle Group Focus";
+    private static final String WORKOUT_DIFFICULTY_LABEL = "Difficulty Average";
+    private static final String WORKOUT_TIME_LABEL = "Time (min)";
+    private static final String WORKOUT_FAVOURITE_LABEL = "Favourite?";
+    private static final String WORKOUT_SIZE_LABEL = "# of Exercises in Workout";
+    private static final String WORKOUT_SAMPLE_SIZE_LABEL = "# of Exercises as Sample Size";
+
     private WorkoutGeneratorPanelPresenter workoutGeneratorPanelPresenter;
 
     private Map<String, JComboBox<String>> inputBoxes;
@@ -28,8 +36,6 @@ public class WorkoutGeneratorPanel extends AddToCollectionPanel {
     private JTextField timeMinutes;
     private JTextField size;
     private JTextField sampleSize;
-
-    private JLabel splashText;
 
     // EFFECTS: creates a new panel for generating workouts
     public WorkoutGeneratorPanel() {
@@ -96,18 +102,18 @@ public class WorkoutGeneratorPanel extends AddToCollectionPanel {
     // MODIFIES: this
     // EFFECTS: collects the text fields for convenient parsing
     private void collectTextFields() {
-        inputTextFields.put("name", name);
-        inputTextFields.put("time", timeMinutes);
-        inputTextFields.put("size", size);
-        inputTextFields.put("sampleSize", sampleSize);
+        inputTextFields.put(JsonKeys.WORKOUT_NAME.getKey(), name);
+        inputTextFields.put(JsonKeys.RANDOM_WORKOUT_MAX_TIME.getKey(), timeMinutes);
+        inputTextFields.put(JsonKeys.RANDOM_WORKOUT_SIZE.getKey(), size);
+        inputTextFields.put(JsonKeys.RANDOM_WORKOUT_SAMPLE_SIZE.getKey(), sampleSize);
     }
 
     // MODIFIES: this
     // EFFECTS: collects the input boxes for convenient parsing
     private void collectBoxes() {
-        inputBoxes.put("selectDifficulty", selectDifficulty);
-        inputBoxes.put("selectMuscleGroup", selectMuscleGroup);
-        inputBoxes.put("selectFavourite", selectFavourite);
+        inputBoxes.put(JsonKeys.RANDOM_WORKOUT_MUSCLE_GROUP_FOCUS.getKey(), selectMuscleGroup);
+        inputBoxes.put(JsonKeys.RANDOM_WORKOUT_DIFFICULTY_MODE.getKey(), selectDifficulty);
+        inputBoxes.put(JsonKeys.WORKOUT_FAVOURITE.getKey(), selectFavourite);
     }
 
     @Override
@@ -115,19 +121,19 @@ public class WorkoutGeneratorPanel extends AddToCollectionPanel {
     // EFFECTS: adds each component to be displayed to components
     protected void addDisplayComponents() {
         components.add(new JLabel("Random Workout Generator"));
-        components.add(new JLabel("Workout Name"));
+        components.add(new JLabel(WORKOUT_NAME_LABEL));
         components.add(name);
-        components.add(new JLabel("Difficulty"));
-        components.add(selectDifficulty);
-        components.add(new JLabel("Muscle Group"));
+        components.add(new JLabel(WORKOUT_MUSCLE_GROUP_LABEL));
         components.add(selectMuscleGroup);
-        components.add(new JLabel("Favourite?"));
+        components.add(new JLabel(WORKOUT_DIFFICULTY_LABEL));
+        components.add(selectDifficulty);
+        components.add(new JLabel(WORKOUT_FAVOURITE_LABEL));
         components.add(selectFavourite);
-        components.add(new JLabel("Time (min)"));
+        components.add(new JLabel(WORKOUT_TIME_LABEL));
         components.add(timeMinutes);
-        components.add(new JLabel("# of Exercises"));
+        components.add(new JLabel(WORKOUT_SIZE_LABEL));
         components.add(size);
-        components.add(new JLabel("# of Exercises as Sample Size"));
+        components.add(new JLabel(WORKOUT_SAMPLE_SIZE_LABEL));
         components.add(sampleSize);
         components.add(splashText);
         components.add(addButton);
@@ -178,12 +184,6 @@ public class WorkoutGeneratorPanel extends AddToCollectionPanel {
     // EFFECTS: switches to the workouts panel
     private void back() {
         workoutGeneratorPanelPresenter.update(null, BACK_COMMAND);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: sets the onscreen splash text to display the given string
-    public void setText(String text) {
-        splashText.setText(text);
     }
 
     // EFFECTS: returns the presenter for this panel

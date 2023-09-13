@@ -1,5 +1,6 @@
 package model.exercises.exercise;
 
+import model.json.JsonKeys;
 import model.metrics.Difficulty;
 import model.metrics.ExerciseType;
 import model.metrics.MuscleGroup;
@@ -40,8 +41,8 @@ public class CardioExercise extends Exercise {
     public JSONObject toJson() {
         JSONObject jsonObject = super.toJson();
 
-        jsonObject.put("exerciseType", ExerciseType.CARDIO_EXERCISE.getType());
-        jsonObject.put("distance", distanceMetres);
+        jsonObject.put(JsonKeys.EXERCISE_TYPE.getKey(), ExerciseType.CARDIO_EXERCISE.getType());
+        jsonObject.put(JsonKeys.EXERCISE_DISTANCE.getKey(), distanceMetres);
 
         return jsonObject;
     }

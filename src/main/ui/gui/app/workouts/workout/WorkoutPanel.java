@@ -18,6 +18,11 @@ import static ui.gui.app.FitnessAppCommands.EDIT_COMMAND;
 
 // Represents a panel for displaying a workout
 public class WorkoutPanel extends DisplayElementPanel {
+    private static final String WORKOUT_NAME_LABEL = "Name";
+    private static final String WORKOUT_DIFFICULTY_LABEL = "Difficulty";
+    private static final String WORKOUT_TIME_LABEL = "Time (min)";
+    private static final String WORKOUT_FAVOURITE_LABEL = "Favourite?";
+
     private WorkoutPanelPresenter workoutPanelPresenter;
 
     private Map<String, JComboBox<String>> inputBoxes;
@@ -85,8 +90,8 @@ public class WorkoutPanel extends DisplayElementPanel {
     // MODIFIES: this
     // EFFECTS: collects the input boxes for convenient parsing
     private void collectBoxes() {
-        inputBoxes.put("selectDifficulty", selectDifficulty);
-        inputBoxes.put("selectFavourite", selectFavourite);
+        inputBoxes.put(JsonKeys.WORKOUT_DIFFICULTY.getKey(), selectDifficulty);
+        inputBoxes.put(JsonKeys.WORKOUT_FAVOURITE.getKey(), selectFavourite);
     }
 
     @Override
@@ -95,14 +100,14 @@ public class WorkoutPanel extends DisplayElementPanel {
     protected void addDisplayComponents() {
         components.add(new JLabel("Workout"));
         components.add(scrollableDataTable);
-        components.add(new JLabel("Name"));
+        components.add(new JLabel(WORKOUT_NAME_LABEL));
         components.add(name);
-        components.add(new JLabel("Difficulty"));
+        components.add(new JLabel(WORKOUT_DIFFICULTY_LABEL));
         components.add(selectDifficulty);
-        components.add(new JLabel("Favourite?"));
-        components.add(selectFavourite);
-        components.add(new JLabel("Time (min)"));
+        components.add(new JLabel(WORKOUT_TIME_LABEL));
         components.add(time);
+        components.add(new JLabel(WORKOUT_FAVOURITE_LABEL));
+        components.add(selectFavourite);
         components.add(splashText);
         components.add(editButton);
         components.add(backButton);
@@ -148,9 +153,9 @@ public class WorkoutPanel extends DisplayElementPanel {
     // EFFECTS: updates the appropriate inputs with the given workout info
     void updateInputs(Workout workout) {
         name.setText(workout.getName());
-        inputBoxes.get("selectDifficulty")
+        inputBoxes.get(JsonKeys.WORKOUT_DIFFICULTY.getKey())
                 .setSelectedItem(Integer.toString(workout.getDifficulty().getDifficultyAsInt()));
-        inputBoxes.get("selectFavourite").setSelectedItem(Boolean.toString(workout.isFavourite()));
+        inputBoxes.get(JsonKeys.WORKOUT_FAVOURITE.getKey()).setSelectedItem(Boolean.toString(workout.isFavourite()));
         time.setText(Integer.toString(workout.getTimeMinutes()));
     }
 

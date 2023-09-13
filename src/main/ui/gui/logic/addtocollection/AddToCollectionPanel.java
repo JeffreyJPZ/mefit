@@ -14,6 +14,7 @@ public abstract class AddToCollectionPanel extends FitnessPanel {
 
     protected Map<String, JTextField> inputTextFields;
 
+    protected JLabel splashText;
     protected JButton addButton;
     protected JButton backButton;
 
@@ -28,6 +29,7 @@ public abstract class AddToCollectionPanel extends FitnessPanel {
     protected void initializeFields() {
         this.inputTextFields = new HashMap<>();
 
+        this.splashText = new JLabel("");
         this.addButton = new JButton(ADD_COMMAND.getFitnessAppCommand());
         this.backButton = new JButton(BACK_COMMAND.getFitnessAppCommand());
     }
@@ -41,4 +43,9 @@ public abstract class AddToCollectionPanel extends FitnessPanel {
 
     // EFFECTS: initializes the input components and adds them to the appropriate collection
     protected abstract void initializeInputs();
+
+    // EFFECTS: sets the splash text to display the given string
+    public void setText(String text) {
+        splashText.setText(text);
+    }
 }

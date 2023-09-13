@@ -1,5 +1,6 @@
 package model.profiles.profile;
 
+import model.json.JsonKeys;
 import model.workouts.WorkoutsByName;
 import model.exercises.ExercisesByName;
 import org.json.JSONObject;
@@ -118,13 +119,13 @@ public class Profile implements JsonWritable {
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("id", id);
-        jsonObject.put("name", name);
-        jsonObject.put("gender", gender);
-        jsonObject.put("age", ageYears);
-        jsonObject.put("weight", weightPounds);
-        jsonObject.put("exercises", exercises.toJson());
-        jsonObject.put("workouts", workouts.toJson());
+        jsonObject.put(JsonKeys.PROFILE_ID.getKey(), id);
+        jsonObject.put(JsonKeys.PROFILE_NAME.getKey(), name);
+        jsonObject.put(JsonKeys.PROFILE_GENDER.getKey(), gender);
+        jsonObject.put(JsonKeys.PROFILE_AGE.getKey(), ageYears);
+        jsonObject.put(JsonKeys.PROFILE_WEIGHT.getKey(), weightPounds);
+        jsonObject.put(JsonKeys.EXERCISES.getKey(), exercises.toJson());
+        jsonObject.put(JsonKeys.WORKOUTS.getKey(), workouts.toJson());
 
         return jsonObject;
     }

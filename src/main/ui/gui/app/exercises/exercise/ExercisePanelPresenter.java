@@ -45,27 +45,28 @@ public class ExercisePanelPresenter extends DisplayElementPresenter {
     // MODIFIES: this, exercisePanel
     // EFFECTS: parses the exercise info from t and updates the exercise with the exercise info
     private <T> void editExercise(T t) {
-        try {
-            JSONObject jsonObject = (JSONObject) t;
-            JSONObject data = jsonObject.getJSONObject(JsonKeys.DATA.getKey());
+        JSONObject jsonObject = (JSONObject) t;
+        JSONObject data = jsonObject.getJSONObject(JsonKeys.DATA.getKey());
 
-            JSONObject textFields = data.getJSONObject(JsonKeys.FIELDS.getKey());
-            JSONObject boxes = data.getJSONObject(JsonKeys.BOXES.getKey());
-            String exerciseTypeName = data.getString(JsonKeys.EXERCISE_TYPE.getKey());
+        JSONObject textFields = data.getJSONObject(JsonKeys.FIELDS.getKey());
+        JSONObject boxes = data.getJSONObject(JsonKeys.BOXES.getKey());
+        String exerciseTypeName = data.getString(JsonKeys.EXERCISE_TYPE.getKey());
 
-            editExercise(textFields, boxes, exerciseTypeName);
-        } catch (ClassCastException e) {
-            throw new RuntimeException("Invalid data type was passed to the model");
-        }
+        editExercise(textFields, boxes, exerciseTypeName);
     }
 
     // MODIFIES: this, exercisePanel
     // EFFECTS: updates the exercise with the exercise data
+    //          if exercise data cannot be parsed, notifies the user
     private void editExercise(JSONObject textFields, JSONObject boxes, String exerciseTypeName) {
         ExerciseType exerciseType = FitnessMetricParser.getInstance().getExerciseTypeByName(exerciseTypeName);
 
-        editBasicInfo(textFields, boxes);
-        editAdvancedInfo(textFields, exerciseType);
+        try {
+            editBasicInfo(textFields, boxes);
+            editAdvancedInfo(textFields, exerciseType);
+        } catch (ClassCastException e) {
+            exercisePanel.setText(INVALID_INPUT_TEXT);
+        }
 
         exercisePanel.updateInputs(exercise, exerciseType);
 
@@ -73,7 +74,7 @@ public class ExercisePanelPresenter extends DisplayElementPresenter {
     }
 
     // MODIFIES: exercisesPanelPresenter
-    // EFFECTS: updates the exercises collection with the exercise data
+    // EFFECTS: updates the exercise collection with the exercise data
     private void updateExercises() {
         JSONObject data = new JSONObject();
         JSONObject exerciseData = new JSONObject();
@@ -90,10 +91,10 @@ public class ExercisePanelPresenter extends DisplayElementPresenter {
     // MODIFIES: this, exercisePanel
     // EFFECTS: updates the exercise with basic exercise data
     private void editBasicInfo(JSONObject textFields, JSONObject boxes) {
-        String muscleGroup = boxes.getString("selectMuscleGroup");
-        String difficulty = boxes.getString("selectDifficulty");
-        String favourite = boxes.getString("selectFavourite");
-        String time = textFields.getString("time");
+        String muscleGroup = boxes.getString(JsonKeys.EXERCISE_MUSCLE_GROUP.getKey());
+        String difficulty = boxes.getString(JsonKeys.EXERCISE_DIFFICULTY.getKey());
+        String favourite = boxes.getString(JsonKeys.EXERCISE_FAVOURITE.getKey());
+        String time = textFields.getString(JsonKeys.EXERCISE_TIME.getKey());
 
         try {
             exercise.setMuscleGroup(FitnessMetricParser.getInstance().getMuscleGroupByName(muscleGroup));
@@ -112,9 +113,9 @@ public class ExercisePanelPresenter extends DisplayElementPresenter {
             case WEIGHTS_EXERCISE:
                 WeightsExercise weightsExercise = (WeightsExercise) exercise;
 
-                String weight = textFields.getString("weight");
-                String sets = textFields.getString("sets");
-                String reps = textFields.getString("reps");
+                String weight = textFields.getString(JsonKeys.EXERCISE_WEIGHT.getKey());
+                String sets = textFields.getString(JsonKeys.EXERCISE_SETS.getKey());
+                String reps = textFields.getString(JsonKeys.EXERCISE_REPS.getKey());
 
                 weightsExercise.setWeightPounds(parseInt(weight));
                 weightsExercise.setSets(parseInt(sets));
@@ -124,8 +125,8 @@ public class ExercisePanelPresenter extends DisplayElementPresenter {
             case BODYWEIGHTS_EXERCISE:
                 BodyWeightsExercise bodyWeightsExercise = (BodyWeightsExercise) exercise;
 
-                sets = textFields.getString("sets");
-                reps = textFields.getString("reps");
+                sets = textFields.getString(JsonKeys.EXERCISE_SETS.getKey());
+                reps = textFields.getString(JsonKeys.EXERCISE_REPS.getKey());
 
                 bodyWeightsExercise.setSets(parseInt(sets));
                 bodyWeightsExercise.setReps(parseInt(reps));
@@ -134,7 +135,7 @@ public class ExercisePanelPresenter extends DisplayElementPresenter {
             case CARDIO_EXERCISE:
                 CardioExercise cardioExercise = (CardioExercise) exercise;
 
-                String distance = textFields.getString("distance");
+                String distance = textFields.getString(JsonKeys.EXERCISE_DISTANCE.getKey());
 
                 cardioExercise.setDistanceMetres(parseInt(distance));
 

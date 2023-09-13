@@ -19,6 +19,16 @@ import static ui.gui.app.FitnessAppCommands.*;
 
 // Represents a panel for displaying an exercise
 public class ExercisePanel extends DisplayElementPanel {
+    private static final String EXERCISE_NAME_LABEL = "Name";
+    private static final String EXERCISE_MUSCLE_GROUP_LABEL = "Muscle Group";
+    private static final String EXERCISE_DIFFICULTY_LABEL = "Difficulty";
+    private static final String EXERCISE_TIME_LABEL = "Time (min)";
+    private static final String EXERCISE_FAVOURITE_LABEL = "Favourite?";
+    private static final String EXERCISE_WEIGHT_LABEL = "Weight (lbs)";
+    private static final String EXERCISE_SETS_LABEL = "Sets";
+    private static final String EXERCISE_REPS_LABEL = "Reps";
+    private static final String EXERCISE_DISTANCE_LABEL = "Distance (m)";
+
     private ExercisePanelPresenter exercisePanelPresenter;
 
     private Map<String, JComboBox<String>> inputBoxes;
@@ -83,11 +93,11 @@ public class ExercisePanel extends DisplayElementPanel {
     // MODIFIES: this
     // EFFECTS: collects the text fields for convenient parsing
     private void collectTextFields() {
-        inputTextFields.put("time", timeMinutes);
-        inputTextFields.put("weight", weightPounds);
-        inputTextFields.put("sets", sets);
-        inputTextFields.put("reps", reps);
-        inputTextFields.put("distance", distance);
+        inputTextFields.put(JsonKeys.EXERCISE_TIME.getKey(), timeMinutes);
+        inputTextFields.put(JsonKeys.EXERCISE_WEIGHT.getKey(), weightPounds);
+        inputTextFields.put(JsonKeys.EXERCISE_SETS.getKey(), sets);
+        inputTextFields.put(JsonKeys.EXERCISE_REPS.getKey(), reps);
+        inputTextFields.put(JsonKeys.EXERCISE_DISTANCE.getKey(), distance);
     }
 
     // MODIFIES: this
@@ -112,9 +122,9 @@ public class ExercisePanel extends DisplayElementPanel {
     // MODIFIES: this
     // EFFECTS: collects the input boxes for convenient parsing
     private void collectBoxes() {
-        inputBoxes.put("selectDifficulty", selectDifficulty);
-        inputBoxes.put("selectMuscleGroup", selectMuscleGroup);
-        inputBoxes.put("selectFavourite", selectFavourite);
+        inputBoxes.put(JsonKeys.EXERCISE_DIFFICULTY.getKey(), selectDifficulty);
+        inputBoxes.put(JsonKeys.EXERCISE_MUSCLE_GROUP.getKey(), selectMuscleGroup);
+        inputBoxes.put(JsonKeys.EXERCISE_FAVOURITE.getKey(), selectFavourite);
     }
 
     @Override
@@ -122,23 +132,23 @@ public class ExercisePanel extends DisplayElementPanel {
     // EFFECTS: stores the components of the exercise panel for convenient access
     protected void addDisplayComponents() {
         components.add(exerciseType);
-        components.add(new JLabel("Name"));
+        components.add(new JLabel(EXERCISE_NAME_LABEL));
         components.add(name);
-        components.add(new JLabel("Difficulty"));
-        components.add(selectDifficulty);
-        components.add(new JLabel("Muscle Group"));
+        components.add(new JLabel(EXERCISE_MUSCLE_GROUP_LABEL));
         components.add(selectMuscleGroup);
-        components.add(new JLabel("Favourite?"));
+        components.add(new JLabel(EXERCISE_DIFFICULTY_LABEL));
+        components.add(selectDifficulty);
+        components.add(new JLabel(EXERCISE_FAVOURITE_LABEL));
         components.add(selectFavourite);
-        components.add(new JLabel("Time (min)"));
+        components.add(new JLabel(EXERCISE_TIME_LABEL));
         components.add(timeMinutes);
-        components.add(new JLabel("Weight (lbs)"));
+        components.add(new JLabel(EXERCISE_WEIGHT_LABEL));
         components.add(weightPounds);
-        components.add(new JLabel("Sets"));
+        components.add(new JLabel(EXERCISE_SETS_LABEL));
         components.add(sets);
-        components.add(new JLabel("Reps"));
+        components.add(new JLabel(EXERCISE_REPS_LABEL));
         components.add(reps);
-        components.add(new JLabel("Distance (m)"));
+        components.add(new JLabel(EXERCISE_DISTANCE_LABEL));
         components.add(distance);
         components.add(splashText);
         components.add(editButton);
@@ -202,19 +212,19 @@ public class ExercisePanel extends DisplayElementPanel {
 
         switch (exerciseType) {
             case WEIGHTS_EXERCISE:
-                inputTextFields.get("distance").setVisible(false);
+                inputTextFields.get(JsonKeys.EXERCISE_DISTANCE.getKey()).setVisible(false);
 
                 break;
             case BODYWEIGHTS_EXERCISE:
-                inputTextFields.get("weight").setVisible(false);
-                inputTextFields.get("distance").setVisible(false);
+                inputTextFields.get(JsonKeys.EXERCISE_WEIGHT.getKey()).setVisible(false);
+                inputTextFields.get(JsonKeys.EXERCISE_DISTANCE.getKey()).setVisible(false);
 
 
                 break;
             case CARDIO_EXERCISE:
-                inputTextFields.get("weight").setVisible(false);
-                inputTextFields.get("sets").setVisible(false);
-                inputTextFields.get("reps").setVisible(false);
+                inputTextFields.get(JsonKeys.EXERCISE_WEIGHT.getKey()).setVisible(false);
+                inputTextFields.get(JsonKeys.EXERCISE_SETS.getKey()).setVisible(false);
+                inputTextFields.get(JsonKeys.EXERCISE_REPS.getKey()).setVisible(false);
 
                 break;
         }
@@ -236,34 +246,43 @@ public class ExercisePanel extends DisplayElementPanel {
 
     // MODIFIES: this
     // EFFECTS: updates the appropriate inputs according to the given exercise type with the given exercise info
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     void updateInputs(Exercise exercise, ExerciseType exerciseType) {
         name.setText(exercise.getName());
-        inputBoxes.get("selectDifficulty")
+        inputBoxes.get(JsonKeys.EXERCISE_DIFFICULTY.getKey())
                 .setSelectedItem(Integer.toString(exercise.getDifficulty().getDifficultyAsInt()));
-        inputBoxes.get("selectMuscleGroup").setSelectedItem(exercise.getMuscleGroup().getMuscleGroupAsString());
-        inputBoxes.get("selectFavourite").setSelectedItem(Boolean.toString(exercise.isFavourite()));
-        inputTextFields.get("time").setText(Integer.toString(exercise.getTimeMinutes()));
+        inputBoxes.get(JsonKeys.EXERCISE_MUSCLE_GROUP.getKey())
+                .setSelectedItem(exercise.getMuscleGroup().getMuscleGroupAsString());
+        inputBoxes.get(JsonKeys.EXERCISE_FAVOURITE.getKey())
+                .setSelectedItem(Boolean.toString(exercise.isFavourite()));
+        inputTextFields.get(JsonKeys.EXERCISE_TIME.getKey()).setText(Integer.toString(exercise.getTimeMinutes()));
 
         switch (exerciseType) {
             case WEIGHTS_EXERCISE:
                 WeightsExercise weightsExercise = (WeightsExercise) exercise;
 
-                inputTextFields.get("weight").setText(Integer.toString(weightsExercise.getWeightPounds()));
-                inputTextFields.get("sets").setText(Integer.toString(weightsExercise.getSets()));
-                inputTextFields.get("reps").setText(Integer.toString(weightsExercise.getReps()));
+                inputTextFields.get(JsonKeys.EXERCISE_WEIGHT.getKey())
+                        .setText(Integer.toString(weightsExercise.getWeightPounds()));
+                inputTextFields.get(JsonKeys.EXERCISE_SETS.getKey())
+                        .setText(Integer.toString(weightsExercise.getSets()));
+                inputTextFields.get(JsonKeys.EXERCISE_REPS.getKey())
+                        .setText(Integer.toString(weightsExercise.getReps()));
 
                 break;
             case BODYWEIGHTS_EXERCISE:
                 BodyWeightsExercise bodyWeightsExercise = (BodyWeightsExercise) exercise;
 
-                inputTextFields.get("sets").setText(Integer.toString(bodyWeightsExercise.getSets()));
-                inputTextFields.get("reps").setText(Integer.toString(bodyWeightsExercise.getReps()));
+                inputTextFields.get(JsonKeys.EXERCISE_SETS.getKey())
+                        .setText(Integer.toString(bodyWeightsExercise.getSets()));
+                inputTextFields.get(JsonKeys.EXERCISE_REPS.getKey())
+                        .setText(Integer.toString(bodyWeightsExercise.getReps()));
 
                 break;
             case CARDIO_EXERCISE:
                 CardioExercise cardioExercise = (CardioExercise) exercise;
 
-                inputTextFields.get("distance").setText(Integer.toString(cardioExercise.getDistanceMetres()));
+                inputTextFields.get(JsonKeys.EXERCISE_DISTANCE.getKey())
+                        .setText(Integer.toString(cardioExercise.getDistanceMetres()));
 
                 break;
         }
