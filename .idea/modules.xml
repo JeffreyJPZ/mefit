@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MeFit.iml" filepath="$PROJECT_DIR$/MeFit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mefit.iml" filepath="$PROJECT_DIR$/mefit.iml" />
     </modules>
   </component>
 </project>
