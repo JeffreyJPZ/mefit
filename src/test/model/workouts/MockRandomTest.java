@@ -22,13 +22,13 @@ public class MockRandomTest {
 
     @Test
     public void testNextInt() {
-        assertEquals(0, mockRandom.nextInt());
+        assertEquals(0, mockRandom.nextInt(1));
     }
 
     @Test
     public void testNextIntMultiple() {
-        assertEquals(0, mockRandom.nextInt());
-        assertEquals(1, mockRandom.nextInt());
-        assertEquals(2, mockRandom.nextInt());
+        assertEquals(0, mockRandom.nextInt(3));
+        assertEquals(1, mockRandom.nextInt(5));
+        assertEquals(2, mockRandom.nextInt(10));
     }
 }

@@ -176,7 +176,7 @@ public class WorkoutGeneratorTest {
 
         assertEquals(2, testWorkout.length());
         assertEquals(e4, testWorkout.getExercise("Pullups"));
-        assertEquals(e5, testWorkout.getExercise("Curls"));
+        assertEquals(e3, testWorkout.getExercise("Deadlifts"));
     }
 
     @Test
